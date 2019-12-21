@@ -28,7 +28,7 @@ div#admin_sidebar>div#admin_sidebar_p1>img {
 div#admin_sidebar>div#admin_sidebar_p1>p,
 div#admin_sidebar>div#admin_sidebar_p1>a p {color: #ccc;text-align: center;}
 div#admin_sidebar>div#admin_sidebar_p2>div#p2_content p {
-	width:100px;
+	/* width:100px; */
 	color: #ccc;
 	text-align: left;
 	display: inline-block;
