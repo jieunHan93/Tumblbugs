@@ -1,0 +1,446 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% boolean result = false; %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  	<script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+  	<script>
+  	$(document).ready(function(){
+  		$( window ).scroll( function() {
+    		if ( $( this ).scrollTop() > 200 ) {
+    			$( '.top' ).fadeIn();
+    		} else {
+    			$( '.top' ).fadeOut();
+    		}
+    	} );
+    	$( '.top' ).click( function() {
+    		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+    		return false;
+    	} );
+	});
+  </script>
+	<style>
+		div#projectMenuModal>div.modal-dialog,
+		div#searchMenuModal>div.modal-dialog,
+		div#myMenuModal>div.modal-dialog{
+			max-width:1080px;	
+			min-width:1080px;
+			margin:auto;
+			margin-top:30px;
+			height:1000px;
+		}
+		div#projectMenuModal button.close:hover, 
+		div#searchMenuModal button.close:hover,
+		div#myMenuModal button.close:hover{
+			color:#1e90ff;
+		}
+		div#projectMenuModal button,
+		div#searchMenuModal button,
+		div#myMenuModal button {
+			outline: none;
+		}
+		div#searchMenuModal button {
+			position: relative;
+    		top: 8px;
+		}
+		div#projectMenuModal h1.modal-title,
+		div#myMenuModal h1.modal-title{
+			font-size: 20px;
+			display: inline-block;
+			font-weight: bold;
+		}
+		div#projectMenuModal div.modal-header,
+		div#myMenuModal div.modal-header{
+			text-align: center;
+			display: inline-block;
+		}
+		div#projectMenuModal div#modal_search{
+			margin-top:15px;
+			margin-bottom:15px;
+		}
+		div#projectMenuModal div#modal_search_title{
+			font-size: 15px;
+			font-weight: bold;
+			color: gray;
+			margin-bottom:15px;
+		}
+		div#projectMenuModal div#modal_search_box input {
+			width: 910px;
+			height:40px;
+			font-size: 15px;
+			padding: 15px 10px;
+			border:1px solid #ccc;
+			border-radius: 5px;
+		}
+		div#projectMenuModal div#modal_search_box button {
+			height: 40px;
+		    width: 100px;
+		    margin-left: 10px;
+		    border:1px solid #ccc;
+		    border-radius: 5px;
+		    background-color: rgb(230,230,230);
+		    color:rgba(102,102,102,0.8);
+		}
+		div#projectMenuModal div#modal_space,
+		div#myMenuModal div#modal_space{
+			width:100%;	height:1px;
+			background-color: rgb(230,230,230);
+		}
+		
+		div#projectMenuModal div#modal_all_project a:hover,
+		div#projectMenuModal div#modal_collection a:hover,
+		div#projectMenuModal div#tags a:hover,
+		div#projectMenuModal div#modal_category a:hover{
+			color:rgb(200,200,200);
+			cursor:pointer;
+		}
+		
+		div#projectMenuModal div#modal_all_project a{
+			text-decoration: none;
+			outline: none;
+			color:black;
+			font-size:28px;
+			font-weight: bold;
+		}
+		div#projectMenuModal div#modal_all_project {
+			margin:20px 0px;
+		}
+		div#projectMenuModal div#modal_collection a{
+			text-decoration: none;
+			outline: none;
+			color:black;
+			font-size:28px;
+			font-weight: bold;
+		}
+		div#projectMenuModal div#modal_collection>div:first-child,
+		div#projectMenuModal div#modal_tag>div:first-child, 
+		div#projectMenuModal div#modal_category>div:first-child{
+			font-size: 15px;
+			font-weight: bold;
+			margin-top:40px;
+			color: gray;
+		}
+		div#projectMenuModal div#modal_collection {
+			margin:20px 0px;
+		}
+		
+		div#projectMenuModal div#modal_tag{
+			margin:20px 0px;
+		}
+		div#projectMenuModal div#tags{
+			margin:10px 0px;
+		}
+		div#projectMenuModal div#tags>div {
+			display: inline-block;
+			border:1px solid white;
+			border-radius: 5px;
+			padding: 3px 7px 6px 7px;
+    		margin: 0px 2px 5px 2px;
+		}
+		div#projectMenuModal div#tags a{
+			text-decoration: none;
+			outline: none;
+			color:black;
+			font-size:23px;
+			font-weight: bold;
+			color: white;
+			text-shadow: 0 0 2px black;
+		}
+		div#projectMenuModal div#tags>div:nth-child(1) {background-color: blue;}
+		div#projectMenuModal div#tags>div:nth-child(2) {background-color: indigo;}
+		div#projectMenuModal div#tags>div:nth-child(3) {background-color: purple;}
+		div#projectMenuModal div#tags>div:nth-child(4) {background-color: pink;}
+		div#projectMenuModal div#tags>div:nth-child(5) {background-color: red;}
+		div#projectMenuModal div#tags>div:nth-child(6) {background-color: orange;}
+		div#projectMenuModal div#tags>div:nth-child(7) {background-color: cyan;}
+		div#projectMenuModal div#tags>div:nth-child(8) {background-color: green;}
+		div#projectMenuModal div#tags>div:nth-child(9) {background-color: teal;}
+		
+		div#projectMenuModal div#modal_category{
+			margin:20px 0px;
+			margin-bottom:30px;
+		}
+		div#projectMenuModal div#modal_category a{
+			text-decoration: none;
+			outline: none;
+			color:black;
+			font-size:28px;
+			font-weight: bold;
+		}
+		div#projectMenuModal div#categories{
+			margin:10px 0px;
+		}
+		
+		
+		div#searchMenuModal.modal.show{
+			overflow-y: hidden;
+		}
+		div#searchMenuModal div.modal-body,
+		div#myMenuModal div.modal-body {
+			height:817px;
+		}
+		
+		div#searchMenuModal div.modal-header img{
+			width:20px;		height:20px;
+		}
+		div#searchMenuModal div.modal-header input{
+			width: 980px;
+			height:40px;
+			font-size: 15px;
+			padding: 15px 10px;
+			border: none;
+		}
+		button#mymenubtn{
+			padding-right: 60px;
+		}
+		div#myMenuModal div.modal-header {
+			border:1px solid rgba(10,10,10,0.1);
+		}
+		div#myMenuModal div#myMenu_user_profil{
+			margin: 10px 0px 20px 0px;
+		}
+		div#myMenuModal div#myMenu_user_profil span#myMenu_user_profil_icon {
+			display:inline-block;
+			width:56px;
+			height:56px;
+			border:1px solid #ddd;
+			border-radius: 50%;
+			margin-right:5px;
+			background-image:url("http://localhost:9090/tumblbugs/images/kurby.gif");
+			background-size: cover;
+    		background-position: 50% 38%;
+		}
+		div#myMenuModal div#myMenu_user_profil span#myMenu_user_profil_name{
+			display: inline-block;
+			vertical-align: top;
+		    margin-top: 16px;
+		    color: #757575;
+		    font-weight: bolder;
+		    font-size: 20px;
+		}
+		div#myMenuModal a{
+			text-decoration: none;
+		    outline: none;
+		    color: black;
+		    font-size: 28px;
+		    font-weight: bold;
+		    cursor:pointer;
+		}
+		div#myMenuModal a>div{
+			margin:5px 0px;
+			padding-left:5px;
+		}
+		div#myMenuModal a:nth-child(3)>div,
+		div#myMenuModal a:nth-child(7)>div {
+			margin-top:15px;
+		}
+		div#myMenuModal a:nth-child(5)>div,
+		div#myMenuModal a:nth-child(9)>div {
+			margin-bottom:15px;
+		}
+	</style>
+	<script>
+		$(document).ready(function(){
+			$("div#modal_all_project>div").click(function(){
+				var menu_id = $(this).attr("id");
+				/*alert(menu_id);*/
+				if(menu_id == "sort_editorpick_project"){
+					sessionStorage.clear();
+					sessionStorage.setItem("ongoing","ongoing");
+					sessionStorage.setItem("editorpick","1");
+					sessionStorage.setItem("order","fav");
+				} else if(menu_id == "sort_rateup_project") {
+					sessionStorage.clear();
+					sessionStorage.setItem("ongoing","ongoing");
+					sessionStorage.setItem("rate","2");
+					sessionStorage.setItem("editorpick","1");
+					sessionStorage.setItem("order","deadline");
+				} else if(menu_id == "sort_new_project"){
+					sessionStorage.clear();
+					sessionStorage.setItem("ongoing","ongoing");
+					sessionStorage.setItem("editorpick","1");
+					sessionStorage.setItem("order","new");
+				} else {
+					sessionStorage.clear();
+				}
+				location.href="discover";
+			});
+		});
+	</script>
+</head>
+<body>
+	<header>
+		<div id="header_nav">
+			<div id="header_nav_left">
+				<button type="button" data-toggle="modal" data-target="#projectMenuModal"><img src="http://localhost:9090/tumblbugs/images/icon_nav.png">프로젝트 둘러보기</button>
+				<span>프로젝트 올리기</span>
+			</div>
+			<div id="header_nav_center"><a href="index"><img src="http://localhost:9090/tumblbugs/images/tumblbugs_logo.png">
+				<!-- <svg>
+					<path d="M12.21,11.92H9.3l.94-2.43a.55.55,0,0,0,0-.39c-.06-.08-.15-.24-.25-.24H8.39c-.12,0-.24.22-.28.33l-1,2.73H5c-.12,0-.24,0-.28.12l-.58,1.4a.35.35,0,0,0,0,.31.33.33,0,0,0,.25.16H6.26L3.67,20.37v0l-.09.22c-.6,1.54-.63,2.62-.09,3.31a2.77,2.77,0,0,0,2.29.8,5.54,5.54,0,0,0,4.59-2.46,8.86,8.86,0,0,0,1.09-2,.31.31,0,0,0-.29-.42H9.49a.31.31,0,0,0-.28.18,4.5,4.5,0,0,1-2.38,2.49c-.57.16-1,.13-1.16-.1-.32-.38-.12-1.22.16-1.86l2.67-6.63h3.15a.35.35,0,0,0,.28-.23l.58-1.45a.19.19,0,0,0,0-.22C12.41,11.91,12.31,11.92,12.21,11.92Z" transform="translate(-3.1 -3.05)" data-reactid="25"></path>
+					<path d="M26.55,11.87H25c-.12,0-.23,0-.28.12l-2.27,5.5c-1.15,2.89-2.31,4.62-4.9,5a1.41,1.41,0,0,1-1.24-.32c-.27-.33-.26-.89.05-1.64l2.82-6.89,0-.07.58-1.43a.18.18,0,0,0,0-.21c-.06-.08-.15-.06-.25-.06H16c-.12,0-.24,0-.28.12l-.58,1.4a.35.35,0,0,0,0,.31.33.33,0,0,0,.25.16h1.46l-2.75,6.68a3.53,3.53,0,0,0,0,3h0a3.2,3.2,0,0,0,2.58,1.06A8.27,8.27,0,0,0,21,23.13l.08-.05,0,.09a2.27,2.27,0,0,0,1.37,1.29c.74.19,1.81.18,3.44-1.52a.31.31,0,0,0,0-.43l-.77-.76a.31.31,0,0,0-.45,0c-.47.6-.94.91-1.32.88a.39.39,0,0,1-.33-.26,3.77,3.77,0,0,1,.4-2,.31.31,0,0,0,0-.13l.22-.45,3.15-7.68a.18.18,0,0,0,0-.21C26.75,11.84,26.65,11.87,26.55,11.87Z" transform="translate(-3.1 -3.05)" data-reactid="24"></path>
+					<path d="M46.2,21.57a.31.31,0,0,0-.47.05c-.26.4-.8,1.08-1.49,1.08a.29.29,0,0,1-.27-.11c-.12-.17-.09-.42.08-.9L46.37,16a4.69,4.69,0,0,0,.24-3.32,2.35,2.35,0,0,0-1.54-1.28,5,5,0,0,0-1.49-.23,5.35,5.35,0,0,0-4,1.79l-.1.11,0-.14a2.14,2.14,0,0,0-1.86-1.53,4.82,4.82,0,0,0-3.4,1l-.23.18.28-.66a.27.27,0,0,0,0-.27.29.29,0,0,0-.26-.12h-3.5a.29.29,0,0,0-.28.17l-.58,1.42a.27.27,0,0,0,0,.27.29.29,0,0,0,.25.11h1.48l-.85,2.13v0l-3,7.58a.39.39,0,0,0,0,.33.35.35,0,0,0,.25.17h1.57a.35.35,0,0,0,.28-.23l2.24-5.59c1.13-2.57,3-4.27,4.85-4.41.63,0,.8.22.86.31.33.53-.05,1.62-.33,2.19v0l-3,7.2a.31.31,0,0,0,.28.42h1.57a.29.29,0,0,0,.28-.19l2.79-6.79c1.15-2.4,3-3.48,4.22-3.49a1.21,1.21,0,0,1,1.12.5c.4.7-.18,1.93-.36,2.29v0l-2.25,5.47a2.73,2.73,0,0,0-.16,2.27,1.81,1.81,0,0,0,1.54.8h.52A3.84,3.84,0,0,0,47,22.69a.31.31,0,0,0,0-.37Z" transform="translate(-3.1 -3.05)" data-reactid="26"></path>
+					<path d="M58.85,11.76a4.45,4.45,0,0,0-4.19-.5l-.18.07-.17.07,3.14-7.8a.36.36,0,0,0,0-.31.33.33,0,0,0-.25-.16H53.43a.33.33,0,0,0-.28.22L52.57,4.8a.39.39,0,0,0,0,.32.35.35,0,0,0,.25.17h1.7L49.7,17.35c-.23.58-.55,1.67-.55,1.68a4.7,4.7,0,0,0,1.37,4.84,3.84,3.84,0,0,0,2.42.79,5.65,5.65,0,0,0,1.81-.33,9.56,9.56,0,0,0,5.87-8.14A5.05,5.05,0,0,0,58.85,11.76ZM53.34,22.52A2.22,2.22,0,0,1,51.88,22a2.7,2.7,0,0,1-.68-2.74L52.84,15a3.85,3.85,0,0,1,2.25-1.85,2.91,2.91,0,0,1,2.47.27,3,3,0,0,1,.92,2.62c-.14,2.66-2.14,5.55-4.35,6.31A2.48,2.48,0,0,1,53.34,22.52Z" transform="translate(-3.1 -3.05)" data-reactid="30"></path>
+					<path d="M65.75,21.61a.31.31,0,0,0-.46,0c-.4.56-.77.86-1.12.89a.56.56,0,0,1-.47-.19c-.21-.24-.12-.85.07-1.3l7-17.51a.36.36,0,0,0,0-.31.33.33,0,0,0-.25-.16H67.06a.33.33,0,0,0-.28.22L66.2,4.75a.39.39,0,0,0,0,.32.35.35,0,0,0,.25.17H67.9L61.57,21h0l0,.12a3,3,0,0,0,.13,2.64,2.11,2.11,0,0,0,1.91.84,3.84,3.84,0,0,0,3-1.82.31.31,0,0,0,0-.39Z" transform="translate(-3.1 -3.05)" data-reactid="31"></path>
+					<path d="M79.22,11.69h0a4.45,4.45,0,0,0-4.19-.5l-.18.07-.17.07,3.14-7.8a.36.36,0,0,0,0-.31.33.33,0,0,0-.25-.16H73.8a.33.33,0,0,0-.28.22l-.58,1.45a.39.39,0,0,0,0,.32.35.35,0,0,0,.25.17h1.7L70.07,17.27c-.09.23-.26.69-.54,1.63l0,0a4.7,4.7,0,0,0,1.37,4.83,3.84,3.84,0,0,0,2.42.79,5.68,5.68,0,0,0,1.81-.33A9.56,9.56,0,0,0,81,16.11,5,5,0,0,0,79.22,11.69ZM73.71,22.44a2.2,2.2,0,0,1-1.46-.52,2.7,2.7,0,0,1-.68-2.74L73.21,15a3.85,3.85,0,0,1,2.25-1.85,2.91,2.91,0,0,1,2.48.27A3,3,0,0,1,78.86,16c-.14,2.66-2.13,5.55-4.35,6.31A2.49,2.49,0,0,1,73.71,22.44Z" transform="translate(-3.1 -3.05)" data-reactid="29"></path>
+					<path d="M94.6,22.24l-.77-.76a.3.3,0,0,0-.23-.09.3.3,0,0,0-.22.12c-.34.43-.84.93-1.32.88a.39.39,0,0,1-.33-.26,3.77,3.77,0,0,1,.4-2,.3.3,0,0,0,0-.1l.23-.5,3.14-7.67a.18.18,0,0,0,0-.21c-.06-.08-.15-.06-.25-.06H93.66c-.12,0-.23,0-.28.12l-2.27,5.5c-1.15,2.89-2.31,4.62-4.91,5A1.4,1.4,0,0,1,85,21.95c-.27-.33-.26-.89.05-1.64l2.82-6.89,0-.07.58-1.43a.18.18,0,0,0,0-.21c-.06-.08-.15-.06-.25-.06H84.66c-.12,0-.24,0-.28.12l-.58,1.4a.35.35,0,0,0,0,.31.33.33,0,0,0,.25.16h1.46L82.8,20.3a3.51,3.51,0,0,0,0,3h0a3.2,3.2,0,0,0,2.58,1.06,8.27,8.27,0,0,0,4.28-1.52l.08-.05,0,.09a2.27,2.27,0,0,0,1.36,1.29c.74.19,1.81.18,3.44-1.52A.31.31,0,0,0,94.6,22.24Z" transform="translate(-3.1 -3.05)" data-reactid="27"></path>
+					<path d="M110.88,12.24a1.66,1.66,0,0,0-1-1,2.24,2.24,0,0,0-2.52.73l-.11.15-.05.08-.06-.07a4.44,4.44,0,0,0-3-1.39h-.33a5.56,5.56,0,0,0-5.34,4.59,5.11,5.11,0,0,0,.17,2.16l0,.07-.07,0A4.38,4.38,0,0,0,96.72,19a3,3,0,0,0,.34,3.88l.08.08L97,23a4.3,4.3,0,0,0-2.49,4.38h0a4.12,4.12,0,0,0,1.2,2.69c.92.91,2.34,1.35,4.36,1.34a14.5,14.5,0,0,0,3-.25c4.59-1,5.26-3.71,5.25-5.27a3.44,3.44,0,0,0-1.18-2.74c-2-1.67-5.77-1.08-5.93-1.05h0c-2.16-.13-2.5-.72-2.63-.94a1,1,0,0,1,0-1,2.26,2.26,0,0,1,1-.86l0,0,0,0a4.4,4.4,0,0,0,2.87,1.24h.31a5.5,5.5,0,0,0,5.39-4.56,5,5,0,0,0-.31-2.53l0,0,0,0a2.13,2.13,0,0,1,.8-.7.46.46,0,0,1,.36,0,.41.41,0,0,1,.22.26.85.85,0,0,1-.09.59.31.31,0,0,0,.14.4l.8.39a.31.31,0,0,0,.41-.14A2.69,2.69,0,0,0,110.88,12.24Zm-8,6.25h-.18a2.4,2.4,0,0,1-1.87-1.12,2.83,2.83,0,0,1-.32-1.76,3.38,3.38,0,0,1,3.27-2.74H104a2.31,2.31,0,0,1,1.68.81,2.7,2.7,0,0,1,.54,2.1A3.37,3.37,0,0,1,102.93,18.49Zm-6.05,7.84a3,3,0,0,1,2.18-2.25h0a10,10,0,0,0,3.7,0h0a4.42,4.42,0,0,1,2.78.7,1.8,1.8,0,0,1,.63,1.28,2.24,2.24,0,0,1-.63,1.58c-1,1.11-3,1.66-5.86,1.63a3.07,3.07,0,0,1-2.49-1A2.15,2.15,0,0,1,96.88,26.33Z" transform="translate(-3.1 -3.05)" data-reactid="28"></path>
+					<path d="M69.87,26.86l-.94-.47a.45.45,0,0,0-.6.2l-.23.47a3.08,3.08,0,0,1-2.76,1.64,4.78,4.78,0,0,1-3.49-1.44l-.3-.43a.45.45,0,0,0-.29-.18.45.45,0,0,0-.33.07l-.86.6a.44.44,0,0,0-.18.29.44.44,0,0,0,.07.33l.27.42a6.34,6.34,0,0,0,4.28,2.22v0h.11a5.87,5.87,0,0,0,.79.06,5,5,0,0,0,4.44-2.69l.23-.47A.45.45,0,0,0,69.87,26.86Z" transform="translate(-3.1 -3.05)" data-reactid="32"></path>
+				</svg> -->
+			</a></div>
+			<button type="button" data-toggle="modal" data-target="#searchMenuModal"></button>
+			<div id="header_nav_right">
+				<% if(result){ %>
+				<a href="/tumblbugs/login">
+					<span>로그인/회원가입</span>
+					<div id="user_icon"></div>
+				</a>
+				<% }else{ %>
+				<button id="mymenubtn" type="button" data-toggle="modal" data-target="#myMenuModal">아주 긴~~~유저명<div id="user_icon"><img src="http://localhost:9090/tumblbugs/images/kurby.gif"></div></button>
+				<% } %>
+			</div>
+		</div>
+	</header>
+	
+	  <!-- The Modal -->
+	  <div class="modal" id="projectMenuModal">
+	    <div class="modal-dialog modal-dialog-scrollable">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h1 class="modal-title">프로젝트  둘러보기</h1>
+	          <button type="button" class="close" data-dismiss="modal">×</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	        	<div id="modal_search">
+	        		<div>
+	        			<div id="modal_search_title">검색</div>
+	        			<div id="modal_search_box">
+	        				<!-- <form action="#" method="get"> -->
+	        					<input type="text" placeholder="프로젝트를 검색해주세요">
+	        					<button type="button">검색하기</button>
+	        				<!-- </form> -->
+	        			</div>
+	        		</div>
+	        	</div>
+	        	<div id="modal_space"></div>
+	        	<div id="modal_project_menu">
+	        		<div id="modal_all_project">
+	        			<div id="sort_all_project"><a><span>모든 프로젝트</span></a></div>
+	        			<div id="sort_editorpick_project"><a><span>인기 추천 프로젝트</span></a></div>
+	        			<div id="sort_rateup_project"><a><span>성공 임박 프로젝트</span></a></div>
+	        			<div id="sort_new_project"><a><span>신규 추천 프로젝트</span></a></div>
+	        		</div>
+	        		<div id="modal_collection">
+	        			<div>기획전</div>
+	        			<div><a href="collections?title=2020"><span>2020 신년준비위원회</span></a></div>
+	        			<div><a href="collections?title=miri_christmas"><span>미리 크리스마스</span></a></div>
+	        			<div><a href="collections?title=busan">요즘, 부산은<span></span></a></div>
+	        			<div><a href="collections?title=sba">SBA 기술상용화 지원사업<span></span></a></div>
+	        			<div><a href="collections?title=spotlight">주목할 만한 프로젝트<span></span></a></div>
+	        		</div>
+	        		<div id="modal_tag">
+	        			<div>태그</div>
+	        			<div id="tags">
+	        				<div><a href="#"><span>#원터이즈커밍</span></a></div>
+	        				<div><a href="#"><span>#창작자의도구상자</span></a></div>
+	        				<div><a href="#"><span>#한국의멋</span></a></div>
+	        				<div><a href="#"><span>#텀블벅미식회</span></a></div>
+	        				<div><a href="#"><span>#집사생활</span></a></div>
+	        				<div><a href="#"><span>#오늘의분위기</span></a></div>
+	        				<div><a href="#"><span>#에코라이프</span></a></div>
+	        				<div><a href="#"><span>#어덕행덕</span></a></div>
+	        				<div><a href="#"><span>#기묘한이야기</span></a></div>
+	        			</div>
+	        		</div>
+	        		<div id="modal_category">
+	        			<div>카테고리</div>
+	        			<div id="categories">
+	        				<div><a href="#"><span>게임</span></a></div>
+	        				<div><a href="#"><span>공연</span></a></div>
+	        				<div><a href="#"><span>디자인</span></a></div>
+	        				<div><a href="#"><span>만화</span></a></div>
+	        				<div><a href="#"><span>미술</span></a></div>
+	        				<div><a href="#"><span>공예</span></a></div>
+	        				<div><a href="#"><span>사진</span></a></div>
+	        				<div><a href="#"><span>영화&비디오</span></a></div>
+	        				<div><a href="#"><span>푸드</span></a></div>
+	        				<div><a href="#"><span>음악</span></a></div>
+	        				<div><a href="#"><span>출판</span></a></div>
+	        				<div><a href="#"><span>테크놀로지</span></a></div>
+	        				<div><a href="#"><span>패션</span></a></div>
+	        				<div><a href="#"><span>캠페인</span></a></div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  
+	    <!-- The Modal -->
+	  <div class="modal" id="searchMenuModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <form action="#" method="get">
+	          	<img src="http://localhost:9090/tumblbugs/images/icon_search.png">
+	          	<input type="search" placeholder="검색어를 입력해주세요">
+	          </form>
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          Modal body..
+	        </div>
+	        
+	      </div>
+	    </div>
+	  </div>
+	  
+	    <!-- The Modal -->
+	  <div class="modal" id="myMenuModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h1 class="modal-title">내 페이지</h1>
+	          <button type="button" class="close" data-dismiss="modal">×</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          <div id="myMenu_user_profil">
+	          	<span id="myMenu_user_profil_icon"></span>
+	          	<span id="myMenu_user_profil_name">유저명</span>
+	          </div>
+	          <div id="modal_space"></div>
+	          <a><div>메시지</div></a>
+	          <a><div>내 후원현황</div></a>
+	          <a><div>내가 만든 프로젝트</div></a>
+	          <div id="modal_space"></div>
+	          <a href="profil"><div>프로필 정보</div></a>
+	          <a><div>지불 정보 설정</div></a>
+	          <a><div>로그아웃</div></a>
+	        </div>
+	        
+	      </div>
+	    </div>
+	  </div>
+	  
+	  <button type="button" class="top"></button>
+</body>
+</html>

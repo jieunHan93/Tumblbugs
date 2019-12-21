@@ -1,0 +1,128 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>텀블벅스 :: tumblbugs</title>
+	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/myproject.css">
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	<div>
+		<section id="myproject_bk">
+			<div id="myproject_header_info">
+				<div id="myproject_header_info_icon">
+					<div>
+						<img src="http://localhost:9090/tumblbugs/images/myproject_icon.jpg">
+					</div>
+				</div>
+				<h1>라즈베리스튜디오</h1>
+				<p id="myproject_header_info_web"><a href="http://www.raspberry-studio.com">http://www.raspberry-studio.com</a></p>
+				<p id="myproject_header_info_detail"><i class="fas fa-check-circle"></i><span>2개 프로젝트의 창작자</span></p>
+			</div>
+		</section>
+		<section>
+			<div id="myproject_body">
+				<div id="myproject_content_box">
+					<div id="project_content_box_title">
+						<h3>만든 프로젝트</h3><span>3</span>개
+					</div>
+					<div id="project_content_card_box">
+						
+						<!-- 카드 한장 -->
+						<% for(int i = 0; i<5 ; i++) { %>
+						<div class="project_card">
+							<!-- Default dropright button -->
+							<div class="btn-group dropright">
+							  	<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  		<i class="fas fa-ellipsis-v"></i>
+							  	</button>
+						  		<div class="dropdown-menu">
+								    <div class="dropdown-item"><a>수정</a></div>
+								   	<div class="dropdown-item"><a href="#" onclick="return confirm('프로젝트를 삭제하시겠습니까? 작성 중인 모든 내용이 삭제됩니다.')">삭제</a></div>
+								    <div class="dropdown-item"><a href="http://localhost:9090/tumblbugs/myproject/delivery">선물배송</a></div>
+							  	</div>
+							</div>
+							<a class="project_card_img_link" href="http://localhost:9090/tumblbugs/project_content">
+								<div class="project_card_img_box">
+									<img class="project_card_img" src="http://localhost:9090/tumblbugs/images/myproject_1.jpg">
+								</div>
+							</a>
+							<div class="project_card_content">
+								<h3 class="project_card_content_title">
+									<a href="http://localhost:9090/tumblbugs/project_content">온전한 나의 것, "This Feeling is Mine"</a>
+								</h3>
+								<p class="project_card_content_creator">라즈베리스튜디오의 프로젝트</p>
+								<p class="project_card_content_detail">"This Feeling is Mine"을 다양하게 풀어낸 Hetit의 굿즈들 입니다!</p>
+							</div>
+							
+							<div class="progress project_card_content_progress">
+						  		<div class="progress-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100" style="width:76%"></div>
+							</div>
+							
+							<div class="project_card_bottom_info">
+								<div class="project_card_bottom_info_left">
+									<span>모인 금액</span>
+									<span>2,302,400원<span>76 %</span></span>
+								</div>
+								<div class="project_card_bottom_info_right">
+									<span>남은 시간</span>
+									<span>11일</span>
+								</div>
+							</div>
+						</div>
+						<% } %>
+						
+						<div class="project_card">
+							<!-- Default dropright button -->
+							<div class="btn-group dropright">
+							  	<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  		<i class="fas fa-ellipsis-v"></i>
+							  	</button>
+						  		<div class="dropdown-menu">
+								    <div class="dropdown-item"><a>수정</a></div>
+								   	<div class="dropdown-item"><a href="#" onclick="return confirm('프로젝트를 삭제하시겠습니까? 작성 중인 모든 내용이 삭제됩니다.')">삭제</a></div>
+								    <div class="dropdown-item"><a>선물배송</a></div>
+							  	</div>
+							</div>
+							<a class="project_card_img_link" href="http://localhost:9090/tumblbugs/project_content">
+								<div class="project_card_img_box">
+									<img class="project_card_img" src="http://localhost:9090/tumblbugs/images/myproject_2.jpg">
+								</div>
+							</a>
+							<div class="project_card_content">
+								<h3 class="project_card_content_title">
+									<a href="http://localhost:9090/tumblbugs/project_content">일상의 사랑스러움, 하트지갑</a>
+								</h3>
+								<p class="project_card_content_creator">라즈베리스튜디오의 프로젝트</p>
+								<p class="project_card_content_detail">특별한 취향을 가진 사람들에게 사랑스러운 일상을 선물하는 하트지갑입니다:)</p>
+							</div>
+							
+							<div class="progress project_card_content_progress">
+						  		<div class="progress-bar" role="progressbar" aria-valuenow="693" aria-valuemin="0" aria-valuemax="100" style="width:693%"></div>
+							</div>
+							
+							<div class="project_card_bottom_info">
+								<div class="project_card_bottom_info_left">
+									<span>모인 금액</span>
+									<span>13,871,000원<span>693 %</span></span>
+								</div>
+								<div class="project_card_bottom_info_right">
+									<span class="project_card_status_success">성공!</span>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

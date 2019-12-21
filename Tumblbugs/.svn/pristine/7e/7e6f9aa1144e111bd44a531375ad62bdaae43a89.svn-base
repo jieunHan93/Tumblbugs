@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.payment">
+	<select id="paymentList" parameterType="String" resultType="com.tumblbugs.vo.PaymentVO">
+		select payment_id, payment_method, card_company, substr(card_number, 1, 4) card_number, bank, substr(account_number, 1, 4) account_number
+		from tum_payment
+		where email = #{email}
+		order by payment_date desc
+	</select>
+
+	<insert id="cardRegist" parameterType="com.tumblbugs.vo.PaymentVO">
+		insert into tum_payment(payment_id, email, payment_method, card_company, card_number, card_valid_date, card_pass, card_birth, payment_date)
+		values('PM' || LPAD(tum_payment_sequ.nextval, 5, 0), #{email}, '01', #{card_company}, #{card_number}, #{card_valid_date}, #{card_pass},
+		#{card_birth}, sysdate)
+	</insert>
+	
+	<insert id="bankRegist" parameterType="com.tumblbugs.vo.PaymentVO">
+		insert into tum_payment(payment_id, email, payment_method, bank, account_number, account_name, account_birth, payment_date)
+		values('PM' || LPAD(tum_payment_sequ.nextval, 5, 0), #{email}, '02', #{bank}, #{account_number}, #{account_name}, #{account_birth}, sysdate)
+	</insert>
+	
+	<select id="newPaymentId" parameterType="String" resultType="String">
+		select max(payment_id) from tum_payment where email = #{email}
+	</select>
+	
+	<select id="payment" parameterType="String" resultType="java.lang.String">
+		select payment_id from tum_payment where email=#{sid}
+	</select> 
+
+	<insert id="payment_update_proc" parameterType="com.tumblbugs.vo.PaymentVO" >	
+		insert into tum_payment VALUES(
+			'PM' || LPAD(tum_payment_sequ.nextval, 5, 0),
+			#{email},
+			#{payment_method},
+      		#{card_company},
+      		#{card_number},
+      		#{card_valid_date},
+      		#{card_pass},
+      		#{card_birth},
+      		#{bank},
+      		#{account_number},
+      		#{account_name},
+      		#{account_birth},
+      		sysdate)
+  		
+	</insert>
+</mapper>

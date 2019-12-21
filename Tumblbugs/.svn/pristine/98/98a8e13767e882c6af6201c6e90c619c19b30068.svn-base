@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@page isELIgnored="false" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link rel="stylesheet" href="http://localhost:9090/tumblbugs/css/project_start.css">
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+<script src="http://localhost:9090/tumblbugs/ckeditor/ckeditor.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/project_upload.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+<title>텀블벅스 :: tumblbugs</title>
+<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+</head>
+<body>
+	<div id="project_start_upload">
+		<section>
+			<div id="start_upload_header">
+				<div>
+					<div><a href="http://localhost:9090/tumblbugs/myproject"><i class="fas fa-chevron-left"></i> 내 페이지</a> </div>
+					<div><a href="http://localhost:9090/tumblbugs/index"> tumblbugs </a></div>
+					<div><a href="http://localhost:9090/tumblbugs/help/createcenter"><i class="fas fa-flask"></i> 창작자 센터 </a></div>
+				</div>
+			</div>
+			<div id="start_upload_header_detail">
+				<div id="upload_title">
+					<div>
+						<c:if test="${vo.pj_stitle != null}">
+							<span id="upload_my_stitle">${vo.pj_stitle}</span>
+						</c:if>
+						<c:if test="${vo.pj_stitle == null}">
+							<span id="upload_my_stitle">준비 중</span>
+						</c:if>
+						<label id="upload_my_title">
+							<c:if test="${vo.pj_title == null}">제목을 입력해주세요</c:if>
+							<c:if test="${vo.pj_title != null}"><label style="color:black; font-size:18pt;  font-weight:520;">${vo.pj_title }</label></c:if>
+						</label>
+					</div>
+				</div>
+				<div><i class="fas fa-info-circle"></i> 프로젝트를 작성하면서 궁금하신 사항은 <a href="http://localhost:9090/tumblbugs/help/createcenter">창작자 센터</a>에서 도움말을 찾아보세요.</div>	
+				<div id="all_pro_info"><i class="fas fa-bullhorn"></i> 프로젝트를 개설하려면 네 개의 섹션을 완성해야 합니다. 완성된 섹션은  <i class="fas fa-circle" style="color:#ccc"></i>
+						 탭 아이콘에 <i class='fas fa-check-circle' style='color:#1e90ff'></i> 파랗게 불이 들어옵니다.</div>
+				<!-- <div>총 4개 섹션 중 <label id="sec_complete">1</label>개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.</div>	 -->
+				<div id="upload_menu">
+					<input type="radio" class="upload_menu_btn" id="up_menu1"/>
+						<label class="up_menu_lb" id="menu_label1" for="up_menu1"><i class="fas fa-circle" style="color:#ccc"></i> 프로젝트 개요</label>
+					<input type="radio" class="upload_menu_btn" id="up_menu2"/>
+						<label class="up_menu_lb" id="menu_label2" for="up_menu2"><i class="fas fa-circle" style="color:#ccc"></i> 펀딩 및 선물 구성</label>
+					<input type="radio" class="upload_menu_btn" id="up_menu3"/>
+						<label class="up_menu_lb" id="menu_label3" for="up_menu3"><i class="fas fa-circle" style="color:#ccc"></i> 스토리텔링</label>
+					<input type="radio" class="upload_menu_btn" id="up_menu4"/>
+						<label class="up_menu_lb" id="menu_label4" for="up_menu4"><i class="fas fa-circle" style="color:#ccc"></i> 계좌 설정</label>
+					<div>
+						<a href="http://localhost:9090/tumblbugs/project_preview" target="_blank"><button type="button" ><i class="far fa-eye"></i> 미리보기</button></a>
+						<!-- <button><i class="far fa-save"></i> 임시 <i class="fas fa-check"></i> 저장</button> -->
+						<button type="button" id="submit_btn"><i class="fab fa-telegram-plane"></i> 검토 요청하기</button>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="start_upload_content">
+			<form action="#" name="project_start_upload" id="upload_form" enctype="multipart/form-data">
+				<input type="hidden" name="pj_id" id="${vo.pj_id}"}>
+				<div id="upload_content_detail">
+					<div id="content_up_menu1" class="content_up">
+						<jsp:include page="project_upload_menu1.jsp"></jsp:include>
+					</div>
+				</div>	
+					<div id="content_up_menu2" class="content_up">
+						<jsp:include page="project_upload_menu2.jsp"></jsp:include>
+					</div><!-- menu2  -->
+						
+					<div id="content_up_menu3" class="content_up">
+						<jsp:include page="project_upload_menu3.jsp"></jsp:include>
+					</div><!-- menu3  -->
+					
+					<div id="content_up_menu4" class="content_up">
+							<jsp:include page="project_upload_menu4.jsp"></jsp:include>
+					</div><!-- menu4  -->
+			</form>
+		</section>
+	</div>
+</body>
+</html>

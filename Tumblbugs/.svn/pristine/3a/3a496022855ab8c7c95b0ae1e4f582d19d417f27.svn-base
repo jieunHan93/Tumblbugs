@@ -1,0 +1,61 @@
+package com.tumblbugs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+@Controller
+public class AdminCollectionController {
+	/** 기획전 메인 **/
+	@RequestMapping(value="/admin/collection", method=RequestMethod.GET)
+	public ModelAndView admin_collection() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/admin_collection");
+		
+		return mv;
+	}
+	/** 달력에 데이터 출력 **/
+	@RequestMapping(value="/admin/data",method=RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String json() {
+		Gson gson = new Gson();
+		JsonArray jlist = new JsonArray();
+		JsonObject jdata = new JsonObject();
+
+		for (int i=0;i<9; i++) {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("_id", String.valueOf(i+1));
+			obj.addProperty("title", "2020 신년준비위원회");
+			obj.addProperty("description", "올해도 텀블벅스 신년준비위원회가 돌아왔습니다. 좋아하는 작가의 일러스트, 따뜻한 기획, 센스 있는 디자인 품은 달력은 물론, 한 해를 계획적으로 보내도록 돕는 플래너와 매일의 감정을 선명하게 새길 수 있는 다이어리까지. '2020 신년준비위원회'와 함께 든든한 새해 준비 시작해 보아요.");
+			obj.addProperty("start", "2019-12-1"+i);
+			obj.addProperty("end", "2019-12-1"+i);
+			obj.addProperty("type", "대기중");
+			obj.addProperty("backgroundColor", "#D25565");
+			//obj.addProperty("textColor","#ffffff");
+			obj.addProperty("allDay",true);
+			jlist.add(obj);
+		}
+		jdata.add("list", jlist);
+		String result = gson.toJson(jdata);
+		
+		return result;
+	}
+	
+	/** 컬렉션 등록 **/
+	@RequestMapping(value="/admin/collection/write", method=RequestMethod.GET)
+	public String admin_collection_write() {
+		return "/admin/admin_collection_write";
+	}
+	/** 컬렉션 상세 **/
+	@RequestMapping(value="/admin/collection/content", method=RequestMethod.GET)
+	public String admin_collection_content() {
+		return "/admin/admin_collection_content";
+	}
+
+}

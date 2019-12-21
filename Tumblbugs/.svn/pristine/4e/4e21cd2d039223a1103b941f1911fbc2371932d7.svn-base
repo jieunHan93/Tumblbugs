@@ -1,0 +1,1398 @@
+/* 공통 */
+ul {list-style-type: none;}
+
+/**
+	profile_update
+	한지은
+**/
+
+section#mypage_profile_header{
+	background-color: #ebeae5;
+	height:144px;
+}
+div#mypage_profile_header_container{
+	width:1080px;
+	margin:auto;
+	padding-top: 45px;
+}
+div#mypage_nav,
+div#mypage_profile_header_container>h2{
+	display: inline-block;	
+}
+div#mypage_profile_header_container>h2{
+	color:#645353;
+	font-weight: bold;
+	font-size:40px;
+	margin-left:20px;
+}
+div#mypage_nav>a{
+	cursor:pointer;
+	color:#645353;
+	margin-left:15px;
+	font-size: 15px;
+	text-decoration: none;
+}
+div#mypage_nav>a:hover{
+	cursor:pointer;
+	color:#434343;
+}
+div#mypage_nav {
+	float:right;
+	padding-top: 15px;
+	padding-right:20px;
+}
+div#mypage_profile_main_container{
+	width:1080px;
+	margin:auto;
+	padding:40px 0px;
+}
+div#profile_editor{
+	width:700px;
+	display: inline-block;
+}
+div#profile_editor>form>div{
+	width:700px;
+	border-top:1px solid #ebe8e8;
+	min-height:100px;
+	padding:10px 0px;
+}
+label.profile_editor_label {
+	width:120px;
+	text-align: right;
+	color:#676363;
+	font-size:15px;
+	padding-top:25px;
+	vertical-align: top;
+	margin-right:10px;
+}
+div#profilel_editor_img{
+	display: inline-block;
+	width:450px;
+	font-size:14px;
+	margin:10px 0px;
+	color:#676363;
+}
+div#profilel_editor_img>div{
+	display: inline-block;
+	width: 350px;
+}
+div#profilel_editor_img input{
+	padding-bottom:5px;
+	display: block;
+}
+div#profilel_editor_img>span{
+	display:inline-block;
+	width:60px;	height:60px;
+	border-radius:50%;
+	background-image: url(http://localhost:9090/tumblbugs/images/kurby.gif);
+    background-size: cover;
+    background-position: 50% 50%;
+    vertical-align: super;
+    margin:0px 5px;
+}
+div#profile_editor input[type=text],
+div#profile_editor input[type=text].form-control,
+div#profile_editor input[type=password].form-control {
+	display:inline-block;
+	width:221px;
+	margin-left:5px;
+	padding:3px 6px;
+	vertical-align: bottom;
+	background-color: #EBEAE5;
+	color: #7d7d7d;
+	border:1px solid #EBEAE5;
+	border-radius: 5px;
+}
+div#profile_editor input[type=password].form-control{
+	width:150px;
+}
+span.profile_input_guide{
+	display: block;
+	margin-top:3px;
+}
+div#profile_editor textarea.form-control{
+	margin-left:5px;
+	width:500px;
+	height:100px;
+	margin-top:15px;
+	background-color: #EBEAE5;
+	color: #7d7d7d;
+	border:1px solid #EBEAE5;
+	border-radius: 5px;
+	padding:3px 6px;
+	resize: none; 
+	display:inline-block;
+}
+span.profile_input_guide{
+	color:#676363;
+	font-size:15px;
+	margin-left:140px;
+}
+button#profile_editor_submit{
+	padding:10px 40px;
+	border:1px solid #1e90ff;
+	background-color: #1e90ff;
+	border-radius: 5px;
+	color:white;
+	margin-top:15px;
+	margin-left:280px;
+}
+button#profile_editor_submit:hover{
+	background-color: #1d85ea;
+}
+div#profile_pre{
+	border:1px solid #ebe8e8;
+	width:300px;
+	float:right;
+	display: inline-block;
+	margin-right:20px;
+	border-radius: 5px;
+}
+div#profile_pre_header_space{
+	border:3px solid #1e90ff;
+	border-radius: 5px 5px 0px 0px;
+}
+
+span#profile_pre_header_card_icon{
+	display:inline-block;
+	width:60px;	height:60px;
+	border-radius:50%;
+	background-image: url(http://localhost:9090/tumblbugs/images/kurby.gif);
+    background-size: cover;
+    background-position: 50% 50%;
+    vertical-align: super;
+    margin:0px 5px;
+}
+div#profile_pre_header>div:first-child {
+	color:#1e90ff;
+	font-weight: bold;
+	font-size: 15px;
+	margin-left:20px;
+	margin-top:10px;
+}
+span#profile_pre_header_card_icon{
+	margin-left:20px;
+	margin-top:15px;
+}
+span#profile_pre_header_card_name{
+	position:relative;
+	top:-27px;
+}
+div#profile_pre_middle{
+	border-top:1px solid #ebe8e8;
+	border-bottom:1px solid #ebe8e8;
+	background-color: #FAFAFA;
+	height:40px;
+	padding-top: 8px;
+  		padding-left: 20px;
+  		margin-top:5px;
+  		font-size:15px;
+  		color:gray;
+}
+div#profile_pre_middle i {
+	padding-right:5px;
+	color:#1e90ff;
+}
+div#profile_pre_footer{
+	height:50px;
+	text-align: center;
+	border-bottom:2px solid #ebe8e8;
+	border-right:1px solid #ebe8e8;
+	border-radius: 0px 0px 5px 5px;
+	padding-top:10px;
+}
+div#profile_pre_footer:hover {
+	background-color: #f0f4fe;
+}
+div#profile_pre a{
+	text-decoration: none;
+	outline: none;
+	color:#1e90ff;
+}
+div#profile_pre_middle>a {
+	text-decoration: none;
+	outline: none;
+	color:black;
+}
+div#profile_pre_middle>a:hover{
+	color:#1e90ff;
+}
+
+/**
+	mypage/payment
+	한지은
+**/
+div#mypage_payment_main_container{
+	width:1080px;
+	margin:auto;
+	min-height:680px;
+	padding:40px 0px;
+}
+div#payment_editor{
+	width:700px;
+	display: inline-block;
+}
+div#payment_faq{
+	width:300px;
+	float:right;
+	display: inline-block;
+	margin-right:20px;
+	border-radius: 5px;
+}
+div#payment_nav{
+	margin-left:20px;
+	margin-right:20px;
+}
+div#payment_nav>button:nth-child(2) {
+	float:right;
+}
+div#payment_nav>button {
+	border:transparent;
+	background-color: transparent;
+	font-size:20px;
+	color:#1e90ff;
+	outline: none;
+}
+div#payment_nav>button:hover{
+	color:#1d85ea;
+}
+div#registed_payment_list,
+div#payment_regist_editor {
+	border-top:1px solid #ebe8e8;
+	margin-top:10px;
+	width:700px;
+	min-height:500px;
+}
+div#registed_payment_list>div.registed_payment_content{
+	width:660px;
+	margin:10px 0px 10px 20px;
+	height:50px;
+	border-radius:5px;
+	background-color: #ebe8e8;
+}
+div#registed_payment_list>div.registed_payment_content:hover{
+	box-shadow: 2px 2px 4px rgba(33,33,33,.2); 
+}
+div#registed_payment_list i {
+	font-size:22px;
+	margin-left:15px;
+	margin-top:15px;
+}
+div#registed_payment_list>div>button {
+	float:right;
+	margin-right:15px;
+	border:transparent;
+	background-color: transparent;
+	font-size:22px;
+	outline: none;
+}
+div#registed_payment_list>div>button:hover{
+	color:#1e90ff;
+}
+div#registed_payment_list>div>span {
+	padding-left:10px;
+	font-size: 17px;
+}
+div#payment_faq>div:first-child {
+	font-size:17px;
+	font-weight:bold;
+	color:#676363;
+	border-bottom: 1px solid #ebe8e8;
+	padding-bottom:8px;
+}
+div.payment_faq_article>div{
+	padding:13px 0px 5px 0px;
+}
+div.payment_faq_article>div i{
+	font-size:12px;
+	color:gray;
+	position: relative;
+  		top: -2px;
+  		margin-right:5px;
+}
+div.payment_faq_title>span{
+	font-size:14px;
+	font-weight: bold;
+}
+div.payment_faq_content{
+	margin-left: 14px;
+    margin-top: 5px;
+    font-size: 14px;
+    color:#676363;
+}
+div.payment_faq_content a{
+	text-decoration: none;
+	outline: none;
+	color: #1e90ff;
+}
+div#payment_regist_select button{
+	border:1px solid rgba(10,10,10,0.1);
+	background-color: white;
+	color:#555555;
+	padding: 3px 7px;
+	margin-right:5px;
+	font-size: 15px;
+	width:118px;
+	text-align: left;
+}
+div#payment_regist_select button.dropdown-toggle::after{
+	float: right;
+  		margin-top: 8px;
+}
+.btn-primary:not(:disabled):not(.disabled).active:focus, 
+.btn-primary:not(:disabled):not(.disabled):active:focus, 
+.show>.btn-primary.dropdown-toggle:focus,
+.btn-primary.focus, .btn-primary:focus{
+	box-shadow: none !important;
+}
+div#payment_regist_select {
+	margin-top:10px;
+	padding-left: 20px;
+}
+div#payment_regist_select div.dropdown-menu{
+	min-width: 30px;
+  		max-width: 118px;
+  		margin-top:10px;
+}
+div#payment_regist_select div.dropdown-item{
+	padding-left: 10px;
+	font-size:15px;
+}
+div#payment_regist_editor>span{
+    display: inline-block;	
+	margin:10px 0px 0px 20px;
+	color: #645353;
+    font-weight: bold;
+    font-size: 17px;
+}
+div#payment_regist_credit,
+div#payment_regist_account{
+	background-color: #ebeae5;
+ 			border : 1px solid #e7e5e5;
+ 			color:#676363;
+ 			width:600px;
+ 			/* height:400px; */
+ 			margin-left:20px;
+ 			margin-top:10px;
+ 			border-radius: 5px;
+}
+div.payment_regist_space{
+	border:3px solid #1e90ff;
+	border-radius: 5px 5px 0px 0px;
+}
+div.payment_regist_input{
+	margin-left:20px;
+	margin-top:20px;
+}
+div.payment_regist_input>label{
+	display: block;
+	font-size:15px;
+	font-weight: 550;
+}
+span.payment_regist_guide{
+	margin-top:5px;
+	display: block;
+	width:450px;
+	font-size:13px;
+}
+div#payment_regist_credit input,
+div#payment_regist_account input{
+	width:250px;
+	border:1px solid #ebe8e8;
+	border-radius: 5px;
+	padding:3px 6px;
+}
+div#payment_regist_credit select,
+div#payment_regist_account select{
+	border:1px solid #ebe8e8;
+	border-radius: 5px;
+	padding:3px 6px;
+}
+div#payment_regist_credit div:last-child,
+div#payment_regist_account div:last-child{
+	padding-bottom:40px;
+}
+div#payment_regist_credit>div:nth-child(3)>input.form-control {
+	width:60px;
+	display:inline-block;
+}
+button#payment_regist_submit,
+button#payment_regist_reset{
+	padding:10px 40px;
+	border:1px solid #1e90ff;
+	background-color: #1e90ff;
+	border-radius: 5px;
+	color:white;
+	margin-top:15px;
+	outline:none;
+	margin-right: 10px;
+}
+button#payment_regist_submit {
+	margin-left:170px;
+}
+button#profile_editor_submit:hover,
+button#payment_regist_reset:hover{
+	background-color: #1d85ea;
+}
+
+div#registed_payment_not_founded{
+	background-color: transparent !important;
+	border: none;
+	color: #dddcdc;
+    font-size: 20pt;
+    text-align: center;
+    font-weight:bold;
+}
+div#registed_payment_not_founded:hover{
+	box-shadow: unset;
+}
+div#registed_payment_not_founded>i{
+    font-size: 70pt;
+  		margin-bottom: 10px;
+  		margin-top:80px;
+}
+		
+/**
+	myfunding(내 후원현황) -----------------------------------------------------------------------------------------------------
+	조수윤 --------------------------------------------------------------------------------------------------------------------------
+**/
+	/* 페이지 상단부 - 프로필 이미지, OOO님의 후원 현황 */
+	#funding_history section.page_title {
+		text-align: center;
+		padding: 50px 0px 50px 0px;
+	}
+	#funding_history section.page_title span {
+		display: inline-block;
+		width: 105px; height: 105px;
+		border-radius: 105px;
+		overflow: hidden;
+	}
+	#funding_history section.page_title img {
+		width: 105px;
+	}
+	#funding_history section.page_title div {
+		padding: 10px 0px 10px 0px;
+		font-size: 13.5pt;
+		font-weight: bold;
+	}
+	
+	/**/
+	#funding_history section.page_content {
+		background-color: #f6f5f5;
+		min-height: 680px;
+	}
+	#funding_history article {
+		width: 1080px;
+		margin: auto;
+	}
+	#funding_history li {list-style-type: none;}
+	
+	
+	/* 탭 */
+	#funding_history article#page_content_tab {
+		padding: 20px 0px 20px 0px;
+	}
+	#funding_history #page_content_tab nav,
+	#funding_history #page_content_tab li,
+	#funding_history .search {
+		display: inline-block;
+		font-size: 10.5pt;
+	}
+	#funding_history #page_content_tab li {
+		border-radius: 4px;
+		padding: 8px 10px 8px 10px;
+		margin-right: 8px;
+		cursor: pointer;
+		/* background-color: #eeeded; */
+	}
+	#funding_history #page_content_tab li:hover {
+		background-color: rgba(0,0,0,.05);
+	}
+	#funding_history #page_content_tab li span#list_count {
+		display: inline-block;
+		margin-left: 10px;
+		border-radius: 5px;
+		width: 26px;
+		font-size: 10pt;
+		text-align: center;
+		background-color: #999999;
+		color: white;
+	}
+	
+	#funding_history .select_tab {
+		background-color: rgba(0,0,0,.05);
+		color: #1d85ea;
+	}
+	
+	/* 검색창 */
+	#funding_history .search {
+		float: right;
+		text-align: right;
+	}
+	#funding_history .search input {
+		border: 1px solid lightgray;
+		border-radius: 5px;
+		width: 350px;
+		padding: 7px 7px 7px 12px;
+	}
+	
+	/* 총 n건의 후원이 있습니다. */
+	#funding_history div.list_count {
+		color: #545454;
+		background-color: #eeeded;
+		padding: 15px 15px 15px 30px;
+		margin-bottom: 17px;
+		border-radius: 5px;
+	}
+	#funding_history div.list_count i {margin-right: 15px;}
+	
+	
+	/* 후원한 프로젝트 목록 */
+	#funding_history .funding_list {
+		display: none;
+	}
+	#funding_history .funding_list a, .funding_list a:hover {
+		text-decoration: none;
+		color: #4a4a4a;
+	}
+	#funding_history .funding_list table {
+		border-collapse: separate;
+		margin-bottom: 15px;
+		border: 1px solid lightgray;
+		border-radius: 8px;
+		background-color: white;
+		width: 100%;
+		font-size: 10.5pt;
+	}
+	#funding_history .funding_list table td {
+		padding: 10px;
+	}
+	#funding_history .funding_list table tr:first-child td {
+		border-bottom: 1px solid rgba(10,10,10,0.05);
+		font-size: 10pt;
+	}
+	#funding_history .funding_list table td:last-child {
+		width: 150px; text-align: right;
+	}
+	#funding_history img#project_main_img {
+		width: 140px;
+		border-radius: 5px;
+	}
+	#funding_history td.funding_image {
+		text-align: center;
+		width: 180px;
+	}
+	#funding_history td.funding_detail {
+		font-size: 10pt;
+	}
+	#funding_history td.funding_detail * {line-height: 1.8;}
+	.project_status {
+		display: inline-block;
+		padding: 2px 6px;
+		margin-bottom: 7px;
+		border: 1px solid #1d85ea; color: #1d85ea;
+		border-radius: 3px;
+		font-size: 7.5pt;
+		font-weight: bold;
+		text-align: center;
+	}
+	#funding_history td.funding_detail .project_title {font-size: 10.5pt;}
+	#funding_history td.funding_detail .creator_name {
+		margin-left: 7px;
+		font-size: 8pt;
+	}
+	#funding_history td.funding_detail .payment_status {
+		color: #1d85ea;
+	}
+	
+	
+	/* 후원이 없습니다. */
+	#funding_history .list_none {
+		padding: 120px 0px 120px 0px;
+		text-align: center;
+		font-size: 14pt;
+		font-weight: bold;
+		color: #a7a7a7;
+		opacity: 0.5;
+	}
+	#funding_history .list_none i {
+		font-size: 40pt;
+		margin-bottom: 15px;
+	}
+
+
+/**
+	funding_detail(내 후원현황>상세) ---------------------------------------------------------------------------------------------------
+	조수윤 --------------------------------------------------------------------------------------------------------------------------
+**/
+	#funding_detail {background-color: #f6f5f5; overflow: auto;}
+	#funding_detail section:not(.background_wrap) {
+		width: 1080px;
+		margin: auto;
+		font-size: 10.5pt;
+	}
+	#funding_detail>section.content_wrap>div:first-child {
+		margin: 20px;
+	}
+	#funding_detail>section.content_wrap>div:not(:first-child) {
+		margin: 20px 20px 30px 20px;
+	}
+	#funding_detail table {
+		border-collapse: separate;
+		border-radius: 5px;
+		width: 100%; margin-top: 10px;
+		border: 1px solid lightgray;
+		background-color: white;
+	}
+	#funding_detail .table_title {
+		color: #767676;
+	}
+	#funding_detail td {
+		padding: 10px 20px 10px 20px;
+	}
+	#funding_detail td.button_td,
+	#funding_detail td.button_td_update {
+		width: 280px;
+		padding-right: 30px;
+		text-align: right;
+		vertical-align: bottom;
+	}
+	#funding_detail td .data_title {
+		font-weight: bold;
+		color: #767676;
+		margin-bottom: 5px;
+	}
+	#funding_detail td .data_value {
+		color: black;
+	}
+	
+	/* 최상단 프로젝트 배경 이미지 */
+	#funding_detail section.background_wrap {
+		width: 100%; height: 280px;
+		/* background-image : url("http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg"); */
+		background-repeat: no-repeat;
+		background-position: 50%;
+		background-size: cover;
+		overflow: hidden;
+	}
+	#funding_detail section.background_wrap div {
+		width: 100%; height: 280px;
+		background: linear-gradient(135deg,rgba(0,0,0,.4) 20%,transparent);
+	}
+	#funding_detail section:nth-child(2) {margin-top: -170px;}
+	
+	/* 버튼 */
+	#funding_detail button {
+		border: none;
+		background-color: transparent;
+		outline: none;
+		color: #1d85ea;
+	}
+	#funding_detail #btn_funding_history {
+		color: white;
+		padding: 3px;
+		font-weight: bold;
+	}
+	#funding_detail table button {
+		font-size: 10pt;
+	}
+	#funding_detail #btn_sendMessage {	/* 문의하기 */
+		padding: 7px 10px 7px 10px;
+		color: #4a4a4a;
+		font-weight: bold;
+		background-color: #ececec;
+		border-radius: 5px;
+	}
+	#funding_detail #btn_funding_cancle {
+		width: 160px; height: 45px;
+		font-size: 11.5pt;
+		font-weight: bold;
+		color: white;
+		background-color: #1e90ff;
+		border-radius: 5px;
+	}
+	#funding_detail #btn_funding_cancle:hover {
+		background-color: #1d85ea;
+	}
+	
+	
+	/* .funding_overview_wrap */
+	#funding_detail .funding_overview_wrap tr:not(:first-child) td {
+		padding: 5px 20px 5px 20px;
+	}
+	#funding_detail .funding_overview_wrap tr:last-child td {
+		padding-bottom: 10px;
+	}
+	#funding_detail .funding_overview_wrap td:first-child a {
+		text-decoration: none;
+		color: #4a4a4a;
+	}
+	#funding_detail .funding_overview_wrap td:first-child a:hover {
+		text-decoration: none;
+		color: #4a4a4a;
+	}
+	#funding_detail .funding_overview_wrap .project_title {
+		font-size: 14pt;
+	}
+	#funding_detail .funding_overview_wrap .creator_name {
+		margin-left: 7px;
+		font-size: 9pt;
+	}
+	#funding_detail .funding_overview_wrap td:last-child {
+		width: 180px;
+		text-align: right;
+	}
+	#funding_detail .funding_overview_wrap td:last-child span {
+		padding-right: 10px;
+	}
+	
+	/* 후원 내역 */
+	#funding_detail .total_funding_info_wrap tr:first-child td span {
+		float: left;
+		font-weight: bold;
+	}
+	#funding_detail .total_funding_info_wrap tr:first-child td button {float: right;}
+	#funding_detail .total_funding_info_wrap .circle_span {
+		display: inline-block;
+		width: 45px; height: 45px;
+		margin: 15px 0px 15px 0px;
+		background-color: #fa6462;
+		border-radius: 45px;
+	}
+	#funding_detail .total_funding_info_wrap .circle_span i {
+		color: white;
+		font-size: 14pt;
+		margin: 13px 0px 0px 13px;
+	}
+	#funding_detail .total_funding_info_wrap table td:first-child {
+		width: 60px;
+	}
+	#funding_detail .total_funding_info_wrap table td:last-child {
+		text-align: left;
+	}
+	#funding_detail .total_funding_info_wrap div#reward * {margin: 0px; line-height: 1.7; font-size: 10pt;}
+	#funding_detail .total_funding_info_wrap div#reward label {
+		/* 리워드 타이틀 */
+		color: #8e8780; font-weight: bold;
+	}
+	
+	/* 변경하기 버튼 눌렀을 때 나오는 입력란 스타일 */
+	#funding_detail tr.data_tr_update {display: none;}
+	#funding_detail td.data_td_update input {
+		font-size: 10pt;
+		padding: 5px 5px 5px 10px;
+		margin: 5px 0px 10px 0px;
+		border: 1px solid lightgray;
+		border-radius: 4px;
+	}
+	#funding_detail tr.data_tr_update#recipient_addr td.data_td_update input {
+		width: 600px;
+	}
+	#funding_detail .button_div {
+		text-align: right;
+	}
+	#funding_detail .button_div button {
+		border-radius: 5px;
+		width: 90px; height: 30px;
+		margin: 0px 0px 10px 5px;
+		font-size: 9.5pt;
+		font-weight: bold;
+	}
+	#funding_detail #btn_update_cancel {
+		color: #747576;
+		background-color: #e0e1e2;
+	}
+	#funding_detail #btn_update_cancel:hover {
+		background-color: #cacbcd;
+	}
+	#funding_detail #btn_update_submit {
+		background-color: #1e90ff;
+		color: white;
+	}
+	#funding_detail #btn_update_submit:hover {
+		background-color: #1d85ea;
+	}
+	
+	/* 후원 취소하기 버튼 섹션 */
+	#funding_detail div.last_div {
+		text-align: center;
+		padding: 50px 0px 100px 0px;
+	}
+
+
+
+/**
+	funding_edit(펀딩 변경) ---------------------------------------------------------------------------------------------------------
+	조수윤 -------------------------------------------------------------------------------------------------------------------------
+**/
+	#funding_edit section.background_wrap {
+		width: 100%; height: 280px;
+		background-repeat: no-repeat;
+		background-position: center 33%;
+		background-size: cover;
+		overflow: hidden;
+	}
+	#funding_edit section.background_wrap>div {
+		width: 100%; height: 280px;
+		background: rgba(250, 250, 250, 0.7);
+	}
+	#funding_edit section.background_wrap>div>div {
+		width: 1080px;
+		margin: auto;
+		padding: 70px 0px 70px 0px;
+		text-align: center;
+		vertical-align: center;
+	}
+	#funding_edit section.background_wrap>div>div>div {margin-bottom: 10px;}
+	#funding_edit section.background_wrap .page_title {
+		color: #645353;
+		font-size: 32pt;
+		font-weight: bold;
+	}
+	#funding_edit section.background_wrap .project_title {
+		font-size: 11.5pt; color: #645353;
+	}
+	#funding_edit section.background_wrap .edit_menu a {
+		text-decoration: none;
+		font-size: 11.5pt;
+		color: #878787;
+		margin: 10px;
+		cursor: pointer;
+	}
+	#funding_edit section.background_wrap .edit_menu a:hover {
+		color: #1d85ea;
+		padding-bottom: 5px;
+		border-bottom: 1px solid #1d85ea;
+	}
+	#funding_edit section.content_wrap {
+		width: 680px; margin: auto;
+		min-height: 540px;
+		padding: 50px 0px 100px 0px;
+		color: #676363;
+		text-align: center;
+	}
+	#funding_edit .content_wrap>div {display: none;}
+
+
+	/*** 선물 선택하기 ***/
+	form#gift_select_form {
+		width: 680px;
+		margin: auto;
+		border: 1px solid #ebe8e8;
+	}
+	form#gift_select_form label {
+		width: 100%;
+		margin: 0px;
+		border-bottom: 1px solid #ebe8e8;
+		cursor: pointer;
+		padding: 20px 0px;
+		line-height: 1.75;
+	}
+	form#gift_select_form label:hover {
+		background-color: #fafafa;
+	}
+	form#gift_select_form label.disabled {
+		cursor: default;
+		background-color: #ebeae5;
+		opacity: 0.7;
+	}
+	.gift_select_yn[type="checkbox"] {display: none;}
+	.gift_select .gift_price {
+		float: left;
+		width: 160px;
+		font-size: 15pt;
+		font-weight: bold;
+		text-align: center;
+	}
+	.gift_select .gift_detail {
+		float: right;
+		text-align: left;
+		width: 510px;
+	}
+	.gift_title, .select_cancel {font-size: 11.5pt; display: inline-block;}
+	.select_cancel {
+		display: none;
+		float: right;
+		border: 1px solid #1e90ff;
+		background-color: white;
+		color: #1e90ff;
+		width: 70px;
+		text-align: center;
+		margin-right: 20px;
+	}
+	.gift_select .items {
+		font-size: 11pt;
+		list-style-type: disc;
+		list-style-position: inside;
+		margin-left: 10px;
+	}
+	.gift_select .expected_delivery_day,
+	.gift_select .gift_quantity,
+	.gift_select .gift_option {font-size: 10.5pt;}
+	.gift_select .gift_quantity {margin-top: 10px;}
+	.gift_select .gift_quantity_and_option {display: none;}
+	
+	/* 수량 선택 */
+	.gift_select .option_label {
+		display: inline-block;
+		width: 40px;
+	}
+	.gift_select .gift_quantity input#quantity {
+		padding: 2px 5px;
+		width: 35px; height: 25px;
+		text-align: center;
+		background-color: white;
+		border: none;
+		border-left: 1px solid lightgray;
+		border-right: 1px solid lightgray;
+	}
+	.quantity_box {
+		display: inline-block;
+		border: 1px solid lightgray;
+	}
+	#quantity_minus, #quantity_plus {
+		padding: 0px 5px;
+	}
+	
+	/* 옵션 선택 */
+	.option_box {
+		float: right;
+	}
+	.gift_select .gift_option {
+		overflow: auto;
+		padding-top: 5px;
+	}
+	.gift_select .gift_option>div {display: inline-block;}
+	.gift_select .gift_option>.option_label {float: left; margin-top: 5px;}
+	.gift_select .gift_option .select_option_box {
+		width: 467px;
+		overflow: auto;
+	}
+	.select_option_box select {
+		width: 95%;
+		display: block;
+		border: 1px solid lightgray;
+		padding: 2px 5px;
+		margin: 5px 0px;
+	}
+	.write_option_box {
+		width: 467px;
+		margin: 5px 0px;
+		overflow: auto;
+	}
+	.write_option_box #optionType3_message {
+		font-size: 10pt;
+	}
+	.write_option_box input {
+		width: 95%;
+		border: 1px solid lightgray;
+		padding: 2px 5px;
+	}
+	
+	/* 추가 후원금 입력 */
+	#extra_funding input {
+		text-align: right;
+		width: 180px;
+		padding: 4px 8px;
+		border: 1px solid lightgray;
+		border-radius: 4px;
+	}
+	
+	/* confirm */
+	.gift_select .confirm {
+		padding: 40px 0px;
+		font-weight: bold;
+	}
+	
+	/* 변경 버튼 */
+	#btn_gift_edit {
+		width: 120px; height: 40px;
+		border: none;
+		border-radius: 5px;
+		font-size: 11pt; font-weight: bold;
+		background-color: #1e90ff;
+		color: white;
+	}
+	#btn_gift_edit:hover {
+		background-color: #1d85ea;
+	}
+
+	/*** 결제 수단 변경하기 ***/
+	.payment_edit {
+		font-size: 11pt;
+	}
+	#my_payment {padding-top: 30px;}
+	#my_payment div {
+		border: 1px solid lightgray;
+		width: 400px;
+		padding: 12px 20px;
+		text-align: left;
+		border-radius: 5px;
+		background-color: #f7f7f7;
+		box-shadow: 1px 1px #dcdcdc;
+		cursor: pointer;
+		margin: auto;
+		margin-bottom: 10px;
+	}
+	#my_payment div i {margin-right: 10px;}
+	#my_payment a {
+		text-decoration: none;
+		color: #676363;
+	}
+
+	/*** 취소하기 ***/
+	.cancel_box {
+		margin: auto;
+		background-color: #f7f7f7;
+		width: 500px;
+		padding: 50px 0px;
+		margin-bottom: 20px;
+		font-size: 11pt;
+		font-weight: bold;
+	}
+	
+	.funding_cancel button {
+		width: 100px; height: 33px;
+		font-size: 10.5pt;
+		border: none;
+		margin: 10px;
+		outline: none;
+	}
+	#btn_funding_cancel {
+		background-color: #1e90ff;
+		border-radius: 4px;
+		color:white;
+	}
+	#btn_funding_cancel:hover {
+		background-color: #1d85ea;
+	}
+	#btn_go_funding_detail {
+		background-color: white;
+	}
+	#btn_go_funding_detail:hover {
+		color: #fa6462;
+	}
+
+
+/**
+	message
+	한지은
+**/
+
+div#mypage_message_header{
+	background-image: url("http://localhost:9090/tumblbugs/images/message_background1.png");
+	height:179px;
+	background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid rgba(10,10,10,0.1);
+}
+div#mypage_message_header>div{
+	width:1080px;
+	height:179px;
+	margin:auto;
+	font-size:27pt;
+	color: #757575;
+	font-weight: bold;
+}
+div#mypage_message_header div#mypage_message_header_title{
+	padding-top:48px;
+	padding-left:10px;	
+	height:119px;
+}
+div#mypage_message_header i{
+	padding-right:10px;
+}
+div#mypage_message_header_label{
+	margin-bottom:0px;
+	margin-top: 3px;
+}
+/* div#mypage_message_header_label>a{
+	text-decoration: none;
+} */
+div#mypage_message_header_label>div{
+	color:#1b1c1d;
+	border-top: 1px solid transparent;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	display: inline-block;
+	padding:15px 15px 5px 15px;
+	margin-right:-9px;
+	border-radius: 5px 5px 0px 0px;
+	cursor:pointer;
+}
+div#mypage_message_header_label>div:first-child{
+	border-top: 1px solid rgba(10,10,10,0.1);
+	border-left: 1px solid rgba(10,10,10,0.1);
+	border-right: 1px solid rgba(10,10,10,0.1);
+	background-color: white;
+}
+div#mypage_message_header_label h5{
+	font-size:14px;
+	font-weight: bold;
+}
+div#mypage_message_body {
+	padding:20px 0px;
+}
+div#mypage_message_body>div{
+	width:1080px;
+	min-height:680px;
+	margin:auto;
+}
+div#mypage_message_body_nav{
+	padding-top:15px;
+}
+div#mypage_message_body_nav>span{
+	display:inline-block;
+	margin-right:5px;
+	padding:7px 14px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: #777;
+	font-weight: bold;
+	font-size:14px;
+	cursor:pointer;
+}
+div#mypage_message_body_nav>span:first-child{
+	background-color: rgba(0,0,0,0.08);
+	color:#1e90ff;
+}
+div#mypage_message_body_content{
+	margin:30px 0px;
+}
+div#mypage_message_body_content>a{
+	text-decoration: none;
+	color:black;
+}
+div#mypage_message_card{
+	width:1070px;
+	height:105px;
+	border:1px solid rgba(10,10,10,0.1);
+	border-radius: 5px;
+	margin-bottom:10px;
+	transition: .2s ease;
+}
+div#mypage_message_card:hover{
+	background-color: rgba(0,0,0,0.03);
+}
+div#mypage_message_card_img{
+	width:80px;
+	height:60px;
+	padding-left:15px;
+	vertical-align: bottom;
+	margin-bottom: 14px;
+}
+div#mypage_message_card_img>img{
+	width: 80px;
+   	height: auto;
+   	border-radius: 5px;
+}
+div#mypage_message_card>div{
+	padding-top:10px;
+	display: inline-block;
+}
+div#mypage_message_card_content{
+	margin-left:30px;
+	width:800px;
+}
+div#mypage_message_card_title {
+	font-weight: bold;
+	font-size:15px;
+	padding-top:8px;
+}
+div#mypage_message_card_company{
+	color:#757575;
+	font-size:13px;
+	margin-bottom:5px;
+}
+div#mypage_message_card_preview{
+	color:#757575;
+	font-size:13px;
+}
+div#mypage_message_card_date{
+	width:130px;
+	text-align:right;
+	color:#757575;
+	font-size:12px;
+	vertical-align: top;
+}
+div#mypage_nomessage{
+	min-height:680px;
+	color: #dddcdc;
+    font-size: 20pt;
+    text-align: center;
+    font-weight:bold;
+}
+div#mypage_nomessage>i{
+    font-size: 70pt;
+  		margin-bottom: 10px;
+  		margin-top:100px;
+}
+
+/**
+	message_content
+	한지은
+**/
+
+div#message_content_page{
+	background-image: url("http://localhost:9090/tumblbugs/images/message_background2.png");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height:880px;
+}
+div#message_content_page>section{
+	width:1080px;
+	margin:auto;
+	min-height:880px;
+	border:1px solid transparent;
+}
+div#message_cat_box{
+	width:1080px;
+	background-color: white;
+	min-height:830px;
+	margin:25px 0px;
+	border:1px solid rgba(10,10,10,0.1);
+	border-radius: 5px;
+}
+div#message_cat_box_header_title{
+	height:55px;
+	padding:20px;
+	font-size:15px;
+	font-weight: bold;
+	color:#1e90ff;
+	border-bottom:1px solid rgba(10,10,10,0.1);
+}
+div#message_cat_box_header_title>a{
+	text-decoration: none;
+	cursor:pointer;
+}
+div#message_cat_box_header_title i{
+	padding-right:5px;
+}
+div#message_cat_box_header_title a:nth-child(2){
+	display: inline-block;
+	width:520px;	    
+	text-align: center;    
+	margin-left: 180px;
+}
+div#message_cat_box_header_info{
+	height:55px;
+	padding:15px;
+	padding-right:20px;
+	font-size:15px;
+	font-weight: bold;
+	color:rgba(0,0,0,0.87);
+	border-bottom:1px solid rgba(10,10,10,0.1);
+}
+div#message_cat_box_company_img{
+	display:inline-block;
+	background-image: url("http://localhost:9090/tumblbugs/images/company_img.png");
+	width:30px;
+	height:30px;
+    background-position: 50% 50%;
+    background-size: cover;
+    margin-right: 10px;
+}
+div#message_cat_box_company{
+	display:inline-block;
+	vertical-align: top;
+	margin-top:2px;
+}
+div#message_cat_box_header_info{
+	text-decoration: none;
+	cursor:pointer;
+	box-shadow: 0px 2px 2px rgba(33,33,33,.1); 
+}
+div#message_cat_box_body{
+	min-height:500px;
+	padding:20px 100px 20px 100px;
+}
+div#message_cat_box_footer{
+	/* border:1px solid blue; */
+	height:150px;
+	padding:20px;
+}
+div.message_cat_m>div{
+	display: inline-block;
+}
+div.message_cat_m{
+	height:80px;
+	/* border:1px solid green; */
+	margin-bottom:8px;
+}
+div.message_cat_m_space{
+	border-bottom:1px solid rgba(10,10,10,0.1);
+	margin-bottom:10px;
+}
+div.message_cat_m_img{
+	width:42px;
+	height:42px;
+	border-radius: 50%;
+	background-image: url("http://localhost:9090/tumblbugs/images/kurby.gif");
+	background-position: 50% 50%;
+    background-size: cover;
+    vertical-align: top;
+    margin-right:10px;
+}
+div#message_icon2.message_cat_m_img {
+	background-image: url("http://localhost:9090/tumblbugs/images/company_img.png");
+}
+span.message_cat_m_name{
+	font-size:14px;
+	font-weight:bold;
+	width:180px;
+	display: inline-block;
+}
+div.message_cat_m_date{
+	display: inline-block;
+	color:rgba(0,0,0,.4);
+	font-size:12px;
+}
+div.message_cat_m_detail>p{
+	font-size:14px;
+	margin-bottom:7px;
+}
+span.message_cat_m_status{
+	color:rgba(0,0,0,.6);
+	font-size:12px;
+}
+span.message_cat_m_status>i{
+	color:#1e90ff;
+	padding-right:5px;
+}
+div#message_cat_box_footer textarea{
+	resize: none;
+	width:878px;
+	height:118px;
+	border:1px solid rgba(10,10,10,0.1);
+	border-radius: 5px;
+	padding:15px;
+	font-size:15px;
+}
+div#message_cat_box_footer div{
+	border-top:1px solid rgba(10,10,10,0.1);
+	padding-top:20px;
+	width:878px;
+	margin:auto;
+}
+div#message_cat_box_footer button{
+	border:none;
+	background-color: #1e90ff;
+	color:white;
+	width:100px;
+	height:35px;
+	border-radius: 5px;
+	margin-top:10px;
+	float:right;
+	outline: none;
+}
+div#message_cat_box_footer button i{
+	padding-right:10px;
+}
+div#message_cat_box_footer button:hover{
+	background-color: #1d85ea;
+}
+
+

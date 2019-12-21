@@ -1,0 +1,253 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>텀블벅스 :: tumblbugs</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/jquery.number.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+<script>
+	$(document).ready(function(){
+		$(".content_wrap>div." + '${edit_menu}').show();
+		$(".edit_menu a#" + '${edit_menu}').css("color", "#1d85ea");
+		
+		//numberOnly
+		$("#extra_funding input").number(true);
+		$("#extra_funding input").keyup(function() {
+			totalPrice();
+		});
+		
+		//선물 변경 > 선물 선택
+		$(".reward_select label:not(.disabled)").click(function() {
+			$(this).find("input[type='checkbox']").prop("checked", true);
+			$(this).css("background-color", "#f9f9f9");
+			$(this).find(".reward_quantity_and_option").slideDown();
+			$(this).find(".select_cancel").show();
+			totalPrice();
+		});
+		
+		//선물 선택 취소
+		$(".select_cancel").click(function() {
+			$(this).closest("label").find("input[type='checkbox']").prop("checked", false);
+			$(this).siblings(".reward_quantity_and_option").slideUp();
+			$(this).closest("label").css("background-color", "white");
+			$(this).siblings(".reward_quantity_and_option").find("#quantity").val("1");
+			$(this).siblings(".reward_quantity_and_option").find("#option:first-child option:first-child").prop("selected", true);
+			$(this).siblings(".reward_quantity_and_option").find("#option:not(:first-child)").remove();
+			$(this).hide();
+			
+			totalPrice()
+			
+			return false;
+		});
+		
+		//선물 수량 -1
+		$(".quantity_option_box #quantity_minus").click(function() {
+			var quantity = $(this).siblings("#quantity");
+			if(quantity.val() > 1) {
+				quantity.val(quantity.val() - 1);
+				$(this).closest(".reward_quantity_and_option").find("select:last-child").remove();
+			}
+			totalPrice()
+		});
+		
+		//선물 수량 +1
+		$(".quantity_option_box #quantity_plus").click(function() {
+			var quantity = $(this).siblings("#quantity");
+			quantity.val(parseInt(quantity.val()) + 1);
+			
+			var clone = $(this).closest(".reward_quantity_and_option").find("select:first-child").clone();
+			$(this).closest(".reward_quantity_and_option").find(".select_option_box").append(clone);
+			totalPrice()
+		});
+		
+		//총 펀딩금액 계산
+		function totalPrice() {
+			var totalprice = 0;
+			$("input[type='checkbox']:checked").each(function() {
+				var reward_price = $(this).siblings(".reward_price").find("#reward_price").text().replace(",","");
+				var quantity = $(this).siblings(".reward_detail").find("#quantity").val();
+				totalprice += reward_price * quantity;
+			});
+			
+			var extra_funding = parseInt($("input#extra_funding").val());
+			if(isNaN(extra_funding) == false) {
+				totalprice += extra_funding;
+			}
+				
+			$("span#total_price").text(totalprice).number(true);
+		}
+		
+		//결제수단 변경
+		$(".payment_option").click(function() {
+			var payment = $(this).attr("id");
+			if(confirm("[" + payment + "]로 변경하시겠습니까?")) {
+				//변경 후 후원현황으로 돌아가기
+				alert("변경이 완료되었습니다.");
+			}
+		});
+		
+		//펀딩 취소
+		$("#btn_funding_cancel").click(function() {
+			alert("후원이 취소되었습니다.");
+			location.href = "http://localhost:9090/tumblbugs/myfunding";
+		});
+	});
+</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="funding_edit">
+		<section class="background_wrap">
+			<div>
+				<div>
+					<div class="page_title">변경하기</div>
+					<div class="project_title">월광 : 달빛과 여정 금속 주사위 & 케이스 프로젝트</div>
+					<nav class="edit_menu">
+						<a id="reward_select" href="http://localhost:9090/tumblbugs/myfunding/edit_reward">선물/금액 변경</a>
+						<a id="payment_edit" href="http://localhost:9090/tumblbugs/myfunding/edit_payment">결제수단 변경</a>
+						<a id="funding_cancel" href="http://localhost:9090/tumblbugs/myfunding/cancel_funding">취소하기</a>
+					</nav>
+				</div>
+			</div>
+		</section>
+		<section class="content_wrap">
+			<div class="reward_select">
+				<form id="reward_select_form" name="reward_edit_form">
+					<label for="reward_id_03" class="disabled">
+						<input type="checkbox" id="reward_id_03" class="reward_item" disabled="disabled">	<!-- id로 선물 id가 들어간다. -->
+						<div class="reward_price"><span id="reward_price">95,000</span>원 +<br>선착순 마감됨!</div>
+						<div class="reward_detail">
+							<div class="reward_title">[얼리버드 특가] [배송비 포함]</div>
+							<ul class="reward_component">
+								<li>월광 주사위 (X1)</li>
+								<li>월광 주사위 패드 (X2)</li>
+								<li>월광 주사위 케이스 (X1)</li>
+								<li>스티커 & 명함 (X1)</li>
+							</ul>
+							<div class="expected_delivery_day">예상 전달일: 2020년 3월 2일</div>
+							<div class="reward_quantity_and_option">
+								<div class="reward_quantity">
+									<span class="option_label">수량</span>
+									<div class="quantity_option_box">
+										<span id="quantity_minus">-</span>
+										<input id="quantity" type="text" value="1" disabled="disabled">
+										<span id="quantity_plus">+</span>
+									</div>
+								</div>
+								<div class="reward_option">
+									<div class="option_label">옵션</div>
+									<div class="select_option_box">
+										<select class="select_option" id="option">
+											<option>옵션 1</option>
+											<option>옵션 2</option>
+											<option>옵션 3</option>
+										</select>
+										<!-- <input class="write_option" id="option" type="text"> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</label>
+					<label for="reward_id_01" id="reward_id_01">
+						<input type="checkbox" id="reward_id_01" class="reward_item">	<!-- id로 선물 id가 들어간다. -->
+						<div class="reward_price"><span id="reward_price">13,000</span>원 +</div>
+						<div class="reward_detail">
+							<div class="reward_title">[개별 구성] [배송비 포함]</div>
+							<span class="select_cancel">선택 취소</span>
+							<ul class="reward_component">
+								<li>월광 주사위 패드 (X2)</li>
+								<li>스티커 & 명함 (X1)</li>
+							</ul>
+							<div class="expected_delivery_day">예상 전달일: 2020년 3월 2일</div>
+							<div class="reward_quantity_and_option">
+								<div class="reward_quantity">
+									<span class="option_label">수량</span>
+									<div class="quantity_option_box">
+										<span id="quantity_minus">-</span>
+										<input id="quantity" type="text" value="1" disabled="disabled">
+										<span id="quantity_plus">+</span>
+									</div>
+								</div>
+								<div class="reward_option">
+									<div class="option_label">옵션</div>
+									<div class="select_option_box">
+										<select class="select_option" id="option">
+											<option>옵션 1</option>
+											<option>옵션 2</option>
+											<option>옵션 3</option>
+										</select>
+										<!-- <input class="write_option" id="option" type="text"> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</label>
+					<label for="reward_id_02" id="reward_id_02">
+						<input type="checkbox" id="reward_id_02" class="reward_item">	<!-- id로 선물 id가 들어간다. -->
+						<div class="reward_price"><span id="reward_price">48,000</span>원 +</div>
+						<div class="reward_detail">
+							<div class="reward_title">[개별 구성] [배송비 포함]</div>
+							<span class="select_cancel">선택 취소</span>
+							<ul class="reward_component">
+								<li>월광 주사위 케이스 (X1)</li>
+								<li>스티커 & 명함 (X1)</li>
+							</ul>
+							<div class="expected_delivery_day">예상 전달일: 2020년 3월 2일</div>
+							<div class="reward_quantity_and_option">
+								<div class="reward_quantity">
+									<span class="option_label">수량</span>
+									<div class="quantity_option_box">
+										<span id="quantity_minus">-</span>
+										<input id="quantity" type="text" value="1" disabled="disabled">
+										<span id="quantity_plus">+</span>
+									</div>
+								</div>
+								<div class="reward_option">
+									<div class="option_label">옵션</div>
+									<div class="select_option_box">
+										<select class="select_option" id="option">
+											<option>옵션 1</option>
+											<option>옵션 2</option>
+											<option>옵션 3</option>
+										</select>
+										<!-- <input class="write_option" id="option" type="text"> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</label>
+					<label id="extra_funding">
+						<div class="reward_price">후원금 더하기</div>
+						<div class="reward_detail">
+							<input id="extra_funding" type="text" placeholder="0"> 원을 추가로 후원합니다.
+						</div>
+					</label>
+				</form>
+				<div class="confirm">월광 : 달빛과 여정 금속 주사위 & 케이스 프로젝트에 <span id="total_price">0</span>원을 펀딩합니다.</div>
+				<div><button id="btn_reward_edit" type="button">변경하기</button></div>
+			</div>	
+			<div class="payment_edit">
+				<div>변경할 예약 결제 수단을 선택해주세요.</div>
+				<div id="my_payment">
+					<div class="payment_option" id="신한카드 1234"><i class="far fa-credit-card"></i> 신한카드 1234</div>
+					<div class="payment_option" id="신한은행 5678"><i class="fas fa-money-check"></i> 신한은행 5678</div>
+					<a href="http://localhost:9090/tumblbugs/mypage/payment"><div><i class="fas fa-plus"></i> 신규 결제 수단 등록</div></a>
+				</div>
+			</div>
+			<div class="funding_cancel">
+				<div class="cancel_box">후원을 취소하시겠습니까?</div>
+				<div>
+					<button type="button" id="btn_funding_cancel">취소하기</button>
+					<a href="http://localhost:9090/tumblbugs/myfunding/detail"><button type="button" id="btn_go_funding_detail">다시 생각해보기</button></a>
+				</div>
+			</div>
+		</section>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

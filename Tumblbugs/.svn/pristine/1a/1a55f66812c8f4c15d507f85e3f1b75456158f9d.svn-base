@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.search">
+	<insert	id="insert" parameterType="java.lang.String">
+		INSERT INTO TUM_SEARCH_KEYWORD VALUES(#{KEYWORD},KEYWORD_HG(#{KEYWORD}),SYSDATE)
+	</insert>
+	
+	<select id="top_list" resultType="com.tumblbugs.vo.SearchVO">
+		SELECT * FROM (SELECT ROWNUM RNO, KEYWORD, CT 
+							FROM (SELECT KEYWORD, COUNT(KEYWORD) CT 
+									FROM TUM_SEARCH_KEYWORD GROUP BY KEYWORD ORDER BY CT DESC) 
+							WHERE CT>=5) 
+				WHERE RNO BETWEEN 1 AND 10
+	</select>
+	
+	<select id="search_list" parameterType="map" resultType="com.tumblbugs.vo.SearchVO">
+		SELECT * FROM (SELECT KEYWORD, COUNT(KEYWORD) CT FROM TUM_SEARCH_KEYWORD 
+						WHERE KEYWORD_HG LIKE '%'||#{keyword}||'%' 
+						GROUP BY KEYWORD ORDER BY LENGTH(KEYWORD)) WHERE CT >= 5
+	</select>
+</mapper>

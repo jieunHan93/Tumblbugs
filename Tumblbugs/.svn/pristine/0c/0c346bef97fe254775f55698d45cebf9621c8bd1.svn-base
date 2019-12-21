@@ -1,0 +1,546 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<title>Insert title here</title>
+<style>
+	/* ::-webkit-scrollbar {display:none;} */
+	#admin_project {
+		margin-left: 320px;
+		display: inline-block;
+		position: absolute;
+		width: calc(100% - 320px);
+		width: -webkit-calc(100% - 320px);
+		min-width: 1220px;
+		overflow-x: hidden;
+		height: 100%;
+	}
+	div#admin_header{
+		border-bottom:1px solid #ccc;
+		border-right:1px solid #ccc;
+		width: 100%;
+		height: 70px;
+		line-height:70px;
+		background-color: #ffffff;
+		display: inline-block;
+		color: #1e90ff;
+	}
+	div#admin_header p {
+		margin-left: 20px;
+	}
+	
+	/** 우측 사이드바 **/
+	.checklist_sidebar {
+		position: fixed;
+		top: 100px;
+		right: 100px;
+		display: inline-block;
+		border: 2px solid black;
+		border-radius: 10px;
+		background-color: white;
+		width: 330px;
+	}
+	.check-item {
+		margin: 15px;
+		display: block;
+		font-size: 10pt;
+		clear: both;
+		overflow: auto;
+		cursor: pointer;
+	}
+	.check-item .icon {
+		float: left;
+		text-align: center;
+		width: 20px;
+	}
+	.check-item .icon i {
+		display: block;
+		font-size: 11pt;
+		color: black;
+		margin: 0px;
+		padding-top: 3px;
+	}
+	.check-item .message {
+		float: right;
+		width: 275px;
+	}
+	.check-item input[type='checkbox'] {display: none;}
+	
+	/* 버튼 */
+	.check_result_button {
+		text-align: center;
+		padding: 5px 0px 15px 0px;
+	}
+	.check_result_button button {
+		border: none;
+		border-radius: 5px;
+		padding: 4px 6px;
+		margin: 2px;
+		background-color: black;
+		color: white;
+		cursor: pointer;
+	}
+	
+	/* 프로젝트 내용 */
+	#admin_project_detail_content {
+		float: left;
+		background-color: #f6f5f5;
+		width: 100%;
+		min-height: 100%;
+	}
+	#project_content {
+		float: left;
+		width: 1000px;
+		padding: 25px 30px;
+	}
+	#project_menu #upload_menu{
+		display:inline-block;
+		width: 100%;
+		top:17px;
+	}
+	#project_menu #upload_menu label{
+		padding:13px 25px 13px 25px;
+		font-size:10.5pt;
+		font-weight:bold;
+		border-radius:4px;
+		float:left;
+		border:1px solid #e0e0e0;
+		border-bottom:none;
+		letter-spacing:1px;
+		cursor:pointer;
+	}
+	#project_menu #upload_menu>div{
+		float:right;
+		display:inline-block;
+		margin:0px;
+		position:relative;
+	}
+	#project_menu #upload_menu #btn_preview{
+		padding: 6px 25px 6px 25px;
+		font-size:10pt;
+		font-weight:bold;
+		border-radius:4px;
+		border:2px solid gray;
+		color:gray;
+		background: none;
+		cursor:pointer;
+	}
+	
+	/** 프로젝트 세부 내용 **/
+	#menu_content {
+		font-size: 11pt;
+		padding-top: 30px;
+	}
+	
+	.menu_content_label {
+		color: #767676;
+		padding: 5px;
+	}
+	.menu_content_box {
+		background-color: white;
+		border: 1px solid #e0e0e0;
+		border-radius: 5px;
+		margin: 10px 0px 30px 0px;
+	}
+	.menu_content_box>div {
+		padding: 15px 20px;
+	}
+	.menu_content_box>div:not(:last-child) {
+		border-bottom: 1px solid #e0e0e0;
+	}
+	.sub_menu_title {
+		color: #767676;
+		font-size: 10pt;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	.sub_menu_value {
+		color: rgba(0,0,0,0.87);
+		font-size: 13pt;
+		font-weight: bold;
+	}
+	#pj_summary .sub_menu_value, #intro .sub_menu_value {
+		font-size: 10.5pt;
+		font-weight: normal;
+	}
+	
+	/** menu1: 프로젝트 개요 **/
+	/* 프로필 이미지 */
+	#profile_img .sub_menu_value span {
+		width: 80px;
+		height: 80px;
+		border-radius: 80px;
+	}
+	#profile_img .sub_menu_value span img {
+		height: 80px;
+	}
+	
+	/** menu2: 펀딩 및 선물 구성 **/
+	#gift {
+		font-size: 10pt;
+	}
+	.gift_price {
+		color: rgba(0,0,0,0.85);
+		font-size: 11pt;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.gift_title {
+		font-size: 10.5pt;
+	}
+	.item_list {
+		list-style-position: inside;
+	}
+	.gift_title, .item_list li, .gift_delivery_date {
+		margin: 5px 0px;
+		color: rgba(0,0,0,0.87);
+	}
+	#gift>div:first-child {
+		border-bottom: 1px solid rgba(0,0,0,.05);
+	}
+	#gift>div {
+		overflow: auto;
+	}
+	.gift_max_count, .gift_delivery_yn {
+		display: inline-block;
+		padding: 2px 5px;
+		color: #767676;
+		font-size: 8.5pt;
+		border: 1px solid #767676;
+		border-radius: 4px;
+	}
+	.gift_max_count {float: left;}
+	.gift_delivery_yn {float: right;}
+	
+	/** menu3: 스토리텔링 **/
+	#story .sub_menu_value {
+		padding-top: 20px;
+		font-weight: normal;
+	}
+	
+	/** menu4: 계좌 **/
+	.account_number {
+		font-weight: normal;
+		font-size: 8.5pt;
+		color: #1d85ea;
+		border: 1px solid #1d85ea;
+		border-radius: 3px;
+		padding: 3px 5px;
+		margin-left: 10px;
+	}
+	.file_download {
+		white-space: nowrap;
+		margin-top: 15px;
+		width: 500px; padding: 10px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		border: 1px solid rgba(0,0,0,.1);
+		border-radius: 4px;
+		color: rgba(0,0,0,.87);
+	}
+	#file_icon {
+		padding: 7px;
+		color: rgba(0,0,0,.6);
+		border: 2px solid rgba(0,0,0,.1);
+		border-radius: 3px;
+		margin-right: 10px;
+	}
+	
+	/* 프로젝트 거절 사유 선택 박스 */
+	.reason_of_rejection {
+		border: 1px solid red;
+	}
+	.reason_of_rejection select, option {
+		width: 100%;
+	}
+</style>
+<script>
+	$(document).ready(function() {
+		//체크된 아이콘 숨김
+		$("i#true").hide();
+		
+		//체크박스 체크 표시
+		$("input[type='checkbox']").change(function() {
+			var status = $(this).is(":checked");
+
+			if(status) {
+				//체크
+				$(this).siblings("i#false").hide();
+				$(this).siblings("i#true").show();
+			} else {
+				//체크해제
+				$(this).siblings("i#true").hide();
+				$(this).siblings("i#false").show();
+			}
+		});
+		
+		$("#menu_content>div").hide();
+		$("#menu_content>div#menu1").show();
+		
+		//메뉴 탭
+		$("#upload_menu label").click(function() {
+			var id = $(this).attr("id");
+			$("#menu_content>div").hide();
+			$("#menu_content>div#" + id).show();
+		});
+		
+		//통장사본 마우스 오버 시 스타일 변경
+		$(".file_download").mouseover(function() {
+			$("#file_icon").css("color", "#fa6462");
+		});
+		$(".file_download").mouseout(function() {
+			$("#file_icon").css("color", "rgba(0,0,0,.6)");
+		});
+		
+		//승인 처리
+		$("#btn_approve").click(function() {
+			var result = true;
+			
+			$("input[type='checkbox']").each(function() {
+				if($(this).is(":checked") != true) {
+					alert("체크리스트를 모두 확인해주세요.");
+					result = false;
+					return false;
+				}
+			});
+			
+			if(result == true) {
+				//db 업데이트
+				
+				alert("승인 처리되었습니다.");
+			}
+		});
+		
+		//거절 처리
+		$("#btn_reject").click(function() {
+			//거절 사유 선택
+			
+		});
+	});
+</script>
+</head>
+<body>
+	<jsp:include page="admin_sidebar.jsp"></jsp:include>
+	<div id="admin_project">
+		<div id="admin_header">
+			<p>프로젝트 검수</p>
+		</div>
+		<div id="admin_project_detail_content">
+			<div id="project_content">
+				<div id="project_menu">
+					<div id="upload_menu">
+						<label id="menu1">프로젝트 개요</label>
+						<label id="menu2">펀딩 및 선물 구성</label>
+						<label id="menu3">스토리텔링</label>
+						<label id="menu4">계좌</label>
+						<div>
+							<a href="http://localhost:9090/tumblbugs/project_preview"><button type="button" id="btn_preview"><i class="far fa-eye"></i> &nbsp;&nbsp;미리보기</button></a>
+						</div>
+					</div>
+				</div>
+				<div id="menu_content">
+					<div id="menu1">
+						<label class="menu_content_label">프로젝트 개요</label>
+						<div class="menu_content_box">
+							<div>
+								<div class="sub_menu_title">프로젝트 제목</div>
+								<div class="sub_menu_value">[공식] 따끈따끈 포근포근 핑크빈 핸드워머</div>
+							</div>
+							<div>
+								<div class="sub_menu_title">프로젝트 대표이미지</div>
+								<div class="sub_menu_value"><img src="http://localhost:9090/tumblbugs/images/project_content/admin_project_sample.jpg" height="325.17"></div>
+							</div>
+							<div id="pj_summary">
+								<div class="sub_menu_title">프로젝트 요약</div>
+								<div class="sub_menu_value">...</div>
+							</div>
+							<div>
+								<div class="sub_menu_title">프로젝트 카테고리</div>
+								<div class="sub_menu_value">게임</div>
+							</div>
+							<div>
+								<div class="sub_menu_title">프로젝트 페이지 주소</div>
+								<div class="sub_menu_value">https://tumblbug.com/pinkbeanhandwarmer</div>
+							</div>
+							<div>
+								<div class="sub_menu_title">검색용 태그</div>
+								<div class="sub_menu_value">쿠션,워머</div>
+							</div>
+						</div>
+						<label class="menu_content_label">창작자 정보</label>
+						<div class="menu_content_box">
+							<div id="profile_img">
+								<div class="sub_menu_title">프로필 이미지</div>
+								<div class="sub_menu_value"><span><img src="http://localhost:9090/tumblbugs/images/project_content/admin_profile.jpg"></span></div>
+							</div>
+							<div>
+								<div class="sub_menu_title">창작자 이름</div>
+								<div class="sub_menu_value">네코장</div>
+							</div>
+							<div id="intro">
+								<div class="sub_menu_title">창작자 소개</div>
+								<div class="sub_menu_value">'네코장'은 게임 속에서만 만날 수 있었던 캐릭터, OST, 아이템 등 게임의 무궁무진한 이미지와 상상력을 다양한 굿즈로 재탄생시켜 또 다른 방식으로 게임을 즐기는 넥슨의 새로운 마켓입니다. 넥슨 공식 굿즈뿐만 아니라 유저들이 직접 제작하는 다양한 제품까지. 기존에 만나보지 못했던 창작물을 네코장에서 만나보세요.</div>
+							</div>
+						</div>
+					</div>
+					<div id="menu2">
+						<label class="menu_content_label">펀딩 목표</label>
+						<div class="menu_content_box">
+							<div>
+								<div class="sub_menu_title">목표 금액</div>
+								<div class="sub_menu_value">1,000,000원</div>
+							</div>
+							<div>
+								<div class="sub_menu_title">프로젝트 마감일</div>
+								<div class="sub_menu_value">2019-12-12</div>
+							</div>
+						</div>
+						<label class="menu_content_label">예상 정산일</label>
+						<div class="menu_content_box">
+							<div>
+								<div class="sub_menu_title">결제 종료일</div>
+								<div class="sub_menu_value">2019-12-20</div>
+							</div>
+							<div>
+								<div class="sub_menu_title">예상 정산일</div>
+								<div class="sub_menu_value">2019-12-31</div>
+							</div>
+						</div>
+						<label class="menu_content_label">선물 구성</label>
+						<div class="menu_content_box" id="gift">
+							<div>
+								<div class="gift_price">20,000원 이상 밀어주시는 분께</div>
+								<div class="gift_title">배송비 포함</div>
+								<ul class="item_list">
+									<li>핑크빈 핸드워머 1개 ( x 1 )</li>
+								</ul>
+								<div class="gift_delivery_date">예상 전달일: 2020년 3월 19일</div>
+							</div>
+							<div>
+								<div class="gift_max_count">500개 남음</div>
+								<div class="gift_delivery_yn">배송 필요</div>
+							</div>
+						</div>
+					</div>
+					<div id="menu3">
+						<label class="menu_content_label">프로젝트 스토리</label>
+						<div class="menu_content_box" id="story">
+							<div>
+								<div class="sub_menu_title">프로젝트 스토리</div>
+								<div class="sub_menu_value">내용</div>
+							</div>
+						</div>
+					</div>
+					<div id="menu4">
+						<label class="menu_content_label">이메일 인증</label>
+						<div class="menu_content_box">
+							<div>
+								<div class="sub_menu_title">이메일 주소</div>
+								<div class="sub_menu_value">necoje@nexon.com</div>
+							</div>
+						</div>
+						<label class="menu_content_label">본인 인증</label>
+						<div class="menu_content_box">
+							<div>
+								<div class="sub_menu_title">이름 / 생년월일 / 휴대폰 번호</div>
+								<div class="sub_menu_value">네코장 / 870504 / 010-5546-7812</div>
+							</div>
+						</div>
+						<label class="menu_content_label">입금 계좌</label>
+						<div class="menu_content_box" id="account">
+							<div>
+								<div class="sub_menu_value">
+									신한은행 네코장
+									<span class="account_number"><i class="fas fa-lock"></i>&nbsp;&nbsp;&nbsp;끝자리 9553</span>
+								</div>
+								<a href="http://localhost:9090/tumblbugs/admin/fileDownload">
+									<div class="file_download">
+										<i class="far fa-save" id="file_icon"></i>파일명.jpg
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="checklist_sidebar">
+				<div class="checklist">
+					<label for="checkbox1" class="check-item">
+						<div class="icon">
+							<input id="checkbox1" type="checkbox">
+							<i class="far fa-check-circle" id="false"></i>
+							<i class="fas fa-check-circle" id="true"></i>
+						</div>
+						<div class="message">프로젝트 주제 및 내용이 커뮤니티 가이드라인을 준수합니다.</div>
+					</label>
+					<label for="checkbox2" class="check-item">
+						<div class="icon">
+							<input id="checkbox2" type="checkbox">
+							<i class="far fa-check-circle" id="false"></i>
+							<i class="fas fa-check-circle" id="true"></i>
+						</div>
+						<div class="message">선물 구성이 텀블벅의 기본 취지와 일치하며 현행법을 위반하지 않습니다.</div>
+					</label>
+					<label for="checkbox3" class="check-item">
+						<div class="icon">
+							<input id="checkbox3" type="checkbox">
+							<i class="far fa-check-circle" id="false"></i>
+							<i class="fas fa-check-circle" id="true"></i>
+						</div>
+						<div class="message">선물 제작 관련 변수가 발생할 가능성이 낮습니다.</div>
+					</label>
+					<label for="checkbox4" class="check-item">
+						<div class="icon">
+							<input id="checkbox4" type="checkbox">
+							<i class="far fa-check-circle" id="false"></i>
+							<i class="fas fa-check-circle" id="true"></i>
+						</div>
+						<div class="message">프로젝트 완수 경험이 없으며, 현재 진행중인 다른 프로젝트의 창작자가 아닙니다.</div>
+					</label>
+					<label for="checkbox5" class="check-item">
+						<div class="icon">
+							<input id="checkbox5" type="checkbox">
+							<i class="far fa-check-circle" id="false"></i>
+							<i class="fas fa-check-circle" id="true"></i>
+						</div>
+						<div class="message">창작자가 프로젝트 완수 경험이 있으며, 현재 유사한 프로젝트를 진행하고 있지 않습니다.</div>
+					</label>
+					<label for="checkbox6" class="check-item">
+						<div class="icon">
+							<input id="checkbox6" type="checkbox">
+							<i class="far fa-check-circle" id="false"></i>
+							<i class="fas fa-check-circle" id="true"></i>
+						</div>
+						<div class="message">필수 제출 서류를 확인했습니다.</div>
+					</label>
+				</div>
+				<div class="reason_of_rejection">
+					<div>프로젝트 등록 거절 사유를 선택해주세요.</div>
+					<select>
+						<option>프로젝트 주제 및 내용이 부적절합니다.</option>
+						<option>선물 구성이 부적절합니다.</option>
+						<option>선물 제작시 변수가 발생할 가능성이 높습니다.</option>
+						<option>프로젝트 완수 경험이 없는 창작자의 경우, 동시에 두 개의 프로젝트를 진행하실 수 없습니다.</option>
+						<option>동시에 유사한 여러 프로젝트를 진행하실 수 없습니다.</option>
+						<option>필수 제출 서류가 누락되었습니다.</option>
+					</select>
+					<div>직접 입력</div>
+				</div>
+				<div class="check_result_button">
+					<button id="btn_approve" type="button">승인</button>
+					<button id="btn_reject" type="button">거절</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+</body>
+</html>

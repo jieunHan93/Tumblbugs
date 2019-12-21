@@ -1,0 +1,51 @@
+package com.tumblbugs.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.tumblbugs.dao.ProjectDAO;
+import com.tumblbugs.vo.FundingVO;
+
+@Controller
+public class FundingController {
+	
+	@Autowired
+	private ProjectDAO projectDAO;
+	
+	@RequestMapping(value="/funding/step1", method=RequestMethod.GET)
+	public ModelAndView step1(String pj_id, String gift_id) {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("/funding/step1_gift_select");
+		mv.addObject("pj_id", pj_id);
+		mv.addObject("pj_title", projectDAO.getProjectTitle(pj_id));
+		mv.addObject("giftList", projectDAO.getGiftList(pj_id));
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/funding/step2", method=RequestMethod.POST)
+	public String step2(FundingVO vo) {
+		
+		System.out.println("giftList size: " + vo.getGiftList().size());
+		
+		for(int i=0; i<vo.getGiftList().size(); i++) {
+			System.out.println("gift_id: " + vo.getGiftList().get(i).getGift_id());
+			System.out.println("select_yn: " + vo.getGiftList().get(i).getSelect_yn());
+			System.out.println("gift_quantity: " + vo.getGiftList().get(i).getGift_quantity());
+			System.out.println("gift_option: " + vo.getGiftList().get(i).getGift_option());
+		}
+		
+		return "/funding/step2_payment_reservation";
+	}
+	
+	@RequestMapping(value="/funding/success", method=RequestMethod.GET)
+	public String step3() {
+		return "/funding/step3_funding_success";
+	}
+}

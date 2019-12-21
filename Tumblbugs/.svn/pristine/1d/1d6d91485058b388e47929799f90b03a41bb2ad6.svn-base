@@ -1,0 +1,458 @@
+/**
+	myproject
+	한지은
+**/
+section#myproject_bk{
+	/* background-image: url("http://localhost:9090/tumblbugs/images/myproject_background.jpg"); */
+	height: 340px;
+	background-color: #ebeae5;
+	/* background-repeat: none;
+	background-size: cover;
+   	background-position: 50% 60%; */
+}
+div#myproject_header_info{
+    width: 1080px;
+    margin: auto;
+    text-align: center;
+    height:200px;
+    padding-top:60px;
+    border-top: 1.2px solid #efeded;
+    border-bottom: 1.2px solid #efeded;
+}
+div#myproject_header_info_icon{
+	width: 96px;
+	padding-bottom: 13px !important;
+	display: inline-block;
+}
+div#myproject_header_info_icon>div{
+	width:96px;
+	height:96px;
+	border: 2px solid #fff;
+	overflow: hidden;
+	border-radius: 50%;
+}
+div#myproject_header_info_icon img{
+	width: 100%;
+    height: auto;
+    margin-top: -10%;
+}
+div#myproject_header_info>h1{
+	color: #645353;
+	font-size:28px;
+	font-weight: bold;
+}
+p#myproject_header_info_detail{
+	color: #898080;
+}
+p#myproject_header_info_detail i{
+	padding-right:5px;
+}
+p#myproject_header_info_web>a{
+	text-decoration: none;
+	color:#1e90ff;
+	margin-bottom:0px;
+	font-size:14px;
+}
+div#myproject_body{
+	padding-top:50px;
+	padding-bottom:50px;
+	width:960px;
+	margin:auto;
+	min-height:500px;
+}
+div#myproject_content_box{
+	width:720px;
+	margin:auto;
+	min-height:500px;
+}
+div#project_content_box_title{
+	margin-bottom:5px;
+}
+div#project_content_box_title>h3{
+	color: #645353;
+	font-weight: bold;
+	font-size:16px;
+	display: inline-block;
+	padding-right:5px;
+}
+div#project_content_box_title>span{
+	color:#1e90ff;
+}
+div#project_content_card_box .dropright .dropdown-toggle::after{
+	display: none;
+}
+div#project_content_card_box button.dropdown-toggle {
+	background-color: transparent;
+	border:transparent;
+	color:#676363;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active:focus, 
+.btn-secondary:not(:disabled):not(.disabled):active:focus, 
+.show>.btn-secondary.dropdown-toggle:focus,
+.btn-secondary.focus, .btn-secondary:focus{
+	box-shadow: none !important;
+}
+div#project_content_card_box .dropdown-menu {
+	min-width: 70px;
+}
+div#project_content_card_box .dropdown-item {
+    padding: .1rem .5rem;
+    font-size:12px;
+}
+div#project_content_card_box .dropdown-item:active{
+	background-color: white;
+}
+div#project_content_card_box .dropdown-item a{
+	text-decoration: none;
+	color: #676363;
+}
+div#project_content_card_box .btn-group{
+	display: inline-block;
+	float:right;
+	margin-bottom:-32px;
+	background-color: rgba(255,255,255,0.5);
+	border-radius: 0px 5px 0px 0px ;
+}
+div.project_card{
+	width:220px;
+	height:390px;
+	display: inline-block;
+	border:1px solid #dcdcdc;;
+	border-radius: 5px;
+	margin-right:15px;
+	margin-bottom:15px;
+}
+a.project_card_img_link{
+	clear:both;
+	cursor: pointer;
+ display: inline-block;
+ overflow: hidden;
+}
+div.project_card_img_box{
+	width:218px;
+	height:160px;
+	overflow: hidden;
+	border-radius: 5px 5px 0px 0px;
+}
+div.project_card_img_box>img{
+	width: 100%;
+ height: auto;
+}
+div.project_card_content{
+	padding:13px 19px 0px 19px;
+	max-height:159px;
+	min-height:159px;
+}
+h3.project_card_content_title a{
+	text-decoration: none;
+	color: #645353;
+	font-size:14px;
+	display: inline-block;
+}
+p.project_card_content_creator{
+	font-size:12px;
+	color:#433;
+	margin-bottom:5px;
+}
+p.project_card_content_detail{
+	margin-top:8px;
+	margin-bottom:0px;
+	font-size:14px;
+	color:#676363;
+	min-height:80px;
+	max-height:80px;
+}
+div.project_card_content_progress{
+	width:100%;
+	margin:0px;
+	height:3px;
+	border-radius: 0px;
+}
+div.project_card_bottom_info{
+	height: 43px;
+ margin-top: 10px;
+ overflow: hidden;
+ padding: 0 19px 6.5px;
+}
+div.project_card_bottom_info>div{
+	display: inline-block;
+	height: 43px;
+}
+div.project_card_bottom_info_left{
+	width:126px;
+	font-size:12px;
+}
+div.project_card_bottom_info_right{
+ 	width:50px;
+	font-size:12px;
+}
+div.project_card_bottom_info_left>span:first-child,
+div.project_card_bottom_info_right>span:first-child{
+	color:#6d6d6d;
+	padding-bottom:3px;
+	display: block;
+}
+div.project_card_bottom_info_left>span>span{
+	padding-left:5px;
+	font-size: 10px;
+	color:#1e90ff;
+}
+span.project_card_status_success{
+	font-size:15px;
+	color:#1e90ff !important;
+	font-weight:bold;
+}
+
+/**
+	myproject_delivery
+	한지은
+**/
+
+div#myproject_delivery_bc{
+	background-image: url("http://localhost:9090/tumblbugs/images/myproject_delivery.jpg");
+	height: 340px;
+	background-repeat: none;
+	background-size: cover;
+   	background-position: 50% 50%;
+}
+section#myproject_delivery_bk{
+	height: 340px;	width:100%;
+	background: linear-gradient(135deg,rgba(0,0,0,.6) 20%,transparent);
+}
+div#myproject_delivery_info{
+    width: 1080px;
+    margin: auto;
+    text-align: center;
+    height:200px;
+    padding-top:80px;
+}
+div#myproject_info_upper {
+	text-align: left;
+}
+div#myproject_info_upper>div{
+	text-align:center;
+	font-size:12px;
+	color: #1e90ff;
+	background-color: white;
+	border:1px solid #1e90ff;
+	border-radius: 5px;
+	width:75px;
+	height:20px;
+	font-weight:bold;
+	margin-bottom:5px;
+}
+div#myproject_info_upper a{
+	text-decoration: none;
+	font-size:30px;
+	color:white;
+	font-weight:bold;
+}
+div#myproject_info_upper span{
+	padding-left:10px;
+	font-size:15px;
+	color:white;
+	font-weight:bold;
+}
+div#myproject_info_lower{
+	margin-top:20px;
+	color:white;
+	text-align: left;
+}
+div#myproject_info_lower>div>span:first-child {
+	display:inline-block;
+	width:80px;	
+	font-weight: bold;
+}
+
+div#myproject_delivery_body{
+	width:1080px;
+	margin:auto;
+	padding-bottom:80px;
+}
+table#myproject_delivery_table{
+	width:2320px;
+	font-size:15px;
+}
+table#myproject_delivery_table,
+table#myproject_delivery_table th,
+table#myproject_delivery_table td{
+	border-collapse: collapse;
+	border:1px solid #999999;
+}
+tr.delivery_table_loaddata>td{
+	padding:3px 6px;
+}
+div#tooltip_div{
+	font-size:12px;
+	text-align: left;
+}
+div#tooltip_space{
+	height:5px;
+}
+div#tooltip_div>span{
+	color:#99FFFF;
+}
+div#myproject_tooltip i{
+	color:#898080;
+	font-size:20px;
+}
+div#myproject_delivery_nav{
+	padding: 30px 0px 5px 0px;
+}
+div#myproject_delivery_nav>div{
+	display: inline-block;
+}
+div#myproject_delivery_nav button#btn-download {
+	background-color: #1e90ff;
+	border:none;
+	border-radius: 5px;
+	padding:5px 10px; 
+	color:white;
+	margin-right:5px;
+}
+form#excelUploadForm{
+	display: inline-block;
+}
+div#myproject_delivery_nav button#btn-download i,
+div#myproject_delivery_nav .filebox label i{
+	margin-right:5px;
+}
+div#myproject_delivery_nav button#btn-download:hover {
+	background-color: #1d85ea;
+}
+div#myproject_funding_search{
+	float:right;
+	border:1px solid #ebe8e8;
+	border-radius: 5px;
+	padding: 5px 10px 0px 3px ;
+}
+div#myproject_funding_search input {
+	padding:5px 10px;
+	font-size:14px;
+	border:none;
+	border-radius: 5px;
+}
+div#myproject_funding_search button{
+	border: none;
+	background-color: transparent;
+}
+div#myproject_funding_search button i{
+	font-size:20px;
+	color:#898080;
+}
+tr.delivery_table_loaddata input {
+	border:1px solid #ebe8e8;
+}
+tr.delivery_table_loaddata input.name {
+	width: 80px;
+}
+
+table#myproject_delivery_table.dataTable tbody th, table.dataTable tbody td {
+    padding:4px 6px;
+}
+table#myproject_delivery_table.dataTable tbody tr:hover{
+    background-color: #ebe8e8;
+}
+tr.delivery_table_loaddata input.addr{
+	width:300px;
+}
+tr.delivery_table_loaddata input.phone_num{
+	width:110px;
+}
+tr.delivery_table_loaddata input.quantity{
+	width:50px;
+}
+tr.delivery_table_loaddata input.cost,
+tr.delivery_table_loaddata input.tip{
+	width:100px;
+}
+tr.delivery_table_loaddata input.delivery_com{
+	width:85px;
+}
+tr.delivery_table_loaddata input.delivery_date{
+	width:150px;
+}
+div#btn-save_reset{
+	margin-top:10px;
+	float:right;
+}
+div#btn-save_reset button{
+	background-color: #1e90ff;
+	border:none;
+	border-radius: 5px;
+	padding:5px 10px; 
+	color:white;
+	margin-right:5px;
+}
+div#btn-save_reset button i{
+	margin-right:5px;
+}
+div#myproject_delivery_nav .filebox{
+	display: inline-block;
+}
+div#myproject_delivery_nav .filebox label {
+  display: inline-block;
+  padding:5px 10px;
+  margin-right:5px;
+  color: #fff;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #1e90ff !important;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  margin-bottom:5px;
+}
+div#myproject_delivery_nav .filebox label:hover {
+  background-color: #1d85ea !important;
+}
+div#myproject_delivery_nav .filebox input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+div#myproject_delivery_body button{
+	outline: none;
+}
+div#btn-save_reset button:hover{
+	background-color: #1d85ea;
+}
+
+table#myproject_delivery_table th.title_rno{width:45px;}
+table#myproject_delivery_table th.title_pay_name,
+table#myproject_delivery_table th.title_name,
+table#myproject_delivery_table th.title_end{width:80px;}
+table#myproject_delivery_table th.title_pay_num{width:80px;}
+
+table.dataTable thead th, table.dataTable thead td {
+    padding: 5px 6px 5px 5px;
+    border: 1px solid #999999;
+    font-size:15px;
+    font-weight: normal;
+    border-bottom: none;
+    border-right:none;
+    text-align: center;
+    background-color: #e3f1ff;
+}
+table.dataTable thead th, table.dataTable thead tr,
+table.dataTable thead th, table.dataTable thead td {
+	 border-collapse: collapse;
+}
+table.dataTable thead th.title_end.sorting{
+	overflow: hidden;
+} 
+div#myproject_delivery_table_box .dataTables_wrapper .dataTables_paginate {
+  		float: left;
+	width: 620px;
+    margin-top: 10px;
+}
+  	div#myproject_delivery_table_box .dataTables_wrapper .dataTables_length{
+  		margin-top: 10px;
+  	}

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.collection">
+	<select id="list" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT ROWNUM RNO,COL_ID,COL_NAME, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, 
+				TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTROLL, COL_STATUS
+		FROM (SELECT COL_ID,COL_NAME, COL_STARTDATE, COL_ENDDATE, COL_CONTROLL, COL_STATUS 
+				FROM TUM_COLLECTION ORDER BY COL_REGDATE)
+	</select>
+
+	<update id="main_checkbox" parameterType="map"> 
+		UPDATE TUM_COLLECTION SET COL_CONTROLL =#{col_controll}, COL_STATUS=#{col_status} WHERE COL_ID = #{col_id}
+	</update>
+	
+	<select id="project_count" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(*) FROM TUM_COLLECTION_PROJECT WHERE COL_ID=#{col_id}
+	</select>
+	
+	<select id="calendar_list" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT COL_ID, COL_NAME, COL_CONTENT, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, 
+		TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_STATUS, COL_CCOLOR FROM TUM_COLLECTION
+	</select>
+
+	<insert id="write" parameterType="com.tumblbugs.vo.CollectionVO">
+		INSERT INTO TUM_COLLECTION VALUES('C'||LPAD(TUM_COLLECTION_SEQU.NEXTVAL, 5, '0'), #{col_name}, #{col_content}, SYSDATE, #{col_startdate}, 
+		#{col_enddate}, '0', '대기중', #{col_img}, #{col_simg}, #{col_bcolor}, #{col_ccolor})
+	</insert>
+	
+	<select id="content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT COL_ID, COL_NAME, COL_BCOLOR, COL_CCOLOR, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, COL_CONTROLL,
+		 TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTENT, COL_IMG, COL_SIMG FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+	</select>
+	
+	<update id="update" parameterType="com.tumblbugs.vo.CollectionVO">
+		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, COL_ENDDATE = #{col_enddate},
+			COL_STATUS = #{col_status}, COL_CONTROLL =#{col_controll}, COL_BCOLOR = #{col_bcolor}, COL_CCOLOR = #{col_ccolor}, COL_IMG = #{col_img}, COL_SIMG = #{col_simg} WHERE COL_ID = #{col_id}
+	</update>
+	<update id="updatenofile" parameterType="com.tumblbugs.vo.CollectionVO">
+		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, COL_STATUS = #{col_status}, COL_CONTROLL =#{col_controll},
+		COL_ENDDATE = #{col_enddate}, COL_BCOLOR = #{col_bcolor}, COL_CCOLOR = #{col_ccolor} WHERE COL_ID = #{col_id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+	</delete>
+	
+	<select id="controllforcalendar" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT COL_CONTROLL FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+	</select>
+	
+	<update id="updateBtncalendar" parameterType="com.tumblbugs.vo.CollectionVO">
+		UPDATE TUM_COLLECTION SET COL_NAME=#{col_name}, COL_CONTENT=#{col_content}, COL_STARTDATE=#{col_startdate}, COL_ENDDATE=#{col_enddate},
+			COL_CCOLOR=#{col_ccolor}, COL_CONTROLL=#{col_controll}, COL_STATUS=#{col_status} WHERE COL_ID=#{col_id}
+	</update>
+	
+	<delete id="deleteBtncalendar" parameterType="java.lang.String">
+		DELETE FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+	</delete>
+	
+	<update id="updateDragcalendar" parameterType="com.tumblbugs.vo.CollectionVO">
+		UPDATE TUM_COLLECTION SET COL_STARTDATE=#{col_startdate}, COL_ENDDATE=#{col_enddate}, COL_CONTROLL=#{col_controll}, COL_STATUS=#{col_status} WHERE COL_ID=#{col_id}
+	</update>
+	
+	<select id="collection_count" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT A.count1, B.count2, C.count3 FROM
+			(SELECT COUNT(*) count1 FROM TUM_COLLECTION WHERE COL_STATUS = '대기중') A,
+			(SELECT COUNT(*) count2 FROM TUM_COLLECTION WHERE COL_STATUS = '진행중') B,
+			(SELECT COUNT(*) count3 FROM TUM_COLLECTION WHERE COL_STATUS = '종료')C
+	</select>
+	
+	<select id="project_list" resultType="com.tumblbugs.vo.CollectionVO"><!-- AND PJ_CHECK_YN='y'  -->
+		SELECT ROWNUM RNO, PJ_ID, PJ_CATEGORY, PJ_TITLE, NAME, TO_CHAR(PJ_START_DATE, 'YYYY-MM-DD') PJ_START_DATE, 
+			TO_CHAR(PJ_END_DATE, 'YYYY-MM-DD') PJ_END_DATE FROM(SELECT PJ_ID, PJ_CATEGORY, PJ_TITLE, NAME, PJ_START_DATE, PJ_END_DATE 
+			FROM TUM_PROJECT, TUM_MEMBER WHERE TUM_PROJECT.EMAIL = TUM_MEMBER.EMAIL AND PJ_CHECK_YN='y' ORDER BY PJ_REG_DATE)
+	</select>
+	
+	<insert id="addproject" parameterType="com.tumblbugs.vo.CollectionVO">
+		INSERT INTO TUM_COLLECTION_PROJECT VALUES(#{col_id}, SYSDATE, #{pj_id})
+	</insert>
+	
+	<select id="colloection_project_list" parameterType="java.lang.String" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT ROWNUM RNO, PJ_ID, NVL(PJ_CATEGORY, '') PJ_CATEGORY, NVL(PJ_TITLE, '') PJ_TITLE, NAME, 
+			TO_CHAR(NVL(PJ_START_DATE, SYSDATE), 'YYYY-MM-DD') PJ_START_DATE, TO_CHAR(NVL(PJ_END_DATE, SYSDATE),'YYYY-MM-DD') PJ_END_DATE 
+		FROM( SELECT CP.PJ_ID, PJ_CATEGORY, PJ_TITLE, NAME, PJ_START_DATE, PJ_END_DATE 
+				FROM TUM_COLLECTION_PROJECT CP, TUM_PROJECT PJ, TUM_MEMBER MEM 
+				WHERE CP.PJ_ID = PJ.PJ_ID AND PJ.EMAIL = MEM.EMAIL AND COL_ID=#{col_id}
+				ORDER BY COL_PJ_REGDATE)
+	</select>
+
+	<delete id="removeproject" parameterType="com.tumblbugs.vo.CollectionVO">
+		DELETE FROM TUM_COLLECTION_PROJECT WHERE COL_ID=#{col_id} AND PJ_ID=#{pj_id}	
+	</delete>
+	
+	<select id="project_check" parameterType="com.tumblbugs.vo.CollectionVO" resultType="int">
+		SELECT COUNT(*) FROM TUM_COLLECTION_PROJECT WHERE COL_ID=#{col_id} AND PJ_ID=#{pj_id}
+	</select>
+	
+	<!-- user page -->
+	<select id="collection_title" parameterType="java.lang.String" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT COL_ID, COL_NAME, COL_CONTENT, COL_SIMG, COL_BCOLOR FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+	</select>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.upload">
+   <!--  <select id="login" parameterType="com.dycgv.vo.LoginVO" resultType="com.dycgv.vo.SessionVO"> 
+	</select> -->
+	<insert id="add_project">
+		insert into tum_project(pj_id, pj_reg_date, email)  values('PJ' || LPAD(tum_project_sequ.nextval, 5, 0), sysdate, 'aaa@naver.com')
+		<!-- <if test = "testvalue!= null and testvalue!= ''"> -->
+	</insert>
+	
+	<select id="get_pj_id" resultType="java.lang.String">
+		select pj_id from(select rownum rno, pj_id from (select pj_id, pj_reg_date from tum_project order by pj_reg_date desc)) where rno = 1
+	</select>
+	
+	<select id="get_pj_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.ProjectVO">
+		select  pj_id, pj_title, pj_img, pj_simg, pj_summary, pj_category, pj_addr, pj_tag,
+				pj_price, pj_class, pj_refund, pj_reg_date, pj_story, pj_account_type, pj_account_id, pj_account_name, pj_bank,
+				pj_account_number from tum_project where pj_id = #{pj_id}
+	</select>
+	<update id="update_title" parameterType="map">
+		update tum_project  set pj_title=#{pj_title}, pj_stitle=#{pj_stitle} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_input" parameterType="map">
+		update tum_project  set ${pj_colname}=#{pj_val} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_date" parameterType="map">
+		update tum_project  set ${pj_colname}=to_date(#{pj_val}, 'yyyy-mm-dd') where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_member" parameterType="map">
+		update tum_member  set ${pj_colname} = #{pj_val} where email= #{email}
+	</update>
+	
+	<update id="update_file" parameterType="com.tumblbugs.vo.ProjectVO">
+		update tum_project  set pro_img = #{vo.pro_img}, pro_simg = #{vo.pro_simg} where pj_id='PJ80'
+	</update>
+	
+	<update id="update_account" parameterType="map">
+		update tum_project set pj_account_type = #{pj_account_type}, pj_account_id = #{pj_account_id}, pj_account_name = #{pj_account_name},
+								pj_bank = #{pj_bank}, pj_account_number = #{pj_account_number} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_editor" parameterType="map">
+		update tum_project  set ${pj_colname}=#{pj_val:VARCHAR} where pj_id=#{pj_id}
+	</update>
+	
+	<!-- <resultMap id="getProjectListResult" type="map">
+		<result property="PJ_ID" column="PJ_ID" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_TITLE" column="PJ_TITLE" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_STITLE" column="PJ_STITLE" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_IMG" column="PJ_IMG" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_SIMG" column="PJ_SIMG" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_SUMMARY" column="PJ_SUMMARY" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_CATEGORY" column="PJ_CATEGORY" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_ADDR" column="PJ_ADDR" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_TAG" column="PJ_TAG" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="EMAIL" column="EMAIL" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_PRICE" column="PJ_PRICE" jdbcType="NUMBER" javaType="int"/>
+		<result property="PJ_REG_DATE" column="PJ_REG_DATE" jdbcType="DATE" javaType="java.lang.String"/>
+		<result property="PJ_START_DATE" column="PJ_START_DATE" jdbcType="DATE" javaType="java.lang.String"/>
+		<result property="PJ_END_DATE" column="PJ_END_DATE" jdbcType="DATE" javaType="java.lang.String"/>
+		<result property="PJ_CLASS" column="PJ_CLASS" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_REFUND" column="PJ_REFUND" jdbcType="NVARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_STORY" column="PJ_STORY" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="PJ_ACCOUNT_TYPE" column="PJ_ACCOUNT_TYPE" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_ACCOUNT_ID" column="PJ_ACCOUNT_ID" jdbcType="NUMBER" javaType="int"/>
+		<result property="PJ_ACCOUNT_NAME" column="PJ_ACCOUNT_NAME" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_BANK" column="PJ_BANK" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_ACCOUNT_NUMBER" column="PJ_ACCOUNT_NUMBER" jdbcType="NUMBER" javaType="int"/>
+		<result property="PJ_CHECK_REQUEST_DATE" column="PJ_CHECK_REQUEST_DATE" jdbcType="DATE" javaType="java.lang.String"/>
+		<result property="PJ_CHECK_DATE" column="PJ_CHECK_DATE" jdbcType="DATE" javaType="java.lang.String"/>
+		<result property="PJ_CHECK_YN" column="PJ_CHECK_YN" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		<result property="PJ_REJECT" column="PJ_REJECT" jdbcType="VARCHAR2" javaType="java.lang.String"/>
+		
+	</resultMap> -->
+</mapper>

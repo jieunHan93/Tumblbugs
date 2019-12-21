@@ -1,0 +1,360 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>텀블벅스 헬프센터</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<style>
+* {
+	font-family: SpoqaHanSans;
+}
+body{
+	background-color: #f7f7f7;
+}
+div#header_wrap {
+	background-color:#ffffff;
+	width:100%;
+	height: 71px;
+	margin-top: -8px;
+}
+div#header_wrap>header#help_header{
+	/* border:1px solid red; */
+	max-width:1080px;
+	height:71px;
+	margin: 0 auto;
+	align-items: center;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	background-color: #ffffff;
+	border: 0;
+}
+div#logo {
+	display: block;
+}
+div#logo img {
+	height: 35px;
+	vertical-align: middle;
+}
+div#logo a {
+	line-height:35px;
+	text-decoration: none;
+	color: #1e90ff;
+}
+div#header_right>#nav1 a {
+	text-decoration: none;
+	color: black;
+	font-size: 14px;
+	margin-left: 20px;
+}
+div#main {
+	/* border: 1px solid red; */
+}
+div#main>#sec1 {
+	background-color: #1e90ff;
+	background-image:url(http://localhost:9090/tumblbugs/images/a1.jpg);
+	background-size:cover;
+	width:100%;
+	height: 300px;
+	text-align: center;
+	margin-bottom: 50px;
+}
+div#main>#sec1>#sec1_inner {
+	color:#ffffff;
+	position: relative;
+	top:50%;
+	transform:translateY(-50%);
+	width:600px;
+	margin: 0 auto;
+}
+div#main>#sec1>#sec1_inner h1 {
+	margin-top:0px;
+	font-size: 32px;
+	text-align: center;
+	height: 50px;
+	margin-bottom: 10px;
+}
+div#sec1_inner>input[type="search"] {
+	width: 100%;
+	height: 40px;
+	padding-left: 15px;
+	margin-bottom: 10px;
+}
+a#tag {
+	display:inline-block;
+	text-decoration: none;
+	border: 1px solid rgba(0,0,0,.7);
+	padding: 0 12px;
+	margin: 0;
+	border-radius: 3px;
+	color: #ffffff;
+	background-color: rgba(0,0,0,.7);
+}
+div#container {
+	width: 1080px;
+	padding: 0;
+	margin: 0 auto;
+}
+section#sec2 {
+	/* border: 1px solid red; */
+	margin-bottom: 50px;
+}
+section#sec2 h2{
+	font-size: 15px;
+	font-weight: bold;
+	color: #757575;
+	display: block;
+	text-align: left;
+	margin-bottom: 10px;
+}
+section#sec2>ul#ul1 {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	padding: 0;
+}
+section#sec2 > ul#ul1 > li#sec2_item {
+	margin-bottom: 12px;
+}
+section#sec2 > ul#ul1 > li#sec2_item a{
+	z-index: 5;
+	text-decoration: none;
+	display: block;
+	width:511px;
+	height: 45px;
+	padding-left: 20px;
+	line-height:45px;
+	font-size: 15px;
+	color: #191919;
+	background-color:#ffffff;
+	border: 1px solid #ccc;
+}
+section#sec3 {
+	margin-bottom: 20px;
+}
+section#sec4 {
+	margin-bottom: 20px;
+}
+section#sec5 {
+	margin-bottom: 20px;
+}
+section#sec3 h2 {
+	font-size: 15px;
+	font-weight: bold;
+	color: #757575;
+	display: block;
+	text-align: left;
+	margin-bottom: 10px;
+}
+div#topic {
+	width: 1040px;
+	height:105px;
+	background-color: #ffffff;
+	display: inline-block;
+	padding: 20px;
+}
+div#topic2 {
+	width: 1040px;
+	height:165px;
+	background-color: #ffffff;
+	display: inline-block;
+	padding: 20px;
+}
+div#topic3 {
+	width: 1040px;
+	height:95px;
+	background-color: #ffffff;
+	display: inline-block;
+	padding: 20px;
+}
+div#topic_title {
+	display: inline-block;
+	width: 337px;
+	/* border: 1px solid red; */
+	vertical-align: top;
+}
+div#topic_title a{
+	font-size: 18px;
+	color: #191919;
+	font-weight: bold;
+	margin-left: 10px;
+	margin-bottom: 18px;
+	display: block;
+}
+div#topic_title p{
+	font-size: 14px;
+	color:#666666;
+	margin-left: 10px;
+}
+div#topic_content{
+	display: inline-block;
+	/* border: 1px solid red; */
+	width: 600px;
+}
+div#topic_content ul {
+	list-style: none;
+	/* border: 1px solid red; */
+	width: 730px;
+}
+div#topic_content ul li{
+	display: inline-block;
+}
+div#topic_content ul li a{
+	display:inline-block;
+	border: 1px solid #ccc;
+	width: 321px;
+	height: 45px;
+	line-height: 45px;
+	margin-left: 14px;
+	margin-bottom: 14px;
+	color: #191919;
+	font-size: 15px;
+	padding-left: 10px;
+}
+section#help_qna {
+	border-top: 1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	text-align: center;
+	font-size: 18px;
+	color: #757575;
+	font-weight: bold;
+	margin-top: 50px;
+}
+section#help_qna p{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+section#help_qna a{
+	display:inline-block;
+	background-color: #1e90ff;
+	width:150px;
+	border: 0;
+	border-radius: 4px;
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 15px;
+	margin-bottom: 50px;
+}
+section#help_qna a:hover{
+	background-color: #1d85ea;
+}
+#footer{width: 1080px; margin: auto; color: #757575; padding: 60px 0px 80px 0px;}
+#footer>div:last-child>span {display: inline-block; padding: 0px 10px 0px 10px;}
+#footer>div:last-child>span:first-child {float: left; font-size: 9pt; width: 880px;}
+#footer>div:last-child>span:last-child {float: right; font-size: 9pt; width: 150px; text-align: right;}
+</style>
+</head>
+<body>
+	<div id="header_wrap">
+		<header id="help_header">
+			<div id="logo">
+				<a href="#"><img src="http://localhost:9090/tumblbugs/images/tum_logo.png">
+				헬프 센터
+				</a>
+			</div>
+			<div id="header_right">
+				<nav id="nav1">
+					<a href="#">텀블벅스로 돌아가기</a>
+					<a href="#">1:1 문의하기</a>
+				</nav>
+			</div>
+		</header>
+	</div>
+	<div id="main">
+		<section id="sec1">
+			<div id="sec1_inner">
+				<h1>무엇을 도와드릴까요?</h1>
+				<input type="search" id="query" placeholder="검색">
+				<p>
+					<a href="#" id="tag">결제</a>
+					<a href="#" id="tag">후원자</a>
+					<a href="#" id="tag">수수료</a>
+					<a href="#" id="tag">홍보</a>
+					등으로 검색해보세요.
+				</p>
+			</div>
+		</section>
+		<div id="container">
+			<section id="sec2">
+				<h2>자주 묻는 질문들</h2>
+				<ul id="ul1">
+					<li id="sec2_item"><a href="#">크라우드펀딩과 후원이란 무엇인가요?</a></li>
+					<li id="sec2_item"><a href="#" style="margin-left: 12px;">결제에 실패했습니다. 재결제는 어떻게 하나요?</a></li>
+					<li id="sec2_item"><a href="#">예약해 둔 결제수단을 변경하고 싶어요.</a></li>
+					<li id="sec2_item"><a href="#" style="margin-left: 12px;">텀블벅 프로젝트 규칙</a></li>
+					<li id="sec2_item"><a href="#">펀딩 수수료는 얼마인가요?</a></li>
+					<li id="sec2_item"><a href="#" style="margin-left: 12px;">프로젝트를 올리려면 어떻게 해야 하나요?</a></li>
+					<li id="sec2_item"><a href="#">어떻게 하면 프로젝트 홍보를 잘 할 수 있을까요?</a></li>
+					<li id="sec2_item"><a href="#" style="margin-left: 12px;">모금액 정산 일정을 알고 싶어요.</a></li>
+				</ul>
+			</section>
+			<section id="sec3">
+				<h2>주제별로 살펴보기</h2>
+				<div id="topic">
+					<div id="topic_title">
+						<a href="#">후원자 센터</a>
+						<p>프로젝트 후원, 결제, 선물 수령 및 창작자와의 소통에 관한<br>질문들을 안내드립니다.</p>
+					</div>
+					<div id="topic_content">
+						<ul>
+							<li><a href="#">1. 프로젝트 밀어주기(후원하기)</a></li>
+							<li><a href="#">2. 결제하기</a></li>
+							<li><a href="#">3. 선물 전달받기</a></li>
+							<li><a href="#">4. 기타</a></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section id="sec4">
+				<div id="topic2">
+						<div id="topic_title">
+							<a href="#">창작자 센터</a>
+							<p>프로젝트 개설부터 펀딩 진행, 선물 실행, 후속 처리 및<br>후원자와의 소통과 관련하여 알려드립니다.</p>
+						</div>
+						<div id="topic_content">
+							<ul>
+								<li><a href="#">1. 텀블벅스 플랫폼 알아보기</a></li>
+								<li><a href="#">2. 텀블벅스 펀딩 준비하기</a></li>
+								<li><a href="#">3. 텀블벅스에 프로젝트 올리기</a></li>
+								<li><a href="#">4. 펀딩 시작하고 후원자 만나기</a></li>
+								<li><a href="#" style="width: 672px;">5. 펀딩 마감 후 선물 전달하기/마무리하기</a></li>
+							</ul>
+						</div>
+				</div>
+			</section>
+			<section id="sec5">
+				<div id="topic3">
+						<div id="topic_title">
+							<a href="#">공통 사항</a>
+							<p>텀블벅스에 대한 일반적인 질문들 및 계정 사용에 관한<br>질문들을 안내드려요.</p>
+						</div>
+						<div id="topic_content">
+							<ul>
+								<li><a href="#">1. 텀블벅스 소개</a></li>
+								<li><a href="#">2. 계정 설정 및 기타</a></li>
+							</ul>
+						</div>
+				</div>
+			</section>
+		</div>
+		<div id="help_answer">
+			<section id="help_qna">
+				<p>질문에 대한 답을 찾지 못하셨나요?</p>
+				<a href="#">문의하기</a>
+			</section>
+		</div>
+	</div>
+	<footer>
+		<div id="footer">
+			<div>
+				<span>텀블벅스(주) | 대표 염재승 105-87-***** | 서울시 강남구 강남대로 364, 12층 1201호 (역삼동) | 통신판매업 2019-서울강남-00797 | 대표전화 02-6080-0760</span>
+				<span>ⓒ 2019 Tumblbugs Inc.</span>
+			</div>
+		</div>			
+	</footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+package com.tumblbugs.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.tumblbugs.dao.LoginDAO;
+import com.tumblbugs.vo.MemberVO;
+import com.tumblbugs.vo.SessionVO;
+
+@Controller
+public class LoginController {
+	@Autowired
+	private LoginDAO logindao;
+	
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login() {
+		return "/login/login";
+	}
+	@RequestMapping(value="/login_proc", method=RequestMethod.POST)
+	public String login_proc(MemberVO vo, HttpSession session) {
+		String resPage = "";
+		SessionVO svo = logindao.getResultLogin(vo);	
+
+		if(svo != null) {
+			
+			if(svo.isResult()) {	
+				
+				session.setAttribute("svo", svo);
+				session.setAttribute("sid", vo.getEmail());
+				resPage = "/index";
+			}
+			
+		}else{
+			resPage = "/login/login";
+		}
+		
+		return resPage;		
+	}
+	
+	
+	
+	@RequestMapping(value="/idfound", method=RequestMethod.GET)
+	public String idfound() {
+		return "/login/idfound";
+	}
+
+}

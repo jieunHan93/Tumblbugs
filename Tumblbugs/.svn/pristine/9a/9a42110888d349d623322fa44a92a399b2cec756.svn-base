@@ -1,0 +1,428 @@
+@charset "UTF-8";
+
+/** 공통 **/
+	div#admin_header{
+		border-bottom:1px solid #ccc;
+		border-right:1px solid #ccc;
+		width: 100%;
+		height: 70px;
+		line-height:70px;
+		background-color: #ffffff;
+		display: inline-block;
+		color: #1e90ff;
+	}
+	div#admin_header p {
+		margin-left: 20px;
+	}
+
+/** admin_project: 프로젝트 관리 **/
+	#admin_project {
+		margin-left: 320px;
+		display: inline-block;
+		position: absolute;
+		width: calc(100% - 320px);
+		width: -webkit-calc(100% - 320px);
+		min-width: 1220px;
+		overflow-x: hidden;
+		height: 100%;
+		background-color: #f6f5f5;
+	}
+	
+	.admin_project_content {
+		padding: 25px 30px;
+		width: 1200px;
+	}
+	
+	#project_table_wrapper {
+		font-size: 10.5pt;
+	}
+	#project_table_wrapper #project_table_length {
+		margin-bottom: 15px;
+	}
+	/* 테이블 페이지 버튼 */
+	.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+	.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+		background: white;
+	}
+	
+	#project_table {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	#project_table td:not(.title) {
+		text-align: center;
+	}
+	#project_table,
+	#project_table th,
+	#project_table td {
+		border: 1px solid lightgray;
+		border-collapse: collapse;
+	}
+	.admin_project_content #project_table th {
+		font-size: 10pt;
+	}
+	
+	#project_table a {
+		color: black;
+	}
+
+/** admin_project_detail : 프로젝트 내용 페이지 **/
+	/** 우측 사이드바 **/
+	.checklist_sidebar {
+		position: fixed;
+		top: 100px;
+		right: 100px;
+		display: inline-block;
+		border: 2px solid black;
+		border-radius: 10px;
+		background-color: white;
+		width: 330px;
+		font-size: 10pt;
+	}
+	.list_title {
+		margin: 15px;
+		font-weight: bold;
+	}
+	.select_title {
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.check-item {
+		margin: 15px;
+		display: block;
+		clear: both;
+		overflow: auto;
+		cursor: pointer;
+	}
+	.check-item .icon {
+		float: left;
+		text-align: center;
+		width: 20px;
+	}
+	.check-item .icon i {
+		display: block;
+		font-size: 11pt;
+		color: black;
+		margin: 0px;
+		padding-top: 4px;
+	}
+	.check-item .message {
+		float: right;
+		width: 275px;
+	}
+	input[type='checkbox'] {display: none;}
+	
+	/* 버튼 */
+	.check_result_button {
+		text-align: center;
+		padding: 5px 0px 15px 0px;
+	}
+	.check_result_button button {
+		border: none;
+		border-radius: 5px;
+		padding: 4px 6px;
+		margin: 2px;
+		background-color: black;
+		color: white;
+		cursor: pointer;
+	}
+	
+	/** 프로젝트 내용 **/
+	#admin_project_detail_content {
+		float: left;
+		background-color: #f6f5f5;
+		width: 100%;
+		min-height: 100%;
+	}
+	#project_content {
+		float: left;
+		width: 1000px;
+		padding: 25px 30px;
+	}
+	#project_menu #upload_menu{
+		display:inline-block;
+		width: 100%;
+		top:17px;
+	}
+	#project_menu #upload_menu label{
+		padding:13px 25px 13px 25px;
+		font-size:10.5pt;
+		font-weight:bold;
+		border-radius:4px;
+		float:left;
+		border:1px solid #e0e0e0;
+		border-bottom:none;
+		letter-spacing:1px;
+		cursor:pointer;
+	}
+	#project_menu #upload_menu>div{
+		float:right;
+		display:inline-block;
+		margin:0px;
+		position:relative;
+	}
+	#project_menu #upload_menu button{
+		padding: 6px 25px 6px 25px;
+		font-size:10pt;
+		font-weight:bold;
+		border-radius:4px;
+		border:2px solid gray;
+		color:gray;
+		background: none;
+		cursor:pointer;
+	}
+
+	/** 프로젝트 세부 내용 **/
+	#admin_project_detail_content #menu_content {
+		font-size: 11pt;
+		padding-top: 30px;
+	}
+	
+	#admin_project_detail_content .menu_content_label {
+		color: #767676;
+		padding: 5px;
+	}
+	#admin_project_detail_content .menu_content_box {
+		background-color: white;
+		border: 1px solid #e0e0e0;
+		border-radius: 5px;
+		margin: 10px 0px 30px 0px;
+	}
+	#admin_project_detail_content .menu_content_box>div {
+		padding: 15px 20px;
+	}
+	#admin_project_detail_content .menu_content_box>div:not(:last-child) {
+		border-bottom: 1px solid #e0e0e0;
+	}
+	#admin_project_detail_content .sub_menu_title {
+		color: #767676;
+		font-size: 10pt;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	#admin_project_detail_content .sub_menu_value {
+		color: rgba(0,0,0,0.87);
+		font-size: 13pt;
+		font-weight: bold;
+	}
+	#pj_summary .sub_menu_value, #intro .sub_menu_value {
+		font-size: 10.5pt;
+		font-weight: normal;
+	}
+	
+	/** menu1: 프로젝트 개요 **/
+	/* 프로필 이미지 */
+	#profile_img .sub_menu_value span {
+		width: 80px;
+		height: 80px;
+		border-radius: 80px;
+	}
+	#profile_img .sub_menu_value span img {
+		height: 80px;
+	}
+	
+	/** menu2: 펀딩 및 선물 구성 **/
+	#gift {
+		font-size: 10pt;
+	}
+	.gift_price {
+		color: rgba(0,0,0,0.85);
+		font-size: 11pt;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.gift_title {
+		font-size: 10.5pt;
+	}
+	.item_list {
+		list-style-position: inside;
+	}
+	.gift_title, .item_list li, .gift_delivery_date {
+		margin: 5px 0px;
+		color: rgba(0,0,0,0.87);
+	}
+	#gift>div:first-child {
+		border-bottom: 1px solid rgba(0,0,0,.05);
+	}
+	#gift>div {
+		overflow: auto;
+	}
+	.gift_max_count, .gift_delivery_yn {
+		display: inline-block;
+		padding: 2px 5px;
+		color: #767676;
+		font-size: 8.5pt;
+		border: 1px solid #767676;
+		border-radius: 4px;
+	}
+	.gift_max_count {float: left;}
+	.gift_delivery_yn {float: right;}
+	
+	/** menu3: 스토리텔링 **/
+	#story .sub_menu_value {
+		padding-top: 20px;
+		font-weight: normal;
+	}
+	
+	/** menu4: 계좌 **/
+	.account_number {
+		font-weight: normal;
+		font-size: 8.5pt;
+		color: #1d85ea;
+		border: 1px solid #1d85ea;
+		border-radius: 3px;
+		padding: 3px 5px;
+		margin-left: 10px;
+	}
+	.file_download {
+		white-space: nowrap;
+		margin-top: 15px;
+		width: 500px; padding: 10px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		border: 1px solid rgba(0,0,0,.1);
+		border-radius: 4px;
+		color: rgba(0,0,0,.87);
+	}
+	#file_icon {
+		padding: 7px;
+		color: rgba(0,0,0,.6);
+		border: 2px solid rgba(0,0,0,.1);
+		border-radius: 3px;
+		margin-right: 10px;
+	}
+
+
+/** admin_reject : 프로젝트 반려 메일 작성 페이지 **/
+	#admin_project_reject_content {
+		width: 800px;
+		padding: 25px 30px;
+	}
+	form[name='project_reject_form'] {
+		background-color: white;
+		border: 1px solid #e0e0e0;
+		border-radius: 10px;
+		font-size: 10.5pt;
+		overflow: hidden;
+	}
+	form[name='project_reject_form'] label {
+		display: inline-block;
+		width: 100px;
+		font-weight: bold;
+		color: #5c5c5c;
+	}
+	#admin_project_reject_content #form_title {
+		padding: 20px;
+		text-align: center;
+		background-color: #343434;
+		color: white;
+		font-weight: bold;
+		
+	}
+	#admin_project_reject_content #pj_title,
+	#admin_project_reject_content #pj_creator {
+		padding: 17px;
+		margin: 0px 20px;
+		border-bottom: 1px solid #e0e0e0;
+	}
+	#admin_project_reject_content #pj_title span,
+	#admin_project_reject_content #pj_creator span {
+		font-weight: bold;
+	}
+	#pj_reject_content {
+		padding: 15px 23px;
+		border-bottom: 1px solid #e0e0e0;
+	}
+	#pj_reject_content textarea {
+		padding: 10px;
+		width: calc(100% - 20px);
+		width: -webkit-calc(100% - 20px);
+		height: 300px;
+		border-radius: 5px;
+		line-height: 1.75;
+	}
+	#pj_reject_button_div {
+		padding: 20px;
+		text-align: right;
+	}
+	#pj_reject_button_div button {
+		padding: 10px 14px;
+		margin-left: 5px;
+		border: none;
+		border-radius: 5px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+	#pj_reject_button_div button:hover {
+		background-color: #cacbcd;
+	}
+
+
+/** admin_member : 회원 관리 메인 **/
+	#project_table .no {width: 30px;}
+	#project_table .name {width: 150px;}
+	#project_table .use_yn {width: 80px;}
+
+
+/** admin_member_content : 회원 상세 정보 **/
+	.admin_member_content {
+		padding: 25px 30px;
+		width: 900px;
+	}
+	div#mypage_profile_main_container {
+		padding: 0px;
+	}
+	div#profile_editor {
+		width: 620px;
+	}
+	div#profile_editor>div {
+		width: 100%;
+		padding: 20px;
+		border-top: 1px solid #ebe8e8;
+		vertical-align: top;
+	}
+	label.profile_editor_label {
+		display: inline-block;
+		width: 100px;
+		font-size: 10.5pt;
+		padding: 0px;
+	}
+	div#profile_editor input[type=text],
+	div#profile_editor input[type=text].form-control,
+	div#profile_editor input[type=password].form-control {
+		background-color: #f6f5f5;
+		border: none;
+		font-size: 10.5pt;
+	}
+	div#profile_editor textarea.form-control {
+		width: 450px;
+		background-color: white;
+		margin: 0px 0px 0px 10px;
+	}
+	#profile_pre {
+		font-size: 11pt;
+	}
+	div#profile_pre_middle, div#profile_pre_footer {
+		height: 100%;
+		padding: 20px;
+	}
+	div#profile_pre_header>div:first-child {
+		font-size: 10pt;
+	}
+	div#profile_editor>div#profile_button_div {
+		text-align: center;
+	}
+	div#profile_button_div button {
+		padding: 10px 20px;
+		border: 1px solid #1e90ff;
+		background-color: #1e90ff;
+		border-radius: 5px;
+		color: white;
+		cursor: pointer;
+	}
+	div#profile_button_div button:hover{
+		background-color: #1d85ea;
+	}
+	#btn_unreg {
+		margin-left: 5px;
+	}

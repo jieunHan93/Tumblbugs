@@ -1,0 +1,114 @@
+package com.tumblbugs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class HelpController {
+	
+	@RequestMapping(value="/help", method=RequestMethod.GET)
+	public String help() {
+		return "/helpCenter/helpCenter";
+	}
+	@RequestMapping(value="/help/helpq", method=RequestMethod.GET)
+	public String helpQuestion() {
+		return "/helpCenter/helpQuestion";
+	}
+	@RequestMapping(value="/help/helpq/spon1", method=RequestMethod.GET)
+	public String helpQuestion_spon1() {
+		return "/helpCenter/helpQuestion_spon1";
+	}
+	@RequestMapping(value="/help/helpq/spon2", method=RequestMethod.GET)
+	public String helpQuestion_spon2() {
+		return "/helpCenter/helpQuestion_spon2";
+	}
+	@RequestMapping(value="/help/helpq/create1", method=RequestMethod.GET)
+	public String helpQuestion_create1() {
+		return "/helpCenter/helpQuestion_create1";
+	}
+	@RequestMapping(value="/help/helpq/create2", method=RequestMethod.GET)
+	public String helpQuestion_create2() {
+		return "/helpCenter/helpQuestion_create2";
+	}
+	@RequestMapping(value="/help/helpq/common1", method=RequestMethod.GET)
+	public String helpQuestion_common1() {
+		return "/helpCenter/helpQuestion_common1";
+	}
+	@RequestMapping(value="/help/helpq/common2", method=RequestMethod.GET)
+	public String helpQuestion_common2() {
+		return "/helpCenter/helpQuestion_common2";
+	}
+	@RequestMapping(value="/help/helpq/common3", method=RequestMethod.GET)
+	public String helpQuestion_common3() {
+		return "/helpCenter/helpQuestion_common3";
+	}
+	@RequestMapping(value="/help/sponcenter", method=RequestMethod.GET)
+	public String sponcenter() {
+		return "/helpCenter/helpSponCenter";
+	}
+	@RequestMapping(value="/help/createcenter", method=RequestMethod.GET)
+	public String createcenter() {
+		return "/helpCenter/helpCreateCenter";
+	}
+	@RequestMapping(value="/help/commoncenter", method=RequestMethod.GET)
+	public String commoncenter() {
+		return "/helpCenter/helpCommonCenter";
+	}
+	@RequestMapping(value="/help/sponcenter/a1", method=RequestMethod.GET)
+	public String sponcenter_a1() {
+		return "/helpCenter/helpSponCenter_article1";
+	}
+	@RequestMapping(value="/help/sponcenter/a2", method=RequestMethod.GET)
+	public String sponcenter_a2() {
+		return "/helpCenter/helpSponCenter_article2";
+	}
+	@RequestMapping(value="/help/sponcenter/a3", method=RequestMethod.GET)
+	public String sponcenter_a3() {
+		return "/helpCenter/helpSponCenter_article3";
+	}
+	@RequestMapping(value="/help/sponcenter/a4", method=RequestMethod.GET)
+	public String sponcenter_a4() {
+		return "/helpCenter/helpSponCenter_article4";
+	}
+	@RequestMapping(value="/help/createcenter/a1", method=RequestMethod.GET)
+	public String createcenter_a1() {
+		return "/helpCenter/helpCreateCenter_article1";
+	}
+	@RequestMapping(value="/help/createcenter/a2", method=RequestMethod.GET)
+	public String createcenter_a2() {
+		return "/helpCenter/helpCreateCenter_article2";
+	}
+	@RequestMapping(value="/help/createcenter/a3", method=RequestMethod.GET)
+	public String createcenter_a3() {
+		return "/helpCenter/helpCreateCenter_article3";
+	}
+	@RequestMapping(value="/help/createcenter/a4", method=RequestMethod.GET)
+	public String createcenter_a4() {
+		return "/helpCenter/helpCreateCenter_article4";
+	}
+	@RequestMapping(value="/help/createcenter/a5", method=RequestMethod.GET)
+	public String createcenter_a5() {
+		return "/helpCenter/helpCreateCenter_article5";
+	}
+	@RequestMapping(value="/help/commoncenter/a1", method=RequestMethod.GET)
+	public String commoncenter_a1() {
+		return "/helpCenter/helpCommonCenter_article1";
+	}
+	@RequestMapping(value="/help/commoncenter/a2", method=RequestMethod.GET)
+	public String commoncenter_a2() {
+		return "/helpCenter/helpCommonCenter_article2";
+	}
+	@RequestMapping(value="/help/sponcenter/a1/c1", method=RequestMethod.GET)
+	public String commoncenter_a1_c1() {
+		return "/helpCenter/helpSponCenter_article1_content1";
+	}
+	@RequestMapping(value="/help/sponcenter/a1/c2", method=RequestMethod.GET)
+	public String commoncenter_a1_c2() {
+		return "/helpCenter/helpSponCenter_article1_content2";
+	}
+	@RequestMapping(value="/help/helpsearch", method=RequestMethod.GET)
+	public String helpsearch() {
+		return "/helpCenter/helpSearch";
+	}
+}

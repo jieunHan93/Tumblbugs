@@ -1,0 +1,646 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<title>Insert title here</title>
+<style>
+	body>div{
+	
+		width:1080px;
+		margin: auto;
+	}
+	
+	section#topinfolist{
+	
+		background-color: #dcdcdc;
+		background-size: cover;
+		padding-top:10px;
+		padding-bottom: 60px;
+	
+	}
+	
+	div#topinfodiv{
+	
+		margin-top: 50px;
+		padding-left: 0px;
+	}
+	
+	b#b1{
+		color:#9A7745;
+		padding: 0px 0 0px 20px;
+		font-size: 50px;
+	}
+	
+	div#topinfodivdetail{
+	
+		text-align: right;
+		display: inline-block;
+		text-decoration: none;
+	
+		margin-left: 250px;
+		margin-top: -50px;
+	
+	}
+	
+	div#topinfodivdetail a{
+	
+		margin-left: 45px;
+		text-decoration: none;
+		color: Gray;
+	
+	}
+	
+	div#topinfodivdetail a:hover{
+		color: red;
+	
+	}
+	
+	.cardfrominfo{
+		border-style:none;
+		border-radius:5px;
+		background: #dcdcdc;
+		color: gray;
+		padding:  5px 0 5px 5px; 
+	}
+	
+	.cardfrominfo:hover{
+		background: #d2d2d2;
+		
+	}
+	
+	.cardfrominfo>option{
+		background: white;
+		
+	}
+	
+	section#cardfromlist{
+	
+		display:inline-block;
+		padding: 150px 0 250px 0;
+		margin: 0 0 0 20px;
+	
+	}
+	
+	b#b2{
+	
+		display:inline-block;
+		color: #9A7745;
+		margin: -220px 0 0 0px;
+	
+	}
+	
+	select#cardfrominfo{
+		display:table;
+		margin: -180px 0 20px 0px;
+	
+	}
+	
+	div#div3{
+	
+		background-color:#dcdcdc;
+		display:inline-block;
+		border-radius: 5px 5px 5px 5px;
+		padding: 0 250px 0px 0 ;
+	
+	}
+	
+	button#addcard{
+		background-color: white;
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: 10px 0 -40px 20px;
+		width: 180px;
+		height: 40px;
+	
+	}
+	
+	button#addcard:hover{
+		background-color: #F2F2F2;
+	
+	}
+	
+	div#div4{
+	
+		display: table;
+		margin: 20px 0 0px 0;
+		color: gray;
+	
+	}
+	
+	b#b3{
+	
+		margin: 0 0 0 30px;
+	
+	}
+	
+	input#phonenumber{
+	
+		border-style: none;
+		background-color: #dcdcdc;
+		margin-left: 10px;
+		border-radius: 5px5px5px5px;
+		width: 10%;
+		height: 35px;
+		padding-left: 10px;
+	}
+	
+	b#b4{
+	
+		font-size: 5px;
+		color: #FF3232;
+		margin: 20px 0 0 30px;
+	
+	}
+	
+	/* b#	{
+		border-bottom: 1.5px solid #dcdcdc;
+		padding-right:600px;
+		margin: 30px 0 0 0;
+		display: table;
+	} */
+	
+	b#b6{
+		border-bottom: 1.5px solid #dcdcdc;
+		padding-bottom: 10px;
+		padding-right: 150px;
+		
+	}
+	
+	section#questionlist{
+	
+		display: table;
+		margin: 50px 0px -200px 750px;
+	
+	}
+	
+	button#button3{
+	
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		display: table;
+		margin: -200px 0 0 20px;
+		width: 150px;
+		height: 50px;
+		background-color: #1e90ff;
+	
+	}
+	
+	button#button3:nth-child(1){
+	
+		margin: -50px 0 50px 200px;
+	
+	}
+	
+	button#button3:hover {
+	
+		background-color: #1d85ea;	
+	
+	}
+	/*폼1  */
+	b#b7{
+	
+		color: gray;
+		font-weight: normal;
+		margin: 50px 0 0px 20px ;
+		display: table;
+	
+	}
+	
+	input#cardnumber{
+	
+		border: 10px solid red;
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: -20px 0 0 20px;
+		width: 250px;
+		height: 40px;
+		padding: 00 20px 0 20px;
+	}
+	
+	b#b8{
+	
+		color: red;
+		font-size:10px;
+		margin: 0 0 0 20px;
+	
+	}
+	
+	b#b9{
+	
+		color: gray;
+		font-weight: normal;
+		margin: -20px 0 -10px 20px ;
+		display: table;
+	
+	}
+	select#cardvalidity{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: -30px 0 0 20px;
+		width: 70px;
+		height: 40px;
+		padding: 00 5px 0 5px;
+	}
+	
+	select#cardyear{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: -30px 0 0 5px;
+		width: 90px;
+		height: 40px;
+		padding: 00 5px 0 5px;
+	}
+	b#b10{
+		color: gray;
+		font-weight: normal;
+		margin: 10px 0 -20px 20px ;
+		display: table;
+	}
+	input#birthdaynumber{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: 0px 0 0 20px;
+		width: 170px;
+		height: 40px;
+		padding: 0 15px 0 15px;
+	}
+	b#b11{
+		color: gray;
+		font-weight: normal;
+		margin: 10px 0 -20px 20px ;
+		display: table;
+	}
+	input#cardpassword{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: 0px 0 0px 20px;
+		width: 50px;
+		height: 40px;
+		padding: 0 15px 0 15px;
+	
+	}
+	button#addbankaccount{
+		background-color: white;
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: -15px 0 -15px 20px;
+		width: 180px;
+		height: 40px;
+		display: table;
+	}
+	b#b12{
+		color: gray;
+		font-weight: normal;
+		margin: 0px 0 0px 0px ;
+	
+		border-bottom: 1px solid gray;
+		padding-right: 200px;
+	}
+	input#agreebtn{
+		margin: 0 5px 0 20px;
+	
+	}
+	b#b13{
+		color: gray;
+		font-weight: normal;
+		margin: 10px 0 20px 20px ;
+		display: table;
+		border-bottom: 1px solid gray;
+		padding-bottom: 20px;
+	}
+	b#b14{
+		color: gray;
+		font-weight: normal;
+		margin: 0px 0 0px 20px ;
+		display: table;
+	}
+	select#banknamelist{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: 0px 0 0 20px;
+		width: 130px;
+		height: 40px;
+		padding: 00 10px 0 10px;
+	}
+	b#b15{
+		color: gray;
+		font-weight: normal;
+		margin: 10px 0 -15px 20px ;
+		display: table;
+	
+	}
+	input#bankaccountnumber{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: 0px 0 0 20px;
+		width: 250px;
+		height: 40px;
+		padding: 0 15px 0 15px;
+	}
+	b#b16{
+		color: gray;
+		font-weight: normal;
+		margin: 10px 0 5px 20px ;
+		display: table;
+	
+	}
+	
+	b#dateofbirth{
+	
+		margin: 0px 0 0px 20px;
+		color: gray;
+		font-weight: normal;
+		display: table;
+	}
+	b#buisnessname{
+		margin: -48px 0 0 20px;
+		color: gray;
+		font-weight: normal;
+		display: table;
+	}
+	
+	input#accountholder{
+	
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: 0px 0 0 20px;
+		width: 250px;
+		height: 40px;
+		padding: 0 15px 0 15px;
+	}
+	.checks1{
+		margin: 0 0 0 20px;
+		display: table;
+		color: gray;
+	}
+	.checks2{
+		margin: -30px 0 0 250px;
+		display: table;
+		color: gray;
+	}
+	radio#radio1,radio#radio2{
+		display: none;
+	}
+	input#birthtextfield{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: -20px 0 -72px 20px;
+		width: 250px;
+		height: 40px;
+		padding: 0 15px 0 15px;
+		display: table;
+	}
+	input#buisnessfield{
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		margin: -20px 0 0px 20px;
+		width: 250px;
+		height: 40px;
+		padding: 0 15px 0 15px;
+	
+	}
+	b#b19{
+		margin: 0 0 20px 20px ;
+		display: table;
+	}
+
+</style>
+<script>
+$(document).ready(function(){
+	$('#cardfrom').hide();
+	$('#bankaccountfrom').hide();  
+	$('#addbankaccount').hide();
+	$('#dateofbirth').show();
+	$('#birthtextfield').show();	  
+	$('#buisnessname').hide();
+	$('#buisnessfield').hide();	
+	$("input:radio[name='radio']:radio[value='1']").prop('checked', true);
+	
+	$("#cardfrominfo").change(function(){		
+		
+		if($("#cardfrominfo option:selected").val() == "card"){
+			$('#addcard').show();
+			$('#cardfrom').hide();
+			
+			$('#addbankaccount').hide();
+			$('#bankaccountfrom').hide();  
+			
+		}else if($("#cardfrominfo option:selected").val() == "moneyaccount"){
+			$('#addcard').hide();
+			$('#cardfrom').hide();
+			
+			$('#addbankaccount').show();
+			$('#bankaccountfrom').hide();
+		}
+	
+	});
+	
+	
+	  $("#addcard").click(function(){
+		 
+			if($("#cardfrominfo option:selected").val() == "card"){
+				$("#cardfrom").toggle(500);
+				$('#bankaccountfrom').hide(); 
+				
+	    	}else{
+	    		alert("결제 수단을 선택해주세요.")	
+	    	}
+	    	
+	  });
+	  
+	  $("#addbankaccount").click(function(){
+		  if($("#cardfrominfo option:selected").val() == "moneyaccount"){
+			  $('#cardfrom').hide();
+			  $("#bankaccountfrom").toggle(500); 
+				
+	    	}else{
+	    		alert("결제 수단을 선택해주세요.")	
+	    	}
+	    	
+	  });
+	  
+	  
+		  $(".radio").click(function(){
+			  var Val = $('input[name="radio"]:checked').val();
+	          if(Val == "1"){
+	        	  $('#dateofbirth').show();
+	        	  $('#birthtextfield').show();
+	        	  
+	        	  $('#buisnessname').hide();
+	        	  $('#buisnessfield').hide();
+	          }else if(Val == "2"){
+	        	  $('#dateofbirth').hide();
+	        	  $('#birthtextfield').hide();
+	        	  
+	        	  $('#buisnessname').show();
+	        	  $('#buisnessfield').show();
+	          }
+
+		  }); 
+	});
+	
+</script>
+</head>
+<body>
+<jsp:include page="../header.jsp"></jsp:include>
+	<div>
+	
+		<section id="topinfolist">
+			<div id="topinfodiv">
+				<b id="b1">지불정보 설정</b>
+				<div id="topinfodivdetail">
+					<a href="http://localhost:9090/tumblbugs/profilesetting">프로필 설정</a>
+					<a href="http://localhost:9090/tumblbugs/accountsetting">계정 설정</a>
+					<a href="http://localhost:9090/tumblbugs/payment">지불정보 설정</a>
+				</div>
+			</div>
+		</section>
+		
+		<section id="questionlist">
+		<b id ="b6">자주묻는질문</b><br><br>
+		<b>> 예약한 결제수단을 확인하고 싶어요.<br><br>
+		프로젝트별로 예약된 결제수단은<br>
+		<a href= "http://localhost:9090/tumblbugs/mysponsor">내 후원 현황</a>에서 조회하실 수 있습니다.</b><br><br>
+		<b>> 예약한 결제수단은 어떻게 바꾸나요?<br><br>
+		<a href="http://localhost:9090/tumblbugs/mysponsor">내 후원 현황</a> > 프로젝트 후원 상세 <br>
+		페이지에서 변경하실 수 있습니다.</b>
+		</section>
+		
+		<section id="cardfromlist">
+			<b id="b2">등록 또는 수정하실 결제 수단을 선택해 주세요.</b><br>
+			<select class="cardfrominfo" id="cardfrominfo">
+				<from action="" method="" name="addfrom" >
+					<option value="card">체크/신용카드</option>
+					<option value="moneyaccount">계좌</option>
+				</from>
+			</select>
+			
+			<div id="div3">
+				<button type="button" id ="addcard">카드추가하기</button>
+				<div>
+					<from action="" method="" name="" id="cardfrom">
+						<b id="b7">카드번호</b><br>
+						<input type="text" id="cardnumber" ><br>
+						<b id="b8">공백이나 하이픈(-) 없이 숫자만 입력해주세요</b><br>
+						<br>
+						<b id="b9">유효기간</b><br>
+						<select class="cardvalidity" id="cardvalidity"> 
+							<option>---</option> 
+							<option value="1">1</option>
+							<option value="2">2</option> 
+							<option value="3">3</option> 
+							<option value="4">4</option> 
+							<option value="5">5</option> 
+							<option value="6">6</option> 
+							<option value="7">7</option> 
+							<option value="8">8</option> 
+							<option value="9">9</option> 
+							<option value="10">10</option> 
+							<option value="11">11</option>
+							<option value="12">12</option> 
+						</select>
+						<select class="cardyear" id="cardyear"> 
+							<option>---</option> 
+							<option value="2019">2019</option> 
+							<option value="2020">2020</option> 
+							<option value="2021">2021</option> 
+							<option value="2022">2022</option> 
+							<option value="2023">2023</option> 
+							<option value="2024">2024</option> 
+							<option value="2025">2025</option> 
+							<option value="2026">2026</option> 
+							<option value="2027">2027</option> 
+							<option value="2028">2028</option> 
+							<option value="2029">2029</option> 
+						</select>
+						<br>
+						<b id="b10">생년월일6자리</b><br>
+						<input type="text" id="birthdaynumber">
+						<br>
+						<b id="b11">카드 비밀번호 앞 2자리</b><br>
+						<input type="text" id="cardpassword"><b>&nbsp;**</b>
+					</from>
+				</div><br>
+					
+				<div>
+				<button type="button" id ="addbankaccount">신규계좌 추가하기</button><br>
+					<from action="" method="" name="" id="bankaccountfrom">
+					<input type="checkbox" value="checkresult" id="agreebtn"><b id="b12">결제사 정보 제공 동의</b><br>
+					<b id="b13">계좌 등록을 하시려면 출금이체 동의가 필요합니다.<br>(전자금융거래법 제15조 1항)<br>휴대폰 번호 등으로  만든 평생계좌번호 및 가상계좌,<br>펀드/적금/정기예금등의  계좌는 등록이 불가능합니다.</b>
+					<b></b>
+					
+					<b id="b14">결제은행</b><br>
+						<select class="banknamelist" id="banknamelist">
+							<option>---</option>
+							<option>기업은행</option>
+							<option>국민은행</option>
+							<option>외환은행</option>
+							<option>농협</option>
+							<option>우리은행</option>
+							<option>SC은행</option>
+							<option>신한은행</option>
+							<option>하나은행</option>
+							<option>씨티은행</option>
+							<option>대구은행</option>
+							<option>부산은행</option>
+							<option>광주은행</option>
+							<option>제주은행</option>
+							<option>경남은행</option>
+							<option>새마을금고</option>
+							<option>신협</option>
+							<option>우체국</option>
+							<option>유안타증권</option>
+							<option>삼성증권</option>
+							<option>산업은행</option>
+						</select>
+						<br>
+					<b id="b15">계좌번호</b><br>
+					<input type="text" id="bankaccountnumber"><br>
+					<b id="b16">예금주명</b>
+					<input type="text" id="accountholder"><br>
+					
+					
+					<div class="checks1">
+                      <input type="radio" id="radio1" name="radio" value="1" class="radio">
+                      <label for="radio1">개인 계좌(개인사업자 포함)</label> 
+                    </div>
+
+					<div class="checks2">
+                      <input type="radio" id="radio2" name="radio" value="2" class="radio"> 
+                      <label for="radio2">법인 사업자</label> 
+                    </div>
+					
+						<b id="dateofbirth">생년월일 6자리</b>	<br>
+						<input type="text" id="birthtextfield">
+						<br>
+						<b id="buisnessname">사업자 등록번호</b>	<br>
+						<input type="text" id="buisnessfield"><br>
+						<b id="b19"></b>
+					</from>
+				</div>
+				
+			</div>
+			
+			<div id="div4">
+				<b id="b3">휴대폰 번호</b>
+				<input type="text" id="phonenumber">
+				<input type="text" id="phonenumber">
+				<input type="text" id="phonenumber"><br>
+				<b id="b4">오직 출금알람과 후원 선물 배송을 위해서만 사용됩니다.</b>
+				<b id="b5"></b>
+			</div>
+		</section>
+		
+		
+		
+		<button type="submit" id="button3" class="submitbtn">저장하기</button>
+		<a href=""><button type="button" id="button3">취소하기</button></a>
+	</div>
+<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

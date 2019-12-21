@@ -1,0 +1,600 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>텀블벅스 :: tumblbugs</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/jquery.number.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+<style>
+	#funding_edit section.background_wrap {
+		width: 100%; height: 280px;
+		background-image : url("http://localhost:9090/tumblbugs/images/project_content/myfunding_sample.png");
+		background-repeat: no-repeat;
+		background-position: 50%;
+		background-size: cover;
+		overflow: hidden;
+	}
+	#funding_edit section.background_wrap>div {
+		width: 100%; height: 280px;
+		background: rgba(250, 250, 250, 0.75);
+	}
+	#funding_edit section.background_wrap>div>div {
+		width: 1080px;
+		margin: auto;
+		padding: 70px 0px 70px 0px;
+		text-align: center;
+		vertical-align: center;
+	}
+	#funding_edit section.background_wrap>div>div>div {margin-bottom: 10px;}
+	#funding_edit section.background_wrap .page_title {
+		color: #645353;
+		font-size: 32pt;
+		font-weight: bold;
+	}
+	#funding_edit section.background_wrap .project_title {
+		font-size: 13.5pt; color: #645353;
+		font-weight: bold;
+	}
+	#funding_edit section.background_wrap .edit_menu a {
+		text-decoration: none;
+		font-size: 11.5pt;
+		color: #4a4a4a;
+		margin: 10px;
+		cursor: pointer;
+	}
+	#funding_edit section.background_wrap .edit_menu a:hover {
+		font-weight: bold;
+	}
+	#funding_edit section.content_wrap {
+		min-height: 680px;
+	}
+	
+	.content_wrap {
+		width: 1080px; margin: auto;
+		text-align: center;
+		padding: 50px 0px;
+	}
+	.content_wrap>div {display: none;}
+	
+	.payment_edit {display: none;}
+	#payment_editor {
+		text-align: left;
+		width: 400px;
+	}
+	
+	/* 펀딩 취소하기 */
+	.funding_cancel .cancel_box {
+		text-align: left;
+		font-size: 10.5pt;
+		background-color: #f4f3ed;
+		width: 650px;
+		margin: auto;
+		margin-bottom: 30px;
+		padding: 10px 20px 20px 20px;
+	}
+	.funding_cancel .cancel_box #cancel_box_title {
+		font-size: 11.5pt;
+		font-weight: bold;
+		color: #645353;
+		margin-bottom: 10px;
+	}
+	.funding_cancel img {
+		width: 140px;
+		vertical-align: top;
+	}
+	.funding_cancel .cancel_detail {
+		display: inline-block;
+		margin-left: 20px;
+	}
+	.funding_cancel .cancel_detail>label {
+		display: inline-block;
+		width: 100px;
+		font-weight: bold;
+		color: #676363;
+	}
+	.funding_cancel .cancel_detail>span#funding_price {
+		padding: 2px 5px;
+		background-color: #443333;
+		color: #f4f3f3;
+		border-radius: 3px;
+	}
+	.funding_cancel button {
+		width: 100px; height: 33px;
+		font-size: 10.5pt;
+		border: none;
+		margin: 10px;
+		outline: none;
+	}
+	#btn_funding_cancel {
+		background-color: #1e90ff;
+		border-radius: 4px;
+		color:white;
+	}
+	#btn_funding_cancel:hover {
+		background-color: #1d85ea;
+	}
+	#btn_go_funding_detail {
+		background-color: white;
+	}
+	#btn_go_funding_detail:hover {
+		color: #fa6462;
+	}
+	
+	/* 선물 변경하기 */
+	.reward_edit {color: #676363;}
+	form#reward_edit_form {
+		width: 680px;
+		margin: auto;
+		border: 1px solid #ebe8e8;
+	}
+	form#reward_edit_form label {
+		width: 100%;
+		margin: 0px;
+		border-bottom: 1px solid #ebe8e8;
+		cursor: pointer;
+		padding: 20px 0px;
+		line-height: 1.75;
+	}
+	form#reward_edit_form label:hover {
+		background-color: #fafafa;
+	}
+	form#reward_edit_form label.disabled {
+		cursor: default;
+		background-color: #ebeae5;
+		opacity: 0.7;
+	}
+	.reward_item[type="checkbox"] {display: none;}
+	.reward_edit .reward_price {
+		float: left;
+		width: 160px;
+		font-size: 15pt;
+		font-weight: bold;
+	}
+	.reward_edit .reward_detail {
+		float: right;
+		text-align: left;
+		width: 510px;
+	}
+	.reward_title, .select_cancel {font-size: 11.5pt; display: inline-block;}
+	.select_cancel {
+		display: none;
+		float: right;
+		border: 1px solid #1e90ff;
+		background-color: white;
+		color: #1e90ff;
+		width: 70px;
+		text-align: center;
+		margin-right: 20px;
+	}
+	.reward_component {
+		font-size: 11pt;
+		list-style-type: disc;
+		list-style-position: inside;
+		margin-left: 10px;
+	}
+	.expected_delivery_day, .reward_quantity, .reward_option {font-size: 10.5pt;}
+	.reward_quantity {margin-top: 10px;}
+	.reward_quantity_and_option {display: none;}
+	
+	/* 수량 선택 */
+	.option_label {
+		display: inline-block;
+		width: 40px;
+	}
+	.reward_quantity input#quantity {
+		padding: 2px 5px;
+		width: 35px; height: 25px;
+		text-align: center;
+		background-color: white;
+		border: none;
+		border-left: 1px solid lightgray;
+		border-right: 1px solid lightgray;
+	}
+	.quantity_option_box {
+		display: inline-block;
+		border: 1px solid lightgray;
+	}
+	#quantity_minus, #quantity_plus {
+		padding: 0px 5px;
+	}
+	
+	/* 옵션 선택 */
+	.reward_option>div {display: inline-block;}
+	.reward_option>.option_label {float: left; margin-top: 10px;}
+	.reward_option>.select_option_box {
+		width: 467px;
+		float: right;
+		overflow: auto;
+	}
+	.select_option_box select, .select_option_box input {
+		display: block;
+		border: 1px solid lightgray;
+		padding: 2px 5px;
+		margin-top: 10px;
+		min-width: 120px;
+	}
+	.write_option {
+		width: 95%;
+	}
+	
+	/* 추가 후원금 입력 */
+	#extra_funding input {
+		text-align: right;
+		width: 180px;
+		padding: 4px 8px;
+		border: 1px solid lightgray;
+		border-radius: 4px;
+	}
+	
+	/* confirm */
+	.confirm {
+		padding: 40px 0px;
+		font-weight: bold;
+	}
+	
+	/* 변경 버튼 */
+	#btn_reward_edit {
+		width: 120px; height: 40px;
+		border: none;
+		border-radius: 5px;
+		font-size: 11pt; font-weight: bold;
+		background-color: #1e90ff;
+		color: white;
+	}
+	#btn_reward_edit:hover {
+		background-color: #1d85ea;
+	}
+</style>
+<script>
+	$(document).ready(function(){
+		$(".content_wrap>div." + '${edit_menu}').show();
+		
+		//numberOnly
+		$("#extra_funding input").number(true);
+		
+		//선물 변경 > 선물 선택
+		$(".reward_edit label:not(.disabled)").click(function() {
+			$(this).css("background-color", "#f9f9f9");
+			$(this).find(".reward_quantity_and_option").slideDown();
+			$(this).find(".select_cancel").show();
+		});
+		
+		//선물 선택 취소
+		$(".select_cancel").click(function() {
+			$(this).siblings(".reward_quantity_and_option").slideUp();
+			$(this).closest("label").css("background-color", "white");
+			$(this).siblings(".reward_quantity_and_option").find("#quantity").val("1");
+			$(this).siblings(".reward_quantity_and_option").find("#option:first-child option:first-child").prop("selected", true);
+			$(this).siblings(".reward_quantity_and_option").find("#option:not(:first-child)").remove();
+			$(this).hide();
+			
+			return false;
+		});
+		
+		//선물 수량 -1
+		$(".quantity_option_box #quantity_minus").click(function() {
+			var quantity = $(this).siblings("#quantity");
+			if(quantity.val() > 1) {
+				quantity.val(quantity.val() - 1);
+				$(this).closest(".reward_quantity_and_option").find("select:last-child").remove();
+			}
+		});
+		
+		//선물 수량 +1
+		$(".quantity_option_box #quantity_plus").click(function() {
+			var quantity = $(this).siblings("#quantity");
+			quantity.val(parseInt(quantity.val()) + 1);
+			
+			var clone = $(this).closest(".reward_quantity_and_option").find("select:first-child").clone();
+			$(this).closest(".reward_quantity_and_option").find(".select_option_box").append(clone);
+		});
+		
+		$("div#payment_regist_editor").hide();
+		//$("div#registed_payment_list").hide();
+		$("button#payment_nav_list").click(function(){
+			$("div#payment_regist_editor").hide();
+			$("div#registed_payment_list").show();
+		});
+		
+		$("button#payment_nav_regist").click(function(){
+			$("div#registed_payment_list").hide();
+			$("div#payment_regist_editor").show();
+		});
+		
+		$("button.delete_payment").click(function(){
+			$(this).parent().remove();				
+		});
+		
+		$("div#payment_regist_account").hide();
+		$("div.dropdown-item").click(function(){
+			var text = $(this).text();
+			$("div#payment_regist_select>button").text(text);
+			if(text == '체크/신용카드') {
+				$("div#payment_regist_account").hide();
+				$("div#payment_regist_credit").show();
+			} else {
+				$("div#payment_regist_credit").hide();
+				$("div#payment_regist_account").show();
+				
+			}
+		});
+		
+		//펀딩 취소
+		$("#btn_funding_cancel").click(function() {
+			var result = confirm("정말 취소하시겠습니까?");
+			
+			if(result) {
+				alert("펀딩이 취소되었습니다.");
+				location.href = "http://localhost:9090/tumblbugs/myfunding";
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="funding_edit">
+		<section class="background_wrap">
+			<div>
+				<div>
+					<div class="page_title">변경하기</div>
+					<div class="project_title">월광 : 달빛과 여정 금속 주사위 & 케이스 프로젝트</div>
+					<nav class="edit_menu">
+						<a href="http://localhost:9090/tumblbugs/myfunding/edit_reward">선물/금액 변경</a>
+						<a href="http://localhost:9090/tumblbugs/myfunding/edit_payment">결제수단 변경</a>
+						<a href="http://localhost:9090/tumblbugs/myfunding/cancel_funding">취소하기</a>
+					</nav>
+				</div>
+			</div>
+		</section>
+		<section class="content_wrap">
+			<div class="reward_edit">
+				<form id="reward_edit_form" name="reward_edit_form">
+					<label for="reward_id_03" class="disabled">
+						<input type="checkbox" id="reward_id_03" class="reward_item" disabled="disabled">	<!-- id로 선물 id가 들어간다. -->
+						<div class="reward_price">95,000원 +<br>선착순 마감됨!</div>
+						<div class="reward_detail">
+							<div class="reward_title">[얼리버드 특가] [배송비 포함]</div>
+							<ul class="reward_component">
+								<li>월광 주사위 (X1)</li>
+								<li>월광 주사위 패드 (X2)</li>
+								<li>월광 주사위 케이스 (X1)</li>
+								<li>스티커 & 명함 (X1)</li>
+							</ul>
+							<div class="expected_delivery_day">예상 전달일: 2020년 3월 2일</div>
+							<div class="reward_quantity_and_option">
+								<div class="reward_quantity">
+									<span class="option_label">수량</span>
+									<div class="quantity_option_box">
+										<span id="quantity_minus">-</span>
+										<input id="quantity" type="text" value="1" disabled="disabled">
+										<span id="quantity_plus">+</span>
+									</div>
+								</div>
+								<div class="reward_option">
+									<div class="option_label">옵션</div>
+									<div class="select_option_box">
+										<select class="select_option" id="option">
+											<option>옵션 1</option>
+											<option>옵션 2</option>
+											<option>옵션 3</option>
+										</select>
+										<!-- <input class="write_option" id="option" type="text"> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</label>
+					<label for="reward_id_01" id="reward_id_01">
+						<input type="checkbox" id="reward_id_01" class="reward_item">	<!-- id로 선물 id가 들어간다. -->
+						<div class="reward_price">13,000원 +</div>
+						<div class="reward_detail">
+							<div class="reward_title">[개별 구성] [배송비 포함]</div>
+							<span class="select_cancel">선택 취소</span>
+							<ul class="reward_component">
+								<li>월광 주사위 패드 (X2)</li>
+								<li>스티커 & 명함 (X1)</li>
+							</ul>
+							<div class="expected_delivery_day">예상 전달일: 2020년 3월 2일</div>
+							<div class="reward_quantity_and_option">
+								<div class="reward_quantity">
+									<span class="option_label">수량</span>
+									<div class="quantity_option_box">
+										<span id="quantity_minus">-</span>
+										<input id="quantity" type="text" value="1" disabled="disabled">
+										<span id="quantity_plus">+</span>
+									</div>
+								</div>
+								<div class="reward_option">
+									<div class="option_label">옵션</div>
+									<div class="select_option_box">
+										<select class="select_option" id="option">
+											<option>옵션 1</option>
+											<option>옵션 2</option>
+											<option>옵션 3</option>
+										</select>
+										<!-- <input class="write_option" id="option" type="text"> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</label>
+					<label for="reward_id_02" id="reward_id_02">
+						<input type="checkbox" id="reward_id_02" class="reward_item">	<!-- id로 선물 id가 들어간다. -->
+						<div class="reward_price">48,000원 +</div>
+						<div class="reward_detail">
+							<div class="reward_title">[개별 구성] [배송비 포함]</div>
+							<span class="select_cancel">선택 취소</span>
+							<ul class="reward_component">
+								<li>월광 주사위 케이스 (X1)</li>
+								<li>스티커 & 명함 (X1)</li>
+							</ul>
+							<div class="expected_delivery_day">예상 전달일: 2020년 3월 2일</div>
+							<div class="reward_quantity_and_option">
+								<div class="reward_quantity">
+									<span class="option_label">수량</span>
+									<div class="quantity_option_box">
+										<span id="quantity_minus">-</span>
+										<input id="quantity" type="text" value="1" disabled="disabled">
+										<span id="quantity_plus">+</span>
+									</div>
+								</div>
+								<div class="reward_option">
+									<div class="option_label">옵션</div>
+									<div class="select_option_box">
+										<select class="select_option" id="option">
+											<option>옵션 1</option>
+											<option>옵션 2</option>
+											<option>옵션 3</option>
+										</select>
+										<!-- <input class="write_option" id="option" type="text"> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</label>
+					<label id="extra_funding">
+						<div class="reward_price">후원금 더하기</div>
+						<div class="reward_detail">
+							<input type="text" placeholder="0"> 원을 추가로 후원합니다.
+						</div>
+					</label>
+				</form>
+				<div class="confirm">월광 : 달빛과 여정 금속 주사위 & 케이스 프로젝트에 <span id="total_price">0</span>원을 펀딩합니다.</div>
+				<div><button id="btn_reward_edit" type="button">변경하기</button></div>
+			</div>
+			
+			
+			
+			<div class="payment_edit">
+				<div id="payment_editor">
+					<div id="payment_nav">
+						<button type="button" id="payment_nav_list"><i class="fas fa-list"></i></button>
+						<button type="button" id="payment_nav_regist"><i class="fas fa-plus-circle"></i></button>
+					</div>
+					<div id="registed_payment_list">
+						<div class="registed_payment_content">
+							<i class="far fa-credit-card"></i>
+							<span>국민카드 4327</span>
+							<button type="button" class="delete_payment"></button>
+						</div>
+						<div class="registed_payment_content">
+							<i class="fas fa-money-check"></i>
+							<span>국민은행 2707</span>
+							<button type="button" class="delete_payment"></button>
+						</div>
+						<div id="registed_payment_not_founded">
+							<i class="far fa-meh"></i>
+							<div>등록된 결제 수단이 없습니다.</div>
+						</div>
+					</div>
+					<div id="payment_regist_editor">
+						<span>등록할 결제 수단을 선택해 주세요.</span>
+						<div id="payment_regist_select">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">체크/신용카드</button>
+						    <div class="dropdown-menu" >
+						      <div class="dropdown-item">체크/신용카드</div>
+						      <div class="dropdown-item">은행계좌</div>
+						    </div>
+						</div>
+						<form>
+							<div id="payment_regist_credit">
+								<div class="payment_regist_space"></div>
+								<div class="payment_regist_input">
+									<label>신용(체크)카드 번호</label>
+									<input type="text" class="form-control">
+									<input type="text" class="form-control">
+									<input type="text" class="form-control">
+									<input type="text" class="form-control">
+									<!-- <span class="payment_regist_guide">공백이나 하이픈(-) 없이 숫자만 입력해주세요</span> -->
+								</div>
+								<div class="payment_regist_input">
+									<label>카드 유효 기간</label>
+									<input type="text" placeholder="MM/YY" class="form-control">
+								</div>
+								<div class="payment_regist_input">
+									<label>카드 비밀번호</label>
+									<input type="text" placeholder="앞2자리" class="form-control">
+								</div>
+								<div class="payment_regist_input">
+									<label>생년월일</label>
+									<input type="text" placeholder="주민등록번호 앞 6자리" class="form-control">
+								</div>
+							</div>
+							
+							<div id="payment_regist_account">
+								<div class="payment_regist_space"></div>
+								<div class="payment_regist_input">
+									<label>결제 은행</label>
+									<select>
+										<option>국민은행</option>
+										<option>농협</option>
+										<option>우리은행</option>
+										<option>SC은행</option>
+										<option>삼성은행</option>
+										<option>씨티은행</option>
+										<option>대구은행</option>
+										<option>부산은행</option>
+										<option>광주은행</option>
+										<option>제주은행</option>
+										<option>경남은행</option>
+										<option>새마을금고</option>
+										<option>신협</option>
+										<option>우체국</option>
+										<option>하나은행</option>
+										<option>신한은행</option>
+										<option>외환은행</option>
+										<option>유안타증권</option>
+										<option>기업은행</option>
+										<option>산업은행</option>
+									</select>
+								</div>
+								<div class="payment_regist_input">
+									<label>계좌번호</label>
+									<input type="text" class="form-control">
+									<span class="payment_regist_guide">*핸드폰 번호 등으로 만든 평생계좌번호 및 가상계좌,펀드/적금/정기예금 등의 계좌는 등록이 불가능합니다.</span>
+								</div>
+								<div class="payment_regist_input">
+									<label>예금주명</label>
+									<input type="text" class="form-control">
+								</div>
+								<div class="payment_regist_input">
+									<label>생년월일</label>
+									<input type="text" placeholder="주민등록번호 앞 6자리" class="form-control">
+								</div>
+							</div>
+							
+							<div id="payment_regist_button">
+								<button id="payment_regist_submit" type="button">등록하기</button>
+								<button id="payment_regist_reset" type="reset">취소하기</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="funding_cancel">
+				<div class="cancel_box">
+					<div id="cancel_box_title">취소되는 사항</div>
+					<div>
+						<img src="http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg">
+						<div class="cancel_detail">
+							<label>예약된 금액</label><span id="funding_price">90,000원</span></br>
+							<label>선택하신 선물</label><span>A 스몰 리스 만들기 키트 1개 + 무료 배송 외 1개</span>
+						</div>
+					</div>
+				</div>
+				<div>
+					<button type="button" id="btn_funding_cancel">취소하기</button>
+					<a href="http://localhost:9090/tumblbugs/myfunding/detail"><button type="button" id="btn_go_funding_detail">다시 생각해보기</button></a>
+				</div>
+			</div>
+		</section>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

@@ -1,0 +1,35 @@
+package com.tumblbugs.dao;
+
+import java.util.Date;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.MemberVO;
+import com.tumblbugs.vo.PaymentVO;
+
+@Repository
+public class MypageDAO {
+	@Autowired
+	private SqlSessionTemplate sqlSession; 	
+	private String namespace = "mapper.member";	
+	
+	public int getupdate_profile(MemberVO vo) {
+
+		return sqlSession.update(namespace + ".update_profile" , vo);		
+	}
+	
+	public int getselect_profile_pass(String pass) {
+
+		return sqlSession.selectOne(namespace + ".select_profile_pass" , pass);	
+		
+	}
+	public int getpayment_update(PaymentVO vo) {
+
+		return sqlSession.update(namespace + ".payment_update_proc" , vo);	
+		
+	}
+
+	
+}

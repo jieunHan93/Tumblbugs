@@ -1,0 +1,19 @@
+package com.tumblbugs.dao;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.ProjectVO;
+
+@Repository
+public class PJContentDAO {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private static String namespace = "mapper.pjcontent";
+	
+	public ProjectVO getContent(String pj_id) {
+		return sqlSession.selectOne(namespace + ".content", pj_id);
+	}
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.notice">
+	<insert id="notice_write" parameterType="com.tumblbugs.vo.NoticeVO">
+		insert into tum_notice values('NO' || LPAD(tum_notice_sequ.nextval, 5, 0), #{notice_title}, #{notice_content:VARCHAR}, 
+								#{notice_category}, sysdate, #{notice_event_start}, #{notice_event_end})
+	</insert>
+</mapper>

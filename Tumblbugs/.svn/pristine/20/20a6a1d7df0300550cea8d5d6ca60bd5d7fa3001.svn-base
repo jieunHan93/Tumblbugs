@@ -1,0 +1,112 @@
+package com.tumblbugs.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.tumblbugs.dao.MypageDAO;
+import com.tumblbugs.vo.MemberVO;
+import com.tumblbugs.vo.PaymentVO;
+
+@Controller
+public class MypageController {
+	@Autowired
+	MypageDAO mypagedao;
+	
+	@RequestMapping(value="/mypage/profile", method=RequestMethod.GET)
+	public String profil() {
+		return "/mypage/profile_update";
+	}
+	
+	@RequestMapping(value="/profile_proc", method=RequestMethod.POST)
+	public String profile_proc(MemberVO vo) {
+		
+		ModelAndView mv = new ModelAndView();
+		mypagedao.getupdate_profile(vo);
+		mv.setViewName("/profile_proc");
+		return "/index";
+	}
+	
+	@ResponseBody	
+	@RequestMapping(value="/mypage/select_profile_pass", method=RequestMethod.GET)
+	public String select_profile_pass(String pass) {
+		System.out.println("pass="+pass);
+		int result = mypagedao.getselect_profile_pass(pass);	
+		return String.valueOf(result);
+		
+	}
+	
+	@RequestMapping(value="/mypage/payment", method=RequestMethod.GET)
+	public String payment() {
+		return "/mypage/payment";
+	}
+	
+	@RequestMapping(value="/payment_update_proc", method=RequestMethod.POST)
+	public String payment_update_proc(PaymentVO vo) {
+		mypagedao.getpayment_update(vo);
+		return "/mypage/payment_proc";
+	}
+
+
+	
+	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
+	public String funding() {
+		return "/mypage/myfunding";
+	}
+	
+	@RequestMapping(value="/myfunding/detail", method=RequestMethod.GET)
+	public String funding_detail(String funding_id) {
+		return "/mypage/myfunding_detail";
+	}
+	
+	@RequestMapping(value="/myfunding/edit_reward", method=RequestMethod.GET)
+	public ModelAndView funding_edit_reward(String funding_id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/mypage/myfunding_edit");
+		mv.addObject("edit_menu", "reward_select");
+		return mv;
+	}
+	@RequestMapping(value="/myfunding/edit_payment", method=RequestMethod.GET)
+	public ModelAndView funding_edit_payment(String funding_id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/mypage/myfunding_edit");
+		mv.addObject("edit_menu", "payment_edit");
+		return mv;
+	}
+	@RequestMapping(value="/myfunding/cancel_funding", method=RequestMethod.GET)
+	public ModelAndView funding_cancel(String funding_id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/mypage/myfunding_edit");
+		mv.addObject("edit_menu", "funding_cancel");
+		return mv;
+	}
+	
+	@RequestMapping(value="/mypage/message", method=RequestMethod.GET)
+	public ModelAndView message() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/mypage/message");
+		return mv;
+	}
+	
+	@RequestMapping(value="/mypage/message/content", method=RequestMethod.GET)
+	public ModelAndView message_content() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/mypage/message_content");
+		return mv;
+	}
+	
+	@RequestMapping(value="/myproject", method=RequestMethod.GET)
+	public String myproject() {
+		return "/mypage/myproject";
+	}
+	
+	@RequestMapping(value="/myproject/delivery", method=RequestMethod.GET)
+	public ModelAndView myproject_delivery() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/mypage/myproject_delivery");
+		return mv;
+	}
+}

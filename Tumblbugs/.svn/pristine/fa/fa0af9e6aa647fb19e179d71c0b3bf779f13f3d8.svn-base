@@ -1,0 +1,168 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/project_content.css">
+<script>
+	$(document).ready(function() {
+		$(".menu_content").hide();
+		//$("#menu_tab>nav>a#story").addClass("selectedMenu");
+		$("#menu_tab>nav>a#story").css("color","black").css("border-bottom","3px solid black");
+		$("#menu_content #community").show();
+		
+		//menu tab 상단 고정
+		var tabOffset = $("section#menu_tab").offset();
+		$(window).scroll(function() {
+			if($(document).scrollTop() > tabOffset.top) {
+				$("section#menu_tab").addClass("fixation");
+			} else {
+				$("section#menu_tab").removeClass("fixation");
+			}
+		});
+		
+		//tab
+		$("nav>a").click(function() {
+			//event.preventDefault();
+			
+			$(".menu_content").hide();
+			var id = $(this).attr("id");
+			$("#menu_tab>nav>a").css("color","#a9a9a9").css("border-bottom","none");
+			$("#menu_tab>nav>a#" + id).css("color","black").css("border-bottom","3px solid black");
+			$("#menu_content #" + id).show();
+		});
+		
+		
+	});
+</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="project_content">
+		<section id="overview">
+			<div>
+				<a id="category" href="#">웹툰</a>
+				<div id="title">네이버웹툰 <대학일기> 사랑스러운 바보개의 재탄생!</div>
+				<div id="creator">
+					<span id="creator_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+					<span id="creator_name"><a href="#">네이버웹툰</a></span>
+				</div>
+			</div>
+			<div>
+				<div id="main_img"><img src="http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg"></div>
+				<div id="introduction">
+					<div>
+						<div class="introduction_subtitle">모인금액</div>
+						<span class="introduction_value">67,720,000</span>
+						<span class="introduction_quantity">원</span>
+						<span id="percentage">262%</span>
+					</div>
+					<div>
+						<div class="introduction_subtitle">남은시간</div>
+						<span class="introduction_value">33</span>
+						<span class="introduction_quantity">일</span>
+					</div>
+					<div>
+						<div class="introduction_subtitle">후원자</div>
+						<span class="introduction_value">1,523</span>
+						<span class="introduction_quantity">명</span>
+					</div>
+					<div id="funding_information">
+						<div id="funding_information_title">펀딩 진행중</div>
+						<div id="funding_information_content">목표 금액인 25,800,000원이 모여야만 결제됩니다.<br>결제는 2019년 12월 24일에 다함께 진행됩니다.</div>
+					</div>
+					<div>
+						<a href="#"><button type="button" id="goFunding">프로젝트 밀어주기</button></a>
+						<button type="button" id="shareProject">
+							<svg width="20px" height="22px" viewBox="0 0 20 22" version="1.1" xmlns="http://www.w3.org/2000/svg">
+								<title>ic_share_B</title>
+								<g id="PC" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+									<g id="Asset" transform="translate(-152.000000, -414.000000)">
+										<g id="btn_share-copy-2" transform="translate(131.000000, 399.000000)">
+											<g id="ic_share_B" transform="translate(19.000000, 14.000000)">
+												<g id="ic_share">
+													<rect id="Rectangle-Copy-9" fill-rule="nonzero" x="0" y="0" width="24" height="24"></rect>
+													<g id="share-2" transform="translate(3.000000, 2.000000)" stroke="#5C5C5C" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+														<circle id="Oval" cx="15" cy="3" r="3"></circle><circle id="Oval" cx="3" cy="10" r="3"></circle>
+														<circle id="Oval" cx="15" cy="17" r="3"></circle>
+														<path d="M5.59,11.51 L12.42,15.49" id="Path"></path>
+														<path d="M12.41,4.51 L5.59,8.49" id="Path"></path>
+													</g>
+												</g>
+											</g>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="menu_tab">
+			<nav>
+				<a id="story" href="#">스토리</a>
+				<a id="community" href="#">커뮤니티<span id="community_count">4</span></a>
+				<a id="fundingInfo" href="#">펀딩 안내</a>
+			</nav>
+		</section>
+		<section id="menu_content">
+			<div>
+				<div class="menu_content" id="story"><jsp:include page="project_content_story.jsp"></jsp:include></div>
+				<div class="menu_content" id="community"><jsp:include page="project_content_community.jsp"></jsp:include></div>
+				<div class="menu_content" id="fundingInfo"><jsp:include page="project_content_fundingInfo.jsp"></jsp:include></div>
+				<aside>
+					<div class="white_box" id="creator_infomation">
+						<div id="box_header">창작자 소개</div>
+						<div>
+							<span id="creator_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+							<span id="creator_name"><a href="#">네이버웹툰</a></span>
+						</div>
+						<div class="line_div" id="creator_intro">네이버웹툰 <대학일기> 바보개</div>
+						<div id="creator_login">마지막 로그인&nbsp; <b>8시간 전</b></div>
+						<div id="creator_project">진행한 프로젝트&nbsp; <b>2</b>&nbsp;&nbsp;&nbsp; 밀어준 프로젝트&nbsp; <b>0</b></div>
+						<a href="sendMessage"><button type="button" id="btnSendMessage"><i class="fas fa-envelope"></i> &nbsp;창작자에게 문의하기</button></a>
+					</div>
+					<div id="option_count">선택할 수 있는 <b>2</b>개의 선물이 있습니다</div>
+					<div class="white_box" id="present_option">
+						<div id="box_header">
+							<span id="sponsor_count"><i class="fas fa-check"></i> 1457명이 선택</span>
+							<span id="remaining_earlybird_count">15개 남음</span>
+						</div>
+						<div id="price_info">
+							<div id="price">43,000원 +</div>
+							<div>얼리버드 추가 할인 5%, 직접 수령(배송X)</div>
+						</div>
+						<ul>
+							<li>바보개 필로우쿠션 (x1)</li>
+							<li>바보개 파우치 (x1)</li>
+						</ul>
+						<div class="line_div" id="expected_delivery_day">예상 전달일 <b>2020년 1월 31일</b></div>
+						<a href="http://localhost:9090/tumblbugs/funding/step1"><button type="button">선물 선택하고 밀어주기</button></a>
+					</div>
+					<div class="white_box" id="present_option">
+						<div id="box_header">
+							<span id="sponsor_count"><i class="fas fa-check"></i> 65명이 선택</span>
+							<!-- <span id="remaining_earlybird_count">15개 남음</span> -->
+						</div>
+						<div id="price_info">
+							<div id="price">86,000원 +</div>
+							<!-- <div>얼리버드 추가 할인 5%, 직접 수령(배송X)</div> -->
+						</div>
+						<ul>
+							<li>바보개 필로우쿠션 (x2)</li>
+							<li>바보개 파우치 (x2)</li>
+						</ul>
+						<div class="line_div" id="expected_delivery_day">예상 전달일 <b>2020년 1월 31일</b></div>
+						<a href="http://localhost:9090/tumblbugs/funding/step1"><button type="button">선물 선택하고 밀어주기</button></a>
+					</div>
+				</aside>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

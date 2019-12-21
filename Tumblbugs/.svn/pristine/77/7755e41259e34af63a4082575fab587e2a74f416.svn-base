@@ -1,0 +1,379 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<script type="text/javascript">
+$(document).ready(function(){
+		 if(result != null && result = "ture"){
+			 alert("인증성공");
+		 }
+	});
+
+</script>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<title>텀블벅스 :: tumblbugs</title>
+	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/js/slick.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/js/swiper.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+	<script>
+    $(document).ready(function () {
+        var swiper = new Swiper('div#main_header>section>div.swiper-container', {
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: {
+              delay: 5000,
+              disableOnInteraction: false,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+            
+        });
+        $('section#main_title1 div.multiple-items').slick({
+			infinite: true,
+			slidesToShow: 4,
+			slidesToScroll: 4
+		});
+    	$('section#main_title2 div.multiple-items').slick({
+			infinite: true,
+			slidesToShow: 4,
+			slidesToScroll: 4
+		});
+    	$('section#main_title3 div.multiple-items').slick({
+			infinite: true,
+			slidesToShow: 4,
+			slidesToScroll: 4
+		});
+    	$('section#main_title4 div.multiple-items').slick({
+			infinite: true,
+			slidesToShow: 4,
+			slidesToScroll: 4
+		});
+    	$('div#main_colection_banner div.multiple-items').slick({
+			infinite: true,
+			slidesToShow: 2,
+			slidesToScroll: 2
+		});
+    	
+		$("a.main_project_sort").click(function(){
+			var menu_id = $(this).attr("id");
+			/*alert(menu_id);*/
+			if(menu_id == "sort_editorpick_project"){
+				sessionStorage.clear();
+				sessionStorage.setItem("ongoing","ongoing");
+				sessionStorage.setItem("editorpick","1");
+				sessionStorage.setItem("order","fav");
+			} else if(menu_id == "sort_rateup_project") {
+				sessionStorage.clear();
+				sessionStorage.setItem("ongoing","ongoing");
+				sessionStorage.setItem("rate","2");
+				sessionStorage.setItem("editorpick","1");
+				sessionStorage.setItem("order","deadline");
+			} else if(menu_id == "sort_new_project"){
+				sessionStorage.clear();
+				sessionStorage.setItem("ongoing","ongoing");
+				sessionStorage.setItem("editorpick","1");
+				sessionStorage.setItem("order","new");
+			} else {
+				sessionStorage.clear();
+			}
+			location.href="http://localhost:9090/tumblbugs/discover";
+		});
+	});
+  </script>
+</head>
+<body>
+	<jsp:include page="header.jsp"></jsp:include>
+		
+	<div id="main_header">
+		<section>
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+			      <div class="swiper-slide" id="main_slide1">
+				      <a href="http://localhost:9090/tumblbugs/project_content">
+				     	 <div id="swiper-content">
+				     	 	<h1 class="swiper-title">수면을 위한<br>차, 옷, 향</h1>
+				     	 	<div class="swiper-subtitle">일상에 스며들어 수면 루틴을 살표시 바꿔주는 것들</div>
+				     	 </div>
+				      </a>
+			      </div>
+			      <div class="swiper-slide" id="main_slide2">
+			      	<a href="#">
+				     	 <div id="swiper-content">
+				     	 	<h1 class="swiper-title">당신이 두고 간<br>오늘의 조각들</h1>
+				     	 	<div class="swiper-subtitle">뉴욕 브루클린 카페에서 바리스타로 일하며 기록한<카운터 일기></div>
+				     	 </div>
+				      </a>
+			      </div>
+			      <div class="swiper-slide" id="main_slide3">
+			      	<a href="#">
+				     	 <div id="swiper-content">
+				     	 	<h1 class="swiper-title">오후에도 45℃<br>온도를 유지합니다</h1>
+				     	 	<div class="swiper-subtitle">멋스럽고 간편한 비건가죽 도시락 가방</div>
+				     	 </div>
+				      </a>
+			      </div>
+			      <div class="swiper-slide" id="main_slide4">
+			      	<a href="#">
+				     	 <div id="swiper-content">
+				     	 	<h1 class="swiper-title">드랙 처음 봐?<br>이렇게 사는 애도 있어</h1>
+				     	 	<div class="swiper-subtitle">드랙아티스트 나나영롱킴 다큐멘터리 <나, 나></div>
+				     	 </div>
+				      </a>
+			      </div>
+			      <div class="swiper-slide" id="main_slide5">
+			      	<a href="#">
+				     	 <div id="swiper-content">
+				     	 	<h1 class="swiper-title">막막한 진로 고민도<br>PT 받다요</h1>
+				     	 	<div class="swiper-subtitle">프로진로고민러를 위한 고민 근육 기르기 가이드북</div>
+				     	 </div>
+				      </a>
+			      </div>
+			    </div>
+			    <!-- Add Pagination -->
+			    <div class="swiper-pagination"></div>
+		  </div>
+		</section>
+	</div>
+	
+	<div id="main_content">
+		<section id="main_title1" class="main_content_section">
+		<div>
+		  <div>
+			<div id="main_content_title1">
+			<a href="http://localhost:9090/tumblbugs/collections">
+				주목할 만한 프로젝트
+				<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" data-reactid="98"><polyline points="9 18 15 12 9 6"></polyline></svg>
+			</a>
+			</div>
+			<div id="main_content_swiperBtn">
+				<!-- <div class="swiper-button-prev swiper-button-white"></div>
+    			<div class="swiper-button-next swiper-button-white"></div> -->
+			</div>
+		  </div>
+		  <!-- slick -->
+		  <div class="multiple-items">
+		  	<% for(int i=0; i<8; i++){ %>
+		  	<div>
+		  		<div class="slick-card">
+		      		<a href="http://localhost:9090/tumblbugs/project_content">
+		      			<img id="product_img" src="http://localhost:9090/tumblbugs/images/title1_img01.jpg">
+		      			<div class="slick-card-content">
+		      				<div class="slick-card-content-title">
+		      					<h1>2020 맛있는 달력 & 굿즈</h1>
+		      					<p>연찡</p>
+		      				</div>
+		      				<div class="progress">
+							  	<div class="progress-bar" role="progressbar" aria-valuenow="185" aria-valuemin="0" aria-valuemax="100" style="width:185%"></div>
+							</div>
+		      				<div class="slick-card-content-others">
+		      					<div>
+		      						<i class="far fa-calendar-alt"></i>
+		      						<span>25일 남음</span>
+		      					</div>
+		      					<div>
+		      						<span>1,226,000원</span>
+		      						<span>185%</span>
+		      					</div>
+		      				</div>
+		      			</div>
+		      		</a>
+		      	</div>
+		  	</div>
+		  	<% } %>
+		  </div>
+		  </div>
+		</section>
+		
+		<div id="main_colection_banner">
+			<section class="main_content_section">
+				<div id="main_banner_title">진행중인 기획전</div>
+				<div class="multiple-items">
+				<% for(int i=0;i<6;i++){ %>
+				 <a href="http://localhost:9090/tumblbugs/collections">
+				 	<div class="main_banner_card">
+				 		<div class="main_banner_card_img"><img src="http://localhost:9090/tumblbugs/images/miri_christmas.png"></div>
+				 		<span class="main_banner_card_title">
+				 			<div>미리 크리스마스</div>
+				 		</span>
+				 		<div class="main_banner_card_space"></div>
+				 		<span class="main_banner_card_count">
+				 			<span>26</span>개의 프로젝트
+				 		</span>
+				 	</div>
+				 </a>
+				 <% } %>
+				</div>
+			</section>
+		</div>
+		
+		<section id="main_title2" class="main_content_section">
+		<div>
+		  <div>
+			<div id="main_content_title1">
+			<a href="#" id="sort_editorpick_project" class="main_project_sort">
+				인기 추천 프로젝트
+				<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" data-reactid="98"><polyline points="9 18 15 12 9 6"></polyline></svg>
+			</a>
+			</div>
+		  </div>
+		  <!-- slick -->
+		  <div class="multiple-items">
+		  	<% for(int i=0; i<8; i++){ %>
+		  	<div>
+		  		<div class="slick-card">
+		      		<a href="#">
+		      			<img id="product_img" src="http://localhost:9090/tumblbugs/images/title2_img01.jpg">
+		      			<div class="slick-card-content">
+		      				<div class="slick-card-content-title">
+		      					<h1>별빛의 색을 담아 시를 쓰다. 윤동주 별헤는 밤 잉크</h1>
+		      					<p>글입다 공방</p>
+		      				</div>
+		      				<div class="progress">
+							  	<div class="progress-bar" role="progressbar" aria-valuenow="1063" aria-valuemin="0" aria-valuemax="100" style="width:1063%"></div>
+							</div>
+		      				<div class="slick-card-content-others">
+		      					<div>
+									<i class="far fa-calendar-alt"></i>
+		      						<span>11일 남음</span>
+		      					</div>
+		      					<div>
+		      						<span>5,319,600원</span>
+		      						<span>1063%</span>
+		      					</div>
+		      				</div>
+		      			</div>
+		      		</a>
+		      	</div>
+		  	</div>
+		  	<% } %>
+		  </div>
+		  </div>
+		</section>
+		
+		
+		<section id="main_title3" class="main_content_section">
+		<div>
+		  <div>
+			<div id="main_content_title1">
+			<a href="#" id="sort_rateup_project" class="main_project_sort">
+			성공 임박 프로젝트
+				<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" data-reactid="98"><polyline points="9 18 15 12 9 6"></polyline></svg>
+			</a>
+			</div>
+			<div id="main_content_swiperBtn">
+				<!-- <div class="swiper-button-prev swiper-button-white"></div>
+    			<div class="swiper-button-next swiper-button-white"></div> -->
+			</div>
+		  </div>
+		  <!-- slick -->
+		  <div class="multiple-items">
+		  	<% for(int i=0; i<8; i++){ %>
+		  	<div>
+		  		<div class="slick-card">
+		      		<a href="#">
+		      			<img id="product_img" src="http://localhost:9090/tumblbugs/images/title3_img01.jpg">
+		      			<div class="slick-card-content">
+		      				<div class="slick-card-content-title">
+		      					<h1>세상에 없어서 만들었다 2탄. 코듀로이 개플룩</h1>
+		      					<p>오호스</p>
+		      				</div>
+		      				<div class="progress">
+							  	<div class="progress-bar" role="progressbar" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100" style="width:84%"></div>
+							</div>
+		      				<div class="slick-card-content-others">
+		      					<div>
+		      						<i class="far fa-calendar-alt"></i>
+		      						<span>2일 남음</span>
+		      					</div>
+		      					<div>
+		      						<span>3,384,000원</span>
+		      						<span>84%</span>
+		      					</div>
+		      				</div>
+		      			</div>
+		      		</a>
+		      	</div>
+		  	</div>
+		  	<% } %>
+		  </div>
+		  </div>
+		</section>
+		
+		
+		<section id="main_title4" class="main_content_section">
+		<div>
+		  <div>
+			<div id="main_content_title1">
+			<a href="#" id="sort_new_project" class="main_project_sort">
+				신규 추천 프로젝트
+				<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" data-reactid="98"><polyline points="9 18 15 12 9 6"></polyline></svg>
+			</a>
+			</div>
+			<div id="main_content_swiperBtn">
+				<!-- <div class="swiper-button-prev swiper-button-white"></div>
+    			<div class="swiper-button-next swiper-button-white"></div> -->
+			</div>
+		  </div>
+		  <!-- slick -->
+		  <div class="multiple-items">
+		  	<% for(int i=0; i<8; i++){ %>
+		  	<div>
+		  		<div class="slick-card">
+		      		<a href="#">
+		      			<img id="product_img" src="http://localhost:9090/tumblbugs/images/title4_img01.png">
+		      			<div class="slick-card-content">
+		      				<div class="slick-card-content-title">
+		      					<h1>2080년 중고상점 운영 시물레이션 게임 '우산 금지'</h1>
+		      					<p>후추게임스튜디오</p>
+		      				</div>
+		      				<div class="progress">
+							  	<div class="progress-bar" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100" style="width:98%"></div>
+							</div>
+		      				<div class="slick-card-content-others">
+		      					<div>
+		      						<i class="far fa-calendar-alt"></i>
+		      						<span>41일 남음</span>
+		      					</div>
+		      					<div>
+		      						<span>4,915,001원</span>
+		      						<span>98%</span>
+		      					</div>
+		      				</div>
+		      			</div>
+		      		</a>
+		      	</div>
+		  	</div>
+		  	<% } %>
+		  </div>
+		  </div>
+		</section>
+		
+		<a id="main_back_color" href="#">
+			<div id="main_banner_bot">
+				<section class="main_content_section">
+					<div>
+						<h2>마음 속 프로젝트 아이디어, 텀블벅스에서 현실로</h2>
+						<p>프로젝트를 위한 자금도 마련하고, 든든한 후원자 네트워크도 확보하세요</p>
+					</div>
+				</section>
+			</div>
+		</a>
+	</div>
+	
+	<!-- <button type="button" class="top"></button> -->
+	
+	<jsp:include page="footer.jsp"></jsp:include>
+</body>
+</html>

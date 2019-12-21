@@ -1,0 +1,272 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>텀블벅스 :: tumblbugs</title>
+	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<style>
+		div#mypage_message_header{
+			background-image: url("http://localhost:9090/tumblbugs/images/message_background1.png");
+			height:179px;
+			background-size: cover;
+		    background-position: top;
+		    background-repeat: no-repeat;
+		    border-bottom: 1px solid rgba(10,10,10,0.1);
+		}
+		div#mypage_message_header>div{
+			width:1080px;
+			height:179px;
+			margin:auto;
+			font-size:27pt;
+			color: #757575;
+			font-weight: bold;
+		}
+		div#mypage_message_header div#mypage_message_header_title{
+			padding-top:48px;
+			padding-left:10px;	
+			height:119px;
+		}
+		div#mypage_message_header i{
+			padding-right:10px;
+		}
+		div#mypage_message_header_label{
+			margin-bottom:0px;
+			margin-top: 3px;
+		}
+		/* div#mypage_message_header_label>a{
+			text-decoration: none;
+		} */
+		div#mypage_message_header_label>div{
+			color:#1b1c1d;
+			border-top: 1px solid transparent;
+			border-left: 1px solid transparent;
+			border-right: 1px solid transparent;
+			display: inline-block;
+			padding:15px 15px 5px 15px;
+			margin-right:-9px;
+			border-radius: 5px 5px 0px 0px;
+			cursor:pointer;
+		}
+		div#mypage_message_header_label>div:first-child{
+			border-top: 1px solid rgba(10,10,10,0.1);
+			border-left: 1px solid rgba(10,10,10,0.1);
+			border-right: 1px solid rgba(10,10,10,0.1);
+			background-color: white;
+		}
+		div#mypage_message_header_label h5{
+			font-size:14px;
+			font-weight: bold;
+		}
+		div#mypage_message_body {
+			padding:20px 0px;
+		}
+		div#mypage_message_body>div{
+			width:1080px;
+			min-height:680px;
+			margin:auto;
+		}
+		div#mypage_message_body_nav{
+			padding-top:15px;
+		}
+		div#mypage_message_body_nav>span{
+			display:inline-block;
+			margin-right:5px;
+			padding:7px 14px;
+			border-radius: 5px;
+			text-decoration: none;
+			color: #777;
+			font-weight: bold;
+			font-size:14px;
+			cursor:pointer;
+		}
+		div#mypage_message_body_nav>span:first-child{
+			background-color: rgba(0,0,0,0.08);
+			color:#1e90ff;
+		}
+		div#mypage_message_body_content{
+			margin:30px 0px;
+		}
+		div#mypage_message_body_content>a{
+			text-decoration: none;
+			color:black;
+		}
+		div#mypage_message_card{
+			width:1070px;
+			height:105px;
+			border:1px solid rgba(10,10,10,0.1);
+			border-radius: 5px;
+			margin-bottom:10px;
+			transition: .2s ease;
+		}
+		div#mypage_message_card:hover{
+			background-color: rgba(0,0,0,0.03);
+		}
+		div#mypage_message_card_img{
+			width:80px;
+			height:60px;
+			padding-left:15px;
+			vertical-align: bottom;
+			margin-bottom: 14px;
+		}
+		div#mypage_message_card_img>img{
+			width: 80px;
+	    	height: auto;
+	    	border-radius: 5px;
+		}
+		div#mypage_message_card>div{
+			padding-top:10px;
+			display: inline-block;
+		}
+		div#mypage_message_card_content{
+			margin-left:30px;
+			width:800px;
+		}
+		div#mypage_message_card_title {
+			font-weight: bold;
+			font-size:15px;
+			padding-top:8px;
+		}
+		div#mypage_message_card_company{
+			color:#757575;
+			font-size:13px;
+			margin-bottom:5px;
+		}
+		div#mypage_message_card_preview{
+			color:#757575;
+			font-size:13px;
+		}
+		div#mypage_message_card_date{
+			width:130px;
+			text-align:right;
+			color:#757575;
+			font-size:12px;
+			vertical-align: top;
+		}
+		div#mypage_nomessage{
+			min-height:680px;
+			color: #dddcdc;
+		    font-size: 20pt;
+		    text-align: center;
+		    font-weight:bold;
+		}
+		div#mypage_nomessage>i{
+		    font-size: 70pt;
+    		margin-bottom: 10px;
+    		margin-top:100px;
+		}
+	</style>
+	<script>
+		$(document).ready(function(){
+			$("div#mypage_nomessage").hide();
+			$("div#mypage_message_header_label>div").click(function(){
+				/* 나중에 삭제**/
+				$("div#mypage_nomessage").hide();
+				$("div#mypage_message_body_content").show();
+				
+				$(this).parent().children().css({
+					"border-top": "1px solid transparent",
+					"border-left": "1px solid transparent",
+					"border-right": "1px solid transparent",
+					"background-color": "transparent"
+				});
+				$(this).css({
+					"border-top": "1px solid rgba(10,10,10,0.1)",
+					"border-left": "1px solid rgba(10,10,10,0.1)",
+					"border-right": "1px solid rgba(10,10,10,0.1)",
+					"background-color": "white"
+				});
+				$("div#mypage_message_body_nav>span").parent().children().css({
+					"background-color": "transparent",
+					"color":"#777"		
+				});
+				$("div#mypage_message_body_nav>span:first-child").css({
+					"background-color": "rgba(0,0,0,0.08)",
+					"color":"#1e90ff"
+				});
+			});
+			
+			
+			$("div#mypage_message_body_nav>span").click(function(){
+				$("div#mypage_nomessage").hide();
+				$("div#mypage_message_body_content").show();
+				$(this).parent().children().css({
+					"background-color": "transparent",
+					"color":"#777"		
+				});
+				$(this).css({
+					"background-color": "rgba(0,0,0,0.08)",
+					"color":"#1e90ff"
+				});
+				
+				/* 나중에 삭제**/
+				var text = $(this).text();
+				if(text == "안 읽은 메시지") {
+					$("div#mypage_message_body_content").hide();
+					$("div#mypage_nomessage").show();
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	<div>
+		<div id="mypage_message_header">
+			<div>
+				<div id="mypage_message_header_title">
+					<i class="fas fa-envelope"></i>
+					<span>메시지</span>
+				</div>
+				<div id="mypage_message_header_label">
+					<div>
+						<h5>문의/후원한 프로젝트</h5>
+					</div>
+					<div>
+						<h5>만든 프로젝트</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="mypage_message_body">
+			<div>
+				<div id="mypage_message_body_nav">
+					<span>모든 메시지</span>
+					<span>보낸 메시지</span>
+					<span>안 읽은 메시지</span>
+				</div>
+				
+				<div id="mypage_message_body_content">
+					<% for(int i=0;i<8;i++){ %>
+						<a href="#">
+							<div id="mypage_message_card">
+								<div id="mypage_message_card_img">
+									<img src="http://localhost:9090/tumblbugs/images/message_img.png">
+								</div>
+								<div id="mypage_message_card_content">
+									<div id="mypage_message_card_title"><b>소품일체 '해돋이' 뱃지 연하장</b></div>
+									<div id="mypage_message_card_company"><b>소품일체</b></div>
+									<div id="mypage_message_card_preview"><span>네 맞습니다. 감사합니다:)</span></div>
+								</div>
+								<div id="mypage_message_card_date">
+									<div>1시간 전</div>
+								</div>
+							</div>
+						</a>
+					<% } %>
+				</div>
+				
+				<div id="mypage_nomessage">
+					<i class="fas fa-envelope"></i>
+					<div>새로운 메시지가 없습니다.</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

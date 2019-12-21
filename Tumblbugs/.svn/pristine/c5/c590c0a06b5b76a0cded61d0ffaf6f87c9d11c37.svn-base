@@ -1,0 +1,379 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> --%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/js/isotope-docs.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/js/infinite-scroll-docs.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/project_sort_css.css">
+		<script>
+		$(document).ready(function(){
+			var category = sessionStorage.getItem('category');
+  			var ongoing = sessionStorage.getItem('ongoing');
+  			var rate = sessionStorage.getItem('rate');
+	  		var money = sessionStorage.getItem('money');
+			var editorpick=sessionStorage.getItem('editorpick');
+			var order=sessionStorage.getItem('order');
+	        	var $grid =  $('.grid').isotope({
+	  			  itemSelector: '.scroll-card',
+	  			  masonry: {
+	  			    columnWidth: '.grid__col-sizer',
+	  			    gutter: '.grid__gutter-sizer',
+	  			  },
+	  			  percentPosition: true,
+	  			  stagger: 30,
+	  			  // nicer reveal transition
+	  			  visibleStyle: { transform: 'translateY(0)', opacity: 1 },
+	  			  hiddenStyle: { transform: 'translateY(100px)', opacity: 0 },
+	  			});
+
+	  			//------------------//
+
+	  			// Get an API key for your demos at https://unsplash.com/developers
+	  			//var unsplashID = '9ad80b14098bcead9c7de952435e937cc3723ae61084ba8e729adb642daf0251';
+
+	  			// get Masonry instance
+	  			var iso = $grid.data('isotope');
+	  			// for sort
+	  			/* var category = sessionStorage.getItem('category');
+	  			var ongoing = sessionStorage.getItem('ongoing');
+	  			var rate = sessionStorage.getItem('rate');
+		  		var money = sessionStorage.getItem('money');
+				var editorpick=sessionStorage.getItem('editorpick');
+				var order=sessionStorage.getItem('order'); */
+	  			var $container = $grid.infiniteScroll({
+	  			  // use path string with {{#}} for page number
+	  			  //path: 'https://api.unsplash.com/photos?page={{#}}&client_id=' + unsplashID,
+				  path: 'http://localhost:9090/tumblbugs/discover_proc?page={{#}}&category='+category+'&ongoing='+ongoing+'&rate='+rate+"&money="+money+"&editorpick="+editorpick+"&order="+order,
+	  			  // load response as flat text
+	  			  responseType: 'text',
+	  			  outlayer: iso,
+	  			  status: '.page-load-status',
+	  			  history: false,
+	  			});
+				
+				
+	  			$grid.on( 'load.infiniteScroll', function( event, response ) {
+	  			  // parse response into JSON data
+	  			  var data = JSON.parse( response );
+	  			 console.log( response );
+	  			  // compile data into HTML
+	  			  var itemsHTML = data.list.map( getItemHTML ).join('');
+	  			  // convert HTML string into elements
+	  			  var $items = $( itemsHTML );
+	  			  
+	  			  // append item elements
+	  			  $items.imagesLoaded( function() {
+	  			    $grid.infiniteScroll( 'appendItems', $items )
+	  			      .isotope( 'appended', $items );
+	  			  })
+	  			});
+	  		
+	  			// load initial page
+
+	  			$grid.infiniteScroll('loadNextPage');
+
+	  			//------------------//
+
+	  			var itemTemplateSrc = $('#photo-item-template').html();
+
+	  			function getItemHTML( photo ) {
+	  			  return microTemplate( itemTemplateSrc, photo );
+	  			}
+
+	  			// micro templating, sort-of
+	  			function microTemplate( src, data ) {
+	  			  // replace {{tags}} in source
+	  			  return src.replace( /\{\{([\w\-_\.]+)\}\}/gi, function( match, key ) {
+	  			    // walk through objects to get value
+	  			    var value = data;
+	  			    key.split('.').forEach( function( part ) {
+	  			      value = value[ part ];
+	  			    });
+	  			    return value;
+	  			  });
+	  			}
+	  			
+	  		$("div#project_sort_bar span").hide();
+	  		
+	  		// 저장된 키워드 가져와서 select
+	  		if(editorpick != "all" && editorpick != null){
+	  			$("div#project_sort_bar button#sort_editor").hide(); 
+	  		} else{
+	  			$("div#project_sort_bar button#sort_editor_none").hide(); 
+	  		}
+				if(category != "all" && category != null){
+					var input= "input[value='"+category+"']";
+					var text = $("a.dropdown-item").find(input).parent().text();
+					$("span#sort_category").find("span").text(text).show();
+					$("span#sort_category").show();
+					$("span#sort_category").parent().find("button").hide();
+				} 
+				$("span#sort_category").click(function(){
+					sessionStorage.removeItem('category');
+					location.href="http://localhost:9090/tumblbugs/discover";
+				}); 
+				if(ongoing != "all" && ongoing !=null){
+					var input= "input[value='"+ongoing+"']";
+					var text = $("a.dropdown-item").find(input).parent().text();
+					$("span#sort_state").find("span").text(text).show();
+					$("span#sort_state").show();
+					$("span#sort_state").parent().find("button").hide();
+				}
+				$("span#sort_state").click(function(){
+					sessionStorage.removeItem('ongoing');
+					location.href="http://localhost:9090/tumblbugs/discover";
+				});
+				if(rate != "all" && rate !=null){
+					var input= "input[value='"+rate+"']";
+					var text = $("div.rate a.dropdown-item").find(input).parent().text();
+					$("span#sort_progress").find("span").text(text).show();
+					$("span#sort_progress").show();
+					$("span#sort_progress").parent().find("button").hide();
+				}
+				$("span#sort_progress").click(function(){
+					sessionStorage.removeItem('rate');
+					location.href="http://localhost:9090/tumblbugs/discover";
+				});
+				if(money != "all" && money !=null){
+					var input= "input[value='"+money+"']";
+					var text = $("div.money a.dropdown-item").find(input).parent().text();
+					$("span#sort_fund").find("span").text(text).show();
+					$("span#sort_fund").show();
+					$("span#sort_fund").parent().find("button").hide();
+				}
+				$("span#sort_fund").click(function(){
+					sessionStorage.removeItem('money');
+					location.href="http://localhost:9090/tumblbugs/discover";
+				});
+			if(order != "fav" && order != null){
+				var input = "input[value='"+order+"']";
+				var text = $(input).parent().text();
+				$("button#project_order_result").text(text);
+				$(input).parent().css("color"," #1e90ff");
+			} else{
+				$("input[value='fav']").parent().text("인기순").css("color"," #1e90ff");
+			}
+			// storage에 키워드 저장
+			$("div#project_sort_bar .dropdown-item").click(function(){
+				var text  = $(this).text();
+				if(text != "전체보기"){
+					$(this).parent().parent().find("span").find("span").text(text);
+					var val = $(this).find("input").val();
+					var cat = $(this).parent().parent().find("span").attr("id");
+					var key = "";
+					if(cat == "sort_category"){
+						key="category";
+					} else if(cat == "sort_state"){
+						key="ongoing";
+					} else if(cat == "sort_progress"){
+						key="rate";
+					} else if(cat =="sort_fund"){
+						key="money";
+					}
+					sessionStorage.setItem(key, val);
+					location.href="http://localhost:9090/tumblbugs/discover";
+				} else{
+					var cat = $(this).parent().parent().find("span").attr("id");
+					if(cat == "sort_category"){
+						key="category";
+					} else if(cat == "sort_state"){
+						key="ongoing";
+					} else if(cat == "sort_progress"){
+						key="rate";
+					} else if(cat =="sort_fund"){
+						key="money";
+					}
+					sessionStorage.setItem(key, "all");
+					location.href="http://localhost:9090/tumblbugs/discover";
+				}
+			});
+			// 에디터 픽
+			$("button#sort_editor").click(function(){
+				var val = $(this).parent().find("input").val();
+				sessionStorage.setItem("editorpick", val);
+				$(this).parent().hide();
+				$(this).parent().find("button#sort_editor_none").show();
+				location.href="http://localhost:9090/tumblbugs/discover";
+			});
+			$("button#sort_editor_none").click(function(){
+				var val = $(this).parent().find("input").val();
+				sessionStorage.removeItem("editorpick");
+				$(this).parent().hide();
+				$(this).parent().find("button#sort_editor").show();
+				location.href="http://localhost:9090/tumblbugs/discover";
+			});
+			// 정렬기준
+			$("div#project_order>a").click(function(){
+				var val = $(this).find("input").val();
+				sessionStorage.setItem("order", val);
+				location.href="http://localhost:9090/tumblbugs/discover";
+			});
+			
+			
+			// 세션 클리어 및 검색조건 클리어
+			$("button#sort_reset").click(function(){
+				$("div#project_sort_bar").find("span").hide();
+				$("div#project_sort_bar").find("button").show();
+				sessionStorage.clear();
+				location.href="http://localhost:9090/tumblbugs/discover";
+			}); 
+			
+			setTimeout(function() {
+				var size_id = "input#project_total_count"
+				var size_val =$(size_id).val();
+				console.log(size_id +", "+ size_val);
+				$("span#project_count_point").text(size_val);
+			}, 100);
+			
+			console.log("카테고리="+sessionStorage.getItem('category'));
+			console.log("진행중인프로젝트="+sessionStorage.getItem('ongoing'));
+			console.log("달성률="+sessionStorage.getItem('rate'));
+			console.log("금액="+sessionStorage.getItem('money'));
+			console.log("에디터픽="+sessionStorage.getItem('editorpick'));
+			console.log("정렬기준="+sessionStorage.getItem('order'));
+		});
+	</script>
+	<script type="text/html" id="photo-item-template">
+	<div class="scroll-card {{tcategory}}">
+	<input type="hidden" id="project_total_count" value="{{dbCount}}">
+		<a href="#">
+			<img id="product_img" src="http://localhost:9090/tumblbugs/images/title1_img01.jpg">
+			<div class="slick-card-content">
+				<div class="slick-card-content-title">
+					<h1>{{title}}</h1>
+					<p>{{tdate}}</p>
+				</div>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="185" aria-valuemin="0" aria-valuemax="100" style="width:185%"></div>
+				</div>
+				<div class="slick-card-content-others">
+					<div>
+						<i class="far fa-calendar-alt"></i>
+						<span>25일 남음</span>
+					</div>
+					<div>
+						<span>1,226,000원</span>
+						<span>185%</span>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+	</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+		<div>
+			<section id="project_sort_top">
+				<div id="project_sort_bar">
+				<div>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				      	카테고리
+				    </button>
+				    <span id="sort_category"><span></span> x</span>
+				    <div class="dropdown-menu">
+				      <a class="dropdown-item">전체보기<input type="hidden" name="category" value="all"></a>
+				      <a class="dropdown-item">게임<input type="hidden" name="category" value="game"></a>
+				      <a class="dropdown-item">공연<input type="hidden" name="category" value="concert"></a>
+				      <a class="dropdown-item">디자인<input type="hidden" name="category" value="design"></a>
+				      <a class="dropdown-item">만화<input type="hidden" name="category" value="comic"></a>
+				      <a class="dropdown-item">미술<input type="hidden" name="category" value="art"></a>
+				      <a class="dropdown-item">공예<input type="hidden" name="category" value="craft"></a>
+				      <a class="dropdown-item">사진<input type="hidden" name="category" value="photo"></a>
+				      <a class="dropdown-item">영화&비디오<input type="hidden" name="category" value="movie"></a>
+				      <a class="dropdown-item">푸드<input type="hidden" name="category" value="food"></a>
+				      <a class="dropdown-item">음악<input type="hidden" name="category" value="music"></a>
+				      <a class="dropdown-item">출판<input type="hidden" name="category" value="book"></a>
+				      <a class="dropdown-item">테크놀로지<input type="hidden" name="category" value="tech"></a>
+				      <a class="dropdown-item ">패션<input type="hidden" name="category" value="fashion"></a>
+				      <a class="dropdown-item ">캠페인<input type="hidden" name="category" value="campaign"></a>
+				    </div>
+				  </div>
+				  <div>
+				    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				      	상태
+				    </button>
+				    <span id="sort_state"><span></span> x</span>
+				    <div class="dropdown-menu">
+				      <a class="dropdown-item" >전체보기<input type="hidden" name="ongoing" value="all"></a>
+				      <a class="dropdown-item" >진행중인 프로젝트<input type="hidden" name="ongoing" value="ongoing"></a>
+				      <a class="dropdown-item" >성사된 프로젝트<input type="hidden" name="ongoing" value="confirm"></a>
+				    </div>
+				  </div>
+				  <div>
+				    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				      	달성률
+				    </button>
+				    <span id="sort_progress"><span></span> x</span>
+				    <div class="dropdown-menu rate">
+				      <a class="dropdown-item" >전체보기<input type="hidden" name="rate" value="all"></a>
+				      <a class="dropdown-item" >75% 이하<input type="hidden" name="rate" value="1"></a>
+				      <a class="dropdown-item" >75% ~ 100%<input type="hidden" name="rate" value="2"></a>
+				      <a class="dropdown-item" >100% 이상<input type="hidden" name="rate" value="3"></a>
+				    </div>
+				  </div>
+				  <div>
+				    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				      	모인금액
+				    </button>
+				    <span id="sort_fund"><span></span> x</span>
+				    <div class="dropdown-menu money">
+				      <a class="dropdown-item" >전체보기<input type="hidden" name="money" value="all"></a>
+				      <a class="dropdown-item" >1백만원 이하<input type="hidden" name="money" value="1"></a>
+				      <a class="dropdown-item" >1백만원 ~ 1천만원<input type="hidden" name="money" value="2"></a>
+				      <a class="dropdown-item" >1천만원 ~ 5천만원<input type="hidden" name="money" value="3"></a>
+				      <a class="dropdown-item" >5천만원 ~ 1억원<input type="hidden" name="money" value="4"></a>
+				      <a class="dropdown-item" >1억원 이상<input type="hidden" name="money" value="5"></a>
+				    </div>
+				  </div>
+				    <a><button type="button" id="sort_editor">에디터 추천</button><input type="hidden" name="editorpick" value="1"></a>
+				    <a><button type="button" id="sort_editor_none">에티터 추천 <b>x</b></button><input type="hidden" name="editorpick" value="all"></a>
+				    <a><button type="button" id="sort_reset"><i class="fas fa-sync"></i>필터 초기화</button></a>
+				</div>
+			</section>
+			<section id="project_sort_content">
+				<div>
+					<span><span id="project_count_point"></span>개의 프로젝트가 있습니다.</span>
+					
+					<div>
+				    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="project_order_result">
+				      	인기순
+				    </button>
+				    <div class="dropdown-menu" id="project_order">
+				      <a class="dropdown-item" >인기순<input type="hidden" name="order" value="fav"></a>
+				      <a class="dropdown-item" >최신순<input type="hidden" name="order" value="new"></a>
+				      <a class="dropdown-item" >최다 후원순<input type="hidden" name="order" value="max_choice"></a>
+				      <a class="dropdown-item" >최다 금액순<input type="hidden" name="order" value="max_amount"></a>
+				      <a class="dropdown-item" >마감 임박순<input type="hidden" name="order" value="deadline"></a>
+				    </div>
+				  </div>
+				</div>
+				<div class="grid">
+					<div class="grid__col-sizer"></div>
+					<div class="grid__gutter-sizer"></div>
+				</div>
+				
+				<div class="page-load-status">
+					<div class="loader-ellips infinite-scroll-request">
+				    	<span class="loader-ellips__dot"></span>
+				    	<span class="loader-ellips__dot"></span>
+				    	<span class="loader-ellips__dot"></span>
+				    	<span class="loader-ellips__dot"></span>
+				  	</div>
+				  	<!-- <p class="infinite-scroll-last">End of content</p> -->
+				  	<div class="infinite-scroll-error"><div id="error_icon"></div><div>발견된 프로젝트가 없습니다.</div></div>
+				</div>
+			</section>
+		</div>
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
+
+</body>
+</html>

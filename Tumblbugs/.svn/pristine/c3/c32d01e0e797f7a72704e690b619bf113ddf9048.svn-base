@@ -1,0 +1,123 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<title>Insert title here</title>
+<style>
+	body>div{
+	
+		width:1080px;
+		margin: auto;
+	}
+	
+	section#topinfolist{
+	
+		background-color: #dcdcdc;
+		background-size: cover;
+		padding-top:10px;
+		padding-bottom: 60px;
+	
+	}
+	
+	div#topinfodiv{
+	
+		margin-top: 50px;
+		padding-left: 0px;
+	}
+	
+	b#b1{
+		color:#9A7745;
+		padding: 0px 0 0px 20px;
+		font-size: 50px;
+	}
+	
+	div#topinfodivdetail{
+	
+		text-align: right;
+		display: inline-block;
+		text-decoration: none;
+	
+		margin-left: 250px;
+		margin-top: -50px;
+	
+	}
+	
+	div#topinfodivdetail a{
+	
+		margin-left: 45px;
+		text-decoration: none;
+		color: Gray;
+	
+	}
+	
+	div#topinfodivdetail a:hover{
+		color: red;
+	
+	}
+	
+	
+</style>
+<script>
+
+</script>
+</head>
+<body>
+<jsp:include page="../header.jsp"></jsp:include>
+	<div>
+	
+		<section id="topinfolist">
+			<div id="topinfodiv">
+				<b id="b1">지불정보 설정</b>
+				<div id="topinfodivdetail">
+					<a href="">프로필 설정</a>
+					<a href="">계정 설정</a>
+					<a href="">지불정보 설정</a>
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<div>
+				<b>프로필 사진</b>
+				<img src="">
+				<button type="button">파일 선택</button>
+				<b>파일 선택.사이즈는 200x200으로 해주세요.가능하면Jpg.gif 형식으로 해주세요.</b>
+			</div>
+			
+			<div>
+				<b>이름</b>
+				<input type="text">
+			</div>
+			<div>
+				<b>지역</b>
+				<input type="text">
+			</div>
+			<div>
+				<b>소개</b>
+				<input type="text">
+			</div>
+			<div>
+				<b>웹사이트</b>
+				<input type="text">
+				<b>있는경우에만 입력하세요</b>
+			</div>
+			
+			<div>
+				<b>이름</b>
+				<input type="text">
+				<input type="text">
+				<input type="text">
+				<b>전화번호를 입력해 주세요. 밀어주기 및 후원 선물 배송 시 연락을 위해서 사용됩니다.</b>	
+				</div>
+		</section>
+		
+		<button type="submit" id="button3" class="submitbtn">수정하기</button>
+	</div>
+<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

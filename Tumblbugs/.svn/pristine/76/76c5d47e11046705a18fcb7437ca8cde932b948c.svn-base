@@ -1,0 +1,29 @@
+package com.tumblbugs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class MypageController {
+
+	@RequestMapping(value="/mypage/profile", method=RequestMethod.GET)
+	public String profil() {
+		return "/mypage/profile_update";
+	}
+	@RequestMapping(value="/mypage/payment", method=RequestMethod.GET)
+	public String payment() {
+		return "/mypage/payment";
+	}
+	@RequestMapping(value="/mypage/fundinghistory", method=RequestMethod.GET)
+	public String funding(String funding_id) {
+		String resPage = "";
+		
+		if(funding_id == null) {
+			resPage = "/mypage/funding2";
+		} else {
+			resPage = "/mypage/funding_detail";
+		}
+		return resPage;
+	}
+}

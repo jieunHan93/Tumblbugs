@@ -1,0 +1,34 @@
+package com.tumblbugs.dao;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.ProjectVO;
+
+@Repository
+public class PJUploadDAO {
+	@Autowired
+	private SqlSessionTemplate sqlSession; 
+	
+	private static String namespace = "mapper.upload";
+		
+	public String resultAddProject() {
+		String pj_id ="";
+		int val = sqlSession.insert(namespace+".add_project");
+		
+		if(val != 0) {
+			pj_id = sqlSession.selectOne(namespace+".get_pj_id");
+		}
+		
+		return pj_id;
+	}
+	
+	public ProjectVO getProjectContent(String pj_id) {
+		ProjectVO vo = new ProjectVO();
+		
+		vo = sqlSession.selectOne(namespace+".get_pj_content", pj_id);
+		
+		return vo;
+	}
+}

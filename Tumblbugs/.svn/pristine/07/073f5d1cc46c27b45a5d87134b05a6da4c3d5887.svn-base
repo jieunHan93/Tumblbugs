@@ -1,0 +1,78 @@
+package com.tumblbugs.vo;
+
+import java.util.ArrayList;
+
+public class GiftVO {
+	String gift_id, pj_id, gift_title, gift_price, gift_delivery_date, gift_delivery_yn;
+	int gift_sort_num, gift_max_count, gift_sold_count, gift_remaining_count;
+	ArrayList<ItemVO> itemList;
+	
+	public String getGift_id() {
+		return gift_id;
+	}
+	public void setGift_id(String gift_id) {
+		this.gift_id = gift_id;
+	}
+	public String getPj_id() {
+		return pj_id;
+	}
+	public void setPj_id(String pj_id) {
+		this.pj_id = pj_id;
+	}
+	public String getGift_title() {
+		return gift_title;
+	}
+	public void setGift_title(String gift_title) {
+		this.gift_title = gift_title;
+	}
+	public String getGift_delivery_date() {
+		return gift_delivery_date;
+	}
+	public void setGift_delivery_date(String gift_delivery_date) {
+		this.gift_delivery_date = gift_delivery_date;
+	}
+	public String getGift_delivery_yn() {
+		return gift_delivery_yn;
+	}
+	public void setGift_delivery_yn(String gift_delivery_yn) {
+		this.gift_delivery_yn = gift_delivery_yn;
+	}
+	public String getGift_price() {
+		return gift_price;
+	}
+	public void setGift_price(String gift_price) {
+		this.gift_price = gift_price;
+	}
+	public int getGift_sort_num() {
+		return gift_sort_num;
+	}
+	public void setGift_sort_num(int gift_sort_num) {
+		this.gift_sort_num = gift_sort_num;
+	}
+	public int getGift_max_count() {
+		return gift_max_count;
+	}
+	public void setGift_max_count(int gift_max_count) {
+		this.gift_max_count = gift_max_count;
+	}
+	public int getGift_sold_count() {
+		return gift_sold_count;
+	}
+	public void setGift_sold_count(int gift_sold_count) {
+		this.gift_sold_count = gift_sold_count;
+	}
+	public int getGift_remaining_count() {
+		return gift_remaining_count;
+	}
+	public void setGift_remaining_count(int gift_remaining_count) {
+		this.gift_remaining_count = gift_remaining_count;
+	}
+	public ArrayList<ItemVO> getItemList() {
+		return itemList;
+	}
+	public void setItemList(ArrayList<ItemVO> itemList) {
+		this.itemList = itemList;
+	}
+	
+	
+}

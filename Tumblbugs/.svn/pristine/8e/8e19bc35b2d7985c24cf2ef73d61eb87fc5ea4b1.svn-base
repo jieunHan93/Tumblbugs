@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.pjcontent">
+	<select id="content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
+		SELECT P.PJ_ID, P.PJ_CATEGORY, P.PJ_TITLE, P.PJ_SIMG, P.PJ_PRICE, TO_CHAR(NVL(F.TOTAL_FUNDING_PRICE,0), '999,999,999,999') total_funding_price,
+		NVL(F.TOTAL_FUNDING_PRICE,0)/P.PJ_PRICE achievement_rate, TRUNC(P.PJ_END_DATE - SYSDATE + 1) remaining_days, NVL(F.SPONSOR_COUNT,0) total_sponsor_count,
+		M.NAME, M.PROFILE_SIMG, M.INTRO, M.PJ_COUNT member_pj_count, M.FUNDING_COUNT member_funding_count,
+		P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS
+		FROM TUM_PROJECT P,
+			(SELECT T1.EMAIL, NAME, PROFILE_SIMG, INTRO, PJ_COUNT, NVL(FUNDING_COUNT,0) FUNDING_COUNT
+				FROM TUM_MEMBER T1,
+					(SELECT EMAIL, COUNT(PJ_ID) MEMBER_PJ_COUNT FROM TUM_PROJECT GROUP BY EMAIL) T2,
+					(SELECT EMAIL, COUNT(FUNDING_ID) FUNDING_COUNT FROM TUM_FUNDING GROUP BY EMAIL) T3
+				WHERE T1.EMAIL = T2.EMAIL
+				AND T1.EMAIL = T3.EMAIL(+)) M,
+			(SELECT PJ_ID, SUM(TOTAL_FUNDING_PRICE) TOTAL_FUNDING_PRICE, COUNT(FUNDING_ID) SPONSOR_COUNT FROM TUM_FUNDING GROUP BY PJ_ID) F
+		WHERE P.EMAIL = M.EMAIL
+		AND P.PJ_ID = F.PJ_ID(+)
+		AND P.PJ_ID = #{pj_id}
+	</select>
+
+</mapper>

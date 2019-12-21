@@ -1,0 +1,210 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% boolean result = false; %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  	<script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+  	<script>
+  	$(document).ready(function(){
+  		$( window ).scroll( function() {
+    		if ( $( this ).scrollTop() > 200 ) {
+    			$( '.top' ).fadeIn();
+    		} else {
+    			$( '.top' ).fadeOut();
+    		}
+    	} );
+    	$( '.top' ).click( function() {
+    		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+    		return false;
+    	} );
+		$("div#modal_all_project>div").click(function(){
+			var menu_id = $(this).attr("id");
+			/*alert(menu_id);*/
+			if(menu_id == "sort_editorpick_project"){
+				sessionStorage.clear();
+				sessionStorage.setItem("ongoing","ongoing");
+				sessionStorage.setItem("editorpick","1");
+				sessionStorage.setItem("order","fav");
+			} else if(menu_id == "sort_rateup_project") {
+				sessionStorage.clear();
+				sessionStorage.setItem("ongoing","ongoing");
+				sessionStorage.setItem("rate","2");
+				sessionStorage.setItem("editorpick","1");
+				sessionStorage.setItem("order","deadline");
+			} else if(menu_id == "sort_new_project"){
+				sessionStorage.clear();
+				sessionStorage.setItem("ongoing","ongoing");
+				sessionStorage.setItem("editorpick","1");
+				sessionStorage.setItem("order","new");
+			} else {
+				sessionStorage.clear();
+			}
+			location.href="http://localhost:9090/tumblbugs/discover";
+		});
+	});
+	</script>
+</head>
+<body>
+	<header>
+		<div id="header_nav">
+			<div id="header_nav_left">
+				<button type="button" data-toggle="modal" data-target="#projectMenuModal"><img src="http://localhost:9090/tumblbugs/images/icon_nav.png">프로젝트 둘러보기</button>
+				<span>프로젝트 올리기</span>
+			</div>
+			<div id="header_nav_center"><a href="http://localhost:9090/tumblbugs/index"><img src="http://localhost:9090/tumblbugs/images/tumblbugs_logo.png"></a></div>
+			<button type="button" data-toggle="modal" data-target="#searchMenuModal"></button>
+			<div id="header_nav_right">
+				<% if(result){ %>
+				<a href="/tumblbugs/login">
+					<span>로그인/회원가입</span>
+					<div id="user_icon"></div>
+				</a>
+				<% }else{ %>
+				<button id="mymenubtn" type="button" data-toggle="modal" data-target="#myMenuModal">아주 긴~~~유저명<div id="user_icon"><img src="http://localhost:9090/tumblbugs/images/kurby.gif"></div></button>
+				<% } %>
+			</div>
+		</div>
+	</header>
+	
+	  <!-- The Modal -->
+	  <div class="modal" id="projectMenuModal">
+	    <div class="modal-dialog modal-dialog-scrollable">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h1 class="modal-title">프로젝트  둘러보기</h1>
+	          <button type="button" class="close" data-dismiss="modal">×</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	        	<div id="modal_search">
+	        		<div>
+	        			<div id="modal_search_title">검색</div>
+	        			<div id="modal_search_box">
+	        				<!-- <form action="#" method="get"> -->
+	        					<input type="text" placeholder="프로젝트를 검색해주세요">
+	        					<button type="button">검색하기</button>
+	        				<!-- </form> -->
+	        			</div>
+	        		</div>
+	        	</div>
+	        	<div id="modal_space"></div>
+	        	<div id="modal_project_menu">
+	        		<div id="modal_all_project">
+	        			<div id="sort_all_project"><a><span>모든 프로젝트</span></a></div>
+	        			<div id="sort_editorpick_project"><a><span>인기 추천 프로젝트</span></a></div>
+	        			<div id="sort_rateup_project"><a><span>성공 임박 프로젝트</span></a></div>
+	        			<div id="sort_new_project"><a><span>신규 추천 프로젝트</span></a></div>
+	        		</div>
+	        		<div id="modal_collection">
+	        			<div>기획전</div>
+	        			<div><a href="http://localhost:9090/tumblbugs/collections?title=2020"><span>2020 신년준비위원회</span></a></div>
+	        			<div><a href="http://localhost:9090/tumblbugs/collections?title=miri_christmas"><span>미리 크리스마스</span></a></div>
+	        			<div><a href="http://localhost:9090/tumblbugs/collections?title=busan">요즘, 부산은<span></span></a></div>
+	        			<div><a href="http://localhost:9090/tumblbugs/collections?title=sba">SBA 기술상용화 지원사업<span></span></a></div>
+	        			<div><a href="http://localhost:9090/tumblbugs/collections?title=spotlight">주목할 만한 프로젝트<span></span></a></div>
+	        		</div>
+	        		<div id="modal_tag">
+	        			<div>태그</div>
+	        			<div id="tags">
+	        				<div><a href="#"><span>#원터이즈커밍</span></a></div>
+	        				<div><a href="#"><span>#창작자의도구상자</span></a></div>
+	        				<div><a href="#"><span>#한국의멋</span></a></div>
+	        				<div><a href="#"><span>#텀블벅미식회</span></a></div>
+	        				<div><a href="#"><span>#집사생활</span></a></div>
+	        				<div><a href="#"><span>#오늘의분위기</span></a></div>
+	        				<div><a href="#"><span>#에코라이프</span></a></div>
+	        				<div><a href="#"><span>#어덕행덕</span></a></div>
+	        				<div><a href="#"><span>#기묘한이야기</span></a></div>
+	        			</div>
+	        		</div>
+	        		<div id="modal_category">
+	        			<div>카테고리</div>
+	        			<div id="categories">
+	        				<div><a href="#"><span>게임</span></a></div>
+	        				<div><a href="#"><span>공연</span></a></div>
+	        				<div><a href="#"><span>디자인</span></a></div>
+	        				<div><a href="#"><span>만화</span></a></div>
+	        				<div><a href="#"><span>미술</span></a></div>
+	        				<div><a href="#"><span>공예</span></a></div>
+	        				<div><a href="#"><span>사진</span></a></div>
+	        				<div><a href="#"><span>영화&비디오</span></a></div>
+	        				<div><a href="#"><span>푸드</span></a></div>
+	        				<div><a href="#"><span>음악</span></a></div>
+	        				<div><a href="#"><span>출판</span></a></div>
+	        				<div><a href="#"><span>테크놀로지</span></a></div>
+	        				<div><a href="#"><span>패션</span></a></div>
+	        				<div><a href="#"><span>캠페인</span></a></div>
+	        			</div>
+	        		</div>
+	        	</div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  
+	    <!-- The Modal -->
+	  <div class="modal" id="searchMenuModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <form action="#" method="get">
+	          	<img src="http://localhost:9090/tumblbugs/images/icon_search.png">
+	          	<input type="search" placeholder="검색어를 입력해주세요">
+	          </form>
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          Modal body..
+	        </div>
+	        
+	      </div>
+	    </div>
+	  </div>
+	  
+	    <!-- The Modal -->
+	  <div class="modal" id="myMenuModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h1 class="modal-title">내 페이지</h1>
+	          <button type="button" class="close" data-dismiss="modal">×</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          <div id="myMenu_user_profil">
+	          	<span id="myMenu_user_profil_icon"></span>
+	          	<span id="myMenu_user_profil_name">유저명</span>
+	          </div>
+	          <div id="modal_space"></div>
+	          <a href="http://localhost:9090/tumblbugs/mypage/message"><div>메시지</div></a>
+	          <a href="http://localhost:9090/tumblbugs/mypage/fundinghistory"><div>내 후원현황</div></a>
+	          <a><div>내가 만든 프로젝트</div></a>
+	          <div id="modal_space"></div>
+	          <a href="http://localhost:9090/tumblbugs/mypage/profile"><div>프로필 정보</div></a>
+	          <a href="http://localhost:9090/tumblbugs/mypage/payment"><div>지불 정보 설정</div></a>
+	          <a><div>로그아웃</div></a>
+	        </div>
+	        
+	      </div>
+	    </div>
+	  </div>
+	  
+	  <button type="button" class="top"></button>
+</body>
+</html>

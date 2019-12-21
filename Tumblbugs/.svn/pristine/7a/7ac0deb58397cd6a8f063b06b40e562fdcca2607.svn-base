@@ -1,0 +1,281 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="http://localhost:9090/tumblbugs/ckeditor/ckeditor.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/jquery.timeago.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/jquery.timeago.ko.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/project_content.css">
+<title>Insert title here</title>
+<script>
+	$(document).ready(function() {
+	    var editorConfig = {
+		   filebrowserUploadUrl : "http://localhost:9090/tumblbugs/fileupload.do", //이미지 업로드
+		};
+		
+	    ck = CKEDITOR.replace("ckeditor_content", editorConfig);
+	    
+		CKEDITOR.on('dialogDefinition', function( ev ){
+		   var dialogName = ev.data.name;
+		   var dialogDefinition = ev.data.definition;
+		
+		   switch (dialogName) {
+		       case 'image': //Image Properties dialog
+		       //dialogDefinition.removeContents('info');
+		       dialogDefinition.removeContents('Link');
+		       dialogDefinition.removeContents('advanced');
+		       break;
+		    }
+		});
+		
+		//커뮤니티 게시글 등록
+		$("#community_submit").click(function() {
+			var content = CKEDITOR.instances.ckeditor_content.getData();
+			$("#ckeditor_content").val(content);
+			
+			if($("#ckeditor_content").val() == "") {
+				alert("게시글 내용을 입력해주세요.");
+				CKEDITOR.instances.ckeditor_content.focus();
+			} else {
+				//alert("올리기");
+				community_write_form.submit();
+			}
+		});
+		
+		//게시글 작성하기(창작자에게 응원의 한 마디를)
+		$("#box3_sponser").show();
+		$("#box3_sponser").click(function() {
+			$("#community_content>div").hide();
+			$("#box4_community_write").show();
+		});
+		
+		//게시글 작성하기 → 커뮤니티로 돌아가기
+		$("#btn_back_to_community").click(function() {
+			$("#community_content>#community_top").show();
+			$("#community_content>#community_tab").show();
+			$("#community_content>#all_posting").show();
+			$("#box4_community_write").hide();
+		});
+		
+		//게시글 수정
+		$("#community_update").click(function() {
+			alert("수정");
+		});
+		
+		//게시글 삭제
+		$("#community_delete").click(function() {
+			if(confirm("게시글을 삭제하시겠습니까?")) {
+				//삭제 로직
+				location.reload();
+			}
+		});
+		
+		//게시글 목록 탭
+		$("#community_tab span").click(function() {
+			var id = $(this).attr("id");
+			$("#community_tab span").css("color", "#757575").css("background-color", "transparent");
+			$("div.posting_list").hide();
+			
+			$("#community_tab span#" + id).css("color", "#494949").css("background-color", "#d9d9d9");
+			$("div#" + id).show();
+		});
+		
+		//댓글 슬라이드 토글
+		$("div.reply_count_original").click(function() {
+			var community_id = $(this).attr("id");
+			$("#" + community_id + ".reply_list").slideToggle();
+			$(this).siblings(".reply_count_reply_show").show();
+			$(this).hide();
+		});
+		
+		$("div.reply_count_reply_show").click(function() {
+			var community_id = $(this).attr("id");
+			$("#" + community_id + ".reply_list").slideToggle();
+			$(this).siblings(".reply_count_original").show();
+			$(this).hide();
+		});
+		
+		//$("time.timeago").timeago();
+		$(".timeago").each(function(){
+           var timeago_t = jQuery.timeago($(this).data("date"));
+           $(this).text(timeago_t);
+        });
+	});
+</script>
+</head>
+<body>
+	<div id="community_content">
+		<div id="community_top">
+			<!-- 미로그인 회원 -->
+			<div class="white_box" id="box1_login_request">
+				<a href="#">
+					<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+					<span id="message">로그인해주세요</span>
+				</a>
+			</div>
+			<!-- 비후원자 회원 -->
+			<div class="white_box" id="box2_nonsponser">
+				<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+				<span id="message">후원자만 글을 쓸 수 있어요</span>
+			</div>
+			<!-- 후원자 -->
+			<div class="white_box" id="box3_sponser">
+				<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+				<span id="message">창작자에게 응원의 한 마디를!</span>
+			</div>
+		</div>
+		<!-- 커뮤니티 글 작성 -->
+		<div id="box4_community_write">
+			<div><button id="btn_back_to_community"><i class="fas fa-angle-left"></i> &nbsp;커뮤니티로 돌아가기</button></div>
+			<div class="white_box" id="editor">
+				<div>게시글 작성하기</div>
+				<form action="community_write_proc" method="post" name="community_write_form" enctype="multipart/form-data">
+					<input type="hidden" name="email" value="test@naver.com">
+					<input type="hidden" name="pj_id" value="PJ00001">
+					<textarea class="form-control" id="ckeditor_content" name="community_content"></textarea>
+				</form>
+				<div>
+					<button type="button" id="community_submit"><i class="fas fa-check"></i> &nbsp;올리기</button>
+				</div>
+			</div>
+		</div>
+		<div id="community_tab">
+			<span id="all_posting">모든 게시글</span>
+			<span id="creator_posting">창작자 업데이트</span>
+		</div>
+		<div class="posting_list" id="all_posting">
+			<c:choose>
+				<c:when test="${fn:length(list) != 0}">
+					<c:forEach var="cvo" items="${list}">
+						<div class="white_box" id="posting_box">
+							<div id="posting_header">
+								<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+								<div>
+									<div id="member_name">${cvo.name }
+										<span id="creator_label">창작자</span>
+									</div>
+									<div id="posting_log">
+										<span class="timeago">2일 전</span>
+										<c:if test="${not empty cvo.community_udate}">
+										<span>수정됨</span>
+										</c:if>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    <i class="fas fa-ellipsis-v"></i>
+								  	</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									    <a class="dropdown-item" id="community_update">수정</a>
+									    <a class="dropdown-item" id="community_delete">삭제</a>
+								  </div>
+								</div>
+							</div>
+							<div id="posting_content">${cvo.community_content }</div>
+							<div id="posting_reply">
+								<div class="reply_count">
+									<div class="reply_count_original" id="01">	<!-- 게시글 id를 id로 준다. -->
+										<i class="fas fa-comment"></i>
+										<span id="reply_count">${cvo.rcount }</span>
+									</div>
+									<div class="reply_count_reply_show" id="01">	<!-- 게시글 id를 id로 준다. -->
+										<span><b>${cvo.rcount }</b>개의 댓글이 있습니다.</span>
+										<span id="reply_roll_up"><i class="fas fa-angle-up"></i> 댓글 접기</span>
+									</div>
+								</div>
+								<div class="reply_list" id="01">	<!-- 게시글 id를 id로 준다. -->
+									<div class="reply_each">
+										<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+										<div id="reply_each_right">
+											<div id="reply_writer_and_date">
+												<div id="member_name">Sarah<span id="creator_label">창작자</span></div>
+												<div id="reply_date">2019.12.02 10:09</div>
+											</div>
+											<div id="reply_content">
+												<span>안녕하세요, MATTA(마타) 님! 덕분에 건강과 재력을 모두 얻어가고 있습니다! 이번 달도 정성껏 만들어 보내드리겠습니다. MATTA(마타) 님 입에 잘 맞았으면 좋겠어요. :)</span>
+												<button id="btn_reply_delete" type="button">삭제</button>
+											</div>
+										</div>
+									</div>
+									<div class="reply_write">
+										<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+										<input type="text" id="reply_write_content"></textarea>
+										<button id="btn_reply_write" type="button">올리기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<div id="none">
+						<i class="far fa-meh"></i>
+						<div><b>게시글이 없습니다.</b></div>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div class="posting_list" id="creator_posting">
+			<%-- <c:choose>
+				<c:when test="${커뮤니티 게시글 수가 0이면}">
+					<c:forEach var="vo" items="${list}"> --%>
+						<div class="white_box" id="posting_box">
+							<div id="posting_header">
+								<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+								<div>
+									<div id="member_name">네이버웹툰<span id="creator_label">창작자</span></div>
+									<div id="posting_log"><span>2일 전</span><span>수정됨</span></div>
+								</div>
+							</div>
+							<div id="posting_content">혹시 바보개 파우치 사이즈가 조금 더 크게 변동될 가능성이 있나요? 그리고 물건을 모두 집어넣었을 때 폭이 어느 정도 되나요?</div>
+							<div id="posting_reply">
+								<div class="reply_count">
+									<div class="reply_count_original" id="01">	<!-- 게시글 id를 id로 준다. -->
+										<i class="fas fa-comment"></i>
+										<span id="reply_count">1</span>
+									</div>
+									<div class="reply_count_reply_show" id="01">	<!-- 게시글 id를 id로 준다. -->
+										<span><b>1</b>개의 댓글이 있습니다.</span>
+										<span id="reply_roll_up"><i class="fas fa-angle-up"></i> 댓글 접기</span>
+									</div>
+								</div>
+								<div class="reply_list" id="01">	<!-- 게시글 id를 id로 준다. -->
+									<div class="reply_each">
+										<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+										<div id="reply_each_right">
+											<div id="reply_writer_and_date">
+												<div id="member_name">Sarah<span id="creator_label">창작자</span></div>
+												<div id="reply_date">2019.12.02 10:09</div>
+											</div>
+											<div id="reply_content">
+												<span>안녕하세요, MATTA(마타) 님! 덕분에 건강과 재력을 모두 얻어가고 있습니다! 이번 달도 정성껏 만들어 보내드리겠습니다. MATTA(마타) 님 입에 잘 맞았으면 좋겠어요. :)</span>
+												<button id="btn_reply_delete" type="button">삭제</button>
+											</div>
+										</div>
+									</div>
+									<div class="reply_write">
+										<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+										<input type="text" id="reply_write_content"></textarea>
+										<button id="btn_reply_write" type="button">올리기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					<%-- </c:foreach>
+				</c:when>
+				<c:otherwise> --%>
+					<div id="none">
+						<i class="far fa-meh"></i>
+						<div><b>게시글이 없습니다.</b></div>
+					</div>
+				<%-- </c:otherwise>
+			</c:choose> --%>
+		</div>
+	</div>
+</body>
+</html>

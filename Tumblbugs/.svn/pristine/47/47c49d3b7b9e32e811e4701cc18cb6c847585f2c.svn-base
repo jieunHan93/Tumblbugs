@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.funding">
+	<select id="fundingList" parameterType="String" resultType="com.tumblbugs.vo.FundingVO">
+		select f.funding_id, p.pj_title, p.pj_simg, p.remaining_days, p.achievement_rate, m.name,
+			to_char(f.funding_date,'yyyy.mm.dd') funding_date, f.total_funding_price, f.payment_complete_yn, f.delivery_start_date, f.delivery_complete_yn
+		from tum_funding f,
+			(select t1.pj_id, pj_title, email, pj_simg, trunc(t1.pj_end_date - sysdate + 1) remaining_days, nvl(t2.total_funding_price,0)/t1.pj_price achievement_rate
+			from tum_project t1, (select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) t2
+			where t1.pj_id = t2.pj_id) p,
+			tum_member m
+		where f.pj_id = p.pj_id
+		and p.email = m.email
+		and f.email = #{email}
+		order by funding_id desc
+	</select>
+
+	<insert id="fundingInsert" parameterType="com.tumblbugs.vo.FundingVO">
+		insert into tum_funding values('F' || LPAD(tum_funding_sequ.nextval, 5, 0), #{pj_id}, #{email}, sysdate, #{extra_funding_price},
+		#{total_funding_price}, #{payment_id}, 'n', #{recipient_name}, #{recipient_addr}, #{recipient_phone}, #{recipient_request}, null, null, null, null)
+	</insert>
+	
+	<insert id="fundingGiftInsert" parameterType="com.tumblbugs.vo.FundingGiftVO">
+		insert into tum_funding_gift values(#{funding_id}, #{gift_id}, #{gift_quantity}, #{gift_option}, #{funding_gift_price})
+	</insert>
+	
+	<select id="fundingId" parameterType="String" resultType="String">
+		select max(funding_id) from tum_funding where email = #{email}
+	</select>
+	
+	<select id="recentDeliveryInfo" parameterType="String" resultType="com.tumblbugs.vo.FundingVO">
+		select recipient_name, recipient_phone, recipient_addr
+		from tum_funding
+		where funding_id = (select max(funding_id) from tum_funding where email = #{email})
+	</select>
+</mapper>

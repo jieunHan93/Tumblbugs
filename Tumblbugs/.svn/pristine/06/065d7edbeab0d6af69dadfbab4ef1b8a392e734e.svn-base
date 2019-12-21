@@ -1,0 +1,24 @@
+package com.tumblbugs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class FundingController {
+	
+	@RequestMapping(value="/funding/step1", method=RequestMethod.GET)
+	public String step1() {
+		return "/funding/step1_reward_select";
+	}
+	
+	@RequestMapping(value="/funding/step2", method=RequestMethod.GET)
+	public String step2() {
+		return "/funding/step2_payment_reservation";
+	}
+	
+	@RequestMapping(value="/funding/success", method=RequestMethod.GET)
+	public String step3() {
+		return "/funding/step3_funding_success";
+	}
+}

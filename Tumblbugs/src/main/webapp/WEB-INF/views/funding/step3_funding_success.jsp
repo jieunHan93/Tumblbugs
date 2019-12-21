@@ -1,0 +1,125 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>텀블벅스</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/funding.css">
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="funding_step3">
+		<div id="project_info">
+			<div>
+				<a id="backToProject" href="http://localhost:9090/tumblbugs/project_content"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
+				<div id="project_title">오차원 크리스마스 리스 DIY 키트</div>
+			</div>
+		</div>
+		<div id="step3_content">
+			<div class="page_title">
+				<label>
+					후원이 완료되었습니다.
+					<div style="font-size: 10pt; font-weight: normal;">후원금은 2019년 12월 7일에 결제됩니다.</div>
+				</label>
+			</div>
+			<div id="funding_info_wrap">
+				<div class="table_title">후원번호 00000001</div>
+				<table>
+					<tr>
+						<td><img id="project_main_img" src="http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg"></td>
+						<td>
+							<div>
+								<span id="project_title">오차원 크리스마스 리스 DIY 키트</span>
+								<span id="creator_name">오차원</span>
+							</div>
+							<div>
+								<div id="reward">
+									<label>A 스몰 리스 만들기 키트 1개 + 무료 배송</label>
+									<ul id="reward_component">
+										<li>• &nbsp;&nbsp;스몰 리스 만들기 키트 ( x 1 )</li>
+									</ul>
+									<div>선택 옵션: 레드 / 수량 : 1개 / 39,000원</div>
+								</div>
+								<div id="reward">
+									<label>C 스몰 리스 완성품 1개 + 무료배송</label>
+									<ul id="reward_component">
+										<li>• &nbsp;&nbsp;C 스몰 리스 완성품 ( x 1 )</li>
+										<li>• &nbsp;&nbsp;랜덤 오너먼트  ( x 1 )</li>
+									</ul>
+									<div>선택 옵션: 레드 / 수량 : 1개 / 48,000원</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="payment_info_wrap">
+				<div class="table_title">결제예약 정보</div>
+				<table>
+					<tr>
+						<td>선물금액</td>
+						<td>87,000원</td>
+					</tr>
+					<tr>
+						<td>추가 후원금</td>
+						<td>3,000원</td>
+					</tr>
+					<tr>
+						<td>총결제금액</td>
+						<td>90,000원</td>
+					</tr>
+					<tr>
+						<td>결제 수단</td>
+						<td>신한카드/1234</td>
+					</tr>
+					<tr>
+						<td>결제 상태</td>
+						<td>2019년 12월 7일에 결제 예정입니다.</td>
+					</tr>
+				</table>
+			</div>
+			<div id="supporter_info_wrap">
+				<div class="table_title">후원자 정보</div>
+				<table>
+					<tr>
+						<td>이름</td>
+						<td>조수윤</td>
+					</tr>
+					<tr>
+						<td>이메일</td>
+						<td>josoo126@naver.com</td>
+					</tr>
+					<tr>
+						<td>휴대폰 번호</td>
+						<td>01055861326</td>
+					</tr>
+				</table>
+			</div>
+			<div id="delivery_info_wrap">
+				<div class="table_title">배송 정보</div>
+				<table>
+					<tr>
+						<td>받는 분 이름</td>
+						<td>조수윤</td>
+					</tr>
+					<tr>
+						<td>받는 분 연락처</td>
+						<td>01055861326</td>
+					</tr>
+					<tr>
+						<td>배송 주소</td>
+						<td>[18600] 경기 화성시 향남읍 행정중앙1로 95 (행정리, 향남시범살구꽃마을한일베라체아파트) 1302동 801호</td>
+					</tr>
+				</table>
+			</div>
+			<div id="button_div">
+				<a href="http://localhost:9090/tumblbugs/myfunding"><button type="button">내 후원현황 보기</button></a>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

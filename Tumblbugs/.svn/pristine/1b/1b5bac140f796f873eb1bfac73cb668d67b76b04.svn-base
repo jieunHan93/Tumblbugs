@@ -1,0 +1,239 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/js/evol-colorpicker.min.js"></script>
+	
+	<link irel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+	<link href="http://localhost:9090/tumblbugs/css/evol-colorpicker.min.css" rel="stylesheet" />
+
+	<style>
+	*{margin:0px;padding:0px;}
+	div#admin_collection_write_body{
+		margin-left:320px;
+	}
+	
+	div#admin_header{
+		border-bottom:1px solid #ccc;
+		border-right:1px solid #ccc;
+		height: 70px;
+		line-height:70px;
+		background-color: #ffffff;
+		color: #1e90ff;
+	}
+	div#admin_header p {
+		margin-left: 20px;
+		cursor:default;
+	}
+	div.evo-pop {
+	  	background-color: white;
+	    border: 1px solid lightgray;
+	    border-radius:5px;
+	    margin-top:6px;
+	    padding:5px;
+    }
+    table#admin_collection_write_table,
+    table#admin_collection_write_table>tbody>tr>th,
+    table#admin_collection_write_table>tbody>tr>td{
+    	border-collapse: collapse;
+    	border:1px solid lightgray;
+    }
+    section#collection_body_size{
+    	width:926px;
+    	margin-top:20px;
+    	margin-left:20px;
+    }
+    table#admin_collection_write_table>tbody>tr>th,
+    table#admin_collection_write_table>tbody>tr>td{
+    	padding:5px 10px;  
+    }
+    table#admin_collection_write_table>tbody>tr>th{
+    	width:250px;
+    	background-color: #e3f1ff;
+    	font-size:15px;
+    	color: #424242;
+    }
+    table#admin_collection_write_table input,
+    table#admin_collection_write_table select#edit-color.inputModal,
+    table#admin_collection_write_table textarea{
+    	border: 1px solid #E6E6E6;
+    	border-radius: 5px;
+    	padding:5px 10px;
+    }
+    table#admin_collection_write_table textarea{
+    	width:610px;
+    	height:200px;
+    	resize: none;
+    }
+    input#collection_name{
+    	width:610px;
+    }
+    div.evo-cp-wrap{
+    	width:233px !important;
+    }
+    div.evo-colorind{
+    	margin-top:2px;
+    	padding:3px;
+    }
+    table#admin_collection_write_table tr:nth-child(2) td:nth-child(2){
+		width:260px;
+    }
+    div#collection_write_btn{
+    	float:right;
+    	padding-top:10px;
+    }
+    div#collection_write_btn button{
+  		border :none;
+		border-radius: 5px;
+		background-color: #1e90ff;
+		color:white;
+		font-size:15px;
+		font-weight: bold;
+		padding:5px 10px; 
+	}
+	div#collection_write_btn i {
+		padding-right:5px;
+	}
+	div#collection_write_btn button:hover{
+		background-color: #1d85ea;
+	}
+	input#cofile{
+		border: none !important;
+	}
+    </style>
+	<script>
+	$(document).ready(function(){
+		$('#cpFocus').colorpicker({showOn:'focus'});
+		/*$('#cpFocus').on('change', function(){
+			alert('Selected color = "' + $('#cpFocus').colorpicker("val") + '"');
+		});*/
+		var cofile = "";
+		 $("#cofile").change(function(){
+			//FileReader
+			if(window.FileReader){
+				// 파일이 여러개일때 이름 가져오기
+				cofile = $(this)[0].files[0].name;
+				/* $(pro_co_img).text("").text($(this)[0].files[0].name); */
+			}
+		});
+		$("button#collection_save").click(function(){
+			if($("#collection_name").val() == ""){
+				alert("기획전명을 입력하세요");
+				$("#collection_name").focus();
+			} else if($("#cpFocus").val() == ""){
+				alert("기획전 배경색을 선택하세요");
+				$("#cpFocus").focus();
+			} else if ($("#startDate").val() == ""){
+				alert("기획전 시작일을 선택하세요");
+				$("#startDate").focus();
+			} else if ($("#endDate").val() == ""){
+				alert("기획전 마감일을 선택하세요");
+				$("#endDate").focus();
+			} else if($("#startDate").val() != "" && $("#endDate").val() !=""){
+				var startDate = $( "#startDate" ).val();
+		        var startDateArr = startDate.split('-');
+		        var endDate = $( "#endDate" ).val();
+		        var endDateArr = endDate.split('-');
+		                 
+		        var startDateCompare = new Date(startDateArr[0], parseInt(startDateArr[1])-1, startDateArr[2]);
+			        
+			    var endDateCompare = new Date(endDateArr[0], parseInt(endDateArr[1])-1, endDateArr[2]);
+			    if(startDateCompare.getTime() > endDateCompare.getTime()) {
+			            alert("시작일과 마감일을 확인해 주세요.");
+			            $("#endDate").focus();
+			    }	
+			} else if($("#col_content").text() == ""){
+				alert("기획전 설명을 선택하세요");
+				$("#col_content").focus();
+			} else if(cofile == ""){
+				alert("기획전 이미지를 등록하세요");
+			}
+			
+		});
+		
+		// 파일 이름 가져오기
+		/* $(cfile).change(function(){
+			//FileReader
+			if(window.FileReader){
+				// 파일이 여러개일때 이름 가져오기
+				//alert($(this)[0].files[0].name);
+				$(pro_co_img).text("").text($(this)[0].files[0].name);
+			}
+		}); */
+		//입력 수 제한
+		$("#pro_title").on('keyup',function(){
+			if($(this).val().length>300){
+				$(this).val($(this).val().substring(0,300));
+				alert("최대 300자 입력이 가능합니다");
+			}
+		});
+		
+	});
+	</script>
+
+</head>
+<body>
+	<jsp:include page="admin_sidebar.jsp"></jsp:include>
+	<div id="admin_collection_write_body">
+		<section>
+			<div id="admin_header">
+				<p>기획전 등록</p>
+			</div>
+		</section>
+		
+		<section id="collection_body_size">
+			<form action="#" enctype="multipart/form-data">
+				<table id="admin_collection_write_table">
+					<tr>
+						<th>기획전명</th>
+						<td colspan="3"><input type="text" id="collection_name"></td>
+					</tr>
+					<tr>
+						<th>기획전 배경색</th>
+						<td>
+							<div class="demoPanel ui-widget ui-widget-content ui-corner-all" style="width:130px">
+								<input id="cpFocus" placeholder="배너색을 선택하세요">
+							</div>
+						</td>
+						<th>달력 표시색</th>
+						<td>
+							<select class="inputModal" name="color" id="edit-color">
+                                 <option value="#D25565" style="color:#D25565;">빨간색</option>
+                                 <option value="#9775fa" style="color:#9775fa;">보라색</option>
+                                 <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
+                                 <option value="#74c0fc" style="color:#74c0fc;">파란색</option>
+                                 <option value="#f06595" style="color:#f06595;">핑크색</option>
+                                 <option value="#63e6be" style="color:#63e6be;">연두색</option>
+                                 <option value="#a9e34b" style="color:#a9e34b;">초록색</option>
+                                 <option value="#4d638c" style="color:#4d638c;">남색</option>
+                                 <option value="#495057" style="color:#495057;">검정색</option>
+                             </select>
+						</td>
+					</tr>
+					<tr>
+						<th>기획전 기간</th>
+						<td colspan="3"><input type="date" id="startDate">~<input type="date" id="endDate"></td>
+					</tr>
+					<tr>
+						<th>기획전 설명</th>
+						<td colspan="3"><textarea id="col_content"></textarea></td>
+					</tr>
+					<tr>
+						<th>기획전 이미지</th>
+						<td colspan="3"><input type="file" id="cofile"></td>
+					</tr>
+				</table>
+				<div id="collection_write_btn">
+					<button type="button" id="collection_save"><i class="fas fa-save"></i>저장</button>
+					<a href="http://localhost:9090/tumblbugs/admin/collection"><button type="button"><i class="fas fa-caret-square-left"></i>목록으로</button></a>
+				</div>
+			</form>
+		</section>
+	</div>
+</body>
+</html>

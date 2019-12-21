@@ -1,0 +1,444 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="http://localhost:9090/tumblbugs/js/datatables.min.js"></script>
+	<script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+	<link rel="stylesheet" href="http://localhost:9090/tumblbugs/calendar/css/fullcalendar.min.css" />
+    <link rel="stylesheet" href="http://localhost:9090/tumblbugs/calendar/css/bootstrap.min.css">
+    <link rel="stylesheet" href='http://localhost:9090/tumblbugs/calendar/css/select2.min.css' />
+    <link rel="stylesheet" href='http://localhost:9090/tumblbugs/calendar/css/bootstrap-datetimepicker.min.css' />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://localhost:9090/tumblbugs/calendar/css/core-main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    
+    
+	<style>
+		*{margin:0px;padding:0px;}
+		div#admin_collection_body{
+			margin-left:320px;
+		}
+		
+		div#admin_header{
+			border-bottom:1px solid #ccc;
+			border-right:1px solid #ccc;
+			height: 70px;
+			line-height:70px;
+			background-color: #ffffff;
+			color: #1e90ff;
+		}
+		div#admin_header p {
+			margin-left: 20px;
+		}
+		
+		div.header_box{
+			display: inline-block;
+			margin-top:20px;
+			margin-left: 20px;
+		}
+		div.header_box_left{
+			float:left;
+		}
+		div.header_box{
+			border:1px solid #dcdcdc;
+		}
+		div.header_box_left{
+			width:95px;	height:100%;
+			vertical-align: center;
+			text-align: center;
+		}
+		div.header_box_left i{
+			margin-top:0px;
+			font-size: 45px;
+			padding:15px;
+		}
+		div.header_box_left.first{
+			background-color: rgb(98,199,232);
+		}
+		div.header_box_left.second{
+			background-color: rgb(125,206,154);
+		}
+		div.header_box_left.third{
+			background-color: rgb(249,125,125);
+		}
+		div.header_box_right{
+			width:200px;
+			text-align: center;
+			float: right;
+			padding-top: 2px;
+		}
+		div.header_box_right>div:nth-child(1){
+			font-size:30px;
+			font-weight:bold;
+			color:#1e90ff;
+		}
+		div.header_box_right>div:nth-child(2){
+			font-size:17px;
+			font-weight:bold;
+			color:rgb(187,199,205);
+		}
+		div#collection_calendar_container{
+			width:600px;
+			margin-right:20px;
+			float:right;
+		}
+		div#collection_list_box{
+			display: inline-block;
+			width:960px;
+			padding-left:20px;
+			padding-top:20px;
+		}
+		table#admin_collection_table{
+			width:100%;
+		}
+		
+		div#collection_list_box .dataTables_wrapper .dataTables_length {
+  			/* float: left; */
+  			margin-top: 10px;
+		}
+		
+		div#admin_collection_write{
+			display:inline-block;
+			/* margin-top: -35px; */
+		    margin-left: 20px;
+		    z-index: 1;
+		}
+		div#admin_collection_write button{
+			border :none;
+			border-radius: 5px;
+			background-color: #1e90ff;
+			color:white;
+			font-size:15px;
+			font-weight: bold;
+			padding:5px 10px; 
+		}
+
+		table#admin_collection_table.dataTable tbody tr:hover{
+		    background-color: #ebe8e8;
+		}
+		table#admin_collection_table th:nth-child(1){width:10%;}
+		table#admin_collection_table th:nth-child(2){width:30%;}
+		table#admin_collection_table th:nth-child(3){width:25%;}
+		table#admin_collection_table th:nth-child(4){width:15%;}
+		table#admin_collection_table th:nth-child(5){width:10%;}
+		
+		
+input[switch] {
+  display: none;
+}
+input[switch] + label {
+  font-size: 1em;
+  line-height: 1;
+  width: 4rem;
+  height: 2rem;
+  background-color: #ddd;
+  background-image: none;
+  border-radius: 2rem;
+  padding: 0.16667rem;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2) inset;
+  font-family: inherit;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+input[switch] + label:before {
+  /* Label */
+  text-transform: uppercase;
+  color: #b7b7b7;
+  content: attr(data-off-label);
+  display: block;
+  font-family: inherit;
+  font-family: FontAwesome, inherit;
+  font-weight: 500;
+  font-size: 0.7rem;
+  line-height: 1.74rem;
+  position: absolute;
+  right: 0.21667rem;
+  margin: 0.21667rem;
+  top: 0;
+  text-align: center;
+  min-width: 1.66667rem;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+input[switch] + label:after {
+  /* Slider */
+  content: '';
+  position: absolute;
+  left: 0.16667rem;
+  background-color: #f7f7f7;
+  box-shadow: none;
+  border-radius: 2rem;
+  height: 1.66667rem;
+  width: 1.66667rem;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+input[switch]:checked + label.checked {
+  background-color: lightblue;
+  background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.2));
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3) inset;
+}
+input[switch]:checked + label.checked:before {
+  color: #fff;
+  content: attr(data-on-label);
+  right: auto;
+  left: 0.21667rem;
+}
+input[switch]:checked + label.checked:after {
+  left: 2.16667rem;
+  background-color: #f7f7f7;
+  box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+	</style>
+	<script>
+	$(document).ready(function(){
+		var table = $('#admin_collection_table').DataTable({
+			bPaginate: true, //페이징처리
+	        bLengthChange: true, // n개씩보기
+	        lengthMenu : [ [10, 20, -1], [10, 20,"전체"] ], // 10/25/50/All 개씩보기
+	        bAutoWidth: false, //자동너비
+	        ordering: true, //칼럼별 정렬
+	       	searching: true, //검색기능
+	        "language": {
+	            "emptyTable": "데이터가 없어요.",
+	            "lengthMenu": "_MENU_ 줄보기",
+	            //"info": "현재 _START_ - _END_ / _TOTAL_건",
+	            "infoEmpty": "",
+	            //"infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
+	            "search": "",
+	            "zeroRecords": "일치하는 데이터가 없어요.",
+	            "loadingRecords": "로딩중...",
+	            "processing":     "잠시만 기다려 주세요...",
+	            "paginate": {
+	                "next": ">",
+	                "previous": "<"
+	            },
+	            "sSearchPlaceholder" : "기획전 이름을 입력하세요"
+	        },
+	        'columnDefs' : [ // see https://datatables.net/reference/option/columns.searchable
+                { 'searchable'    : false, 'targets'       : [0] },
+                { 'searchable'    : false, 'targets'       : [2] },
+                { 'searchable'    : false, 'targets'       : [3] },
+                { 'searchable'    : false, 'targets'       : [4] },
+            ],
+		});
+		
+		$("label.switchBtn").click(function(){
+			 $(this).toggleClass("checked");
+		});
+	});
+	</script>
+</head>
+<body>
+	<jsp:include page="admin_sidebar.jsp"></jsp:include>
+	<div id="admin_collection_body">
+		<section>
+			<div id="admin_header">
+				<p>기획전</p>
+			</div>
+			<div id="admin_collection_header">
+				<div class="header_box">
+					<div class="header_box_left first">
+						<i class="far fa-bookmark"></i>
+					</div>
+					<div class="header_box_right">
+						<div>5</div>
+						<div>대기중인 기획전</div>
+					</div>
+				</div>
+				<div class="header_box">
+					<div class="header_box_left second">
+						<i class="far fa-handshake"></i>
+					</div>
+					<div class="header_box_right">
+						<div>5</div>
+					<div>진행중인 기획전</div>
+					</div>
+				</div>
+				<div class="header_box">
+					<div class="header_box_left third">
+						<i class="fas fa-flag-checkered"></i>
+					</div>
+					<div class="header_box_right">
+						<div>5</div>
+						<div>완료된 기획전</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section id="collection_calendar">
+			   <div class="container" id="collection_calendar_container">
+			       <!-- 일자 클릭시 메뉴오픈 -->
+			       <!-- <div id="contextMenu" class="dropdown clearfix">
+			           <ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"
+			               style="display:block;position:static;margin-bottom:5px;">
+			               <li><a tabindex="-1" href="#">카테고리1</a></li>
+			               <li><a tabindex="-1" href="#">카테고리2</a></li>
+			               <li><a tabindex="-1" href="#">카테고리3</a></li>
+			               <li><a tabindex="-1" href="#">카테고리4</a></li>
+			               <li class="divider"></li>
+			               <li><a tabindex="-1" href="#" data-role="close">Close</a></li>
+			           </ul>
+			       </div> -->
+			
+			       <div id="wrapper">
+			           <div id="loading"></div>
+			           <div id="calendar"></div>
+			       </div>
+			
+			       <!-- 일정 추가 MODAL -->
+			       <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+			           <div class="modal-dialog" role="document">
+			               <div class="modal-content">
+			                   <div class="modal-header">
+			                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+			                               aria-hidden="true">&times;</span></button>
+			                       <h4 class="modal-title"></h4>
+			                   </div>
+			                   <div class="modal-body">
+			                       <div class="row">
+			                           <div class="col-xs-12">
+			                               <label class="col-xs-4" for="edit-allDay">하루종일</label>
+			                               <input class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
+			                           </div>
+			                       </div>
+			
+			                       <div class="row">
+			                           <div class="col-xs-12">
+			                               <label class="col-xs-4" for="edit-title">기획전명</label>
+			                               <input class="inputModal" type="text" name="edit-title" id="edit-title"
+			                                   required="required" />
+			                           </div>
+			                       </div>
+			                       
+			                       <div class="row">
+			                           <div class="col-xs-12">
+			                               <label class="col-xs-4" for="edit-start">시작</label>
+			                               <input class="inputModal" type="text" name="edit-start" id="edit-start" />
+			                           </div>
+			                       </div>
+			                       
+			                       <div class="row">
+			                           <div class="col-xs-12">
+			                               <label class="col-xs-4" for="edit-end">끝</label>
+			                               <input class="inputModal" type="text" name="edit-end" id="edit-end" />
+			                           </div>
+			                       </div>
+			                       
+			                       <!-- <div class="row">
+			                           <div class="col-xs-12">
+			                               <label class="col-xs-4" for="edit-type">구분</label>
+			                               <select class="inputModal" type="text" name="edit-type" id="edit-type">
+			                                   <option value="카테고리1">카테고리1</option>
+			                                   <option value="카테고리2">카테고리2</option>
+			                                   <option value="카테고리3">카테고리3</option>
+			                                   <option value="카테고리4">카테고리4</option>
+			                               </select>
+			                           </div>
+			                       </div> -->
+			                       
+			                       <div class="row">
+			                           <div class="col-xs-12">
+			                               <label class="col-xs-4" for="edit-color">색상</label>
+			                               <select class="inputModal" name="color" id="edit-color">
+			                                   <option value="#D25565" style="color:#D25565;">빨간색</option>
+			                                   <option value="#9775fa" style="color:#9775fa;">보라색</option>
+			                                   <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
+			                                   <option value="#74c0fc" style="color:#74c0fc;">파란색</option>
+			                                   <option value="#f06595" style="color:#f06595;">핑크색</option>
+			                                   <option value="#63e6be" style="color:#63e6be;">연두색</option>
+			                                   <option value="#a9e34b" style="color:#a9e34b;">초록색</option>
+			                                   <option value="#4d638c" style="color:#4d638c;">남색</option>
+			                                   <option value="#495057" style="color:#495057;">검정색</option>
+			                               </select>
+			                           </div>
+			                       </div>
+			                       
+			                       <div class="row">
+			                           <div class="col-xs-12">
+			                               <label class="col-xs-4" for="edit-desc">설명</label>
+			                               <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
+			                                   id="edit-desc"></textarea>
+			                           </div>
+			                       </div>
+			                   </div>
+			                   
+			                   <div class="modal-footer modalBtnContainer-addEvent">
+			                       <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			                       <button type="button" class="btn btn-primary" id="save-event">저장</button>
+			                   </div>
+			                   
+			                   <div class="modal-footer modalBtnContainer-modifyEvent">
+			                       <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			                       <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+			                       <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+			                   </div>
+			               </div><!-- /.modal-content -->
+			           </div><!-- /.modal-dialog -->
+			       </div><!-- /.modal -->
+			   </div><!-- /.container -->
+		</section>
+		<section id="collection_list">
+			<div id="collection_list_box">
+				<table id="admin_collection_table">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>기획전명</th>
+							<th>기획전 기간</th>
+							<th>운영 설정</th>
+							<th>상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% for(int i=0; i<10; i++){ %>
+						<tr>
+							<td><%= i+1 %></td>
+							<td>2020 신년준비위원회</td>
+							<td>2019-12-06 ~ 2019-12-20</td>
+							<td>
+								<input type="checkbox" id="switch<%= i %>" switch="none" /> 
+  								<label class="switchBtn" for="switch<%= i %>" data-on-label="On" data-off-label="Off"></label>
+							</td>
+							<td>종료</td>
+						</tr>
+						<% } %>
+					</tbody>
+				</table>
+			</div>
+			<div id="admin_collection_write">
+				<div>
+					<button type="button"><i class="fas fa-edit"></i>기획전 추가</button>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+	
+	<script src="http://localhost:9090/tumblbugs/calendar/js/bootstrap.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/moment.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/fullcalendar.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/ko.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/select2.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/core-main.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/addEvent.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/editEvent.js"></script>
+	<script src="http://localhost:9090/tumblbugs/calendar/js/etcSetting.js"></script>
+</body>
+</html>

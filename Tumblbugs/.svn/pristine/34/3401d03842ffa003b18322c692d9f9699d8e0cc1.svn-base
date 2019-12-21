@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="mapper.member">
+	<insert id="reg" 
+		parameterType="com.tumblbugs.vo.MemberVO">
+		insert into dycgv_member 
+			values(#{eamil},#{name},#{pass},null,null,null,null,sysdate,'y')
+	</insert> 
+</mapper>

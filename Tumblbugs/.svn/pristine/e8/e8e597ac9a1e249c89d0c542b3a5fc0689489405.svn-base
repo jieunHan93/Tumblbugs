@@ -1,0 +1,54 @@
+package com.tumblbugs.vo;
+
+public class FundingGiftVO {
+	String funding_id, gift_id, gift_quantity, gift_option, funding_gift_price, select_yn;
+
+	public String getFunding_id() {
+		return funding_id;
+	}
+
+	public void setFunding_id(String funding_id) {
+		this.funding_id = funding_id;
+	}
+
+	public String getGift_id() {
+		return gift_id;
+	}
+
+	public void setGift_id(String gift_id) {
+		this.gift_id = gift_id;
+	}
+
+	public String getGift_quantity() {
+		return gift_quantity;
+	}
+
+	public void setGift_quantity(String gift_quantity) {
+		this.gift_quantity = gift_quantity;
+	}
+
+	public String getGift_option() {
+		return gift_option;
+	}
+
+	public void setGift_option(String gift_option) {
+		this.gift_option = gift_option;
+	}
+
+	public String getFunding_gift_price() {
+		return funding_gift_price;
+	}
+
+	public void setFunding_gift_price(String funding_gift_price) {
+		this.funding_gift_price = funding_gift_price;
+	}
+
+	public String getSelect_yn() {
+		return select_yn;
+	}
+
+	public void setSelect_yn(String select_yn) {
+		this.select_yn = select_yn;
+	}
+	
+}

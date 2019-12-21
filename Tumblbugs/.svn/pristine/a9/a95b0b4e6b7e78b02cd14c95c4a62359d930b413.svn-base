@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.project_sort">
+	<select id="collection_project_count" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(*) FROM TUM_COLLECTION_PROJECT WHERE COL_ID=#{col_id}
+	</select>
+
+	<select id="collection_project_list" parameterType="map" resultType="com.tumblbugs.vo.ProjectVO">
+		SELECT * FROM 
+		(SELECT ROWNUM RNO,PJ_ID, PJ_TITLE, NAME, REMAINING_DAYS, PJ_SIMG, FUNDING,STATUS,PROGRESS FROM 
+		(SELECT PJ_ID, PJ_TITLE, NAME, REMAINING_DAYS, PJ_SIMG, TO_CHAR(FUNDING, '999,999,999,999') FUNDING,
+		(CASE WHEN REMAINING_DAYS <![CDATA[ < ]]> 0 AND FUNDING >= PJ_PRICE  THEN '펀딩 성공' 
+		WHEN REMAINING_DAYS <![CDATA[ < ]]> 0 AND FUNDING <![CDATA[ < ]]> PJ_PRICE  THEN '펀딩 무산' ELSE '진행중' END) AS STATUS,
+		TRUNC((FUNDING / PJ_PRICE) * 100) AS PROGRESS
+		FROM
+		(SELECT CP.PJ_ID, PJ_TITLE, M.NAME, TRUNC(PJ_END_DATE -SYSDATE+1) REMAINING_DAYS, NVL(SUM(TOTAL_FUNDING_PRICE), 0) FUNDING, PJ_SIMG, PJ_PRICE,COL_PJ_REGDATE
+		FROM TUM_PROJECT P, TUM_MEMBER M, TUM_FUNDING F, TUM_COLLECTION_PROJECT CP WHERE P.EMAIL = M.EMAIL AND P.PJ_ID = F.PJ_ID(+) AND PJ_CHECK_YN = 'y' 
+		AND COL_ID=#{col_id} AND CP.PJ_ID = P.PJ_ID
+		GROUP BY CP.PJ_ID, PJ_TITLE, M.NAME,TRUNC(PJ_END_DATE -SYSDATE+1), PJ_SIMG, PJ_PRICE ,pj_start_date,COL_PJ_REGDATE) 
+		ORDER BY CASE WHEN STATUS IN ('진행중') THEN 0 WHEN STATUS IN ('펀딩 성공') THEN 1 ELSE 2 END ASC, COL_PJ_REGDATE)) WHERE RNO BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="project_sort_count" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM (SELECT PJ_ID, PJ_TITLE, NAME, REMAINING_DAYS, PJ_SIMG, FUNDING,STATUS,PROGRESS 
+				FROM (SELECT PJ_ID, PJ_TITLE, NAME, REMAINING_DAYS, PJ_SIMG, TO_CHAR(FUNDING, '999,999,999,999') FUNDING,
+					(CASE WHEN REMAINING_DAYS <![CDATA[ < ]]> 0 AND FUNDING >= PJ_PRICE  THEN '펀딩 성공' 
+				WHEN REMAINING_DAYS <![CDATA[ < ]]> 0 AND FUNDING <![CDATA[ < ]]> PJ_PRICE  THEN '펀딩 무산' ELSE '진행중' END) AS STATUS,
+				TRUNC((FUNDING / PJ_PRICE) * 100) AS PROGRESS
+				FROM (SELECT P.PJ_ID, PJ_TITLE, M.NAME, TRUNC(PJ_END_DATE -SYSDATE+1) REMAINING_DAYS, NVL(SUM(TOTAL_FUNDING_PRICE), 0) FUNDING, PJ_SIMG, PJ_PRICE
+				FROM TUM_PROJECT P, TUM_MEMBER M, TUM_FUNDING F WHERE P.EMAIL = M.EMAIL AND P.PJ_ID = F.PJ_ID(+) AND PJ_CHECK_YN = 'y'
+				<if test="category != '전체'"> 
+					AND PJ_CATEGORY=#{category}
+				</if>
+				<if test="editorpick != '전체'">
+					AND EDITOR_RECOMMEND='1'
+				</if>
+				<if test="search != '전체'">
+					AND (PJ_TITLE Like '%'|| #{search} ||'%' OR NAME LIKE '%'|| #{search} ||'%' OR PJ_CATEGORY LIKE '%'|| #{search} ||'%')
+				</if>
+				
+				GROUP BY P.PJ_ID, PJ_TITLE, M.NAME,TRUNC(PJ_END_DATE -SYSDATE+1), PJ_SIMG, PJ_PRICE))
+				<trim prefix="WHERE" prefixOverrides="AND |OR ">
+				<choose>
+					<when test="ongoing != '전체' and ongoing == 'ongoing'">
+						STATUS = '진행중' 
+					</when>
+					<when test="ongoing != '전체' and ongoing == 'confirm'">
+						STATUS = '펀딩 성공' 
+					</when>
+				</choose>
+				
+				<choose>
+					<when test='rate != "전체" and rate == "1"'>
+						AND PROGRESS <![CDATA[ <= ]]> 75 
+					</when>
+					<when test='rate != "전체" and rate == "2"'>
+						AND PROGRESS BETWEEN 75 AND 99
+					</when>
+					<when test='rate != "전체" and rate == "3"'>
+						AND PROGRESS >= 100
+					</when>
+				</choose>
+				
+				<choose>
+					<when test='money != "전체" and money == "1"'>
+						AND FUNDING <![CDATA[ <= ]]> TO_CHAR(1000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "2"'>
+						AND FUNDING BETWEEN TO_CHAR(1000000, '999,999,999,999') AND TO_CHAR(10000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "3"'>
+						AND FUNDING BETWEEN TO_CHAR(10000000, '999,999,999,999') AND TO_CHAR(50000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "4"'>
+						AND FUNDING BETWEEN TO_CHAR(50000000, '999,999,999,999') AND TO_CHAR(100000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "5"'> 
+						AND FUNDING >= TO_CHAR(100000000, '999,999,999,999')
+					</when>
+				</choose>
+				</trim>
+				)
+	</select>
+	
+	<select id="project_sort" parameterType="map" resultType="com.tumblbugs.vo.ProjectVO">
+		SELECT * FROM (SELECT ROWNUM RNO, PJ_ID, PJ_TITLE, NAME, REMAINING_DAYS, PJ_SIMG, FUNDING,STATUS,PROGRESS 
+				FROM (SELECT PJ_ID, PJ_TITLE, NAME, REMAINING_DAYS, PJ_SIMG, TO_CHAR(FUNDING, '999,999,999,999') FUNDING,
+					(CASE WHEN REMAINING_DAYS <![CDATA[ < ]]> 0 AND FUNDING >= PJ_PRICE  THEN '펀딩 성공' 
+				WHEN REMAINING_DAYS <![CDATA[ < ]]> 0 AND FUNDING <![CDATA[ < ]]> PJ_PRICE  THEN '펀딩 무산' ELSE '진행중' END) AS STATUS,
+				TRUNC((FUNDING / PJ_PRICE) * 100) AS PROGRESS
+				FROM (SELECT P.PJ_ID, PJ_TITLE, M.NAME, TRUNC(PJ_END_DATE -SYSDATE+1) REMAINING_DAYS, NVL(SUM(TOTAL_FUNDING_PRICE), 0) FUNDING, PJ_SIMG, PJ_PRICE, PJ_START_DATE, PJ_HITS
+				FROM TUM_PROJECT P, TUM_MEMBER M, TUM_FUNDING F WHERE P.EMAIL = M.EMAIL AND P.PJ_ID = F.PJ_ID(+) AND PJ_CHECK_YN = 'y'
+				<if test="category != '전체'"> 
+					AND PJ_CATEGORY=#{category}
+				</if>
+				<if test="editorpick != '전체'">
+					AND EDITOR_RECOMMEND='1'
+				</if>
+				<if test="search != '전체'">
+					AND (PJ_TITLE Like '%'|| #{search} ||'%' OR NAME LIKE '%'|| #{search} ||'%' OR PJ_CATEGORY LIKE '%'|| #{search} ||'%')
+				</if>
+				
+				GROUP BY P.PJ_ID, PJ_TITLE, M.NAME,TRUNC(PJ_END_DATE -SYSDATE+1), PJ_SIMG, PJ_PRICE, PJ_START_DATE, PJ_HITS
+				)
+				
+				<trim prefix="ORDER BY">
+				 		<if test="order == 'fav'"> CASE WHEN STATUS IN ('진행중') THEN 0 WHEN STATUS IN ('펀딩 성공') THEN 1 ELSE 2 END ASC, PJ_HITS DESC </if>
+                        <if test="order == 'new'"> CASE WHEN STATUS IN ('진행중') THEN 0 WHEN STATUS IN ('펀딩 성공') THEN 1 ELSE 2 END ASC, PJ_START_DATE DESC </if>
+                		<if test="order == 'max_rate'"> PROGRESS DESC </if>
+                        <if test="order == 'max_amount'"> FUNDING DESC </if>                 
+                        <if test="order == 'deadline'"> CASE WHEN STATUS IN ('진행중') THEN 0 WHEN STATUS IN ('펀딩 성공') THEN 1 ELSE 2 END ASC, REMAINING_DAYS ASC </if>      
+                </trim>
+                
+				)
+				<trim prefix="WHERE" prefixOverrides="AND |OR ">
+				<choose>
+					<when test="ongoing != '전체' and ongoing == 'ongoing'">
+						STATUS = '진행중' 
+					</when>
+					<when test="ongoing != '전체' and ongoing == 'confirm'">
+						STATUS = '펀딩 성공' 
+					</when>
+				</choose>
+				
+				<choose>
+					<when test='rate != "전체" and rate == "1"'>
+						AND PROGRESS <![CDATA[ <= ]]> 75 
+					</when>
+					<when test='rate != "전체" and rate == "2"'>
+						AND PROGRESS BETWEEN 75 AND 99
+					</when>
+					<when test='rate != "전체" and rate == "3"'>
+						AND PROGRESS >= 100
+					</when>
+				</choose>
+				
+				<choose>
+					<when test='money != "전체" and money == "1"'>
+						AND FUNDING <![CDATA[ <= ]]> TO_CHAR(1000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "2"'>
+						AND FUNDING BETWEEN TO_CHAR(1000000, '999,999,999,999') AND TO_CHAR(10000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "3"'>
+						AND FUNDING BETWEEN TO_CHAR(10000000, '999,999,999,999') AND TO_CHAR(50000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "4"'>
+						AND FUNDING BETWEEN TO_CHAR(50000000, '999,999,999,999') AND TO_CHAR(100000000, '999,999,999,999')
+					</when>
+					<when test='money != "전체" and money == "5"'> 
+						AND FUNDING >= TO_CHAR(100000000, '999,999,999,999')
+					</when>
+				</choose>
+				</trim>
+				) WHERE RNO BETWEEN #{start} AND #{end}
+	</select>
+</mapper>

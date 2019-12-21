@@ -1,0 +1,179 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>텀블벅스 :: tumblbugs</title>
+	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("div#payment_regist_editor").hide();
+			//$("div#registed_payment_list").hide();
+			$("button#payment_nav_list").click(function(){
+				$("div#payment_regist_editor").hide();
+				$("div#registed_payment_list").show();
+			});
+			
+			$("button#payment_nav_regist").click(function(){
+				$("div#registed_payment_list").hide();
+				$("div#payment_regist_editor").show();
+			});
+			
+			$("button.delete_payment").click(function(){
+				$(this).parent().remove();				
+			});
+			
+			$("div#payment_regist_account").hide();
+			$("div.dropdown-item").click(function(){
+				var text = $(this).text();
+				$("div#payment_regist_select>button").text(text);
+				if(text == '체크/신용카드') {
+					$("div#payment_regist_account").hide();
+					$("div#payment_regist_credit").show();
+				} else {
+					$("div#payment_regist_credit").hide();
+					$("div#payment_regist_account").show();
+					
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	<div>
+		<div>
+			<section id="mypage_profile_header">
+				<div id="mypage_profile_header_container">
+					<h2>지불정보 설정</h2>
+					<div id="mypage_nav">
+						<a href="http://localhost:9090/tumblbugs/mypage/profile"><span>프로필 설정</span></a>
+						<a href="http://localhost:9090/tumblbugs/mypage/payment"><span>지불정보 설정</span></a>
+					</div>
+				</div>
+			</section>
+		</div>	
+		<div id="mypage_payment_main_container">
+			<div id="payment_editor">
+				<div id="payment_nav">
+					<button type="button" id="payment_nav_list"><i class="fas fa-list"></i></button>
+					<button type="button" id="payment_nav_regist"><i class="fas fa-plus-circle"></i></button>
+				</div>
+				<div id="registed_payment_list">
+					<div>
+						<i class="far fa-credit-card"></i>
+						<span>국민카드 4327</span>
+						<button type="button" class="delete_payment"><i class="far fa-trash-alt"></i></button>
+					</div>
+					<div>
+						<i class="fas fa-money-check"></i>
+						<span>국민은행 2707</span>
+						<button type="button" class="delete_payment"><i class="far fa-trash-alt"></i></button>
+					</div>
+				</div>
+				<div id="payment_regist_editor">
+					<span>등록할 결제 수단을 선택해 주세요.</span>
+					<div id="payment_regist_select">
+						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">체크/신용카드</button>
+					    <div class="dropdown-menu" >
+					      <div class="dropdown-item">체크/신용카드</div>
+					      <div class="dropdown-item">은행계좌</div>
+					    </div>
+					</div>
+					<form>
+						<div id="payment_regist_credit">
+							<div class="payment_regist_space"></div>
+							<div class="payment_regist_input">
+								<label>신용(체크)카드 번호</label>
+								<input type="text" class="form-control">
+								<input type="text" class="form-control">
+								<input type="text" class="form-control">
+								<input type="text" class="form-control">
+								<!-- <span class="payment_regist_guide">공백이나 하이픈(-) 없이 숫자만 입력해주세요</span> -->
+							</div>
+							<div class="payment_regist_input">
+								<label>카드 유효 기간</label>
+								<input type="text" placeholder="MM/YY" class="form-control">
+							</div>
+							<div class="payment_regist_input">
+								<label>카드 비밀번호</label>
+								<input type="text" placeholder="앞2자리" class="form-control">
+							</div>
+							<div class="payment_regist_input">
+								<label>생년월일</label>
+								<input type="text" placeholder="주민등록번호 앞 6자리" class="form-control">
+							</div>
+						</div>
+						
+						<div id="payment_regist_account">
+							<div class="payment_regist_space"></div>
+							<div class="payment_regist_input">
+								<label>결제 은행</label>
+								<select>
+									<option>국민은행</option>
+									<option>농협</option>
+									<option>우리은행</option>
+									<option>SC은행</option>
+									<option>삼성은행</option>
+									<option>씨티은행</option>
+									<option>대구은행</option>
+									<option>부산은행</option>
+									<option>광주은행</option>
+									<option>제주은행</option>
+									<option>경남은행</option>
+									<option>새마을금고</option>
+									<option>신협</option>
+									<option>우체국</option>
+									<option>하나은행</option>
+									<option>신한은행</option>
+									<option>외환은행</option>
+									<option>유안타증권</option>
+									<option>기업은행</option>
+									<option>산업은행</option>
+								</select>
+							</div>
+							<div class="payment_regist_input">
+								<label>계좌번호</label>
+								<input type="text" class="form-control">
+								<span class="payment_regist_guide">*핸드폰 번호 등으로 만든 평생계좌번호 및 가상계좌,펀드/적금/정기예금 등의 계좌는 등록이 불가능합니다.</span>
+							</div>
+							<div class="payment_regist_input">
+								<label>예금주명</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="payment_regist_input">
+								<label>생년월일</label>
+								<input type="text" placeholder="주민등록번호 앞 6자리" class="form-control">
+							</div>
+						</div>
+						
+						<div id="payment_regist_button">
+							<button id="payment_regist_submit" type="button">등록하기</button>
+							<button id="payment_regist_reset" type="reset">취소하기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div id="payment_faq">
+				<div>자주 묻는 질문</div>
+				<div class="payment_faq_article">
+					<div>
+						<div class="payment_faq_title"><i class="fas fa-chevron-right"></i><span>예약한 결제수단을 확인하고 싶어요.</span></div>
+						<div class="payment_faq_content"><span>프로젝트별로 예약된 결제수단은 </span><br><a href="#">내 후원 현황</a><span>에서 조회하실 수 있습니다.</span></div>
+					</div>
+					<div>
+						<div class="payment_faq_title"><i class="fas fa-chevron-right"></i><span>예약한 결제수단은 어떻게 바꾸나요?</span></div>
+						<div class="payment_faq_content"><a href="#">내 후원 현황</a><span> > 프로젝트 후원 상세 페이지에서<br>변경하실 수 있습니다.</span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

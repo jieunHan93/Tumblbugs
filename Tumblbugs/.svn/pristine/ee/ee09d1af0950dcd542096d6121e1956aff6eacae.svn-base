@@ -1,0 +1,90 @@
+package com.tumblbugs.vo;
+
+public class MessageVO {
+	/*MSG_ID         NOT NULL VARCHAR2(100)  
+	CHATROOM_ID             VARCHAR2(100)  
+	PJ_ID                   VARCHAR2(100)  
+	SENDER_EMAIL            VARCHAR2(100)  
+	RECEIVER_EMAIL          VARCHAR2(100)  
+	MSG_CONTENT    NOT NULL VARCHAR2(2000) 
+	MSG_TYPE       NOT NULL VARCHAR2(100)  
+	MSG_DATE       NOT NULL DATE  */
+	String msg_id, chatroom_id, pj_id, email, msg_content, msg_type, msg_date, msg_check;
+	String pj_title, pj_simg, name, profile_simg;
+	
+	
+	public String getProfile_simg() {
+		return profile_simg;
+	}
+	public void setProfile_simg(String profile_simg) {
+		this.profile_simg = profile_simg;
+	}
+	public String getMsg_check() {
+		return msg_check;
+	}
+	public void setMsg_check(String msg_check) {
+		this.msg_check = msg_check;
+	}
+	public String getPj_title() {
+		return pj_title;
+	}
+	public void setPj_title(String pj_title) {
+		this.pj_title = pj_title;
+	}
+	public String getPj_simg() {
+		return pj_simg;
+	}
+	public void setPj_simg(String pj_simg) {
+		this.pj_simg = pj_simg;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getMsg_id() {
+		return msg_id;
+	}
+	public void setMsg_id(String msg_id) {
+		this.msg_id = msg_id;
+	}
+	public String getChatroom_id() {
+		return chatroom_id;
+	}
+	public void setChatroom_id(String chatroom_id) {
+		this.chatroom_id = chatroom_id;
+	}
+	public String getPj_id() {
+		return pj_id;
+	}
+	public void setPj_id(String pj_id) {
+		this.pj_id = pj_id;
+	}
+	public String getMsg_content() {
+		return msg_content;
+	}
+	public void setMsg_content(String msg_content) {
+		this.msg_content = msg_content;
+	}
+	public String getMsg_type() {
+		return msg_type;
+	}
+	public void setMsg_type(String msg_type) {
+		this.msg_type = msg_type;
+	}
+	public String getMsg_date() {
+		return msg_date;
+	}
+	public void setMsg_date(String msg_date) {
+		this.msg_date = msg_date;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
+}

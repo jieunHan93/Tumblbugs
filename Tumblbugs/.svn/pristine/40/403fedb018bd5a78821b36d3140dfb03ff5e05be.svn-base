@@ -1,0 +1,118 @@
+package com.tumblbugs.controller;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.tumblbugs.dao.FundingDAO;
+import com.tumblbugs.dao.PaymentDAO;
+import com.tumblbugs.dao.ProjectDAO;
+import com.tumblbugs.vo.FundingGiftVO;
+import com.tumblbugs.vo.FundingVO;
+import com.tumblbugs.vo.PaymentVO;
+
+@Controller
+public class FundingController {
+	
+	@Autowired
+	private ProjectDAO projectDAO;
+	
+	@Autowired
+	private PaymentDAO paymentDAO;
+	
+	@Autowired
+	private FundingDAO fundingDAO;
+	
+	/**
+	 * 선물 선택 및 추가 후원금 입력 화면
+	 * @param pj_id
+	 * @param gift_id
+	 * @return
+	 */
+	@RequestMapping(value="/funding/step1", method=RequestMethod.GET)
+	public ModelAndView step1(String pj_id, String gift_id) {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("/funding/step1_gift_select");
+		mv.addObject("pj_id", pj_id);
+		mv.addObject("pj_title", projectDAO.getProjectTitle(pj_id));
+		mv.addObject("giftList", projectDAO.getGiftList(pj_id));
+		
+		return mv;
+	}
+	
+	/**
+	 * 결제 예약 화면
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping(value="/funding/step2", method=RequestMethod.POST)
+	public ModelAndView step2(FundingVO vo) {
+		ModelAndView mv = new ModelAndView();
+		
+		List<FundingGiftVO> list = (ArrayList<FundingGiftVO>)vo.getGiftList();
+		
+		for(int i=list.size(); i>0; i--) {
+			FundingGiftVO fgvo = list.get(i-1);
+			
+			if(StringUtils.hasLength(fgvo.getSelect_yn())) {
+				fgvo.setItemList(projectDAO.getItemList(fgvo.getGift_id()));
+				
+				int funding_gift_price = Integer.parseInt(fgvo.getGift_price().replace(",", "").replace(" ", "")) * fgvo.getGift_quantity();
+				list.get(i-1).setFunding_gift_price(String.valueOf(funding_gift_price));
+				
+			} else {
+				list.remove(i-1);
+			}
+		}
+		
+		vo.setGiftList(list);
+		
+		mv.setViewName("/funding/step2_payment_reservation");
+		mv.addObject("vo", vo);
+		mv.addObject("pj_title", projectDAO.getProjectTitle(vo.getPj_id()));
+		mv.addObject("paymentList", paymentDAO.getPaymentList(vo.getEmail()));	//결제수단 리스트
+		mv.addObject("recentDeliveryInfo", fundingDAO.getRecentDeliveryInfo(vo.getEmail()));	//최근 배송지
+		
+		return mv;
+	}
+	
+	/**
+	 * 펀딩 DB 저장
+	 * @param vo
+	 * @param pvo
+	 * @return
+	 */
+	@RequestMapping(value="/funding/complete", method=RequestMethod.POST)
+	public ModelAndView step3(FundingVO vo, PaymentVO pvo) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		//신규 결제 수단 등록
+		if(!pvo.getPayment_method().equals("")) {
+			int result = paymentDAO.regist(pvo);
+			
+			if(result != 0) {
+				String payment_id = paymentDAO.getNewPaymentId(vo.getEmail());
+				vo.setPayment_id(payment_id);
+			}
+		}
+		
+		//펀딩 등록: tum_funding
+		if(fundingDAO.fundingInsert(vo)) {
+			mv.setViewName("/funding/step3_funding_success");
+		} else {
+			mv.setViewName("errorPage");
+		}
+		
+		return mv;
+	}
+}

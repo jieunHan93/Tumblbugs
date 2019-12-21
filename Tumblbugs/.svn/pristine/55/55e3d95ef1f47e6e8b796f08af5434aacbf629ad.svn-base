@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.upload">
+
+	<insert id="add_project">
+		insert into tum_project(pj_id, pj_reg_date, email)  values('PJ' || LPAD(tum_project_sequ.nextval, 5, 0), sysdate, 'aaa@naver.com')
+	</insert>
+	
+	<select id="get_pj_id" resultType="java.lang.String">
+		select pj_id from(select rownum rno, pj_id from (select pj_id, pj_reg_date from tum_project order by pj_reg_date desc)) where rno=1
+	</select>
+	
+	<select id="get_pj_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.ProjectVO">
+		<!-- select  pj_id, pj_title, pj_img, pj_simg, pj_summary, pj_category, pj_addr, pj_tag,
+				pj_price, pj_class, pj_refund, pj_reg_date, pj_story, pj_account_type, pj_account_id, pj_account_name, pj_bank,
+				pj_account_number from tum_project where pj_id=#{pj_id} -->
+				select pj_id, pj_title, pj_stitle, pj_img, pj_simg, pj_summary, pj_category, pj_addr, pj_tag,
+				pj_price, pj_class, pj_refund, to_char(pj_end_date,'yyyy-mm-dd') pj_end_date, to_char(pj_start_date,'yyyy-mm-dd') pj_start_date, pj_story, pj_account_type, pj_account_id, pj_account_name, pj_bank,
+				pj_account_number, pj_email, pj_phone from tum_project where pj_id=#{pj_id}
+	</select>
+	
+	<update id="update_title" parameterType="map">
+		update tum_project  set pj_title=#{pj_title}, pj_stitle=#{pj_stitle} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_input" parameterType="map">
+		update tum_project  set ${pj_colname}=#{pj_val} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_date" parameterType="map">
+		update tum_project  set ${pj_colname}=to_date(#{pj_val}, 'yyyy-mm-dd') where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_member" parameterType="map">
+		update tum_member  set ${pj_colname}=#{pj_val} where email= #{email}
+	</update>
+	
+	<update id="update_file" parameterType="com.tumblbugs.vo.ProjectVO">
+		update tum_project  set pro_img=#{vo.pro_img}, pro_simg=#{vo.pro_simg} where pj_id='PJ80'
+	</update>
+	
+	<update id="update_account" parameterType="map">
+		update tum_project set pj_account_type=#{pj_account_type}, pj_account_id=#{pj_account_id}, pj_account_name=#{pj_account_name},
+								pj_bank=#{pj_bank}, pj_account_number=#{pj_account_number} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_editor" parameterType="map">
+		update tum_project  set pj_story=#{pj_story:VARCHAR} where pj_id=#{pj_id}
+	</update>
+	
+	<insert id="add_gift" parameterType="map">
+		insert into tum_gift values('G' || LPAD(tum_gift_sequ.nextval, 5, 0) , #{pj_id}, #{gift_title}, #{gift_price}, #{gift_sort_num},
+									to_date(#{gift_delivery_date}, 'yyyy/mm/dd'), #{gift_max_count}, #{gift_delivery_yn})
+	</insert>
+	
+	<select id="get_gift_id" resultType="java.lang.String">
+		select gift_id from(select rownum rno, gift_id from (select gift_id from tum_gift order by gift_id desc)) where rno=1
+	</select>
+	
+	<insert id="add_item" parameterType="map">
+		insert into tum_item values('I' || LPAD(tum_item_sequ.nextval, 5, 0) , #{gift_id}, #{item_title}, #{item_option_type}, #{item_option}, #{item_count}, #{item_check})
+	</insert>
+	
+	<select id="get_item_id" resultType="java.lang.String">
+		select item_id from(select rownum rno, item_id from (select item_id from tum_item order by item_id desc)) where rno=1
+	</select>
+	
+	<delete id="delete_gift" parameterType="java.lang.String">
+		delete from tum_gift where gift_id=#{gift_id}
+	</delete>
+	
+	<update id="update_gift" parameterType="map">
+		update tum_gift set gift_title=#{gift_title}, gift_price=#{gift_price}, gift_sort_num=#{gift_sort_num},
+									gift_delivery_date = #{gift_delivery_date ,jdbcType=TIMESTAMP}, gift_max_count=#{gift_max_count}, gift_delivery_yn = #{gift_delivery_yn}
+									where gift_id=#{gift_id}
+	</update>
+	
+	<delete id="delete_item" parameterType="java.lang.String">
+		delete from tum_item where item_id=#{item_id}
+	</delete>
+	
+	
+	<update id="update_item_check" parameterType="map">
+		update tum_item set item_check=#{item_check}, item_title=#{item_title}, item_option_type=#{item_option_type}, item_option=#{item_option}, item_count=#{item_count}
+					where item_id=#{item_id}
+	</update>
+	
+	
+	<update id="add_file" parameterType="com.tumblbugs.vo.FileVO">
+		update tum_project set pj_img=#{pj_img}, pj_simg=#{pj_simg} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="add_member_file" parameterType="com.tumblbugs.vo.MemberVO">
+		update tum_member set profile_img=#{profile_img}, profile_simg=#{profile_simg} where email = 'aaa@naver.com'
+	</update>
+	
+	<select id="gift_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.GiftVO"> 
+		select rownum rno, gift_id, pj_id, gift_title, gift_price, gift_sort_num, to_char(gift_delivery_date, 'yyyy-mm-dd') gift_delivery_date, gift_max_count, gift_delivery_yn 
+			from(select * from tum_gift where pj_id = #{pj_id} order by gift_id desc)
+	</select>
+</mapper>

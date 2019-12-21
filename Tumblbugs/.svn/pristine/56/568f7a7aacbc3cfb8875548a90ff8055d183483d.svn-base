@@ -1,0 +1,210 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>텀블벅스 :: tumblbugs</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+<script>
+	$(document).ready(function() {
+		
+		//수정하기 버튼 클릭
+		$(".button_td #btn_update").click(function() {
+			var data_tr = $(this).closest("tr");
+			var id = data_tr.attr("id");
+			var data_tr_update = $("tr.data_tr_update#" + id);
+			
+			$("tr.data_tr").show();
+			data_tr.hide();
+			$("tr.data_tr_update").hide().css("background-color", "none");
+			$("tr.data_tr_update input").css("border", "none");
+			
+			data_tr_update.show().css("background-color", "#f0f5ff");
+			data_tr_update.find("input").css("border", "2px solid #1d85ea").focus();
+		});
+		
+		//수정 취소하기 버튼 클릭
+		$(".data_tr_update #btn_update_cancel").click(function() {
+			$("form").each(function() {this.reset();});
+			
+			$("tr.data_tr_update").hide();
+			$("tr.data_tr").show();
+		});
+	});
+</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="funding_detail">
+		<section class="background_wrap"><div></div></section>
+		<section class="content_wrap">
+			<div>
+				<a href="http://localhost:9090/tumblbugs/myfunding"><button type="button" id="btn_funding_history"><i class="fas fa-angle-left"></i> 내 후원현황</button></a>
+			</div>
+			<div class="funding_overview_wrap">
+				<table>
+					<tr>
+						<td>
+							<div class="project_status">펀딩 진행중</div>
+							<a href="http://localhost:9090/tumblbugs/project_content"><div class="project_title"><b>오차원 크리스마스 리스 DIY 키트<span class="creator_name">오차원</span></b></div></a>
+						</td>
+						<td class="button_td">
+							<a href="http://localhost:9090/tumblbugs/sendMessage"><button type="button" id="btn_sendMessage"><i class="fas fa-envelope"></i> 문의하기</button></a>
+						</td>
+					</tr>
+					<tr>
+						<td>후원번호</td>
+						<td><span>00000001</span></td>
+					</tr>
+					<tr>
+						<td>후원 날짜</td>
+						<td><span>2019.11.21 12:04</span></td>
+					</tr>
+					<tr>
+						<td>프로젝트 마감일</td>
+						<td><span>2019.12.06</span></td>
+					</tr>
+				</table>
+			</div>
+			<div class="total_funding_info_wrap">
+				<div class="table_title">후원 내역</div>
+				<table>
+					<tr>
+						<td class="button_td" colspan="2">
+							<span>총 90,000원을 후원하셨습니다.</span>
+							<a href="http://localhost:9090/tumblbugs/myfunding/edit?menu=reward"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a>
+						</td>
+					</tr>
+					<tr>
+						<td><span class="circle_span"><i class="fas fa-gift"></i></span></td>
+						<td>
+							<div id="reward">
+								<label>A 스몰 리스 만들기 키트 1개 + 무료 배송</label>
+								<ul id="reward_component">
+									<li>• &nbsp;&nbsp;스몰 리스 만들기 키트 ( x 1 )</li>
+								</ul>
+								<div>선택 옵션: 레드 / 수량 : 1개 / 39,000원</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><span class="circle_span"><i class="fas fa-gift"></i></span></td>
+						<td>
+							<div id="reward">
+								<label>C 스몰 리스 완성품 1개 + 무료배송</label>
+								<ul id="reward_component">
+									<li>• &nbsp;&nbsp;C 스몰 리스 완성품 ( x 1 )</li>
+									<li>• &nbsp;&nbsp;랜덤 오너먼트  ( x 1 )</li>
+								</ul>
+								<div>선택 옵션: 레드 / 수량 : 1개 / 48,000원</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><span class="circle_span"><i class="fas fa-gifts"></i></span></td>
+						<td>
+							<div id="reward"><label>추가 후원금 3,000원</label></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="payment_wrap">
+				<div class="table_title">결제 정보</div>
+				<table>
+					<tr>
+						<td class="data_td">
+							<div class="data_title">결제 수단</div>
+							<div class="data_value">신한카드/1234</div>
+						</td>
+						<td class="button_td"><a href="http://localhost:9090/tumblbugs/myfunding/edit?menu=payment"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a></td>
+					</tr>
+					<tr>
+						<td class="data_td" colspan="2">
+							<div class="data_title">결제 금액</div>
+							<div class="data_value">90,000원</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="data_td" colspan="2">
+							<div class="data_title">결제 상태</div>
+							<div class="data_value">2019년 12월 7일에 결제 예정입니다.</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="delivery_wrap">
+				<div class="table_title">배송 정보</div>
+				<form name="delivery_update_form">
+					<table>
+						<tr class="data_tr" id="delivery_name">
+							<td class="data_td">
+								<div class="data_title">받는 분 이름</div>
+								<div class="data_value">뿅갹갹</div>
+							</td>
+							<td class="button_td"><button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button></td>
+						</tr>
+						<tr class="data_tr_update" id="delivery_name">
+							<td class="data_td_update" colspan="2">
+								<div class="data_title">받는 분 이름</div>
+								<div class="data_value"><input type="text" value="뿅갹갹"></div>
+								<div class="button_div">
+									<button type="button" id="btn_update_cancel"><i class="fas fa-times"></i> &nbsp;취소하기</button>
+									<button type="button" id="btn_update_submit"><i class="fas fa-check"></i> &nbsp;저장하기</button>
+								</div>
+							</td>
+						</tr>
+						<tr class="data_tr" id="delivery_phone">
+							<td class="data_td">
+								<div class="data_title">받는 분 연락처</div>
+								<div class="data_value">010-1234-5678</div>
+							</td>
+							<td class="button_td"><button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button></td>
+						</tr>
+						<tr class="data_tr_update" id="delivery_phone">
+							<td class="data_td_update" colspan="2">
+								<div class="data_title">받는 분 연락처</div>
+								<div class="data_value"><input type="text" value="010-1234-5678"></div>
+								<div class="button_div">
+									<button type="button" id="btn_update_cancel"><i class="fas fa-times"></i> &nbsp;취소하기</button>
+									<button type="button" id="btn_update_submit"><i class="fas fa-check"></i> &nbsp;저장하기</button>
+								</div>
+							</td>
+						</tr>
+						<tr class="data_tr" id="delivery_addr">
+							<td class="data_td">
+								<div class="data_title">배송 주소</div>
+								<div class="data_value">[06235] 서울 강남구 테헤란로 132 한독약품빌딩 8층 쌍용교육센터</div>
+							</td>
+							<td class="button_td"><button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button></td>
+						</tr>
+						<tr class="data_tr_update" id="delivery_addr">
+							<td class="data_td_update" colspan="2">
+								<div class="data_title">배송 주소</div>
+								<div class="data_value"><input type="text" value="[06235] 서울 강남구 테헤란로 132 한독약품빌딩 8층 쌍용교육센터"></div>
+								<div class="button_div">
+									<button type="button" id="btn_update_cancel"><i class="fas fa-times"></i> &nbsp;취소하기</button>
+									<button type="button" id="btn_update_submit"><i class="fas fa-check"></i> &nbsp;저장하기</button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="data_td" colspan="2">
+								<div class="data_title">운송장 정보</div>
+								<div class="data_value">운송장 번호가 등록되지 않았습니다.</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div class="last_div">
+				<a href="http://localhost:9090/tumblbugs/myfunding/edit?menu=cancel"><button id="btn_funding_cancle">후원 취소하기</button></a>
+			</div>
+		</section>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="mapper.myproject">
+	
+	<select id="my_profile" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MemberVO"> 
+		select name, profile_img, profile_simg, intro, website from tum_member where email=#{email}
+	</select>
+
+	<select id="pj_count" parameterType="java.lang.String" resultType="int"> 
+		select count(*) from tum_project where email=#{email}
+	</select>
+	
+	<select id="pj_list" parameterType="map" resultType="com.tumblbugs.vo.ProjectVO"> 
+	select * from(select rownum rno, pj_id, email, pj_title, pj_summary, pj_img, pj_simg, pj_price, pj_end_date-sysdate pj_extra_date, total_price, sysdate-pj_end_date end_date_check 
+	from (select  t.pj_id, email, pj_title, pj_summary, pj_img, pj_simg, pj_price, pj_end_date, pj_start_date, total_price from tum_project t, 
+	(select t.pj_id, sum(total_funding_price) total_price from  tum_funding f, tum_project t where t.pj_id = f.pj_id group by t.pj_id) f 
+	where t.pj_id=f.pj_id(+) order by t.pj_id desc) where email=#{email}) where rno between #{start} and #{end}
+	</select>
+	
+	<select id="paging_list" parameterType="java.lang.String" resultType="int"> 
+		select count(*) from tum_project where email=#{email}
+	</select>
+	
+	<select id="pj_check" parameterType="java.lang.String" resultType="com.tumblbugs.vo.ProjectVO"> 
+		select NVL(pj_check_yn,'n') pj_check_yn, NVL(to_char(pj_start_date-sysdate), '0')pj_start_date from tum_project where pj_id=#{pj_id}
+	</select>
+	
+	<delete id="pj_delete" parameterType="java.lang.String">
+		delete from tum_project where pj_id=#{pj_id}
+	</delete>
+</mapper>    

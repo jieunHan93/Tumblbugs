@@ -1,0 +1,42 @@
+package com.tumblbugs.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.CommunityReplyVO;
+import com.tumblbugs.vo.CommunityVO;
+import com.tumblbugs.vo.ItemVO;
+
+@Repository
+public class CommunityDAO {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private static String namespace = "mapper.community";
+	
+	public ArrayList<CommunityVO> getList(String pj_id) {
+		List list = sqlSession.selectList(namespace + ".communityList", pj_id);
+		ArrayList<CommunityVO> clist = (ArrayList<CommunityVO>)list;
+		
+		for(CommunityVO vo:clist) {
+			ArrayList<CommunityReplyVO> rlist = getReplyList(vo.getCommunity_id());
+			vo.setRlist(rlist);
+		}
+		
+		return clist;
+	}
+	
+	public ArrayList<CommunityReplyVO> getReplyList(String community_id) {
+		List list = sqlSession.selectList(namespace + ".replyList", community_id);
+		return (ArrayList<CommunityReplyVO>)list;
+	}
+	
+	public int getResultWrite(CommunityVO vo) {
+		return sqlSession.insert(namespace + ".write", vo);
+	}
+	
+}

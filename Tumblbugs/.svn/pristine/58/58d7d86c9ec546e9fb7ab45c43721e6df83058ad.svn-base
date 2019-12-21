@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.upload">
+   <!--  <select id="login" parameterType="com.dycgv.vo.LoginVO" resultType="com.dycgv.vo.SessionVO"> 
+	</select> -->
+	<insert id="add_project">
+		insert into tum_project(pj_id, pj_reg_date, email)  values('PJ' || tum_project_sequ.nextval, sysdate, 'aaa@naver.com')
+		<!-- <if test = "testvalue!= null and testvalue!= ''"> -->
+	</insert>
+	
+	<select id="get_pj_id" resultType="java.lang.String">
+		select pj_id from(select rownum rno, pj_id from (select pj_id, pj_reg_date from tum_project order by pj_reg_date desc)) where rno = 1
+	</select>
+	
+	<select id="get_pj_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.ProjectVO">
+		select  pj_id, pj_title, pj_img, pj_simg, pj_summary, pj_category, pj_addr, pj_tag,
+				pj_price, pj_class, pj_refund, pj_reg_date, pj_story, pj_account_type, pj_birth, pj_account_name, pj_bank,
+				pj_account_number from tum_project where pj_id = #{pj_id}
+	</select>
+	<update id="update_title" parameterType="map">
+		update tum_project  set pj_title=#{pj_title}, pj_stitle=#{pj_stitle} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_input" parameterType="map">
+		update tum_project  set ${pj_colname}=#{pj_val} where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_date" parameterType="map">
+		update tum_project  set ${pj_colname}=to_date(#{pj_val}, 'yyyy-mm-dd') where pj_id=#{pj_id}
+	</update>
+	
+	<update id="update_member" parameterType="map">
+		update tum_member  set ${pj_colname} = #{pj_val} where email= #{email}
+	</update>
+	
+	<update id="update_file" parameterType="com.tumblbugs.vo.ProjectVO">
+		update tum_project  set pro_img = #{vo.pro_img}, pro_simg = #{vo.pro_simg} where pj_id='PJ80'
+	</update>
+</mapper>

@@ -1,0 +1,46 @@
+package com.tumblbugs.dao;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.FaqVO;
+
+@Repository
+public class FaqDAO {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	private static String namespace = "mapper.faq";
+	
+	/** FAQ 등록 **/
+	public boolean getResultWrite(FaqVO vo) {
+		
+		boolean result = false;
+		int ins_result = sqlSession.insert(namespace+".fwrite", vo);
+		if(ins_result != 0) result = true;
+		
+		return result;
+	}
+	
+	/** 전체 row count 출력  **/
+	public int execTotalCount(){
+		return sqlSession.selectOne(namespace+".fcount");
+	}
+	
+	/** FAQ 전체 리스트 **/
+	public ArrayList<FaqVO> getResultList() {
+		List list = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		list = sqlSession.selectList(namespace+".flist", param);
+		
+		return (ArrayList<FaqVO>)list;
+	}
+}

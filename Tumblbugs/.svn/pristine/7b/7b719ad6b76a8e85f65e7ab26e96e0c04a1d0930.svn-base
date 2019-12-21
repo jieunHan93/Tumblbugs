@@ -1,0 +1,221 @@
+/**
+	notice_list
+	한지은
+**/
+		div#notice_list_header_title{
+			width:1080px;
+			margin:auto;
+			height:150px;
+			text-align: center;
+	font-size: 32pt;
+    font-weight: bold;
+    padding-top:40px;
+		}
+		div#notice_list_header_nav_container{
+			border-top:1px solid rgba(10,10,10,0.1);
+			box-shadow: 3px 5px 5px rgba(33,33,33,.1);
+		}
+		div#notice_list_header_nav{
+			width:1080px;
+			margin:auto;
+			height:50px;
+		}
+		div#notice_list_header_nav>div{
+			display: inline-block;
+			border-bottom:2px solid transparent;
+			padding:12px 15px;
+		}
+		div#notice_list_header_nav>div>a{
+			outline: none;
+			text-decoration: none;
+			color:#c0c0c0;
+			font-weight:bold;
+		}
+		div#notice_list_header_nav>div:first-child {
+	margin-left:10px;
+}
+div#notice_list_bk{
+	background-color: rgb(239, 239, 239);
+}
+div#notice_list_content{
+	width:1080px;	/* height:500px; */
+	margin:auto;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+section#notice_list_nav_bk{
+	background-color: white;
+}
+div#notice_list_content ul{
+	list-style-type: none;
+}
+div#notice_list_content a{
+	text-decoration: none;
+	color:black;
+}
+div.notice_list_card_img>img{
+	object-fit: cover;
+	width: 160px;
+		  	height: 112px;
+}
+div.notice_list_card_img{
+	float:right;
+	display: inline-block;
+}
+div.notice_list_card_content{
+	clear:both;
+	display: inline-block;
+}
+li.notice_list_card_size{
+	height:152px;
+	width:1000x;
+	border-bottom:1px solid rgba(10,10,10,0.1);
+	margin:0px 40px;
+	/* padding-bottom:20px; */
+	padding-top:20px;
+}
+div#notice_list_content>ul{
+	background-color: white;
+}
+div.notice_list_card_status>span:first-child {
+	font-weight: bold;
+	color:#757575;
+	padding-right:10px;
+	font-size:15px;
+}
+div.notice_list_card_status>span:nth-child(2) {
+	font-size:15px;
+	font-weight: bold;
+	color:white;
+	padding-right:10px;
+	background-color: #1e90ff;
+	border-radius: 5px;
+	padding-left:6px;
+}
+div.notice_list_card{
+	width:998px;
+	height:152px;
+}
+div.notice_list_card_title{
+	padding-top:2px;
+	padding-bottom:25px;
+	font-size:24px;
+	width:790px;
+}
+div.notice_list_card_date{
+	font-size:15px;
+	color:#c0c0c0;
+}
+div#notice_list_search{
+	border:1px solid rgb(192, 192, 192);
+	border-radius: 5px;
+	width:310px;
+	height:40px;
+	margin:auto;
+}
+input#input_notice_list_search{
+	padding: 4px 8px;
+	font-size:15px;
+	color:rgba(0, 0, 0, 0.87);
+	border:none;
+	width:270px;
+	margin-top:3px;
+	margin-left:3px;
+}
+div#notice_list_search>button{
+	border:transparent;
+	background-color: transparent;
+	font-size:20px;
+	padding-top:10px;
+	outline:none;
+}
+div#notice_list_paging_box {
+	border:1px solid red;
+	width:310px;
+	height:50px;
+	margin:auto;
+}
+
+/**
+	notice_content
+	한지은
+**/
+ 	div#notice_content_detail{
+	width:1080px;	/* height:500px; */
+	margin:auto;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+div#notice_content_detail>div{
+	background-color: white;
+	padding: 42px 40px;
+}
+div#notice_content_textarea {
+	padding-top:20px;
+	padding-bottom:20px;
+	min-height:500px;
+}
+div#notice_content_title{
+	border-bottom:1px solid rgb(239, 239, 239);
+}
+div#notice_cotent_title_category{
+	color: rgb(117, 117, 117);
+   	margin: 0px 0px 4px;
+   	font-size:14px;
+}
+div#notice_content_title_title{
+	color: rgb(33, 33, 33);
+    line-height: 1.3;
+    margin: 0px 0px 16px;
+    font-size:23px;
+    font-weight: bold;
+}
+div#notice_content_title_date{
+	color: rgb(192, 192, 192);
+	font-size:14px;
+	margin: 0px 0px 10px;
+}
+div#notice_content_bottom>ul{
+	list-style: none;
+}
+div#notice_content_bottom li:first-child{
+	border-top:1px solid rgb(239, 239, 239);
+}
+div#notice_content_bottom li{
+	border-bottom:1px solid rgb(239, 239, 239);
+	padding:12px 7px; 
+}
+div#notice_content_bottom span{
+	font-size:15px;
+}
+div#notice_content_bottom span:first-child {
+	padding-right:25px;
+}
+div#notice_content_bottom span:nth-child(2) {
+	display:inline-block;
+	width:65px;
+	color:#757575;
+	font-weight: bold;
+}
+div#notice_content_bottom a{
+	text-decoration: none;
+	color:rgb(33, 33, 33);
+	font-weight: bold;
+}
+a#notice_content_forward>button{
+	width:300px;
+	height:40px;
+	border:none;
+	border-radius:5px;
+	background-color: #1e90ff;
+	color:white;
+	font-weight:bold;
+}
+a#notice_content_forward>button:hover{
+	background-color: #1d85ea;
+}
+div#notice_content_button{
+	padding-top:10px;
+	width:300px;
+	margin:auto;
+}

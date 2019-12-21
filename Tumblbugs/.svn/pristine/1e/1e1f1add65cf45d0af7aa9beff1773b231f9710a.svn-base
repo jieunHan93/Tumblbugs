@@ -1,0 +1,300 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<style>
+		section#mypage_profile_header{
+			background-color: #ebeae5;
+			height:144px;
+		}
+		div#mypage_profile_header_container{
+			width:1080px;
+			margin:auto;
+			padding-top: 45px;
+		}
+		div#mypage_nav,
+		div#mypage_profile_header_container>h2{
+			display: inline-block;	
+		}
+		div#mypage_profile_header_container>h2{
+			color:#645353;
+			font-weight: bold;
+			font-size:40px;
+			margin-left:20px;
+		}
+		div#mypage_nav>a{
+			cursor:pointer;
+			color:#645353;
+			margin-left:15px;
+			font-size: 15px;
+		}
+		div#mypage_nav>a:hover{
+			cursor:pointer;
+			color:#434343;
+		}
+		div#mypage_nav {
+			float:right;
+			padding-top: 15px;
+			padding-right:20px;
+		}
+		div#mypage_profile_main_container{
+			width:1080px;
+			margin:auto;
+			padding:40px 0px;
+		}
+		div#profile_editor{
+			width:700px;
+			display: inline-block;
+		}
+		div#profile_editor>form>div{
+			width:700px;
+			border-top:1px solid #ebe8e8;
+			min-height:100px;
+			padding:10px 0px;
+		}
+		label.profile_editor_label {
+			width:120px;
+			text-align: right;
+			color:#676363;
+			font-size:15px;
+			padding-top:25px;
+			vertical-align: top;
+			margin-right:10px;
+		}
+		div#profilel_editor_img{
+			display: inline-block;
+			width:450px;
+			font-size:14px;
+			margin:10px 0px;
+			color:#676363;
+		}
+		div#profilel_editor_img>div{
+			display: inline-block;
+			width: 350px;
+		}
+		div#profilel_editor_img input{
+			padding-bottom:5px;
+			display: block;
+		}
+		div#profilel_editor_img>span{
+			display:inline-block;
+			width:60px;	height:60px;
+			border-radius:50%;
+			background-image: url(http://localhost:9090/tumblbugs/images/kurby.gif);
+		    background-size: cover;
+		    background-position: 50% 50%;
+		    vertical-align: super;
+		    margin:0px 5px;
+		}
+		div#profile_editor input[type=text],
+		div#profile_editor input[type=text].form-control,
+		div#profile_editor input[type=password].form-control {
+			display:inline-block;
+			width:221px;
+			margin-left:5px;
+			padding:3px 6px;
+			vertical-align: bottom;
+			background-color: #EBEAE5;
+			color: #7d7d7d;
+			border:1px solid #EBEAE5;
+			border-radius: 5px;
+		}
+		div#profile_editor input[type=password].form-control{
+			width:150px;
+		}
+		span.profile_input_guide{
+			display: block;
+			margin-top:3px;
+		}
+		div#profile_editor textarea.form-control{
+			margin-left:5px;
+			width:500px;
+			height:100px;
+			margin-top:15px;
+			background-color: #EBEAE5;
+			color: #7d7d7d;
+			border:1px solid #EBEAE5;
+			border-radius: 5px;
+			padding:3px 6px;
+			resize: none; 
+			display:inline-block;
+		}
+		span.profile_input_guide{
+			color:#676363;
+			font-size:15px;
+			margin-left:140px;
+		}
+		button#profile_editor_submit{
+			padding:10px 40px;
+			border:1px solid #1e90ff;
+			background-color: #1e90ff;
+			border-radius: 5px;
+			color:white;
+			margin-top:15px;
+			margin-left:280px;
+		}
+		button#profile_editor_submit:hover{
+			background-color: #1d85ea;
+		}
+		div#profile_pre{
+			border:1px solid #ebe8e8;
+			width:300px;
+			float:right;
+			display: inline-block;
+			margin-right:20px;
+			border-radius: 5px;
+		}
+		div#profile_pre_header_space{
+			border:3px solid #1e90ff;
+			border-radius: 5px 5px 0px 0px;
+		}
+		
+		span#profile_pre_header_card_icon{
+			display:inline-block;
+			width:60px;	height:60px;
+			border-radius:50%;
+			background-image: url(http://localhost:9090/tumblbugs/images/kurby.gif);
+		    background-size: cover;
+		    background-position: 50% 50%;
+		    vertical-align: super;
+		    margin:0px 5px;
+		}
+		div#profile_pre_header>div:first-child {
+			color:#1e90ff;
+			font-weight: bold;
+			font-size: 15px;
+			margin-left:20px;
+			margin-top:10px;
+		}
+		span#profile_pre_header_card_icon{
+			margin-left:20px;
+			margin-top:15px;
+		}
+		span#profile_pre_header_card_name{
+			position:relative;
+			top:-27px;
+		}
+		div#profile_pre_middle{
+			border-top:1px solid #ebe8e8;
+			border-bottom:1px solid #ebe8e8;
+			background-color: #FAFAFA;
+			height:40px;
+			padding-top: 8px;
+    		padding-left: 20px;
+    		margin-top:5px;
+    		font-size:15px;
+    		color:gray;
+		}
+		div#profile_pre_middle i {
+			padding-right:5px;
+			color:#1e90ff;
+		}
+		div#profile_pre_footer{
+			height:50px;
+			text-align: center;
+			border-bottom:2px solid #ebe8e8;
+			border-right:1px solid #ebe8e8;
+			border-radius: 0px 0px 5px 5px;
+			padding-top:10px;
+		}
+		div#profile_pre_footer:hover {
+			background-color: #f0f4fe;
+		}
+		div#profile_pre a{
+			text-decoration: none;
+			outline: none;
+			color:#1e90ff;
+		}
+		div#profile_pre_middle>a {
+			text-decoration: none;
+			outline: none;
+			color:black;
+		}
+		div#profile_pre_middle>a:hover{
+			color:#1e90ff;
+		}
+	</style>
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	<div>
+		<div>
+			<section id="mypage_profile_header">
+				<div id="mypage_profile_header_container">
+					<h2>프로필 설정</h2>
+					<div id="mypage_nav">
+						<a href="http://localhost:9090/tumblbugs/profile"><span>프로필 설정</span></a>
+						<a><span>지불정보 설정</span></a>
+					</div>
+				</div>
+			</section>
+		</div>	
+		<div id="mypage_profile_main_container">
+			<div id="profile_editor">
+				<form>
+					<div>
+						<label class="profile_editor_label">프로필 사진</label>
+						<div id="profilel_editor_img">
+							<span></span>
+							<div>
+								<input type="file">
+								<span>사이즈는 가로 200px, 세로 250px에 최적화 되어 있으며<br>jpg, gif, png파일을 지원합니다.</span>
+							</div>
+						</div>
+					</div>
+					<div>
+						<label class="profile_editor_label">아이디</label>
+						<input type="text" value="test@naver.com" readonly>
+						<span class="profile_input_guide">아이디는 변경이 불가능합니다.</span>
+					</div>
+					<div>
+						<label class="profile_editor_label">비밀번호 설정</label>
+						<input type="password" class="form-control" placeholder="현재 비밀번호">
+						<input type="password" class="form-control" placeholder="변경할 비밀번호">
+					</div>
+					<div>
+						<label class="profile_editor_label">이름</label>
+						<input type="text" class="form-control" value="기존 유저명">
+					</div>
+					<div>
+						<label class="profile_editor_label">소개</label>
+						<textarea class="form-control"></textarea>
+						<span class="profile_input_guide">300자 이내의 자기소개를 입력해주세요.</span>
+					</div>
+					<div>
+						<label class="profile_editor_label">웹사이트</label>
+						<input type="text" class="form-control" value="웹사이트">
+						<span class="profile_input_guide">웹사이트가 있다면 주소를 입력해주세요.</span>
+					</div>
+					<div id="profile_editor_phone">
+						<label class="profile_editor_label">전화번호</label>
+						<input type="text" class="form-control" value="010">
+						<span class="profile_input_guide">전화번호를 입력해 주세요. 밀어주기 및 후원 선물 배송 시 연락을 위해 사용됩니다.</span>
+					</div>
+					<div>
+						<button id="profile_editor_submit" type="button">수정하기</button>
+					</div>
+				</form>
+			</div>
+			<div id="profile_pre">
+				<div id="profile_pre_header_space"></div>
+				<div id="profile_pre_header">
+					<div>프로필 카드 미리보기</div>
+					<div id="profile_pre_header_card">
+						<span id="profile_pre_header_card_icon"></span>
+						<span id="profile_pre_header_card_name">아주 긴~~~ 유저명</span>
+					</div>
+				</div>
+				<div id="profile_pre_middle"><a href="#"><i class="fas fa-check-circle"></i><span>2개의 프로젝트</span></a>의 창작자</div>
+				<a href="#"><div id="profile_pre_footer"><span>자세히보기</span></div></a>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

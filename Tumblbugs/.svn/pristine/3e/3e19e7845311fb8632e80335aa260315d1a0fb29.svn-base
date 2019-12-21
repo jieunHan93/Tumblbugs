@@ -1,0 +1,139 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>텀블벅스 :: tumblbugs</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+<style>
+	#funding_detail {
+		width: 1080px; margin: auto;
+		font-size: 10.5pt;
+	}
+	#funding_detail section {
+		border: 1px solid red;
+		margin: 20px;
+	}
+	#funding_detail table {width: 100%; margin-top: 10px;}
+	#funding_detail td {
+		border: 1px solid green;
+		padding: 10px;
+	}
+	#funding_detail td.button_td {
+		width: 150px;
+		padding-right: 30px;
+		text-align: right;
+	}
+	#funding_detail td.data_td {
+		font-size: 11pt;
+		font-weight: bold;
+	}
+	#funding_detail td .data_title {
+		color: #767676;
+	}
+	#funding_detail td .data_value {
+		color: black;
+	}
+</style>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="funding_detail">
+		<section>
+			<a href="http://localhost:9090/tumblbugs/mypage/fundinghistory"><button><i class="fas fa-angle-left"></i> 내 후원현황</button></a>
+		</section>
+		<section class="funding_overview_wrap">
+			<table>
+				<tr>
+					<td>
+						<div class="project_status">펀딩 진행중</div>
+						<div class="project_title"><b>오차원 크리스마스 리스 DIY 키트<span class="creator_name">오차원</span></b></div>
+					</td>
+					<td class="button_td"><button><i class="fas fa-envelope"></i> 문의하기</button></td>
+				</tr>
+				<tr>
+					<td>후원번호</td>
+					<td>00000001</td>
+				</tr>
+				<tr>
+					<td>후원 날짜</td>
+					<td>2019.11.21 12:04</td>
+				</tr>
+				<tr>
+					<td>프로젝트 마감일</td>
+					<td>2019.12.06</td>
+				</tr>
+			</table>
+		</section>
+		<section class="payment_status_wrap">
+			
+		</section>
+		<section class="total_funding_info_wrap">
+			
+		</section>
+		<section class="payment_wrap">
+			<div class="table_title">결제 정보</div>
+			<table>
+				<tr>
+					<td class="data_td">
+						<div class="data_title">결제 수단</div>
+						<div class="data_value">신한카드/1234</div>
+					</td>
+					<td class="button_td"><button><i class="fas fa-edit"></i> 수정하기</button></td>
+				</tr>
+				<tr>
+					<td class="data_td" colspan="2">
+						<div class="data_title">결제 금액</div>
+						<div class="data_value">48,000원</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="data_td" colspan="2">
+						<div class="data_title">결제 상태</div>
+						<div class="data_value">2019년 12월 7일에 결제 예정입니다.</div>
+					</td>
+				</tr>
+			</table>
+		</section>
+		<section class="delivery_wrap">
+			<div class="table_title">배송 정보</div>
+			<table>
+				<tr>
+					<td class="data_td">
+						<div class="data_title">받는 분 이름</div>
+						<div class="data_value">뿅갹갹</div>
+					</td>
+					<td class="button_td"><button><i class="fas fa-edit"></i> 수정하기</button></td>
+				</tr>
+				<tr>
+					<td class="data_td">
+						<div class="data_title">받는 분 연락처</div>
+						<div class="data_value">01012345678</div>
+					</td>
+					<td class="button_td"><button><i class="fas fa-edit"></i> 수정하기</button></td>
+				</tr>
+				<tr>
+					<td class="data_td">
+						<div class="data_title">배송 주소</div>
+						<div class="data_value">뿅갹갹</div>
+					</td>
+					<td class="button_td"><button><i class="fas fa-edit"></i> 수정하기</button></td>
+				</tr>
+				<tr>
+					<td class="data_td" colspan="2">
+						<div class="data_title">운송장 정보</div>
+						<div class="data_value">운송장 번호가 등록되지 않았습니다.</div>
+					</td>
+				</tr>
+			</table>
+		</section>
+		<section>
+			<a href="http://localhost:9090/tumblbugs/mypage/fundinghistory"></a><button>후원 취소하기</button>
+		</section>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

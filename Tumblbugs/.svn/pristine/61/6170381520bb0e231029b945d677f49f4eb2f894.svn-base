@@ -1,0 +1,27 @@
+package com.tumblbugs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class ProjectUploadController {
+
+	@RequestMapping(value="/project_start_upload", method=RequestMethod.GET)
+	public String project_start_upload() {
+		
+		return "/project/project_start_upload";
+	}
+	
+	@RequestMapping(value="/project_start_agreement", method=RequestMethod.GET)
+	public String project_start_agreement() {
+		
+		return "/project/project_start_agreement";
+	}
+	
+	@RequestMapping(value="/project_start", method=RequestMethod.GET)
+	public String project_start() {
+		
+		return "/project/project_start";
+	}
+}

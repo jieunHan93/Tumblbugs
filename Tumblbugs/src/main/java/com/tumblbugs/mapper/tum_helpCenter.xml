@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="mapper.helpCenter">
+	
+	<insert id="spon_write" parameterType="com.tumblbugs.vo.QuestionVO">
+		insert into tum_question values(sequ_tum_question.nextval,0,#{question_email},#{question_title},
+		#{question_ques_content},#{question_spon_number},#{question_qfile},#{question_qsfile},sysdate,null,sysdate,null)
+	</insert>
+	
+	<update id="answer_update" parameterType="com.tumblbugs.vo.QuestionVO">
+		update tum_question set question_ans_content=#{question_ans_content}, question_ans_reg_date=sysdate, question_ans_check='YES'
+		where question_num=#{question_num}
+	</update>
+	
+	<select id="answer_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.QuestionVO">
+		select * from tum_question where question_num=#{question_num}
+	</select>
+	
+	<select id="slist" parameterType="map" resultType="com.tumblbugs.vo.QuestionVO">
+		select * from (select rownum rno, QUESTION_NUM, QUESTION_CATEGORY,QUESTION_EMAIL,QUESTION_TITLE,
+              to_char(QUESTION_QUES_REG_DATE,'yyyy/mm/dd') QUESTION_QUES_REG_DATE,QUESTION_ANS_CHECK
+		from (select QUESTION_NUM, QUESTION_CATEGORY,QUESTION_EMAIL,QUESTION_TITLE, QUESTION_QUES_REG_DATE,QUESTION_ANS_CHECK
+		from tum_question order by QUESTION_QUES_REG_DATE desc))
+	</select>
+	
+</mapper>    

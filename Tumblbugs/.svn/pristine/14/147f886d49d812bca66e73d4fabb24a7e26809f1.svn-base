@@ -1,0 +1,392 @@
+@charset "UTF-8";
+/**
+	공통 스타일 ----------------------------------------------------------------------------------------------------------
+**/
+	ul {list-style-type: none;}
+	#project_info {
+		padding: 20px;
+		background: linear-gradient(to right, #0f0051, #320032);
+		color: white;
+	}
+	#project_info>div {
+		width: 1080px;
+		padding: 0px 20px 0px 20px;
+		margin: auto;
+	}
+	#backToProject {
+		display: inline-block;
+		width: 140px;
+		padding-top: 5px;
+		vertical-align: top;
+		text-decoration: none;
+		font-size: 10.5pt;
+		color: white;
+	}
+	#backToProject i {font-size: 12pt;}
+	#project_title {
+		display: inline-block;
+		width: 750px;
+		font-size: 16pt; font-weight: bold;
+		text-align: center;
+		margin-right: 140px;
+	}
+	
+	#step1_content {
+		width: 850px; margin: auto;
+	}
+	#step2_content {
+		width: 700px; margin: auto;
+	}
+	.page_title {padding: 50px 10px 30px 10px; font-weight: bold;}
+	.page_title>label {
+		font-size: 13pt;
+		margin-right: 5px;
+	}
+	#funding_step1 .checkbox,
+	#funding_step2 .square_checkbox {
+		width: 18px; height: 18px;
+		padding: 3px;
+		margin: auto;
+		border: 1px solid lightgray;
+		background-color: white;
+		cursor: pointer;
+	}
+	.checkbox i {font-size: 8.5pt; display: none;}
+	
+/**
+	step1_gift_select style ----------------------------------------------------------------------------------------------------------
+**/
+	#step1_content {
+		width: 700px;
+		padding-bottom: 50px; 
+	}
+	.gift_select>div {
+		text-align: center;
+	}
+	#gift_list>div:first-child>span:last-child {
+		font-size: 13px;
+    	color: #4a4a4a;
+	}
+	.btn_funding_next_step {
+		width: 140px; height: 50px;
+		border: none;
+		border-radius: 5px;
+		font-size: 12pt; font-weight: bold;
+		background-color: #1e90ff;
+		color: white;
+	}
+	.btn_funding_next_step:hover {
+		background-color: #1d85ea;
+	}
+/**
+	step2_payment_reservation style  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**/
+	#funding_step2 {color: #4a4a4a;}
+	#step2_content>form>ul {
+		margin-bottom: 50px;
+	}
+	#step2_content>form>div:not(.page_title),
+	#step2_content>form>table {
+		margin-bottom: 50px;
+	}
+	#total_info_wrap {
+		width: 100%;
+		font-size: 10.5pt;
+	}
+	#total_info_wrap td {
+		padding: 15px;
+	}
+	#total_info_wrap td:nth-child(2) {
+		text-align: right;
+		font-weight: bold;
+	}
+	#total_info_wrap tr#reward td {border-top: 1px solid lightgray;}
+	#total_info_wrap tr#reward:first-child td {border-top: 1px solid #4a4a4a;}
+	#total_info_wrap tr#reward div:last-child {font-weight: bold;}
+	#total_info_wrap tr#extra_support td {
+		background-color: #f7f7f7;
+	}
+	#total_info_wrap tr#total_price td {
+		background-color: #ececec;
+	}
+	#total_info_wrap tr#reward label {
+		color: #8e8780;
+		display: block;
+		text-align: left;
+		margin-bottom: 0px;
+		font-weight: bold;
+	}
+	#total_info_wrap tr#reward #reward_price {margin-left: 20px;}
+	#total_info_wrap ul#reward_component {
+		color: #686868;
+		font-size: 10pt;
+		line-height: 1.8;
+		margin: 5px 0px 5px 0px;
+	}
+	#total_info_wrap #reward_option {
+		font-size: 10pt;
+	}
+	#total_info_wrap div:last-child {
+		text-align: right;
+	}
+	
+	#page_subtitle {
+		font-size: 14pt;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	
+	/** 선물 배송지 **/
+	#delivery_wrap>div {
+		font-size: 10.5pt;
+		vertical-align: top;
+	}
+	
+	/* checkbox 관련 설정 */
+	#step2_content li.checkbox>div:first-child,
+	#step2_content th.checkbox>div:first-child,
+	#step2_content td.checkbox>div:first-child {
+		float: left;
+		width: 20px;
+		padding-top: 3px;
+	}
+
+	#delivery_wrap>div#delivery_address ul {border-top: 1px solid lightgray;}
+	#delivery_wrap>div#delivery_address li {
+		border-bottom: 1px solid lightgray;
+		padding: 15px;
+	}
+	#step2_content .round_checkbox {
+		border: 1px solid lightgray;
+		width: 20px; height: 20px;
+		border-radius: 20px;
+		cursor: pointer;
+	}
+	#step2_content .round_checkbox div {
+		width: 12px; height: 12px;
+		border-radius: 12px;
+		background-color: #1d85ea;
+		margin-top: 3px; margin-left: 3px;
+		display: none;
+	}
+	#delivery_address li.checkbox>div:nth-child(2) {
+		float: right; width: 630px;
+	}
+	#delivery_address li {
+		clear: both;
+		overflow: auto;
+	}
+	#delivery_address input {
+		border: 1px solid #A29584;
+		border-radius: 4px;
+		width: 100%;
+		padding: 7px;
+		margin-bottom: 10px;
+	}
+	#delivery_address div#saved_address  {
+		font-size: 10pt;
+	}
+	#delivery_address div#new_address>label {
+		margin-bottom: 0px;
+	}
+	#delivery_address #new_address_input {
+		display: none;
+		margin-top: 15px;
+	}
+	#delivery_address #new_address_input label {
+		display: block;
+	}
+	#delivery_address #new_address_input input:not(#new_address_detail) {
+		width: 40%;
+	}
+	#delivery_address #new_address_input button {
+		width: 130px; height: 40px;
+		border: none;
+		border-radius: 5px;
+		color: white;
+		background-color: #9f9583;
+		margin-bottom: 10px;
+	}
+	#delivery_address #delivery_request div:last-child {
+		font-size: 10.5pt;
+	}
+	
+	#payment_wrap nav {
+		padding: 10px 0px 10px 0px;
+	}
+	#payment_wrap nav li {
+		display: inline-block;
+		text-align: center;
+		font-size: 10.5pt;
+		width: 130px;
+		padding: 5px 0px 5px 0px;
+		border: 1px solid lightgray;
+		border-radius: 3px;
+		cursor: pointer;
+	}
+	#payment_wrap nav li:nth-child(2) {margin-left: -4px;}
+	#payment_wrap nav li:nth-child(3) {margin-left: -5px;}
+	
+	#payment_wrap>div:last-child {
+		overflow: auto;
+		padding: 10px 0px 10px 0px;
+	}
+	#payment_wrap #payment_input {
+		float: left;
+		width: 440px;
+		font-size: 10.5pt;
+	}
+	#payment_wrap #payment_input input {
+		width: 170px;
+	}
+	
+	/* 내 결제 수단 */
+	#payment_wrap #payment_input #my_payment div {
+		width: 200px;
+		padding: 10px;
+		margin-bottom: 10px;
+		border-radius: 5px;
+		background-color: #f7f7f7;
+		box-shadow: 1px 1px #dcdcdc;
+		cursor: pointer;
+	}
+	#payment_wrap #payment_input label {
+		display: block;
+	}
+	#payment_wrap #payment_input input,
+	#payment_wrap #payment_input select {
+		margin-bottom: 20px;
+		border: 1px solid lightgray;
+		border-radius: 3px;
+		padding: 5px;
+	}
+	
+	/* 신규 카드 */
+	#payment_wrap #payment_input #new_credit_card li#card_number input {
+		width: 60px;
+	}
+	#payment_wrap #payment_input #new_credit_card #expiry_date {
+		float: left;
+		padding-right: 20px;
+	}
+	
+	/* 신규 은행계좌 */
+	#new_bank_account li#account_number label {
+		margin-bottom: 0px;
+	}
+	#new_bank_account li#account_number div {
+		font-size: 10pt;
+		margin-bottom: 5px;
+	}
+	#new_bank_account li#account_number input {
+		width: 250px;
+	}
+	
+	/* 결제 예약시 유의사항 */
+	#payment_wrap #reservation_notice {
+		float: right;
+		width: 250px;
+		font-size: 10pt;
+	}
+	#payment_wrap #reservation_notice ul {
+		list-style-type: square;
+		margin-left: 18px;
+	}
+	#payment_wrap #reservation_notice li {
+		text-align: justify;
+	}
+	
+	/* 약관 동의 */
+	#agreement_wrap table, #agreement_wrap th, #agreement_wrap td {
+		padding: 15px;
+		font-size: 10.5pt;
+	}
+	#agreement_wrap table,
+	#agreement_wrap th {
+		border: 1px solid #ececec;
+		border-collapse: collapse;
+		width: 100%;
+	}
+	#agreement_wrap p {
+		text-align: justify;
+		line-height: 1.75;
+	}
+	#agreement_wrap .round_checkbox {
+		padding: 3px;
+	}
+	#agreement_wrap .checkbox i {
+		font-size: 9pt;
+	}
+	#agreement_wrap .checkbox>div:nth-child(2) {
+		float: right;
+		width: 640px;
+	}
+	
+	#step2_content #confirm {text-align: center;}
+/**
+	step3_funding_success style ----------------------------------------------------------------------------------------------------------
+**/
+	#funding_step3 .page_title {text-align: center;}
+	#step3_content {
+		width: 800px; margin: auto;
+		padding-bottom: 50px;
+		font-size: 10.5pt;
+		color: #4a4a4a;
+	}
+	#step3_content table {
+		width: 100%;
+		margin: 10px 0px 40px 0px;
+		border-top: 2px solid #867e74;
+		border-bottom: 1px solid lightgray;
+	}
+	#step3_content td {
+		/* border: 1px solid green; */
+		padding: 10px;
+	}
+	#step3_content .table_title {
+		font-size: 14pt;
+		font-weight: bold;
+	}
+	
+	/* 프로젝트 */
+	/* 프로젝트 대표 이미지 */
+	#step3_content #funding_info_wrap img#project_main_img {
+		width: 170px;
+	}
+	#step3_content td:first-child {width: 170px; color: black;}
+	
+	#step3_content #funding_info_wrap #project_title {
+		width: auto;
+		font-size: 10pt;
+		margin-right: 5px;
+		text-align: left;
+	}
+	#step3_content #funding_info_wrap #creator_name {
+		font-size: 9pt;
+	}
+	#step3_content #funding_info_wrap table * {
+		margin: 0px;
+		line-height: 1.6;
+		font-size: 9pt;
+	}
+	#step3_content #reward {
+		padding: 5px 0px 5px 0px;
+	}
+	#step3_content #reward>label {font-weight: bold; color: #8e8780;}
+	
+	#step3_content #button_div {text-align: center;}
+	#step3_content button {
+		width: 150px; height: 50px;
+		font-size: 11pt;
+		font-weight: bold;
+		border: none;
+		border-radius: 5px;
+		background-color: #1e90ff;
+		color: white;
+	}
+	#step3_content button:hover {background-color: #1d85ea;}
+
+	
+	footer {
+		clear: both;
+	}

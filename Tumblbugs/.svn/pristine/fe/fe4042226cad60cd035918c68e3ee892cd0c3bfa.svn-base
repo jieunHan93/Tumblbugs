@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.message">
+	<select id="receiver_email" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT EMAIL FROM TUM_PROJECT WHERE PJ_ID=#{pj_id}
+	</select>
+
+	<insert id="write" parameterType="com.tumblbugs.vo.MessageVO">
+		INSERT INTO TUM_MESSAGE VALUES('MG'||LPAD(TUM_MESSAGE_MSG_SEQU.NEXTVAL,5,'0'), 'CR'||LPAD(TUM_MESSAGE_CHATROOM_SEQU.NEXTVAL,5,'0'),
+		#{pj_id}, #{sender_email}, #{receiver_email}, #{msg_content}, #{msg_type}, SYSDATE, 'N')
+	</insert>
+</mapper>

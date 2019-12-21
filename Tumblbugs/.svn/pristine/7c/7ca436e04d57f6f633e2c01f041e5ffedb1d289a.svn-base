@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="mapper.faq">
+	
+	<insert id="fwrite" parameterType="com.tumblbugs.vo.FaqVO">
+		insert into tum_faq values(tum_faq_sequ.nextval,#{faq_category},#{faq_list_num},
+		#{faq_list_title},sysdate,#{faq_content},#{faq_main_check})
+	</insert>
+	
+	<select id="flist" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_CATEGORY,FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE, FAQ_CONTENT,FAQ_MAIN_CHECK
+		from (select FAQ_NUM, FAQ_CATEGORY,FAQ_LIST_NUM,FAQ_LIST_TITLE, REG_DATE,FAQ_CONTENT,FAQ_MAIN_CHECK
+		from tum_faq order by reg_date desc))
+	</select>
+	
+	<select id="frequent_list" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_CATEGORY,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE,FAQ_MAIN_CHECK
+		from (select FAQ_NUM, FAQ_CATEGORY,FAQ_LIST_TITLE,REG_DATE,FAQ_MAIN_CHECK
+		from tum_faq order by reg_date) where faq_main_check='YES')
+	</select>
+	
+	<select id="fcount" resultType="int">
+		select count(*) from tum_faq
+	</select>
+	
+	<select id="slist_1" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'spon_1%' 
+	</select>
+	
+	<select id="slist_2" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'spon_2%' 
+	</select>
+	
+	<select id="slist_3" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'spon_3%' 
+	</select>
+	
+	<select id="slist_4" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'spon_4%' 
+	</select>
+	
+	<select id="spon_count1" resultType="int">
+		select count(*) from tum_faq where faq_list_num like 'spon_1%'
+	</select>
+	
+	<select id="spon_count2" resultType="int">
+		select count(*) from tum_faq where faq_list_num like 'spon_2%'
+	</select>
+	
+	<select id="spon_article_content" resultType="java.lang.String">
+		select faq_content from tum_faq where faq_num=62
+	</select>
+	
+</mapper>    

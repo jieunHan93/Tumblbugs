@@ -1,0 +1,197 @@
+package com.tumblbugs.controller;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.tumblbugs.dao.CollectionDAO;
+import com.tumblbugs.vo.CollectionVO;
+
+@Controller
+public class AdminCollectionController {
+	
+	@Autowired
+	private CollectionDAO collectionDAO;
+	
+	/** 기획전 메인 **/
+	@RequestMapping(value="/admin/collection", method=RequestMethod.GET)
+	public ModelAndView admin_collection() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<CollectionVO> list = collectionDAO.getResultList();
+		mv.addObject("list", list);
+		mv.setViewName("/admin/admin_collection");
+		return mv;
+	}
+	/** 기획전 메인-checkbox 반영 **/
+	@RequestMapping(value="admin/collection_checkbox", method=RequestMethod.GET)
+	@ResponseBody
+	public String collection_checkbox(CollectionVO vo) throws Exception{
+		String col_status = "";		String status="";	boolean result = false;
+		int col_controll = Integer.valueOf(vo.getCol_controll());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentTime = new Date();
+		String current = format.format(currentTime);
+		Date today = format.parse(current);		//현재날짜
+		
+		Date start = format.parse(vo.getCol_startdate());	//기획전 시작일
+		Date end = format.parse(vo.getCol_enddate());		// 기획전 종료일
+		
+		int result1 = today.compareTo(start);		// today>start = 1, today==start = 0, today < start = -1
+		int result2 = today.compareTo(end);
+		
+		//에러찾자
+		if(result2 == -1 && col_controll == 0) {
+			col_status = "대기중";
+		} else if((result1 == 0 || result1 == 1) && result2 == -1 && col_controll == 1) {
+			col_status = "진행중";
+		} else if((result2 == 0 || result2 == 1) && col_controll == 0) {
+			col_status = "종료";
+		}
+		result = collectionDAO.getResultCheckbox(vo.getCol_id(), vo.getCol_controll(), col_status);
+		if(result) {
+			status = col_status;
+		}
+		
+		return status;
+	}
+	/** 달력에 데이터 출력 **/
+	@RequestMapping(value="/admin/data",method=RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String calendar_list() {
+		ArrayList<CollectionVO> list = collectionDAO.getResultCalendarList();
+		
+		Gson gson = new Gson();
+		JsonArray jlist = new JsonArray();
+		JsonObject jdata = new JsonObject();
+
+		for (CollectionVO vo: list) {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("_id", vo.getCol_id());
+			obj.addProperty("title", vo.getCol_name());
+			obj.addProperty("description", vo.getCol_content());
+			obj.addProperty("start", vo.getCol_startdate());
+			obj.addProperty("end", vo.getCol_enddate());
+			obj.addProperty("type", vo.getCol_status());
+			obj.addProperty("backgroundColor", vo.getCol_ccolor());
+			obj.addProperty("allDay",true);
+			jlist.add(obj);
+		}
+		jdata.add("list", jlist);
+		String result = gson.toJson(jdata);
+		
+		return result;
+	}
+	
+	/** 컬렉션 등록 **/
+	@RequestMapping(value="/admin/collection/write", method=RequestMethod.GET)
+	public String admin_collection_write() {
+		return "/admin/admin_collection_write";
+	}
+	/** 컬렉션 등록 과정 **/
+	@RequestMapping(value="/admin/collection/write_proc", method=RequestMethod.POST)
+	public String admin_collection_write_proc(CollectionVO vo, HttpServletRequest request) throws Exception {
+		String respage="";	String cofile=vo.getCofile().getOriginalFilename();
+		String col_simg ="";
+		boolean result = false;
+		if(cofile != "" && cofile != null) {
+			UUID uuid= UUID.randomUUID();
+			String col_img = cofile;
+			col_simg = uuid+"_"+cofile;
+			
+			vo.setCol_img(col_img);
+			vo.setCol_simg(col_simg);
+		}
+		
+		result = collectionDAO.getResultWrite(vo);
+		if(result) {
+			if(cofile != "" && cofile != null) {
+				String root_path = request.getSession().getServletContext().getRealPath("/");
+				String attach_path = "\\resources\\upload\\";
+				File file = new File(root_path+attach_path+col_simg);
+				vo.getCofile().transferTo(file);
+			}
+			respage="redirect:/admin/collection";
+		} else {
+			respage="error_page";
+		}
+		return respage;
+	}
+	/** 컬렉션 상세 **/
+	@RequestMapping(value="/admin/collection/content", method=RequestMethod.GET)
+	public ModelAndView admin_collection_content(String col_id) {
+		ModelAndView mv = new ModelAndView();
+		CollectionVO vo = collectionDAO.getResultContent(col_id);
+		mv.addObject("vo", vo);
+		mv.setViewName("/admin/admin_collection_content");
+		return mv;
+	}
+	/** 컬렉션 상세 수정 **/
+	@RequestMapping(value="/admin/collection/update_proc", method=RequestMethod.POST)
+	public ModelAndView admin_collection_update_proc(CollectionVO vo, String del_img, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		String respage="";	String col_simg="";		boolean result = false;
+		String cofile= vo.getCofile().getOriginalFilename();
+		String root_path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "\\resources\\upload\\";
+		
+		if(cofile != "" && cofile != null) {
+			UUID uuid = UUID.randomUUID();
+			String col_img = cofile;
+			col_simg = uuid+"_"+cofile;
+			
+			vo.setCol_img(col_img);
+			vo.setCol_simg(col_simg);
+		}
+		result = collectionDAO.getResultUpdate(vo);
+		if(result) {
+			if(cofile != "" && cofile != null) {
+				File file = new File(root_path+attach_path+col_simg);
+				vo.getCofile().transferTo(file);
+				
+				if(vo.getCol_simg() != "" && vo.getCol_simg() != null) {
+					File dfile = new File(root_path+attach_path+del_img);
+					if(dfile.exists()) dfile.delete();
+				}
+			}
+			mv.addObject("col_id", vo.getCol_id());
+			mv.addObject("result", "true");
+			mv.setViewName("redirect:/admin/collection/content");
+		} else {
+			mv.setViewName("error_page");
+		}
+		return mv;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+}

@@ -1,0 +1,312 @@
+@charset "UTF-8";
+/**
+	공통 스타일
+**/
+	#funding_step1, #funding_step2 {
+		width: 1080px;
+		margin: auto;
+	}
+	#project_info {
+		padding: 20px;
+		background-color: #a29584;
+		color: white;
+	}
+	#project_info>div {
+		width: 700px;
+	}
+	#backToProject {
+		display: inline-block;
+		width: 140px;
+		padding-top: 5px;
+		vertical-align: top;
+		text-decoration: none;
+		font-size: 10.5pt;
+		color: white;
+	}
+	#backToProject i {font-size: 12pt;}
+	#project_title {
+		display: inline-block;
+		width: 750px;
+		font-size: 16pt; font-weight: bold;
+		text-align: center;
+		margin-right: 140px;
+	}
+	
+	#step1_content {
+		width: 850px; margin: auto;
+	}
+	#step2_content {
+		width: 700px; margin: auto;
+	}
+	.page_title {padding: 50px 10px 30px 10px; font-weight: bold;}
+	.page_title>label {
+		font-size: 13pt;
+		margin-right: 5px;
+	}
+	#funding_step1 .checkbox,
+	#funding_step2 .square_checkbox {
+		width: 18px; height: 18px;
+		margin: auto;
+		border: 1px solid lightgray;
+		background-color: white;
+		cursor: pointer;
+	}
+	.checkbox i {display: none;}
+	
+/**
+	step1_reward_select style
+**/
+	#reward_list>div:first-child>span:last-child {
+		font-size: 13px;
+    	color: #4a4a4a;
+	}
+	#reward_list #reward_box {
+		background-color: #f9f9f9;
+		margin-bottom: 10px;
+		overflow: auto;
+	}
+	#reward_box #left {
+		float: left;
+		width: 110px;
+		padding-top: 50px;
+	}
+	
+	#reward_box #right {
+		float: right;
+		width: 740px;
+		padding: 20px 20px 20px 10px;
+		/* border: 1px solid blue; */
+	}
+	#reward_box #right #reward_price {
+		font-size: 13pt;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	#reward_box #right #reward_info {
+		font-size: 11pt;
+		margin-bottom: 5px;
+	}
+	#reward_box #right #reward_component {
+		font-size: 10.5pt;
+		margin-bottom: 15px;
+	}
+	#reward_box #right #expected_delivery_day {font-size: 10.5pt;}
+	#reward_box #right #options {
+		padding: 15px 0px 15px 0px;
+		display: none;
+	}
+	#reward_box #right #options>div {
+		display: inline-block;
+	}
+	#reward_box #right #options>div:first-child {
+		margin-right: 60px;
+	}
+	#reward_box #right #options i {
+		cursor: pointer;
+	}
+	#reward_box #right #options #option_name {
+		font-size: 10pt;
+		margin-bottom: 8px;
+	}
+	#reward_box #right #options #option_value {
+		font-size: 10.5pt;
+		padding: 5px;
+	}
+	#quantity #option_value {width: 60px; text-align: right;}
+	#option #option_value {width: 400px;}
+	
+	#extra_support {padding: 40px 0px 30px 0px;}
+	#reward_list #extra_support label {
+		float: left;
+		font-size: 13pt;
+		font-weight: bold;
+		padding-right: 50px;
+	}
+	#extra_support>div>div {
+		font-size: 15px;
+		font-weight: bold;
+    	color: #4a4a4a;
+    	margin-bottom: 10px;
+	}
+	#extra_support>div>span {font-size: 16px; color: #4a4a4a;}
+	#extra_support>div>input {
+		width: 200px;
+		padding: 8px;
+		text-align: right;
+		margin-right: 5px;
+	}
+	
+	#confirm {
+		text-align: center;
+		margin-bottom: 100px;
+	}
+	#confirm>div {
+		font-size: 12pt;
+		font-weight: bold;
+		margin: 20px;
+	}
+	#confirm button {
+		width: 150px; height: 50px;
+		font-weight: bold;
+		border: none;
+		border-radius: 5px;
+		background-color: #1e90ff;
+		color: white;
+	}
+	#confirm button:hover {
+		background-color: #1d85ea;
+	}
+	
+/**
+	step2_payment_reservation style
+**/
+	#funding_step2 {color: #4a4a4a;}
+	#step2_content>form>ul {
+		margin-bottom: 50px;
+	}
+	#step2_content>form>div:not(.page_title) {
+		margin-bottom: 50px;
+	}
+	#funding_step2 ul {
+		list-style: none;
+		
+	}
+	#total_info_wrap {
+		border-top: 1px solid #4a4a4a;
+		font-size: 10.5pt;
+	}
+	#total_info_wrap li {
+		padding: 15px;
+		clear: both;
+		overflow: auto;
+		border-bottom: 1px solid lightgray;
+	}
+	#total_info_wrap li#extra_support,
+	#total_info_wrap li#delivery_fee {
+		background-color: #f7f7f7;
+	}
+	#total_info_wrap li#total_price {background-color: #ececec;}
+	#total_info_wrap li#reward label {color: #8e8780;}
+	#total_info_wrap li#reward #reward_price {margin-left: 20px;}
+	#total_info_wrap li#reward div:last-child {
+		/* font-weight: bold; */
+	}
+	#total_info_wrap div#reward_component {
+		color: #686868;
+		font-size: 10pt;
+		clear: both;
+	}
+	#total_info_wrap label {
+		float: left;
+	}
+	#total_info_wrap div:last-child {
+		float: right;
+	}
+	
+	#page_subtitle {
+		font-size: 14pt;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	#delivery_wrap {overflow: auto;}
+	#delivery_wrap>div {
+		display: inline-block;
+		width: 335px;
+		font-size: 10.5pt;
+		vertical-align: top;
+	}
+	#delivery_wrap>div#funding_supporter {float: left;}
+	#delivery_wrap>div#funding_supporter>ul {
+		background-color: #eeede9;
+		padding: 15px;
+		border-radius: 5px;
+	}
+	#delivery_wrap>div#funding_supporter>ul>li {padding-bottom: 15px;}
+	#delivery_wrap>div#funding_supporter>ul>li>#value {color: #7c7c7c;}
+	#delivery_wrap>div#funding_supporter>ul>li:last-child {
+		border-top: 1px solid #4a4a4a;
+		padding-top: 15px;
+		overflow: auto;
+	}
+	
+	/* checkbox 관련 설정 */
+	#step2_content li.checkbox>div:first-child,
+	#step2_content th.checkbox>div:first-child,
+	#step2_content td.checkbox>div:first-child {
+		float: left;
+		width: 20px;
+		padding-top: 3px;
+	}
+	div#funding_supporter li.checkbox {
+		cursor: pointer;
+	}
+	#step2_content #checkbox_content {
+		float: right;
+		width: 280px;
+		color: black;
+	}
+	#delivery_wrap>div#delivery_address {float: right;}
+	#delivery_wrap>div#delivery_address ul {border-top: 1px solid lightgray;}
+	#delivery_wrap>div#delivery_address li {
+		border-bottom: 1px solid lightgray;
+		padding: 15px;
+	}
+	#step2_content .round_checkbox {
+		border: 1px solid lightgray;
+		width: 20px; height: 20px;
+		border-radius: 20px;
+		cursor: pointer;
+	}
+	#step2_content .round_checkbox div {
+		width: 12px; height: 12px;
+		border-radius: 12px;
+		background-color: #1d85ea;
+		margin-top: 3px; margin-left: 3px;
+		display: none;
+	}
+	#delivery_address li.checkbox>div:nth-child(2) {
+		float: right; width: 275px;
+	}
+	#delivery_address li {
+		clear: both;
+		overflow: auto;
+	}
+	#delivery_address input {
+		border: 1px solid #A29584;
+		border-radius: 4px;
+		width: 100%;
+		padding: 7px;
+		margin-bottom: 10px;
+	}
+	#delivery_address div#saved_address  {
+		font-size: 10pt;
+	}
+	#delivery_address div#new_address>label {
+		margin-bottom: 0px;
+	}
+	#delivery_address #new_address_input {display: none;}
+	#delivery_address #new_address_input label {
+		display: block;
+	}
+	#delivery_address #new_address_input {
+		margin-top: 15px;
+	}
+	#delivery_address #new_address_input button {
+		width: 130px; height: 40px;
+		border: none;
+		border-radius: 5px;
+		color: white;
+		background-color: #9f9583;
+		margin-bottom: 10px;
+	}
+	#delivery_address #delivery_request div:last-child {
+		font-size: 10.5pt;
+	}
+
+
+
+
+	
+	footer {
+		clear: both;
+	}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.community">
+	<select id="communityList" parameterType="String" resultType="com.tumblbugs.vo.CommunityVO">
+		select c.community_id, name, profile_simg, c.email, community_content, community_date, community_udate, nvl(rcount, 0) rcount
+		from tum_community c, tum_member m, (select count(*) rcount, community_id from tum_community_reply group by community_id) r
+		where c.email = m.email
+		and c.community_id = r.community_id(+)
+		and pj_id = #{pj_id}
+		order by community_date desc
+	</select>
+	
+	<select id="replyList" parameterType="String" resultType="com.tumblbugs.vo.CommunityReplyVO">
+		select reply_id, c.community_id, r.email, m.name, m.profile_simg, reply_content,  to_char(reply_date,'yyyy.mm.dd hh24:mi') reply_date
+		from tum_community c, tum_community_reply r, tum_member m
+		where c.community_id = r.community_id
+		and r.email = m.email
+		and c.community_id = #{community_id}
+	</select>
+	
+	<insert id="write" parameterType="com.tumblbugs.vo.CommunityVO">
+		insert into tum_community values('CM'||LPAD(tum_community_sequ.nextval, 5, '0'), #{pj_id}, #{email}, #{community_content}, sysdate, null)
+	</insert>
+</mapper>

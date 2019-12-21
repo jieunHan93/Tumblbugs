@@ -1,0 +1,40 @@
+package com.tumblbugs.dao;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.FaqVO;
+import com.tumblbugs.vo.QuestionVO;
+
+@Repository
+public class QuestionDAO {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	private static String namespace = "mapper.helpCenter";
+	
+	/** 1:1 문의 등록 **/
+	public boolean getResultWrite(QuestionVO vo) {
+		boolean result = false;
+		int ins_result = sqlSession.insert(namespace+".squestion", vo);
+		if(ins_result != 0) result = true;
+		return result;
+	}
+	
+	/** 1:1 문의 리스트 **/
+	public ArrayList<QuestionVO> getResultList() {
+		List list = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		list = sqlSession.selectList(namespace+".slist", param);
+		
+		return (ArrayList<QuestionVO>)list;
+	}
+}

@@ -1,0 +1,65 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>텀블벅스 :: tumblbugs</title>
+	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	
+	<div id="message_content_page">
+		<section>
+			<div id="message_cat_box">
+				<div id="message_cat_box_header">
+					<div id="message_cat_box_header_title">
+						<a href="http://localhost:9090/tumblbugs/mypage/message"><span><i class="fas fa-chevron-left"></i>메시지함</span></a>
+						<a href="http://localhost:9090/tumblbugs/project_content"><span>소품일체 '해돋이' 뱃지 연하장</span></a>
+					</div>
+					<div id="message_cat_box_header_info">
+						<!-- 회사 id hidden으로 넘길것 -->
+						<a href="#"><div id="message_cat_box_company_img"></div><div id="message_cat_box_company">소품일체</div></a>
+					</div>
+				</div>
+				<div id="message_cat_box_body">
+					<div class="message_cat_m">
+						<div class="message_cat_m_img"></div>
+						<div class="message_cat_m_text">
+							<span class="message_cat_m_name" id="message_icon1">바나나곰</span>
+							<div class="message_cat_m_date"><span>2017년 12월 21일 오후 5시 2분</span></div>
+							<div class="message_cat_m_detail"><p>배송비 미포함으로 뱃지 2개를 사고싶어서 13000원으로 기입했습니다. 이러면 2개 구매로 신청되는게 맞나요?</p></div>
+							<span class="message_cat_m_status"><i class="fas fa-check-circle"></i>읽음</span>
+						</div>
+					</div>
+					<div class="message_cat_m_space"></div>
+					<div class="message_cat_m">
+						<div class="message_cat_m_img"  id="message_icon2"></div>
+						<div class="message_cat_m_text">
+							<span class="message_cat_m_name">소품일체</span>
+							<div class="message_cat_m_date"><span>2017년 12월 21일 오후 6시 37분</span></div>
+							<div class="message_cat_m_detail"><p>네 맞습니다. 감사합니다:)</p></div>
+							<!-- <span class="message_cat_m_status"><i class="fas fa-check-circle"></i>읽음</span> -->
+						</div>
+					</div>
+				</div>
+				<div id="message_cat_box_footer">
+					<form>
+						<div>
+							<!-- 유저 아이디, 메시지 아이디 -->
+							<textarea class="form-control"></textarea>
+							<button type="button"><i class="fas fa-envelope"></i>보내기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

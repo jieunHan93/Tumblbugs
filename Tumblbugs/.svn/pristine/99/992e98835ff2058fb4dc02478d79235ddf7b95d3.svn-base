@@ -1,0 +1,338 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<title>텀블벅스 :: tumblbugs</title>
+	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/myproject.css">
+	<script>
+	$(document).ready(function(){
+	  $('[data-toggle="tooltip"]').tooltip();   
+	});
+	</script>
+	<style>
+				div#myproject_delivery_bc{
+			background-image: url("http://localhost:9090/tumblbugs/images/myproject_delivery.jpg");
+			height: 340px;
+			background-repeat: none;
+			background-size: cover;
+		   	background-position: 50% 50%;
+		}
+		section#myproject_delivery_bk{
+			height: 340px;	width:100%;
+			background: linear-gradient(135deg,rgba(0,0,0,.6) 20%,transparent);
+		}
+		div#myproject_delivery_info{
+		    width: 1080px;
+		    margin: auto;
+		    text-align: center;
+		    height:200px;
+		    padding-top:80px;
+		}
+		div#myproject_info_upper {
+			text-align: left;
+		}
+		div#myproject_info_upper>div{
+			text-align:center;
+			font-size:12px;
+			color: #1e90ff;
+			background-color: white;
+			border:1px solid #1e90ff;
+			border-radius: 5px;
+			width:75px;
+			height:20px;
+			font-weight:bold;
+			margin-bottom:5px;
+		}
+		div#myproject_info_upper a{
+			text-decoration: none;
+			font-size:30px;
+			color:white;
+			font-weight:bold;
+		}
+		div#myproject_info_upper span{
+			padding-left:10px;
+			font-size:15px;
+			color:white;
+			font-weight:bold;
+		}
+		div#myproject_info_lower{
+		margin-top:20px;
+			color:white;
+			text-align: left;
+		}
+		div#myproject_info_lower>div>span:first-child {
+			display:inline-block;
+			width:80px;	
+			font-weight: bold;
+		}
+	
+		div#myproject_delivery_body{
+			width:1080px;
+			margin:auto;
+			padding-bottom:80px;
+		}
+		div#myproject_delivery_table_box{
+			overflow-x: scroll;
+		}
+		table#myproject_delivery_table{
+			width:2200px;
+			font-size:15px;
+		}
+		table#myproject_delivery_table,
+		table#myproject_delivery_table th,
+		table#myproject_delivery_table td{
+			border-collapse: collapse;
+			border:1px solid #999999;
+		}
+		tr.delivery_table_loaddata>td{
+			padding:3px 6px;
+		}
+		div#tooltip_div{
+			font-size:12px;
+			text-align: left;
+		}
+		div#tooltip_space{
+			height:5px;
+		}
+		div#tooltip_div>span{
+			color:#99FFFF;
+		}
+		div#myproject_tooltip i{
+			color:#898080;
+			font-size:20px;
+		}
+		div#myproject_delivery_nav{
+			padding: 30px 0px 20px 0px;
+		}
+		div#myproject_delivery_nav>div{
+			display: inline-block;
+		}
+		div#myproject_delivery_nav button#btn-download {
+			background-color: #1e90ff;
+			border:none;
+			border-radius: 5px;
+			padding:5px 10px; 
+			color:white;
+			margin-right:5px;
+		}
+		div#myproject_delivery_nav button#btn-download i,
+		div#myproject_delivery_nav .filebox label i{
+			margin-right:5px;
+		}
+		div#myproject_delivery_nav button#btn-download:hover {
+			background-color: #1d85ea;
+		}
+		div#myproject_funding_search{
+			float:right;
+			border:1px solid #ebe8e8;
+			border-radius: 5px;
+			padding: 5px 10px 0px 3px ;
+		}
+		div#myproject_funding_search input {
+			padding:5px 10px;
+			font-size:14px;
+			border:none;
+			border-radius: 5px;
+		}
+		div#myproject_funding_search button{
+			border: none;
+			background-color: transparent;
+		}
+		div#myproject_funding_search button i{
+			font-size:20px;
+			color:#898080;
+		}
+		tr.delivery_table_loaddata input {
+			border:1px solid #ebe8e8;
+		}
+		tr.delivery_table_loaddata input.name,
+		tr.delivery_table_loaddata input.delivery_com{
+			width:50px;
+		}
+		tr.delivery_table_loaddata td{
+			padding:3px 6px;
+		}
+		tr.delivery_table_loaddata input.addr{
+			width:300px;
+		}
+		tr.delivery_table_loaddata input.phone_num{
+			width:110px;
+		}
+		tr.delivery_table_loaddata input.quantity{
+			width:50px;
+		}
+		tr.delivery_table_loaddata input.cost,
+		tr.delivery_table_loaddata input.tip{
+			width:100px;
+		}
+		tr.delivery_table_loaddata input.delivery_com{
+			width:85px;
+		}
+		tr.delivery_table_loaddata input.delivery_date{
+			width:150px;
+		}
+		table#myproject_delivery_table tr:first-child{
+			text-align: center;
+		}
+		table#myproject_delivery_table tr:first-child>th{
+			font-weight: 400;
+			padding:3px 6px;
+			background-color: #bddeff;
+		}
+		div#btn-save_reset{
+			margin-top:10px;
+			float:right;
+		}
+		div#btn-save_reset button{
+			background-color: #1e90ff;
+			border:none;
+			border-radius: 5px;
+			padding:5px 10px; 
+			color:white;
+			margin-right:5px;
+		}
+		div#btn-save_reset button i{
+			margin-right:5px;
+		}
+		.filebox{
+			display: inline-block;
+		}
+		.filebox label {
+		  display: inline-block;
+		  padding:5px 10px;
+		  margin-right:5px;
+		  color: #fff;
+		  font-size: inherit;
+		  line-height: normal;
+		  vertical-align: middle;
+		  background-color: #1e90ff !important;
+		  cursor: pointer;
+		  border: none;
+		  border-radius: 5px;
+		  margin-bottom:5px;
+		}
+		.filebox label:hover {
+		  background-color: #1d85ea !important;
+		}
+		.filebox input[type="file"] {
+		  position: absolute;
+		  width: 1px;
+		  height: 1px;
+		  padding: 0;
+		  margin: -1px;
+		  overflow: hidden;
+		  clip: rect(0, 0, 0, 0);
+		  border: 0;
+		}
+		div#myproject_delivery_body button{
+			outline: none;
+		}
+		div#btn-save_reset button:hover{
+			background-color: #1d85ea;
+		}
+	</style>
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	
+	<div>
+		<div id="myproject_delivery_bc">
+			<section id="myproject_delivery_bk">
+				<div id="myproject_delivery_info">
+					<div id="myproject_info_upper">
+						<div>펀딩 진행중</div><!-- <div>펀딩 성공</div><div>펀딩 실패</div> -->
+						<a href="http://localhost:9090/tumblbugs/project_content">2019년을 정리하는 100가지 질문 <연말정산> 5주년</a><span>Day-off</span>
+					</div>
+					<div id="myproject_info_lower">
+						<div><span>모인 금액</span><span>20,881,500원</span></div>
+						<div><span>달성률</span><span>4176%</span></div>
+						<div><span>남은 시간</span><span>7일</span></div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<section>
+			<div id="myproject_delivery_body">
+				<div id="myproject_delivery_nav">
+					<div>
+						<button type="button" id="btn-download"><i class="fas fa-file-download"></i>다운로드</button>
+						<div class="filebox">
+							<label for="excelFile"><i class="fas fa-file-upload"></i>업로드</label>
+							<input id="excelFile" type="file" name="excelFile" />
+						</div>
+						<!-- <input id="excelFile" type="file" name="excelFile" />
+						<button type="button" id="btn-upload"><i class="fas fa-file-upload"></i>업로드</button> -->
+					</div>
+					<div id="myproject_tooltip">
+						<span data-toggle="tooltip" placement="top" data-html="true" title="<div id='tooltip_div'>데이터의 변경이 있다면 <span>저장</span> 후<br>다운로드를 진행해주세요<br>업로드 후에 꼭 <span>저장</span>을 눌러주세요<br>다운받은 파일은 <span>'C:/'</span> 에서 확인 가능합니다.<div id='tooltip_space'></div>일부 항복은 수정이 불가능합니다.</div>"><i class="fas fa-question-circle"></i></span>
+					</div id="myproject_search">
+					<div id="myproject_funding_search">
+						<div>
+							<input type="text" placeholder="후원번호를 입력하세요.">
+							<button type="button"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<form>
+				<div id="myproject_delivery_table_box">
+					<table id="myproject_delivery_table">
+						<tr>
+							<th>번호</th>
+							<th>후원번호</th>
+							<th>후원자명</th>
+							<th>후원일자</th>
+							<th>수령자명</th>
+							<th>배송주소</th>
+							<th>핸드폰번호</th>
+							<th>배송요청사항</th>
+							<th>선물</th>
+							<th>선택옵션</th>
+							<th>수량</th>
+							<th>후원액</th>
+							<th>추가후원금</th>
+							<th>택배사</th>
+							<th>송장번호</th>
+							<th>배송시작일</th>
+							<th>수령완료</th>
+						</tr>
+						<% for(int i=0; i<20;i++){ %> 
+						<tr class="delivery_table_loaddata">
+							<td><%= i+1 %></td>
+							<td>838765</td>
+							<td>홍길동</td>
+							<td>2019-12-01</td>
+							<td><input type="text" id="<%= i %>" class="name" value="한지은"></td>
+							<td><input type="text" id="<%= i %>" class="addr" value="[17095]경기도 용인시 기흥구 덕영대로2077번길 53 (청현마을 태영데시앙) 200동 1001호"></td>
+							<td><input type="text" id="<%= i %>" class="phone_num" value="01053519617"></td>
+							<td><input type="text" id="<%= i %>" class="memo" value="부재시 문앞에 놔주세요"></td>
+							<td><input type="text" id="<%= i %>" class="product" value="혼자서 탱탱볼"></td>
+							<td><input type="text" id="<%= i %>" class="option" value="<연말정산> ( ✕ 1 )"></td>
+							<td><input type="number" id="<%= i %>" class="quantity" value="1"></td>
+							<td><input type="number" id="<%= i %>" class="cost" value="13000"></td>
+							<td><input type="number" id="<%= i %>" class="tip" value="0"></td>
+							<td><input type="text" id="<%= i %>" class="delivery_com" value="우체국 택배"></td>
+							<td><input type="text" id="<%= i %>" class="delivery_num" value="12586184620500"></td>
+							<td><input type="date" id="<%= i %>" class="delivery_date" value="2019-12-02"></td>
+							<td>미완료</td>
+						</tr>
+						<% } %>
+					</table>
+				</div>
+				<div id="btn-save_reset">
+					<button type="button"><i class="fas fa-save"></i>저장</button>
+					<button type="reset"><i class="fas fa-sync"></i>다시쓰기</button>
+				</div>
+				</form>
+			</div>
+		</section>
+	</div>
+	
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

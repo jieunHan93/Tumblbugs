@@ -1,0 +1,19 @@
+package com.tumblbugs.dao;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.MemberVO;
+
+@Repository
+public class MypageDAO {
+	@Autowired
+	private SqlSessionTemplate sqlSession; 	
+	private String namespace = "mapper.member";	
+	
+	public int getupdate_profile(MemberVO vo) {
+
+		return sqlSession.update(namespace + ".update_profile" , vo);		
+	}
+}

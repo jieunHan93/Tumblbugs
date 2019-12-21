@@ -1,0 +1,381 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>텀블벅스</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/funding.css">
+<script>
+	$(document).ready(function() {
+		$(".checkbox").mouseover(function() {
+			$(this).find(".square_checkbox").css("border", "1px solid #1e90ff");
+		});
+		$(".checkbox").mouseout(function() {
+			$(this).find(".square_checkbox").css("border", "1px solid lightgray");
+		});
+		
+		//펀딩 진행 상황 안내 수신 동의 체크
+		$("#funding_supporter .checkbox").click(function() {
+			var status = $(this).find(".square_checkbox").attr("id");
+			
+			if(status == 0) {
+				$(this).find(".square_checkbox").attr("id", "1");
+				$(this).find("i").show();
+			} else {
+				$(this).find(".square_checkbox").attr("id", "0");
+				$(this).find("i").hide();
+			}
+		});
+		
+		//배송지 선택
+		$("li#saved_address .round_checkbox").click(function() {
+			var status = $(this).attr("id");
+			
+			if(status == 0) {
+				$(this).attr("id", "1");
+				$(this).find("div").show();
+				$("#new_address_input").hide();
+				$("#new_address_input input").val("");
+				$("label#new_address").text("");
+				$("li#new_address .round_checkbox").attr("id", "0");
+				$("li#new_address .round_checkbox").find("div").hide();
+			}
+		});
+		$("li#new_address .round_checkbox").click(function() {
+			var status = $(this).attr("id");
+			
+			if(status == 0) {
+				$("#new_address_input").show();
+				$(this).attr("id", "1");
+				$(this).find("div").show();
+				$("li#saved_address .round_checkbox").attr("id", "0");
+				$("li#saved_address .round_checkbox").find("div").hide();
+			}
+		});
+		
+		//우편번호 검색
+		$("#btnAddrSearch").click(function() {
+			new daum.Postcode({
+				oncomplete: function(data) {
+	                var zipcode = data.zonecode;
+	                var roadAddr = data.roadAddress;
+					var extraRoadAddr = "";
+	                
+					if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+						extraRoadAddr += data.bname;
+	                }
+	                if(data.buildingName !== '' && data.apartment === 'Y') {
+	                	extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                if(extraRoadAddr !== ''){
+	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+	                }
+	                
+					$("label#new_address").text("[" + zipcode + "] " + roadAddr + extraRoadAddr);
+				}
+			}).open();
+		});
+		
+		//결제수단 탭
+		$("#payment_input>div").hide();
+		$("#payment_wrap nav li:first-child").css("background-color", "#73baff").css("color", "white");
+		$("#payment_input>div:first-child").show();
+		
+		$("#payment_wrap nav li").click(function() {
+			var id = $(this).attr("id");
+			
+			$("#payment_wrap nav li").css("background-color", "white").css("color", "#4a4a4a");
+			$("#payment_input>div").hide();
+			
+			$(this).css("background-color", "#73baff").css("color", "white");
+			$("#payment_input>div#" + id).show();
+		});
+		
+		//내 결제수단 선택
+		$("#my_payment div").click(function() {
+			$("#my_payment div").css("background-color", "#f7f7f7").css("box-shadow", "1px 1px #dcdcdc");
+			$(this).css("background-color", "#dfefff").css("box-shadow", "1px 1px #73baff");
+		});
+		
+		//약관동의
+		$("#agreement_wrap .round_checkbox").click(function() {
+			var status = $(this).attr("id");
+			var all = $(this).closest("tr").attr("id");
+			
+			if(status == 0) {
+				if(all == "complete_agreement") {
+					$("#agreement_wrap .round_checkbox i").show();
+					$("#agreement_wrap .round_checkbox").attr("id", "1");
+				} else {
+					$(this).find("i").show();
+					$(this).attr("id", "1");
+					
+					if($("#agreement_wrap tr:nth-child(2) .round_checkbox").attr("id") == "1" && $("#agreement_wrap tr:nth-child(3) .round_checkbox").attr("id") == "1") {
+						$("#agreement_wrap .round_checkbox i").show();
+						$("#agreement_wrap .round_checkbox").attr("id", "1");
+					}
+				}
+			} else {
+				if(all == "complete_agreement") {
+					$("#agreement_wrap .round_checkbox i").hide();
+					$("#agreement_wrap .round_checkbox").attr("id", "0");
+				} else {
+					$(this).find("i").hide();
+					$(this).attr("id", "0");
+					$("#agreement_wrap #complete_agreement").find("i").hide();
+					$("#agreement_wrap #complete_agreement .round_checkbox").attr("id", "0");
+				}
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="funding_step2">
+		<div id="project_info">
+			<div>
+				<a id="backToProject" href="http://localhost:9090/tumblbugs/project_content"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
+				<div id="project_title">오차원 크리스마스 리스 DIY 키트</div>
+			</div>
+		</div>
+		<div id="step2_content">
+			<form name="fundingForm">
+				<div class="page_title"><label>결제 예약</label></div>
+				<table id="total_info_wrap">
+					<tr id="reward">
+						<td colspan="2">
+							<label>A 스몰 리스 만들기 키트 1개 + 무료 배송</label>
+							<ul id="reward_component">
+								<li>• &nbsp;&nbsp;스몰 리스 만들기 키트 (X1)</li>
+							</ul>
+							<div id="reward_option">선택 옵션: 레드</div>
+							<div>
+								<span>수량 : 1개</span>
+								<span id="reward_price">39,000원</span>
+							</div>
+						</td>
+					</tr>
+					<tr id="reward">
+						<td colspan="2">
+							<label>C 스몰 리스 완성품 1개 + 무료배송</label>
+							<ul id="reward_component">
+								<li>• &nbsp;&nbsp;C 스몰 리스 완성품 ( x 1 )</li>
+								<li>• &nbsp;&nbsp;랜덤 오너먼트  ( x 1 )</li>
+							</ul>
+							<div id="reward_option">선택 옵션: 레드</div>
+							<div>
+								<span>수량 : 1개</span>
+								<span id="reward_price">48,000원</span>
+							</div>
+						</td>
+					</tr>
+					<tr id="extra_support">
+						<td>추가 후원금</td>
+						<td>3,000원</td>
+					</tr>
+					<tr id="total_price">
+						<td>최종결제금액</td>
+						<td>90,000원</td>
+					</tr>
+				</table>
+				<div id="delivery_wrap">
+					<div id="funding_supporter">
+						<div id="page_subtitle">프로젝트 서포터</div>
+						<ul>
+							<li>
+								<label>이름</label>
+								<div id="value">조수윤</div>
+							</li>
+							<li>
+								<label>이메일</label>
+								<div id="value">josoo126@naver.com</div>
+							</li>
+							<li>
+								<label>휴대폰번호</label>
+								<div id="value">01055861326</div>
+							</li>
+							<li class="checkbox">
+								<div><div class="square_checkbox" id="0"><i class="fas fa-check"></i></div></div>
+								<div id="checkbox_content">(필수) 펀딩 진행에 대한 새소식 및 결제 관련 안내를 받습니다.</div>
+							</li>
+						</ul>
+					</div>
+					<div id="delivery_address">
+						<div id="page_subtitle">선물 배송지</div>
+						<ul>
+							<li class="checkbox" id="saved_address">
+								<div><div class="round_checkbox" id="0"><div></div></div></div>
+								<div>
+									<label>최근 배송지</label>
+									<div id="saved_address">조수윤 010-5586-1326<br>[18600] 경기 화성시 향남읍 행정중앙1로 95 (행정리, 향남시범살구꽃마을한일베라체아파트) 1302동 801호</div>
+								</div>
+							</li>
+							<li class="checkbox" id="new_address">
+								<div><div class="round_checkbox" id="0"><div></div></div></div>
+								<div id="new_address">
+									<label>새로입력</label>
+									<div id="new_address_input">
+										<label>이름</label>
+										<input type="text">
+										<label>휴대폰 번호</label>
+										<input type="text">
+										<label>주소</label>
+										<button type="button" id="btnAddrSearch">우편번호 검색</button>
+										<label id="new_address"></label>
+										<input type="text" placeholder="상세주소">
+									</div>
+								</div>
+							</li>
+							<li id="delivery_request">
+								<label>배송 시 요청사항 (선택)</label>
+								<div><input type="text" placeholder="ex) 부재시 경비실에 보관해주세요."></div>
+								<div>해당 요청사항은 배송에 관련된 내용만 적어주세요.</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div id="payment_wrap">
+					<div id="page_subtitle">결제 수단</div>
+					<nav>
+						<li id="my_payment">내 결제 수단</li>
+						<li id="new_credit_card">신규 카드</li>
+						<li id="new_bank_account">신규 은행계좌</li>
+					</nav>
+					<div>
+						<div id="payment_input">
+							<!-- 내 결제 수단 -->
+							<div id="my_payment">
+								<div><i class="far fa-credit-card"></i> 신한카드 1234</div>
+								<div><i class="fas fa-money-check"></i> 신한은행 5678</div>
+							</div>
+							<!-- 신규 카드 -->
+							<div id="new_credit_card">
+								<ul>
+									<li id="card_number">
+										<label>신용(체크)카드번호</label>
+										<input type="text">
+										<input type="text">
+										<input type="text">
+										<input type="text">
+									</li>
+									<li id="expiry_date_card_pass">
+										<div id="expiry_date">
+											<label>카드 유효기간</label>
+											<input type="text" placeholder="MM/YY">
+										</div>
+										<div id="card_pass">
+											<label>카드 비밀번호</label>
+											<input type="text" placeholder="앞 2자리">
+										</div>
+									</li>
+									<li id="birth">
+										<label>생년월일</label>
+										<input type="text" placeholder="주민등록번호 앞 6자리">
+									</li>
+									<li id="phone">
+										<label>휴대폰번호</label>
+										<input type="text">
+									</li>
+								</ul>
+							</div>
+							<!-- 신규 은행계좌 -->
+							<div id="new_bank_account">
+								<ul>
+									<li id="bank">
+										<label>결제 은행</label>
+										<select>
+											<option>국민은행</option>
+											<option>농협</option>
+											<option>우리은행</option>
+											<option>SC은행</option>
+											<option>삼성은행</option>
+											<option>씨티은행</option>
+											<option>대구은행</option>
+											<option>부산은행</option>
+											<option>광주은행</option>
+											<option>제주은행</option>
+											<option>경남은행</option>
+											<option>새마을금고</option>
+											<option>신협</option>
+											<option>우체국</option>
+											<option>하나은행</option>
+											<option>신한은행</option>
+											<option>외환은행</option>
+											<option>유안타증권</option>
+											<option>기업은행</option>
+											<option>산업은행</option>
+										</select>
+									</li>
+									<li id="account_number">
+										<label>계좌번호</label>
+										<div>* 휴대폰 번호 등으로 만든 평생계좌번호 및 가상계좌, 펀드/적금/정기예금 등의 계좌는 등록이 불가능합니다.</div>
+										<input type="text">
+									</li>
+									<li id="account_holder">
+										<label>예금주명</label>
+										<input type="text">
+									</li>
+									<li id="birth">
+										<label>생년월일</label>
+										<input type="text" placeholder="주민등록번호 앞 6자리">
+									</li>
+									<li id="phone">
+										<label>휴대폰번호</label>
+										<input type="text">
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div id="reservation_notice">
+							<div>결제 예약시 유의사항</div>
+							<ul>
+								<li>결제실행일에 결제자 귀책사유(한도초과, 이용정지 등)로 인하여 결제가 실패할 수 있으니, 결제수단이 유효한지 한번 확인하세요.</li>
+								<li>1차 결제 실패 시 실패일로부터 5 영업일 동안 재 결제를 실행합니다.</li>
+								<li>결제 예약 이후, 결제 수단을 변경하려면 마이페이지 > 내 후원현황에서 결제 수단을 변경해주세요.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="agreement_wrap">
+					<div id="page_subtitle">약관 동의</div>
+					<table>
+						<tr id="complete_agreement">
+							<th class="checkbox">
+								<div><div class="round_checkbox" id="0"><i class="fas fa-check"></i></div></div>
+								<div>전체 동의하기</div>
+							</th>
+						</tr>
+						<tr>
+							<td class="checkbox">
+								<div><div class="round_checkbox" id="0"><i class="fas fa-check"></i></div></div>
+								<div>
+									<span>제 3자에 대한 개인정보 제공 동의</span>
+									<!-- <span id="show_term">보기</span> -->
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="checkbox">
+								<div><div class="round_checkbox" id="0"><i class="fas fa-check"></i></div></div>
+								<div>
+									<span>책임 규정에 대한 동의</span>
+									<!-- <span id="show_term">보기</span> -->
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="confirm">
+					<a href="success"><button type="button" id="btn_payment_reservation_finish">결제 예약하기</button></a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

@@ -1,0 +1,49 @@
+package com.tumblbugs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+@Controller
+public class AdminCollectionController {
+	/** 기획전 메인 **/
+	@RequestMapping(value="/admin/collection", method=RequestMethod.GET)
+	public ModelAndView admin_collection() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/admin_collection");
+		
+		return mv;
+	}
+	@RequestMapping(value="/admin/data",method=RequestMethod.GET, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String json() {
+		Gson gson = new Gson();
+		JsonArray jlist = new JsonArray();
+		JsonObject jdata = new JsonObject();
+
+		for (int i=0;i<9; i++) {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("_id", String.valueOf(i+1));
+			obj.addProperty("title", "스케쥴 제목");
+			obj.addProperty("description", "Lorem ipsum dolor sit incid idunt ut Lorem ipsum sit.");
+			obj.addProperty("start", "2019-12-1"+i+"T09:30");
+			obj.addProperty("end", "2019-12-1"+i+"T15:00");
+			obj.addProperty("type", "카테고리1");
+			obj.addProperty("backgroundColor", "#D25565");
+			obj.addProperty("textColor","#ffffff");
+			obj.addProperty("allDay",false);
+			jlist.add(obj);
+		}
+		jdata.add("list", jlist);
+		String result = gson.toJson(jdata);
+		
+		return result;
+	}
+	
+}

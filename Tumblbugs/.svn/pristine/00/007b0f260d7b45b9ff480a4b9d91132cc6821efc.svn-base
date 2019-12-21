@@ -1,0 +1,99 @@
+package com.tumblbugs.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.FundingGiftVO;
+import com.tumblbugs.vo.FundingVO;
+import com.tumblbugs.vo.ItemVO;
+
+@Repository
+public class FundingDAO {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private static String namespace = "mapper.funding";
+	private static String pnamespace = "mapper.project";
+	
+	/**
+	 * 후원 리스트
+	 * @param email
+	 * @return
+	 */
+	public ArrayList<FundingVO> getFundingList(String email) {
+		List list = sqlSession.selectList(namespace + ".fundingList", email);
+		return (ArrayList<FundingVO>)list;
+	}
+	
+	/**
+	 * 후원 상세 정보
+	 * @param funding_id
+	 * @return
+	 */
+	public FundingVO getFundingDetail(String funding_id) {
+		return sqlSession.selectOne(namespace + ".fundingDetail", funding_id);
+	}
+	
+	/**
+	 * 후원 시 선택한 선물 리스트
+	 * @param funding_id
+	 * @return
+	 */
+	public ArrayList<FundingGiftVO> getFundingGiftList(String funding_id) {
+		List list = sqlSession.selectList(namespace + ".fundingGiftList", funding_id);
+		ArrayList<FundingGiftVO> giftList = (ArrayList<FundingGiftVO>)list;
+		
+		for(FundingGiftVO vo:giftList) {
+			List itemList = sqlSession.selectList(pnamespace + ".item", vo.getGift_id());
+			vo.setItemList((ArrayList<ItemVO>)itemList);
+		}
+		
+		return giftList;
+	}
+	
+	/**
+	 * 후원하기 : tum_funding table insert
+	 * @param vo
+	 * @return
+	 */
+	public boolean fundingInsert(FundingVO vo) {
+		boolean result = false;
+		
+		if(sqlSession.insert(namespace + ".fundingInsert", vo) != 0) {
+			int insertCount = 0;
+			
+			for(FundingGiftVO fgvo:vo.getGiftList()) {
+				String funding_id = getFundingId(vo.getEmail());
+				fgvo.setFunding_id(funding_id);
+				insertCount += fundingGiftInsert(fgvo);
+			}
+			
+			if(insertCount == vo.getGiftList().size()) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 후원하기 : tum_funding_gift table insert
+	 * @param vo
+	 * @return
+	 */
+	public int fundingGiftInsert(FundingGiftVO vo) {
+		return sqlSession.insert(namespace + ".fundingGiftInsert", vo);
+	}
+	
+	public String getFundingId(String email) {
+		return sqlSession.selectOne(namespace + ".fundingId", email);
+	}
+	
+	public FundingVO getRecentDeliveryInfo(String email) {
+		return sqlSession.selectOne(namespace + ".recentDeliveryInfo", email);
+	}
+}

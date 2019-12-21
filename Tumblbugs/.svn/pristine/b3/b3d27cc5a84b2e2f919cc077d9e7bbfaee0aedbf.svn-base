@@ -1,0 +1,233 @@
+@charset "UTF-8";
+
+/**
+	project_content_main
+	작성자: 조수윤
+**/
+	/** overview ----------------------------------------------------------------------------------------------**/
+	#project_content #overview {
+		width: 1080px; height: 780px;
+		margin: auto; text-align: center;
+		padding-top: 60px;
+	}
+	
+	#project_content #overview a#category {
+		padding: 4px;
+		text-decoration: none;
+		font-size: 9pt; font-weight: bold;
+		border: 1px solid #f0f0f0;
+		background-color: #f5f5f5;
+		color: #757575;
+	}
+	#project_content #overview div#title {font-size: 28pt; font-weight: bold; margin: 20px 0px 20px 0px;}
+	
+	#project_content #overview #creator {margin-bottom: 50px; height: 25px;}
+	#project_content #overview #creator_img {
+		display: inline-block;
+		width: 25px; height: 25px; margin-right: 5px;
+		border: 1px solid lightgray;
+		border-radius: 25px;
+		overflow: hidden;
+	}
+	#project_content #overview #creator_img img {height: 25px;}
+	#project_content #creator_name {display: inline-block; height: 25px; vertical-align: top; padding-top: 3px;}	/* aside #creator_name 공통 css*/
+	#project_content #creator_name>a {text-decoration: none; color: black; font-size: 10.5pt; font-weight: bold;}
+	#project_content #creator_name>a:hover {color: gray;}
+	
+	#project_content div#main_img {float: left; margin-right: 15px;}
+	#project_content div#main_img img {width: 650px;}
+	
+	#project_content div#introduction {
+		float: right; text-align: left;
+		width: 390px; height: 488px;
+		padding-right: 20px;
+	}
+	#project_content div#introduction>div {margin-bottom: 20px;}
+	#project_content .introduction_subtitle, .introduction_quantity {font-size: 10.5pt;}
+	#project_content .introduction_value {font-size: 26pt;}
+	#project_content span#percentage {margin-left: 10px; font-size: 13pt; font-weight: bold;}
+	
+	#project_content #funding_information {
+		border: 1px solid #f0f0f0;
+		background-color: #fafafa;
+		padding: 15px; margin-top: 33px;
+		font-size: 10.5pt;
+		line-height: 1.8;
+	}
+	#project_content #funding_information_title {font-weight: bold; margin-bottom: 15px;}
+	
+	#project_content button#goFunding {
+		width: 295px; height: 55px; margin-right: 5px;
+		background-color: #1e90ff; color: white;
+		border: none; border-radius: 5px;
+		font-size: 11.5pt; font-weight: bold;
+		cursor: pointer;
+		vertical-align: top;
+	}
+	#project_content button#goFunding:hover {background-color: #1d85ea;}
+	#project_content button#shareProject {
+		width: 65px; height: 55px;
+		border: none; border-radius: 5px;
+		cursor: pointer;
+	}
+	#project_content section {clear: both;}
+	
+	/** menu_tab - 스토리, 커뮤니티, 펀딩 안내 ---------------------------------------------------------------------------**/
+	#project_content #menu_tab {
+		background-color: white;
+		border-top: 1px solid #e7e7e7;
+		border-bottom: 1px solid #e7e7e7;
+		width: 100%; height: 50px;
+	}
+	#project_content #menu_tab>nav {width: 1080px; margin: auto; padding-left: 5px;}
+	#project_content #menu_tab>nav>a {
+		display: inline-block;
+		padding: 13px 10px 13px 10px; vertical-align: top;
+		text-decoration: none;
+		text-align: center;
+		color: #a9a9a9;
+		display: inline-block;
+		font-size: 10pt; font-weight: bold;
+		margin: 0px;
+	}
+	#project_content #menu_tab>nav>a:hover {color: black;}
+	#project_content #menu_tab span#community_count {font-size: 7pt; vertical-align: top; margin-left: 2px;}
+	
+	/* 메뉴 탭 상단고정을 위한 클래스 스타일 */
+	.fixation {
+		position: fixed;
+		top: 0px;
+	}
+	
+	/** menu_content ----------------------------------------------------------------------------------------------**/
+	section#menu_content {
+		background-color: #f6f5f5;
+		border: 1px solid #f6f5f5;
+	}
+	section#menu_content>div {
+		width: 1080px; margin: auto;
+		margin-top: 15px;
+		overflow: auto;
+		margin-bottom: 50px;
+	}
+	section#menu_content .menu_content {
+		width: 680px; float: left;
+	}
+	.white_box {
+		background-color: white;
+		box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+		padding: 25px;
+		margin-bottom: 15px;
+	}
+	
+	/* aside -----------------------------------------------------------------------------------------*/
+	#project_content aside {
+		width: 370px; float: right; margin-right: 15px;
+		font-size: 10.5pt;
+	}
+	#project_content aside button {
+		border: none;
+		width: 100%; height: 45px;
+		color: #5c5c5c;
+		background-color: #e7e7e7;
+		border-radius: 5px;
+		font-size: 10.5pt; font-weight: bold;
+	}
+	#project_content aside button:hover {
+		background-color: #d9d9d9;
+	}
+	#project_content aside #box_header {
+		font-weight: bold; margin-bottom: 20px;
+	}
+	
+	/* 창작자 소개 -----------------------------------------------------------------------------------------*/
+	#project_content aside #creator_img,
+	#community #member_img {
+		display: inline-block;
+		width: 40px; height: 40px; margin-right: 7px;
+		border: 1px solid lightgray;
+		border-radius: 40px;
+		overflow: hidden;
+	}
+	#project_content aside #creator_img img,
+	#community #member_img img {height: 40px;}
+	#project_content aside #creator_name {padding-top: 10px;}
+	
+	/* 선물 */
+	#project_content aside #box_header #sponsor_count {float: left;}
+	#project_content aside #box_header #remaining_earlybird_count {
+		float: right;
+		background-color: #e2f1ff; color: #1e90ff;
+		border: 1px solid #b9ddff;
+		font-weight: normal;
+		padding: 3px;
+	}
+	#project_content aside #price_info {
+		margin: 30px 0px 30px 0px;
+	}
+	#project_content aside #price_info #price {
+		clear: both;
+		font-size: 18pt; font-weight: bold;
+	}
+	#project_content aside li {
+		margin: 0px 0px 5px 20px;
+	}
+	#project_content aside .line_div {
+		border-bottom: 1px solid #e7e7e7;
+		padding: 15px 0px 15px 0px;
+		margin-bottom: 15px;
+	}
+	
+	/* 폰트색, 사이즈, margin 설정------------------------------------------------------------------------------- */
+	#creator_login, #creator_project, #option_count, #sponsor_count, #expected_delivery_day {color: #5c5c5c;}
+	#creator_login, #creator_project, #expected_delivery_day {
+		font-size: 10pt;
+	}
+	#creator_login {margin-bottom: 5px;}
+	#creator_project {margin-bottom: 15px;}
+	#option_count {padding: 10px 0px 10px 5px;}
+	
+
+/**
+	project_content_story
+	작성자: 조수윤
+**/
+
+
+/**
+	project_content_fundingInfo
+	작성자: 조수윤
+**/
+	/* 공통 ------------------------------------------------------------------------------*/
+	#fundingInfo_content .subtitle {
+		font-weight: bold;
+		font-size: 10.5pt;
+		padding-bottom: 20px;
+	}
+	#fundingInfo_content .subContent {
+		font-size: 10.5pt;
+		line-height: 1.7;
+		margin-bottom: 10px;
+	}
+	
+	/* 상품정보 고시 -------------------------------------------------------------------------*/
+	.subContent #value {
+		color: #5c5c5c;
+		margin-bottom: 10px;
+	}
+	
+	/* 문의사항 ----------------------------------------------------------------------------*/
+	#fundingInfo_content #request {overflow: auto;}
+	#fundingInfo_content #request .subtitle {float: left; padding: 10px 0px 0px 0px;}
+	#fundingInfo_content button {
+		float: right;
+		border: none;
+		width: 200px; height: 45px;
+		color: #5c5c5c;
+		background-color: #e7e7e7;
+		border-radius: 5px;
+		font-size: 10.5pt; font-weight: bold;
+	}
+	#fundingInfo_content button:hover {
+		background-color: #d9d9d9;
+	}

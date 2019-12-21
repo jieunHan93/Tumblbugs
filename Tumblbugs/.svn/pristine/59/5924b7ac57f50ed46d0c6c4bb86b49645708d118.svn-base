@@ -1,0 +1,191 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<style>
+		section#mypage_profil_header{
+			background-color: #ebeae5;
+			height:144px;
+		}
+		div#mypage_profil_header_container{
+			width:1080px;
+			margin:auto;
+			padding-top: 45px;
+		}
+		div#mypage_nav,
+		div#mypage_profil_header_container>h2{
+			display: inline-block;	
+		}
+		div#mypage_profil_header_container>h2{
+			color:#645353;
+			font-weight: bold;
+			font-size:40px;
+			margin-left:20px;
+		}
+		div#mypage_nav>a{
+			cursor:pointer;
+			color:#645353;
+			margin-left:15px;
+			font-size: 15px;
+		}
+		div#mypage_nav>a:hover{
+			cursor:pointer;
+			color:#434343;
+		}
+		div#mypage_nav {
+			float:right;
+			padding-top: 15px;
+			padding-right:20px;
+		}
+		div#mypage_profil_main_container{
+			width:1080px;
+			margin:auto;
+			padding:40px 0px;
+		}
+		div#profil_editor{
+			width:700px;
+			border:1px solid blue;
+		}
+		div#profil_editor>form>div{
+			width:700px;
+			border-top:1px solid #ebe8e8;
+			min-height:100px;
+			padding:10px 0px;
+		}
+		label.profil_editor_label {
+			width:120px;
+			text-align: right;
+			color:#676363;
+			font-size:15px;
+			padding-top:25px;
+			vertical-align: top;
+			margin-right:10px;
+		}
+		div#profill_editor_img{
+			display: inline-block;
+			width:450px;
+			font-size:14px;
+			margin:10px 0px;
+			color:#676363;
+		}
+		div#profill_editor_img>div{
+			display: inline-block;
+			width: 350px;
+		}
+		div#profill_editor_img input{
+			padding-bottom:5px;
+			display: block;
+		}
+		div#profill_editor_img>span{
+			display:inline-block;
+			width:60px;	height:60px;
+			border-radius:50%;
+			background-image: url(http://localhost:9090/tumblbugs/images/kurby.gif);
+		    background-size: cover;
+		    background-position: 50% 50%;
+		    vertical-align: super;
+		    margin:0px 5px;
+		}
+		div#profil_editor input[type=text] {
+			margin-left:5px;
+			padding:3px 6px;
+			vertical-align: bottom;
+			background-color: #EBEAE5;
+			color: #7d7d7d;
+			border:1px solid #EBEAE5;
+			border-radius: 5px;
+		}
+		div#profil_editor_phone input{
+			width:68px;
+		}
+		span.profil_input_guide{
+			display: block;
+		}
+		div#profil_editor textarea{
+			margin-left:5px;
+			width:500px;
+			height:100px;
+			margin-top:15px;
+			background-color: #EBEAE5;
+			color: #7d7d7d;
+			border:1px solid #EBEAE5;
+			border-radius: 5px;
+			padding:3px 6px;
+			resize: none; 
+		}
+		span.profil_input_guide{
+			color:#676363;
+			font-size:15px;
+			margin-left:140px;
+		}
+	</style>
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	<div>
+		<div>
+			<section id="mypage_profil_header">
+				<div id="mypage_profil_header_container">
+					<h2>프로필 설정</h2>
+					<div id="mypage_nav">
+						<a href="profil"><span>프로필 설정</span></a>
+						<a><span>계정 설정</span></a>
+						<a><span>지불정보 설정</span></a>
+					</div>
+				</div>
+			</section>
+		</div>	
+		<div id="mypage_profil_main_container">
+			<div id="profil_editor">
+				<form>
+					<div>
+						<label class="profil_editor_label">프로필 사진</label>
+						<div id="profill_editor_img">
+							<span></span>
+							<div>
+								<input type="file">
+								<span>사이즈는 가로 200px, 세로 250px에 최적화 되어 있으며<br>jpg, gif, png파일을 지원합니다.</span>
+							</div>
+						</div>
+					</div>
+					<div>
+						<label class="profil_editor_label">이름</label>
+						<input type="text" value="기존 유저명">
+					</div>
+					<div>
+						<label class="profil_editor_label">지역</label>
+						<input type="text" value="지역">
+					</div>
+					<div>
+						<label class="profil_editor_label">소개</label>
+						<textarea></textarea>
+						<span class="profil_input_guide">300자 이내의 자기소개를 입력해주세요.</span>
+					</div>
+					<div>
+						<label class="profil_editor_label">웹사이트</label>
+						<input type="text" value="웹사이트">
+						<span class="profil_input_guide">웹사이트가 있다면 주소를 입력해주세요.</span>
+					</div>
+					<div id="profil_editor_phone">
+						<label class="profil_editor_label">전화번호</label>
+						<input type="text" value="010">
+						<input type="text" value="1111">
+						<input type="text" value="1111">
+						<span class="profil_input_guide">전화번호를 입력해 주세요. 밀어주기 및 후원 선물 배송 시 연락을 위해 사용됩니다.</span>
+					</div>
+					<div></div>
+				</form>
+			</div>
+			<div id="prodil_pre">
+			
+			</div>
+		</div>
+	</div>
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

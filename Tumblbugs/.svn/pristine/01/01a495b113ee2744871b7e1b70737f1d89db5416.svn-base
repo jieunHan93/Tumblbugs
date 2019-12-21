@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style>
+	
+</style>
+</head>
+<body>
+	<div class="white_box" id="story_content">
+		안녕하세요! 네이버웹툰입니다!<br><br>
+		매일 매일 새로운 재미! 네이버웹툰입니다.<br>
+		극사실주의 공감백배 일상을 다룬 <대학일기>의 사랑스러운 바보개가 <br>
+		이번에는 말랑말랑~한 필로우쿠션과 복슬복슬~한 다용도 미니 파우치로 재탄생합니다!<br>
+		그동안 앓고 앓던 바보개 굿즈를 기다린 팬들이라면 모두 주목해주세욥!!<br><br>
+		<img src="http://localhost:9090/tumblbugs/images/project_content/project_content_sample1.png" width="635">
+	</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+package com.tumblbugs.dao;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.MessageVO;
+
+@Repository
+public class MessageDAO {
+
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private String namespace = "mapper.message";
+
+	/** 문의 등록 **/
+	public boolean getResultWrite(MessageVO vo) {
+		boolean result = false;
+		int val = sqlSession.insert(namespace+".write", vo);
+		if(val != 0) result = true;
+		return result;
+	}
+	
+	/** 채팅방 가져오기 **/
+	public ArrayList<MessageVO> getResultChatroom(String user, String email, String sort){
+		List list = null;
+		Map<String, String> param = new HashMap<String,String>();
+		param.put("user", user);
+		param.put("email", email);
+		param.put("sort", sort);
+		list = sqlSession.selectList(namespace+".chatroom_list", param);
+		return (ArrayList<MessageVO>) list;
+	}
+	
+	/** 메시지 가져오기 **/
+	public ArrayList<MessageVO> getResultMessage(String chatroom_id){
+		List list = null;
+		list = sqlSession.selectList(namespace+".message_list", chatroom_id);
+		return (ArrayList<MessageVO>) list;
+	}
+	
+	/** 채팅방 프로젝트 정보 가져오기 **/
+	public MessageVO getResultProjectInfo(String chatroom_id) {
+		MessageVO vo = sqlSession.selectOne(namespace+".project_info", chatroom_id);
+		return vo;
+	}
+	
+	/** 채팅방 읽음 안읽음 전환을 위한 카운트 **/
+	public void getResultCheck(String chatroom_id, String email) {
+		String last_email = sqlSession.selectOne(namespace+".message_check_count", chatroom_id);
+		if(!last_email.equals(email)) getResultUpdateCheck(chatroom_id);
+	}
+	/** 채팅방 읽음 업데이트 **/
+	public void getResultUpdateCheck(String chatroom_id) {
+		sqlSession.update(namespace+".message_check_update", chatroom_id);
+	}
+	/**채팅 등록**/
+	public int getResultInsert(MessageVO vo) {
+		MessageVO info = getResultMessageInfo(vo.getChatroom_id());
+		vo.setMsg_type(info.getMsg_type());
+		vo.setPj_id(info.getPj_id());
+		vo.setEmail_starter(info.getEmail_starter());
+		return sqlSession.insert(namespace+".insert_message", vo);
+	}
+	/** 채팅유형과 프로젝트 아이디 가져오기 **/
+	public MessageVO getResultMessageInfo(String chatroom_id) {
+		return sqlSession.selectOne(namespace+".message_info", chatroom_id);
+	}
+}

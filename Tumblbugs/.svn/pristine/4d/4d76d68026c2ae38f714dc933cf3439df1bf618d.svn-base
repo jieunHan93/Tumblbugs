@@ -1,0 +1,84 @@
+package com.tumblbugs.vo;
+
+import java.util.ArrayList;
+
+public class FundingGiftVO {
+	String funding_id, gift_id, gift_option, funding_gift_price, gift_title, gift_price, select_yn;
+	//select_yn: 펀딩할 선물을 선택할 때 view에서 전체 form 데이터를 post 방식으로 받아온 뒤 select_yn의 값이 y인 vo만 남기고 나머지는 remove하기 위해 사용
+	
+	int gift_quantity;
+	ArrayList<ItemVO> itemList;
+
+	public String getFunding_id() {
+		return funding_id;
+	}
+
+	public void setFunding_id(String funding_id) {
+		this.funding_id = funding_id;
+	}
+
+	public String getGift_id() {
+		return gift_id;
+	}
+
+	public void setGift_id(String gift_id) {
+		this.gift_id = gift_id;
+	}
+
+	public int getGift_quantity() {
+		return gift_quantity;
+	}
+
+	public void setGift_quantity(int gift_quantity) {
+		this.gift_quantity = gift_quantity;
+	}
+
+	public String getGift_option() {
+		return gift_option;
+	}
+
+	public void setGift_option(String gift_option) {
+		this.gift_option = gift_option;
+	}
+
+	public String getFunding_gift_price() {
+		return funding_gift_price;
+	}
+
+	public void setFunding_gift_price(String funding_gift_price) {
+		this.funding_gift_price = funding_gift_price;
+	}
+
+	public String getSelect_yn() {
+		return select_yn;
+	}
+
+	public void setSelect_yn(String select_yn) {
+		this.select_yn = select_yn;
+	}
+
+	public String getGift_title() {
+		return gift_title;
+	}
+
+	public void setGift_title(String gift_title) {
+		this.gift_title = gift_title;
+	}
+
+	public ArrayList<ItemVO> getItemList() {
+		return itemList;
+	}
+
+	public void setItemList(ArrayList<ItemVO> itemList) {
+		this.itemList = itemList;
+	}
+
+	public String getGift_price() {
+		return gift_price;
+	}
+
+	public void setGift_price(String gift_price) {
+		this.gift_price = gift_price;
+	}
+	
+}

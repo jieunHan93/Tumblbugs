@@ -1,0 +1,144 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>텀블벅스 :: tumblbugs</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+<script>
+	$(document).ready(function() {
+		$(".funding_list#list_all").show();
+		$("nav #list_all #list_count").css("background-color", "#1d85ea");
+		
+		//탭 선택
+		$("nav li").click(function() {
+			var id = $(this).attr("id");
+			
+			$("nav li").removeClass("select_tab");
+			$("nav li #list_count").css("background-color", "#999999");
+			$(this).addClass("select_tab");
+			$(this).find("#list_count").css("background-color", "#1d85ea");
+			
+			$(".funding_list").hide();
+			$(".funding_list#" + id).show();
+		});
+	});
+</script>
+</head>
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div id="funding_history">
+		<section class="page_title">
+			<span><img src="http://localhost:9090/tumblbugs/images/kurby.gif" id="img1"></span>
+			<div>커비님의 후원 현황</div>
+		</section>
+		<section class="page_content">
+			<article id="page_content_tab">
+				<nav>
+					<li class="select_tab" id="list_all">
+						<span>모두 보기</span>
+						<span id="list_count">1</span>
+					</li>
+					<li id="list_ongoing">
+						<span>펀딩 진행중</span>
+						<span id="list_count">1</span>
+					</li>
+					<li id="list_finish">
+						<span>결제 완료</span>
+						<span id="list_count">0</span>
+					</li>
+				</nav>
+				<div class="search">
+					<span><input type="text" placeholder="프로젝트, 창작자를 검색하세요"></span>
+				</div>
+			</article>
+			<article class="page_content_funding_list">
+				<div class="funding_list" id="list_all">
+					<div class="list_count"><i class="fas fa-list"></i>총 1건의 후원 결과가 있습니다.</div>
+					<a href="http://localhost:9090/tumblbugs/mypage/fundinghistory/detail">
+						<table>
+							<tr>
+								<td colspan="2"><b>2019.11.26</b></td>
+								<td>후원번호 <b>00000001</b></td>
+							</tr>
+							<tr>
+								<td class="funding_image"><img id="project_main_img" src="http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg"></td>
+								<td class="funding_detail">
+									<div class="project_status">펀딩 진행중</div>
+									<div class="project_title"><b>오차원 크리스마스 리스 DIY 키트<span class="creator_name">오차원</span></b></div>
+									<div class="payment_status"><b>결제 예정</b></div>
+									<div class="delivery_status">예상 전달일: 2019.12.20</div>
+									<div class="funding_price"><b>48,000원</b>을 후원하셨습니다.</div>
+								</td>
+								<td><i class="fas fa-angle-right"></i></td>
+							</tr>
+						</table>
+					</a>
+					<div class="list_none">
+						<i class="far fa-meh"></i>
+						<div>후원 내역이 없습니다.</div>
+					</div>
+				</div>
+				<div class="funding_list" id="list_ongoing">
+					<div class="list_count"><i class="fas fa-rocket"></i>총 1건의 펀딩 진행중인 후원이 있습니다.</div>
+					<a href="#">
+						<table>
+							<tr>
+								<td colspan="2"><b>2019.11.26</b></td>
+								<td>후원번호 <b>00000001</b></td>
+							</tr>
+							<tr>
+								<td class="funding_image"><img id="project_main_img" src="http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg"></td>
+								<td class="funding_detail">
+									<div class="project_status">펀딩 진행중</div>
+									<div class="project_title"><b>오차원 크리스마스 리스 DIY 키트<span class="creator_name">오차원</span></b></div>
+									<div class="payment_status"><b>결제 예정</b></div>
+									<div class="delivery_status">예상 전달일: 2019.12.20</div>
+									<div class="funding_price"><b>48,000원</b>을 후원하셨습니다.</div>
+								</td>
+								<td><i class="fas fa-angle-right"></i></td>
+							</tr>
+						</table>
+					</a>
+					<div class="list_none">
+						<i class="fas fa-rocket"></i>
+						<div>펀딩 진행중인 후원이 없습니다.</div>
+					</div>
+				</div>
+				<div class="funding_list" id="list_finish">
+					<div class="list_count"><i class="far fa-credit-card"></i>총 0건의 결제 완료된 후원이 있습니다.</div>
+					<a href="#">
+						<table>
+							<tr>
+								<td colspan="2"><b>2019.11.26</b></td>
+								<td>후원번호 <b>00000001</b></td>
+							</tr>
+							<tr>
+								<td class="funding_image"><img id="project_main_img" src="http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg"></td>
+								<td class="funding_detail">
+									<div class="project_status">펀딩 진행중</div>
+									<div class="project_title"><b>오차원 크리스마스 리스 DIY 키트<span class="creator_name">오차원</span></b></div>
+									<div class="payment_status"><b>결제 예정</b></div>
+									<div class="delivery_status">예상 전달일: 2019.12.20</div>
+									<div class="funding_price"><b>48,000원</b>을 후원하셨습니다.</div>
+								</td>
+								<td><i class="fas fa-angle-right"></i></td>
+							</tr>
+						</table>
+					</a>
+					<div class="list_none">
+						<i class="far fa-credit-card"></i>
+						<div>결제 완료된 후원이 없습니다.</div>
+					</div>
+				</div>
+			</article>
+		</section>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

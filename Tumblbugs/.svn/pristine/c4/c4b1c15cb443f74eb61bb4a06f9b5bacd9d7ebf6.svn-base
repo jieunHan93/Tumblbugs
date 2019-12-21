@@ -1,0 +1,30 @@
+package com.tumblbugs.dao;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.MessageVO;
+
+@Repository
+public class MessageDAO {
+
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private String namespace = "mapper.message";
+	
+	/** 작가 아이디 구하기 **/
+	public String getResultReceiverID(String pj_id) {
+		return sqlSession.selectOne(namespace+".receiver_email", pj_id);
+	}
+	
+	/** 문의 등록 **/
+	public boolean getResultWrite(MessageVO vo) {
+		boolean result = false;
+		String receiver_email = getResultReceiverID(vo.getPj_id());
+		vo.setReceiver_email(receiver_email);
+		int val = sqlSession.insert(namespace+".write", vo);
+		if(val != 0) result = true;
+		return result;
+	}
+}

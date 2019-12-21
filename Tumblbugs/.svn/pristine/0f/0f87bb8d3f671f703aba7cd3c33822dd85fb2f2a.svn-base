@@ -1,0 +1,49 @@
+package com.tumblbugs.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.GiftVO;
+import com.tumblbugs.vo.ItemVO;
+import com.tumblbugs.vo.ProjectVO;
+
+@Repository
+public class ProjectDAO {
+	//22
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private static String namespace = "mapper.project";
+	
+	public ProjectVO getAdminContent(String pj_id) {
+		return sqlSession.selectOne(namespace + ".admin_content", pj_id);
+	}
+	
+	public ProjectVO getContent(String pj_id) {
+		return sqlSession.selectOne(namespace + ".content", pj_id);
+	}
+	
+	public String getProjectTitle(String pj_id) {
+		return sqlSession.selectOne(namespace + ".pj_title", pj_id);
+	}
+	
+	public ArrayList<GiftVO> getGiftList(String pj_id) {
+		List list = sqlSession.selectList(namespace + ".gift", pj_id);
+		ArrayList<GiftVO> giftList = (ArrayList<GiftVO>)list;
+		
+		for(GiftVO vo:giftList) {
+			ArrayList<ItemVO> itemList = getItemList(vo.getGift_id());
+			vo.setItemList(itemList);
+		}
+		
+		return giftList;
+	}
+	
+	public ArrayList<ItemVO> getItemList(String gift_id) {
+		List list = sqlSession.selectList(namespace + ".item", gift_id);
+		return (ArrayList<ItemVO>)list;
+	}
+}

@@ -1,0 +1,132 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+<style>
+	body>section>div#div1{
+		margin: auto;
+		width:1080px;
+		height: 200px; 
+		background-color: white;
+		
+	}
+	
+	img#img1{
+		margin: 50px 0 0 500px;
+		width: 120px;
+		height: 120px;
+		display: table;
+	}
+	
+	b#b1{
+	
+		margin: -20px 0 0 500px;
+		display: table;		
+															
+	}
+	div#div2{
+		display: table;
+		margin: auto;
+		width: 1080px;
+		height: 400px;
+
+	}
+	button#allview{
+		background-color: #d2d2d2;
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		width: 150px;
+		height: 30px;
+	
+	}
+	button#allview:hover{
+		background-color:#dcdcdc;
+		color: #1e90ff;
+	}
+	button#FundingProgress{
+		background-color: #d2d2d2;
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		width: 150px;
+		height: 30px;
+	
+	}
+	button#FundingProgress:hover{
+		background-color:#dcdcdc;
+		color: #1e90ff;
+	}
+	button#PaymentComplete{
+		background-color: #d2d2d2;
+		border-style: none;
+		border-radius: 5px 5px 5px 5px;
+		width: 150px;
+		height: 30px;
+	
+	}
+	button#PaymentComplete:hover{
+		background-color:#dcdcdc;
+		color: #1e90ff;
+	}
+	input#SearchHistory{
+		width: 350px;
+		margin-left: 240px;
+	}
+	div#SponsorResultdiv{
+		
+		margin: 30px 0 0 0;
+		display: table;
+		width: 1080px;
+		height: 0px;
+		
+	}
+	span#SponsorResultspan{
+		border-radius: 5px 5px 5px 5px;
+		background-color: #dcdcdc;
+		height: 50px;
+		width: 1080px;
+		display: table;
+		padding: 10px 0 0 15px;
+		margin-bottom: 10px;#9A7745
+	}
+</style>
+</head>
+<body>
+<jsp:include page="../header.jsp"></jsp:include>
+	<section>
+		<div id="div1">
+			<img alt="" src="http://localhost:9090/tumblbugs/images/smlie.png" id="img1">	<br>	
+			<b id="b1">?님의 후원 현황</b>
+		</div>
+		
+		<div id="div2">
+			<section>
+				<div>
+					<button type="button" id="allview">모두 보기 </button>
+					<button type="button" id="FundingProgress">펀딩 진행중 </button>
+					<button type="button" id="PaymentComplete">결제 완료 </button>
+					<input type="text" id="SearchHistory" placeholder="프로젝트,선물,창작자를 검색해주세요.">
+					
+						<div id="SponsorResultdiv">
+							<span id="SponsorResultspan"><a href=""><img src=""> 총 0건의 후원 결과가 있습니다.</a></span>
+							<span id="SponsorResultspan"><a href=""><img src=""> 총 0건의 후원 결과가 있습니다.</a></span>
+							<span id="SponsorResultspan"><a href=""><img src=""> 총 0건의 후원 결과가 있습니다.</a></span>
+							<span id="SponsorResultspan"><a href=""><img src=""> 총 0건의 후원 결과가 있습니다.</a></span>
+							<span id="SponsorResultspan"><a href=""><img src=""> 총 0건의 후원 결과가 있습니다.</a></span>
+						</div>
+					
+				</div>
+			</section>
+		</div>
+	</section>
+
+
+
+<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

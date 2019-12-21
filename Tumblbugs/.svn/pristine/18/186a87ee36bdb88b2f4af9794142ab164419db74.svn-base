@@ -1,0 +1,118 @@
+package com.tumblbugs.controller;
+
+import java.io.File;
+
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.tumblbugs.dao.ProjectDAO;
+import com.tumblbugs.vo.EmailVO;
+
+@Controller
+public class AdminProjectController {
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	@Autowired
+	private ProjectDAO projectDAO;
+	
+	/**
+	 * 프로젝트 관리 메인화면
+	 * @return
+	 */
+	@RequestMapping(value="/admin/project", method=RequestMethod.GET)
+	public ModelAndView admin_project(String list) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/admin_project");
+		mv.addObject("list_name", list);
+		
+		return mv;
+	}
+	
+	/**
+	 * 프로젝트 상세 내용 화면
+	 * @return
+	 */
+	@RequestMapping(value="/admin/project_detail", method=RequestMethod.GET)
+	public ModelAndView admin_project_detail(String pj_id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/admin_project_detail");
+		mv.addObject("vo", projectDAO.getAdminContent(pj_id));
+		mv.addObject("giftList", projectDAO.getGiftList(pj_id));
+		
+		return mv;
+	}
+
+	/**
+	 * 프로젝트 검수 상세페이지 > 통장 사본 이미지 다운로드
+	 * @param pj_id
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/admin/fileDownload", method=RequestMethod.GET)
+	public ModelAndView fileDownload(String pj_id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		
+		String bfile = "admin_profile.jpg";
+		String bsfile = "admin_profile.jpg";
+		String file_path = request.getSession().getServletContext().getRealPath("/") + "\\resources\\upload\\" + bsfile;
+		File file = new File(file_path);
+		
+		mv.setViewName("imageDownload");
+		mv.addObject("downloadFileName", bfile);
+		mv.addObject("file", file);
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 프로젝트 반려 메일 작성 화면
+	 * @return
+	 */
+	@RequestMapping(value="/admin/project_reject", method=RequestMethod.GET)
+	public ModelAndView project_reject() {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("admin/admin_project_reject");
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 프로젝트 반려 메일 발송 처리
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/admin/project_reject_proc", method=RequestMethod.POST)
+	public ModelAndView project_reject_proc(EmailVO vo) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		
+		messageHelper.setFrom(vo.fromEmailAddr);
+		messageHelper.setTo(vo.getToEmailAddr());
+		messageHelper.setSubject(vo.getTitle());
+		messageHelper.setText(vo.getContent());
+
+		mailSender.send(message);
+		
+		mv.setViewName("redirect:/admin/project");
+		
+		return mv;
+	}
+}

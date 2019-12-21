@@ -1,0 +1,148 @@
+package com.tumblbugs.controller;
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.tumblbugs.dao.CommunityDAO;
+import com.tumblbugs.dao.ProjectDAO;
+import com.tumblbugs.vo.CommunityVO;
+
+@Controller
+public class ProjectContentController {
+	
+	@Autowired
+	private CommunityDAO communityDAO;
+	
+	@Autowired
+	private ProjectDAO projectDAO;
+	
+	/**
+	 * 프로젝트 상세페이지
+	 * @param pj_id
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/project_content", method=RequestMethod.GET)
+	public ModelAndView project_content(String pj_id, String tab, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		pj_id = "PJ00001";
+		
+		//session.setAttribute("pj_id", pj_id);
+		
+		mv.setViewName("/project/project_content_main");
+		mv.addObject("tab", tab);
+		mv.addObject("vo", projectDAO.getContent(pj_id));
+		mv.addObject("clist", communityDAO.getList(pj_id));
+		mv.addObject("giftList", projectDAO.getGiftList(pj_id));
+		
+		return mv;
+	}
+	
+	/**
+	 * 프로젝트 상세페이지 > 스토리
+	 * @param session
+	 * @return
+	 */
+	/*@RequestMapping(value="/project_content/story", method=RequestMethod.GET, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String project_content_story(String pj_id) {
+		return projectDAO.getStory(pj_id);
+	}*/
+	
+	/**
+	 * 프로젝트 상세페이지 > 커뮤니티
+	 * @param session
+	 * @return
+	 */
+	/*@RequestMapping(value="/project_content/community", method=RequestMethod.GET, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String project_content_community(String pj_id) {
+		Gson gson = new Gson();
+		JsonArray jlist = new JsonArray();
+		
+		ArrayList<CommunityVO> clist = communityDAO.getList(pj_id);
+		
+		for(CommunityVO cvo:clist) {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("community_id", cvo.getCommunity_id());
+			obj.addProperty("email", cvo.getEmail());
+			obj.addProperty("name", cvo.getName());
+			obj.addProperty("community_content", cvo.getCommunity_content());
+			obj.addProperty("community_date", cvo.getCommunity_date());
+			obj.addProperty("community_udate", cvo.getCommunity_udate());
+			obj.addProperty("rcount", cvo.getRcount());
+			
+			jlist.add(obj);
+		}
+		
+		JsonObject jdata = new JsonObject();
+		jdata.add("list", jlist);
+		
+		return gson.toJson(jdata);
+	}*/
+	
+	/**
+	 * 프로젝트 상세페이지 > 펀딩 안내
+	 * @param session
+	 * @return
+	 */
+	/*@RequestMapping(value="/project_content/policy", method=RequestMethod.GET, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String project_content_policy(HttpSession session) {
+		return null;
+	}*/
+	
+	@RequestMapping(value="/sendMessage", method=RequestMethod.GET)
+	public String send_message() {
+		return "/project/send_message";
+	}
+	
+	
+	/** 커뮤니티 **/
+	@RequestMapping(value="/community_write_proc", method=RequestMethod.POST)
+	public String community_write(CommunityVO vo) {
+		String resPage = "";
+		
+		if(communityDAO.getResultWrite(vo) != 0) {
+			resPage = "redirect:/project_content";
+		} else {
+			//에러페이지
+		}
+		
+		return resPage;
+	}
+	
+	/** 프로젝트 미리보기 **/
+	@RequestMapping(value="/project_preview", method=RequestMethod.GET)
+	public ModelAndView project_preview(String pj_id, String tab) {
+		ModelAndView mv = new ModelAndView();
+		
+		pj_id = "PJ00001";
+		
+		mv.setViewName("/project/project_preview");
+		mv.addObject("vo", projectDAO.getContent(pj_id));
+		mv.addObject("giftList", projectDAO.getGiftList(pj_id));
+		
+		if(tab != null) {
+			mv.addObject("tab", tab);
+			
+			if(tab.equals("community")) {
+				mv.addObject("list", communityDAO.getList(pj_id));
+			}
+		}
+		
+		
+		return mv;
+	}
+}

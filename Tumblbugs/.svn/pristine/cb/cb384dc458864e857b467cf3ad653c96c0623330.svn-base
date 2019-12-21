@@ -1,0 +1,36 @@
+package com.tumblbugs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class ProjectContentController {
+	
+	@RequestMapping(value="/project_content", method=RequestMethod.GET)
+	public String project_content() {
+		return "/project/project_content_main";
+	}
+	
+	@RequestMapping(value="/project_content/story", method=RequestMethod.GET)
+	public String project_content_story() {
+		return "/project/project_content_main";
+	}
+	
+	@RequestMapping(value="/project_content/community", method=RequestMethod.GET)
+	public String project_content_community() {
+		return "/project/project_content_main";
+	}
+	
+	@RequestMapping(value="/project_content/fundingInfo", method=RequestMethod.GET)
+	public String project_content_fundingInfo() {
+		return "/project/project_content_main";
+	}
+	
+	@RequestMapping(value="/sendMessage", method=RequestMethod.GET)
+	public String send_message() {
+		return "/project/send_message";
+	}
+	
+	
+}

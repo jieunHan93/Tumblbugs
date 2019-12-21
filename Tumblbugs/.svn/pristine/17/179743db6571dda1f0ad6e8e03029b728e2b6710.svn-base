@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.collection">
+	<select id="list" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT ROWNUM RNO,COL_ID,COL_NAME, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, 
+				TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTROLL, COL_STATUS
+		FROM (SELECT COL_ID,COL_NAME, COL_STARTDATE, COL_ENDDATE, COL_CONTROLL, COL_STATUS 
+				FROM TUM_COLLECTION ORDER BY COL_REGDATE)
+	</select>
+
+	<update id="main_checkbox" parameterType="map"> 
+		UPDATE TUM_COLLECTION SET COL_CONTROLL =#{col_controll}, COL_STATUS=#{col_status} WHERE COL_ID = #{col_id}
+	</update>
+	
+	<select id="calendar_list" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT COL_ID, COL_NAME, COL_CONTENT, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, 
+		TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_STATUS, COL_CCOLOR FROM TUM_COLLECTION
+	</select>
+
+	<insert id="write" parameterType="com.tumblbugs.vo.CollectionVO">
+		INSERT INTO TUM_COLLECTION VALUES('C00101', #{col_name}, #{col_content}, SYSDATE, #{col_startdate}, 
+		#{col_enddate}, '0', '대기중', #{col_img}, #{col_simg}, #{col_bcolor}, #{col_ccolor})
+	</insert>
+	
+	<select id="content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.CollectionVO">
+		SELECT COL_ID, COL_NAME, COL_BCOLOR, COL_CCOLOR, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE,
+		 TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTENT, COL_IMG, COL_SIMG FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+	</select>
+	
+	<update id="update" parameterType="com.tumblbugs.vo.CollectionVO">
+		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, 
+		COL_ENDDATE = #{col_enddate}, COL_BCOLOR = #{col_bcolor}, COL_CCOLOR = #{col_ccolor}, COL_IMG = #{col_img}, COL_SIMG = #{col_simg} WHERE COL_ID = #{col_id}
+	</update>
+	<update id="updatenofile" parameterType="com.tumblbugs.vo.CollectionVO">
+		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, 
+		COL_ENDDATE = #{col_enddate}, COL_BCOLOR = #{col_bcolor}, COL_CCOLOR = #{col_ccolor} WHERE COL_ID = #{col_id}
+	</update>
+</mapper>

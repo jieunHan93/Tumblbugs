@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.project">
+	<select id="admin_content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
+		SELECT P.PJ_ID, P.PJ_CATEGORY, P.PJ_TITLE, P.PJ_SIMG, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE,
+			TO_CHAR(PJ_END_DATE, 'yyyy-mm-dd') PJ_END_DATE, TO_CHAR(PJ_END_DATE + 7, 'yyyy-mm-dd') PJ_PAY_END_DATE,
+			TO_CHAR(PJ_END_DATE + 16, 'yyyy-mm-dd') PJ_BILL_DATE, P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS, p.pj_email, p.pj_account_type,
+			p.pj_account_name, p.pj_account_id, p.pj_phone, p.pj_bank, substr(p.pj_account_number, -4) pj_account_number,
+			M.NAME, M.PROFILE_SIMG, M.INTRO
+		FROM TUM_PROJECT P, TUM_MEMBER M
+		WHERE P.EMAIL = M.EMAIL
+		AND P.PJ_ID = #{pj_id}
+	</select>
+
+	<select id="content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
+		SELECT P.PJ_ID, P.PJ_CATEGORY, p.pj_addr, P.PJ_TITLE, P.PJ_SIMG, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE, TO_CHAR(PJ_END_DATE + 1, 'yyyy"년" fmmm"월" dd"일"') PJ_PAY_DATE, 
+			TO_CHAR(NVL(F.TOTAL_FUNDING_PRICE,0), '999,999,999,999') total_funding_price, trunc((NVL(F.TOTAL_FUNDING_PRICE,0)/P.PJ_PRICE)*100) achievement_rate,
+			TRUNC(P.PJ_END_DATE - SYSDATE + 1) remaining_days, TO_CHAR(NVL(F.SPONSOR_COUNT,0),'999,999,999') total_sponsor_count,
+			M.NAME, M.PROFILE_SIMG, M.INTRO, M.PJ_COUNT member_pj_count, M.FUNDING_COUNT member_funding_count, NVL(C.COMMUNITY_COUNT,0) COMMUNITY_COUNT,
+			M.EMAIL, P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS
+		FROM TUM_PROJECT P,
+			(SELECT T1.EMAIL, NAME, PROFILE_SIMG, INTRO, PJ_COUNT, NVL(FUNDING_COUNT,0) FUNDING_COUNT
+				FROM TUM_MEMBER T1,
+					(SELECT EMAIL, COUNT(PJ_ID) PJ_COUNT FROM TUM_PROJECT GROUP BY EMAIL) T2,
+					(SELECT EMAIL, COUNT(FUNDING_ID) FUNDING_COUNT FROM TUM_FUNDING GROUP BY EMAIL) T3
+				WHERE T1.EMAIL = T2.EMAIL
+				AND T1.EMAIL = T3.EMAIL(+)) M,
+			(SELECT PJ_ID, COUNT(COMMUNITY_ID) COMMUNITY_COUNT FROM TUM_COMMUNITY GROUP BY PJ_ID) C,
+			(SELECT PJ_ID, SUM(TOTAL_FUNDING_PRICE) TOTAL_FUNDING_PRICE, COUNT(FUNDING_ID) SPONSOR_COUNT FROM TUM_FUNDING GROUP BY PJ_ID) F
+		WHERE P.EMAIL = M.EMAIL
+		AND P.PJ_ID = C.PJ_ID(+)
+		AND P.PJ_ID = F.PJ_ID(+)
+		AND P.PJ_ID = #{pj_id}
+		AND P.PJ_CHECK_YN = 'y'
+	</select>
+	
+	<select id="story" parameterType="String" resultType="String">
+		select pj_story from tum_project where pj_id=#{pj_id}
+	</select>
+	
+	<select id="pj_title" parameterType="String" resultType="String">
+		select pj_title from tum_project where pj_id=#{pj_id}
+	</select>
+	
+	<select id="gift" parameterType="String" resultType="com.tumblbugs.vo.GiftVO">
+		select g.pj_id, g.gift_id, g.gift_title, to_char(g.gift_price, '999,999,999') gift_price, g.gift_sort_num,
+			to_char(g.gift_delivery_date, 'yyyy"년" fmmm"월" dd"일"') gift_delivery_date, g.gift_delivery_yn,
+			g.gift_max_count, nvl(fg.gift_sold_count,0) gift_sold_count, (g.gift_max_count - nvl(fg.gift_sold_count,0)) gift_remaining_count,
+      		nvl(item_option_count, 0) item_option_count
+		from tum_gift g, (select gift_id, count(*) item_option_count from tum_item where item_option_type != '1' group by gift_id ) i,
+			(select gift_id, sum(gift_quantity) gift_sold_count from tum_funding_gift group by gift_id) fg
+		where g.gift_id = i.gift_id(+)
+    	and g.gift_id = fg.gift_id(+)
+		and g.pj_id = #{pj_id}
+		order by gift_sort_num
+	</select>
+	
+	<select id="item" parameterType="String" resultType="com.tumblbugs.vo.ItemVO">
+		select item_id, item_title, item_count, item_option_type, item_option
+		from tum_item
+		where gift_id=#{gift_id}
+		and item_check='y'
+		order by item_id
+	</select>
+	
+	<update id="hits" parameterType="String">
+		update tum_project set pj_hits = pj_hits + 1 where pj_id = #{pj_id}
+	</update>
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.message">
+	<select id="receiver_email" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT EMAIL FROM TUM_PROJECT WHERE PJ_ID=#{pj_id}
+	</select>
+
+	<insert id="write" parameterType="com.tumblbugs.vo.MessageVO">
+		INSERT INTO TUM_MESSAGE VALUES('MG'||LPAD(TUM_MESSAGE_MSG_SEQU.NEXTVAL,5,'0'), 'CR'||LPAD(TUM_MESSAGE_CHATROOM_SEQU.NEXTVAL,5,'0'),
+		#{pj_id}, #{email}, #{msg_content}, #{msg_type}, SYSDATE, 'N', #{email})
+	</insert>
+	
+	<select id="chatroom_list" parameterType="map" resultType="com.tumblbugs.vo.MessageVO">
+		SELECT CHATROOM_ID, PJ_SIMG, PJ_TITLE, PJ_EMAIL, NAME, EMAIL_STARTER, EMAIL, MSG_CONTENT, TO_CHAR(MSG_DATE, 'YYYY/MM/DD HH:MI:SS') MSG_DATE FROM 
+		(SELECT CHATROOM_ID, PJ_SIMG, PJ_TITLE, P.EMAIL AS PJ_EMAIL, EMAIL_STARTER, MSG.EMAIL, M.NAME, MSG_CONTENT, MSG_DATE, MSG_CHECK,
+		ROW_NUMBER() OVER(PARTITION BY CHATROOM_ID ORDER BY MSG_DATE DESC) AS RECENT_CH
+		FROM TUM_PROJECT P, TUM_MEMBER M, TUM_MESSAGE MSG WHERE MSG.PJ_ID = P.PJ_ID AND P.EMAIL = M.EMAIL) WHERE RECENT_CH = 1 
+		<choose>
+			<when test="user == 'buyer'">
+				AND EMAIL_STARTER = #{email}
+			</when>
+			<when test="user == 'creator'">
+				AND PJ_EMAIL = #{email}
+			</when>
+		</choose>
+		<choose>
+			<when test="sort == 'notread'">
+				AND MSG_CHECK = 'N' AND EMAIL NOT IN(#{email})
+			</when> 
+			<when test="sort == 'send'">
+				and chatroom_id in (select distinct(chatroom_id) from tum_message where email in(#{email}))
+			</when>
+		</choose>
+		ORDER BY MSG_DATE ASC
+	</select>
+	
+	<select id="message_list" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MessageVO">
+		SELECT NAME, profile_simg, MSG_CONTENT, TO_CHAR(MSG_DATE, 'YYYY/MM/DD HH24:MI') MSG_DATE, MSG_CHECK FROM TUM_MESSAGE MSG, TUM_MEMBER M 
+		WHERE CHATROOM_ID=#{chatroom_id} AND MSG.EMAIL = M.EMAIL ORDER BY MSG_DATE ASC
+	</select>
+	
+	<select id="project_info" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MessageVO">
+		SELECT DISTINCT(MSG.PJ_ID), PJ_TITLE, NAME, PROFILE_SIMG FROM TUM_MESSAGE MSG, TUM_MEMBER M, TUM_PROJECT P WHERE MSG.PJ_ID = P.PJ_ID 
+		AND P.EMAIL = M.EMAIL AND CHATROOM_ID = #{chatroom_id}
+	</select>
+	
+	<select id="message_check_count" parameterType="java.lang.String" resultType="java.lang.String"> 
+		SELECT EMAIL FROM
+		(SELECT CHATROOM_ID, EMAIL, MSG_CONTENT,
+		ROW_NUMBER() OVER(PARTITION BY CHATROOM_ID ORDER BY MSG_DATE DESC) AS RECENT_MSG
+		FROM TUM_MESSAGE WHERE CHATROOM_ID=#{chatroom_id}) WHERE RECENT_MSG = 1
+	</select>
+	
+	<update id="message_check_update" parameterType="java.lang.String" >
+		UPDATE TUM_MESSAGE SET MSG_CHECK = 'Y' WHERE CHATROOM_ID=#{chatroom_id}
+	</update>
+	
+	<insert id="insert_message" parameterType="com.tumblbugs.vo.MessageVO">
+		INSERT INTO TUM_MESSAGE VALUES('MG'||LPAD(TUM_MESSAGE_MSG_SEQU.NEXTVAL,5,'0'), #{chatroom_id},
+		#{pj_id}, #{email}, #{msg_content}, #{msg_type}, SYSDATE, 'N', #{email_starter})
+	</insert>
+	
+	<select id="message_info" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MessageVO">
+		SELECT MSG_TYPE, PJ_ID, EMAIL_STARTER FROM TUM_MESSAGE WHERE CHATROOM_ID = #{chatroom_id} GROUP BY MSG_TYPE, PJ_ID, EMAIL_STARTER
+	</select>
+	
+	<select id="creator_name" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT NAME FROM TUM_MEMBER M, TUM_PROJECT P WHERE P.EMAIL = M.EMAIL AND P.PJ_ID=#{pj_id} GROUP BY NAME
+	</select>
+</mapper>

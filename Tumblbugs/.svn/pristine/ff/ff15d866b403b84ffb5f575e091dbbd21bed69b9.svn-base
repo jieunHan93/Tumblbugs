@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<title>텀블벅스 :: tumblbugs</title>
+	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/myproject.css">
+	<style>
+		div#myproject_delivery_body{
+			width:1080px;
+			margin:auto;
+		}
+		div#myproject_delivery_table_box{
+			overflow-x: scroll;
+		}
+		table#myproject_delivery_table{
+			width:2000px;
+		}
+		td.delivery_table_addr{
+			/* width:20%; */
+		}
+		table#myproject_delivery_table,
+		table#myproject_delivery_table th,
+		table#myproject_delivery_table td{
+			border-collapse: collapse;
+			border:1px solid black;
+		}
+		tr.delivery_table_loaddata>td{
+			padding:3px 6px;
+		}
+	</style>
+</head>
+<body>
+	<jsp:include page="../header.jsp" />
+	
+	<div>
+		<section id="myproject_bk">
+			<div id="myproject_header_info">
+				<div id="myproject_header_info_icon">
+					<div>
+						<img src="http://localhost:9090/tumblbugs/images/myproject_icon.jpg">
+					</div>
+				</div>
+				<h1>라즈베리스튜디오</h1>
+				<p id="myproject_header_info_web"><a href="http://www.raspberry-studio.com">http://www.raspberry-studio.com</a></p>
+				<p id="myproject_header_info_detail"><i class="fas fa-check-circle"></i><span>2개 프로젝트의 창작자</span></p>
+			</div>
+		</section>
+		
+		<section>
+			<div id="myproject_delivery_body">
+				<div id="myproject_delivery_table_box">
+					<table id="myproject_delivery_table">
+						<tr>
+							<th>번호</th>
+							<th>후원번호</th>
+							<th>후원자명</th>
+							<th>수령자명</th>
+							<th>배송주소</th>
+							<th>핸드폰번호</th>
+							<th>배송요청사항</th>
+							<th>선물</th>
+							<th>선택옵션</th>
+							<th>수량</th>
+							<th>후원액</th>
+							<th>추가후원금</th>
+							<th>택배사</th>
+							<th>송장번호</th>
+							<th>배송시작일</th>
+							<th>수령완료</th>
+						</tr>
+						<% for(int j=1; j<20;j++){ %> 
+						<tr class="delivery_table_loaddata">
+							<td><%= j %></td>
+							<td>838765</td>
+							<td>홍길동</td>
+							<td>한지은</td>
+							<td class="delivery_table_addr">[17095]경기도 용인시 기흥구 덕영대로2077번길 53 (청현마을 태영데시앙) 207동 1501호</td>
+							<td>01053519617</td>
+							<td>부재시 문앞에 놔주세요</td>
+							<td>'해돋이' 뱃지 연하장</td>
+							<td>1개</td>
+							<td>1개</td>
+							<td>13,000</td>
+							<td>0</td>
+							<td>우체국 택배</td>
+							<td>12586184620500</td>
+							<td>2019-12-02</td>
+							<td>미완료</td>
+						</tr>
+						<% } %>
+					</table>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+	<jsp:include page="../footer.jsp" />
+</body>
+</html>

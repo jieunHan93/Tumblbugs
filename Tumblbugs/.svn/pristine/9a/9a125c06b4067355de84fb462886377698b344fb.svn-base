@@ -1,0 +1,133 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>로그인</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<style>
+*{
+list-style-type: none;
+}
+body>div#logindiv1{
+
+width:1080px;
+margin: auto;
+
+}
+body>div#logindiv1>section#section1 {
+border:1px solid LightGray;
+display: inline-block;
+margin: 100px 0 100px 400px;
+padding: 20px 50px 50px 50px;
+box-shadow: -4px 2px 22px 0px rgba(0,0,0,0.25);
+}
+
+
+
+body>div#logindiv1>section#section1>div#div1>b#b2{
+display: inline-block;
+color:Gray;
+font-size: 25px;
+border-bottom: 1.5px solid LightGray;
+margin-bottom: 10px;
+padding-right: 100px;
+}
+
+
+
+input#email {
+margin: 20px 0 0 0;
+padding: 10px 40px 10px 10px;
+width: 260px;
+
+
+}
+input#pw{
+margin: 10px 0 0 0;
+padding: 10px 40px 10px 10px;
+width: 260px;
+}
+button#btnlogin{
+border  : none;
+background  : none;
+border-radius:5px 5px 5px 5px;
+background-color:#1e90ff;
+color: white;
+margin: 20px 0 0 0 ;
+padding: 25px 61px 25px 61px;
+}
+button#btnlogin:hover{
+background-color: #1d85ea;
+}
+div#div2 h1{
+margin: 25px 0 0 0;
+color:Gray;
+font-size: 22px;
+}
+div#div2 h2{
+margin: 25px 0 50px 0;
+padding-bottom:25px;
+font-size: 15px;
+border-bottom: 1.5px solid LightGray;
+text-align: center;
+color: #F07878;
+}
+div#div2 a{
+text-decoration:none;
+}
+
+div#div3 a{
+margin:-20px 0 0px 25px;
+text-align: center;
+color: #F07878;
+text-decoration:none;
+}
+b#b4{
+border-bottom: 1.5px solid LightGray;
+padding-right: 260px;
+}
+b#b5{
+text-decoration: none;
+color: Gray;
+}
+</style>
+</head>
+<body> 
+
+<jsp:include page="../header.jsp"></jsp:include>
+	<div id="logindiv1">
+		<section id="section1">
+				<div id="div1">
+				
+				<b id="b2">비밀번호 찾기</b>
+				
+				<br><b id="b5">텀블벅 가입 시 사용하신 이메일을 <br>
+				입력하시면 새 비밀번호를 생성할 <br>
+				수 있는 링크를 보내드립니다.<br>
+				페이스북/네이버로 가입하신 경우,<br>
+				페이스북/네이버 계정에 쓰이는<br>
+				이메일을 	입력해주세요.</b>
+					<form action="/idfound_proc" method="post" class="login" id="login">
+						<ul id="ul1">
+							<li id="li1">
+								<b id="b4"></b><br>
+								<input type="text" name="email" id="email" placeholder="이메일주소를입력하세요.">
+							</li>
+							
+							<li>
+								<button type="submit" id="btnlogin">비밀번호 링크 받기</button>
+							</li>
+						</ul>
+					</form>
+
+					
+				</div>
+			
+		</section>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+</body>
+</html>

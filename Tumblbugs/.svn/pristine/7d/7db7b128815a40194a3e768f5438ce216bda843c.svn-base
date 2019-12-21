@@ -1,0 +1,140 @@
+package com.tumblbugs.dao;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tumblbugs.vo.FundingGiftVO;
+import com.tumblbugs.vo.FundingVO;
+import com.tumblbugs.vo.ItemVO;
+
+@Repository
+public class FundingDAO {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	private static String namespace = "mapper.funding";
+	private static String pnamespace = "mapper.project";
+	
+	/**
+	 * 후원하기 : tum_funding table insert
+	 * @param vo
+	 * @return
+	 */
+	public boolean fundingInsert(FundingVO vo) {
+		boolean result = false;
+		
+		if(sqlSession.insert(namespace + ".fundingInsert", vo) != 0) {
+			int insertCount = 0;
+			
+			for(FundingGiftVO fgvo:vo.getGiftList()) {
+				String funding_id = getFundingId(vo.getEmail());
+				fgvo.setFunding_id(funding_id);
+				insertCount += fundingGiftInsert(fgvo);
+			}
+			
+			if(insertCount == vo.getGiftList().size()) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 후원하기 : tum_funding_gift table insert
+	 * @param vo
+	 * @return
+	 */
+	public int fundingGiftInsert(FundingGiftVO vo) {
+		return sqlSession.insert(namespace + ".fundingGiftInsert", vo);
+	}
+	
+	public String getFundingId(String email) {
+		return sqlSession.selectOne(namespace + ".fundingId", email);
+	}
+	
+	public FundingVO getRecentDeliveryInfo(String email) {
+		return sqlSession.selectOne(namespace + ".recentDeliveryInfo", email);
+	}
+	
+	/**
+	 * 내 후원현황 > 전체 후원 건수, 펀딩 진행 중인 후원 건수, 결제 완료된 후원 건수 출력
+	 * @param email
+	 * @return
+	 */
+	public Map<String, Integer> getFundingCount(String email) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("totalCount", (Integer)sqlSession.selectOne(namespace + ".totalCount", email));
+		map.put("ongoingCount", (Integer)sqlSession.selectOne(namespace + ".ongoingCount", email));
+		map.put("paymentCount", (Integer)sqlSession.selectOne(namespace + ".paymentCount", email));
+		
+		return map;
+	}
+	
+	/**
+	 * 내 후원현황 > 후원 리스트
+	 * @param email
+	 * @return
+	 */
+	public ArrayList<FundingVO> getFundingList(String email, String category) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		map.put("category", category);
+		
+		List list = sqlSession.selectList(namespace + ".fundingList", map);
+		return (ArrayList<FundingVO>)list;
+	}
+	
+	/**
+	 * 후원 상세 정보
+	 * @param funding_id
+	 * @return
+	 */
+	public FundingVO getFundingDetail(String funding_id) {
+		return sqlSession.selectOne(namespace + ".fundingDetail", funding_id);
+	}
+	
+	/**
+	 * 후원 시 선택한 선물 리스트
+	 * @param funding_id
+	 * @return
+	 */
+	public ArrayList<FundingGiftVO> getFundingGiftList(String funding_id) {
+		List list = sqlSession.selectList(namespace + ".fundingGiftList", funding_id);
+		ArrayList<FundingGiftVO> giftList = (ArrayList<FundingGiftVO>)list;
+		
+		for(FundingGiftVO vo:giftList) {
+			List itemList = sqlSession.selectList(pnamespace + ".item", vo.getGift_id());
+			vo.setItemList((ArrayList<ItemVO>)itemList);
+		}
+		
+		return giftList;
+	}
+	
+	/**
+	 * 배송 정보 변경
+	 * @param map
+	 * @return
+	 */
+	public int getDeliveryUpdateResult(Map<String, String> map) {
+		return sqlSession.update(namespace + ".deliveryUpdate", map);
+	}
+	
+	/**
+	 * 후원 취소(데이터 삭제)
+	 * @param funding_id
+	 * @return
+	 */
+	public int getFundingCancelResult(String funding_id) {
+		//tum_funding_gift 테이블 먼저 delete
+		sqlSession.delete(namespace + ".fundingGiftDelete", funding_id);
+		
+		return sqlSession.delete(namespace + ".fundingDelete", funding_id);
+	}
+}

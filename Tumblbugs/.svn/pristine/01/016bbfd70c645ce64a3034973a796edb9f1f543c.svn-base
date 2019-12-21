@@ -1,0 +1,133 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>관리자 페이지 메인</title>
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+<style>
+body {background-color: #f7f7f7;}
+div#admin_mainpage{
+	display: inline-block;
+}
+div#admin_sidebar{
+	width: 320px;
+	height: 937px;
+	background-color: #191919;
+	display: inline-block;
+}
+div#admin_sidebar>div#admin_sidebar_p1{margin-bottom: 50px;}
+div#admin_sidebar>div#admin_sidebar_p1>img {
+	display:block;
+	width:100px;
+	height:100px;
+	margin: 0 auto;
+	padding: 20px;
+}
+div#admin_sidebar>div#admin_sidebar_p1>p {color: #ccc;text-align: center;}
+div#admin_sidebar>div#admin_sidebar_p2>div#p2_content p {
+	width:100px;
+	color: #ccc;
+	text-align: left;
+	display: inline-block;
+	font-size: 15px;
+}
+div#admin_sidebar>div#admin_sidebar_p1>p:nth-child(2) {margin-bottom: 20px;}
+i {
+	color: #ccc;
+	margin: 20px 40px;
+	font-size: 15px;
+	width: 15px;
+}
+div#admin_mainconent{
+	display: inline-block;
+	height:200px;
+	margin: 0;
+	position: absolute;
+}
+div#admin_mainconent>div#admin_header{
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	width: 1280px;
+	height: 70px;
+	line-height:70px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #1e90ff;
+}
+div#admin_mainconent>div#admin_header p {
+	margin-left: 10px;
+}
+div#admin_mainconent>div#admin_maincontent_list {	
+	/* border: 1px solid red; */
+}
+div#admin_mainconent>div#admin_maincontent_list>div#admin_maincontent_list_sec1{
+	border: 1px solid red;
+	display: flex;
+	justify-content:space-between;
+	margin: 20px;
+}
+div#admin_mainconent>div#admin_maincontent_list>div#admin_maincontent_list_sec1 ul {
+	list-style: none;
+	display: inline-block;
+}
+div#admin_mainconent>div#admin_maincontent_list>div#admin_maincontent_list_sec1 ul li {display: inline-block;}
+div#admin_mainconent>div#admin_maincontent_list>div#admin_maincontent_list_sec1 ul li a{
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<div id="admin_mainpage">
+		<div id="admin_sidebar">
+			<div id="admin_sidebar_p1">
+				<img src="http://localhost:9090/tumblbugs/images/admin_man.png">
+				<p>admin</p>
+				<p>2019.11.28 12:33</p>
+				<p>로그아웃</p>
+			</div>
+			<div id="admin_sidebar_p2">
+				<div id="p2_content">
+					<i class="far fa-edit"></i><p>에디터</p>
+				</div>
+				<div id="p2_content">
+					<i class="fas fa-project-diagram"></i></i><p>프로젝트</p>
+				</div>
+				<div id="p2_content">
+					<i class="fas fa-question"></i><p>1:1 문의</p>
+				</div>
+				<div id="p2_content">
+					<i class="far fa-clipboard"></i></i><p>공지사항</p>
+				</div>
+				<div id="p2_content">
+					<i class="far fa-user"></i><p>회원 관리</p>
+				</div>	
+			</div>
+		</div>
+		<div id="admin_mainconent">
+			<div id="admin_header">
+				<p>1:1 문의</p>
+			</div>
+			<!-- <div id="admin_maincontent_list">
+				<div id="admin_maincontent_list_sec1">
+					<ul>
+						<li><a href="#">모두 보기</a><span>10</span></li>
+						<li><a href="#">답변 대기</a><span>10</span></li>
+						<li><a href="#">답변 완료</a><span>10</span></li>
+					</ul>
+					<input type="search" id="query" placeholder="검색">
+				</div>
+				<div id="admin_maincontent_list_sec2">
+					<i class="fas fa-list-ul"></i><p>총 10건의 질문이 있습니다</p>
+				</div>
+				<div id="admin_maincontent_list_sec3">
+					
+				</div>
+			</div> -->
+		</div>
+	</div>
+</body>
+</html>

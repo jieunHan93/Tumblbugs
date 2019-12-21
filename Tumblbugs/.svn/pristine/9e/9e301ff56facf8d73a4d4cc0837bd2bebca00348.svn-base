@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.funding">
+	<select id="fundingList" parameterType="String" resultType="com.tumblbugs.vo.FundingVO">
+		select f.funding_id, p.pj_title, p.pj_simg, p.remaining_days, p.achievement_rate, m.name,
+			to_char(f.funding_date,'yyyy.mm.dd') funding_date, to_char(f.total_funding_price, '999,999,999,999') total_funding_price, f.payment_complete_yn
+		from tum_funding f,
+			(select t1.pj_id, pj_title, email, pj_simg, trunc(t1.pj_end_date - sysdate + 1) remaining_days, pj_end_date, 
+			(nvl(t2.total_funding_price,0)/t1.pj_price)*100 achievement_rate
+			from tum_project t1, (select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) t2
+			where t1.pj_id = t2.pj_id) p,
+			tum_member m
+		where f.pj_id = p.pj_id
+		and p.email = m.email
+		and f.email = #{email}
+		<choose>
+			<when test="category == 'ongoing'">
+				and p.pj_end_date >= sysdate
+			</when>
+			<when test="category == 'payment'">
+				and f.payment_complete_yn = 'y'
+			</when>
+		</choose>
+		order by funding_id desc
+	</select>
+	
+	<select id="fundingDetail" parameterType="String" resultType="com.tumblbugs.vo.FundingVO">
+		<![CDATA[
+			select funding_id, to_char(funding_date, 'yyyy.mm.dd HH:MI') funding_date, extra_funding_price, f.total_funding_price, payment,
+				payment_complete_yn, recipient_name, recipient_phone, recipient_addr, delivery_start_date, courier, invoice_number,
+				p.pj_id, p.pj_title, p.pj_simg, to_char(pj_end_date, 'yyyy.mm.dd') pj_end_date,
+				case when (pj_end_date + 1) < sysdate
+					then to_char(pj_end_date + 2, 'yyyy"년" fmmm"월" dd"일"')||'에 결제 예정입니다.'
+					when (pj_end_date + 1) >= sysdate and sysdate <= (pj_end_date + 7)
+		        	then to_char(sysdate, 'yyyy"년" fmmm"월" dd"일"')||'에 결제 예정입니다.'
+		        	else '결제 누락'
+				end as pj_pay_date,
+				trunc(p.pj_end_date - sysdate + 1) remaining_days, (nvl(f2.total_funding_price,0)/p.pj_price)*100 achievement_rate
+			from tum_funding f, tum_project p,
+				(select payment_id, case
+				when payment_method='01' then card_company || lpad(substr(card_number, -4),5,'/')
+				when payment_method='02' then bank || lpad(substr(account_number, -4),5,'/') end as payment
+				from tum_payment) payment,
+				(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f2
+			where f.pj_id = p.pj_id
+			and f.payment_id = payment.payment_id
+			and f.pj_id = f2.pj_id
+			and f.funding_id = #{funding_id}
+		]]>
+	</select>
+	
+	<select id="fundingGiftList" parameterType="String" resultType="com.tumblbugs.vo.FundingGiftVO">
+		select fg.gift_id, g.gift_title, fg.gift_quantity, fg.gift_option, funding_gift_price
+		from tum_funding_gift fg, tum_gift g
+		where fg.gift_id = g.gift_id
+		and funding_id=#{funding_id}
+		order by gift_id
+	</select>
+	
+	<select id="totalCount" parameterType="String" resultType="int">
+		select count(*) from tum_funding where email=#{email}
+	</select>
+	
+	<select id="ongoingCount" parameterType="String" resultType="int">
+		select nvl(count(*),0)
+		from tum_funding f, tum_project p
+		where f.pj_id = p.pj_id
+		and pj_end_date > sysdate
+		and f.email = #{email}
+	</select>
+	
+	<select id="paymentCount" parameterType="String" resultType="int">
+		select nvl(count(*),0) from tum_funding where email=#{email} and payment_complete_yn='y'
+	</select>
+	
+	<insert id="fundingInsert" parameterType="com.tumblbugs.vo.FundingVO">
+		insert into tum_funding values('F' || LPAD(tum_funding_sequ.nextval, 5, 0), #{pj_id}, #{email}, sysdate, #{extra_funding_price},
+		#{total_funding_price}, #{payment_id}, 'n', #{recipient_name}, #{recipient_addr}, #{recipient_phone}, #{recipient_request}, null, null, null, null)
+	</insert>
+	
+	<insert id="fundingGiftInsert" parameterType="com.tumblbugs.vo.FundingGiftVO">
+		insert into tum_funding_gift values(#{funding_id}, #{gift_id}, #{gift_quantity}, #{gift_option}, #{funding_gift_price})
+	</insert>
+	
+	<select id="fundingId" parameterType="String" resultType="String">
+		select max(funding_id) from tum_funding where email = #{email}
+	</select>
+	
+	<select id="recentDeliveryInfo" parameterType="String" resultType="com.tumblbugs.vo.FundingVO">
+		select recipient_name, recipient_phone, recipient_addr
+		from tum_funding
+		where funding_id = (select max(funding_id) from tum_funding where email = #{email})
+	</select>
+	
+	<update id="deliveryUpdate" parameterType="map">
+		update tum_funding set ${column_name} = #{value} where funding_id = #{funding_id}
+	</update>
+	
+	<delete id="fundingDelete" parameterType="String">
+		delete from tum_funding where funding_id = #{funding_id}
+	</delete>
+	
+	<delete id="fundingGiftDelete" parameterType="String">
+		delete from tum_funding_gift where funding_id = #{funding_id}
+	</delete>
+</mapper>

@@ -1,0 +1,161 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:9090/tumblbugs/ckeditor/ckeditor.js"></script>
+<title>Insert title here</title>
+<style>
+	#community {color: #5c5c5c;}
+
+	/* 글 작성 */
+	#community_write {padding: 15px 25px 15px 25px; margin-bottom: 30px;}
+	#community_write a {
+		text-decoration: none;
+		color: #5c5c5c;
+	}
+	#community_write span#message {
+		display: inline-block;
+		vertical-align: top; padding-top: 8px;
+		margin-left: 10px;
+		font-weight: bold;
+	}
+	#community_write i {
+		float: right;
+		padding-top: 15px;
+	}
+	
+	/* 커뮤니티 메뉴 탭 - 모든 게시글 / 창작자 업데이트 */
+	#community_tab {clear: both; padding-bottom: 15px;}
+	#community_tab span {
+		color: #757575;
+		font-size: 10pt;
+		font-weight: bold;
+		padding: 4px 8px 4px 8px;
+		border-radius: 4px;
+		cursor: pointer;
+		margin-right: 3px;
+	}
+	#community_tab span:hover {color: #494949;}
+	#community_tab #all {color: #494949; background-color: #d9d9d9;}
+	
+	/* 게시글 */
+	#community_posting {padding: 0px;}
+	#community_posting>div {padding: 20px;}
+	#community_posting>div#posting_header {padding-bottom: 10px;}
+	#community_posting>div#posting_header>#member_img {margin-bottom: -4px;}
+	#community_posting>div#posting_header>div {
+		display: inline-block;
+	}
+	#community_posting>div#posting_header>div>#member_name {
+		font-size: 10.5pt;
+		font-weight: bold;
+	}
+	#community_posting>div#posting_header>div>#member_name>#creator {
+		margin-left: 7px;
+		font-size: 9pt;
+	}
+	#community_posting>div#posting_header>div>#posting_log {
+		font-size: 10pt;
+	}
+	#community_posting>div#posting_header>div>#posting_log>span {margin-right: 7px;}
+	
+	#community_posting>div#posting_content {padding-bottom: 30px; border-bottom: 1px solid #e7e7e7;}
+	#community_posting>div#posting_reply {
+		font-size: 10pt;
+	}
+	#community_posting>div#posting_reply>span#reply_count {margin-left: 5px; font-weight: bold;}
+	
+	/* 게시글이 없습니다. */
+	#none {
+		color: #dddcdc;
+		font-size: 20pt;
+		text-align: center;
+		padding: 50px;
+	}
+	#none i {font-size: 70pt; margin-bottom: 10px;}
+	
+	#community_content {clear: both;}
+</style>
+<script>
+	$(document).ready(function() {
+		CKEDITOR.replace("ckeditor_content", {
+			height: 300
+		});
+		
+		$("#ckeditor_submit").click(function() {
+			var content = CKEDITOR.instances.ckeditor_content.getData();
+			alert(desc);
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<div id="community">
+		<div class="white_box" id="community_write">
+			<!-- 미로그인 회원 -->
+			<!-- <a href="#">
+				<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+				<span id="message">로그인해주세요</span><i class="fas fa-caret-right"></i>
+			</a> -->
+			<!-- 비후원자 회원 -->
+			<!-- <a href="#">
+				<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+				<span id="message">후원자만 글을 쓸 수 있어요</span>
+			</a> -->
+			<!-- 후원자 -->
+			<a href="#">
+				<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+				<span id="message">창작자에게 응원의 한 마디를!</span>
+			</a>
+			<div>
+				<textarea class="form-control" id="ckeditor_content"></textarea>
+				<button type="button" id="ckeditor_submit">등록</button>
+			</div>
+		</div>
+		<div id="community_tab">
+			<span id="all">모든 게시글</span>
+			<span id="creator's">창작자 업데이트</span>
+		</div>
+		<div class="white_box" id="community_posting">
+			<div id="posting_header">
+				<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
+				<div>
+					<div id="member_name">Sarah<!-- <span id="creator">창작자</span> --></div>
+					<div id="posting_log"><span>2일 전</span><span>수정됨</span></div>
+				</div>
+			</div>
+			<div id="posting_content">혹시 바보개 파우치 사이즈가 조금 더 크게 변동될 가능성이 있나요? 그리고 물건을 모두 집어넣었을 때 폭이 어느 정도 되나요?</div>
+			<div id="posting_reply">
+				<i class="fas fa-comment"></i>
+				<span id="reply_count">1</span>
+			</div>
+		</div>
+		
+		
+		<!-- <div class="white_box" id="community_posting">
+			<div id="posting_header">
+				<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
+				<div>
+					<div id="member_name">네이버웹툰<span id="creator">창작자</span></div>
+					<div id="posting_log"><span>2일 전</span><span>수정됨</span></div>
+				</div>
+			</div>
+			<div id="posting_content">혹시 바보개 파우치 사이즈가 조금 더 크게 변동될 가능성이 있나요? 그리고 물건을 모두 집어넣었을 때 폭이 어느 정도 되나요?</div>
+			<div id="posting_reply">
+				<i class="fas fa-comment"></i>
+				<span id="reply_count">0</span>
+			</div>
+		</div> -->
+		
+		
+		<!-- <div id="none">
+			<i class="far fa-meh"></i>
+			<div><b>게시글이 없습니다.</b></div>
+		</div> -->
+	</div>
+</body>
+</html>
