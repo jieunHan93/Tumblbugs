@@ -6,7 +6,7 @@ public class DeliveryVO {
 	String funding_id, name, funding_date, recipient_name,recipient_addr,recipient_phone, recipient_request;
 	String gift_title, gift_option, extra_funding_price, courier, invoice_number, delivery_start_date, delivery_complete_yn;
 	int rno, gift_quantity, funding_gift_price;
-	ArrayList<DeliveryVO> list = new ArrayList<DeliveryVO>();
+	ArrayList<DeliveryVO> list;
 	
 	public ArrayList<DeliveryVO> getList() {
 		return list;

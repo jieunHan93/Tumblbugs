@@ -134,7 +134,7 @@
 		
 		// DB업데이트
 		$("button#btn-save").click(function(){
-			$(".name").each(function(){
+			/* $(".name").each(function(){
 				//alert("11");
 				if($(this).val() == ""){
 					$(this).css("border","1px solid red");
@@ -142,9 +142,9 @@
 					return false;
 				}
 				
-			})
+			}) */
 			
-			//$("#delivery_update").submit();
+			$("#delivery_update").submit();
 		});
 		
 		$("input[type=text]").keypress(function(){
@@ -194,7 +194,7 @@
 						<span data-toggle="tooltip" placement="top" data-html="true" title="<div id='tooltip_div'>데이터의 변경이 있다면 <span>저장</span> 후<br>다운로드를 진행해주세요<br>업로드 후에 꼭 <span>저장</span>을 눌러주세요.<br>업로드와 저장은 <span>전체줄보기</span> 설정 후 진행해주세요.<div id='tooltip_space'></div>일부 항복은 수정이 불가능합니다.</div>"><i class="fas fa-question-circle"></i></span>
 					</div>
 				</div>
-				<form id="delivery_update" name="delivery_update" enctype="multipart/form-data" method="post" action="http://localhost:9090/tumblbugs/myproject/delivery_update" >
+				<form id="delivery_update" name="delivery_update" enctype="multipart/form-data" method="post" action="http://localhost:9090/tumblbugs/myproject/delivery_update?pj_id=${vo.pj_id }" >
 				<div id="myproject_delivery_table_box">
 					<table id="myproject_delivery_table" >
 						<thead>
@@ -219,11 +219,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vo" items="${list }">
+							<%-- <c:forEach var="vo" items="${list }"> --%>
+							<c:forEach items="${list}" var="vo" varStatus="status">
 							<tr class="delivery_table_loaddata">
 								<td class="rno">${vo.rno}<input type="hidden" name="rno" value="${vo.rno }"></td>
 								<td class="pay_num">${vo.funding_id}<input type="hidden" name="funding_id" value="${vo.funding_id}"></td>
-								<td class="pay_person">${vo.name }<input type="hidden" name="name" value=${vo.name }></td>
+								<td class="pay_person">${vo.name }<input type="hidden" name="list[${status.index}].name" value=${vo.name }></td>
 								<td class="payday">${vo.funding_date }<input type="hidden" name="funding_date" value="${vo.funding_date }"></td>
 								<td><input type="text" id="${vo.funding_id}" class="name" name="recipient_name" value="${vo.recipient_name }"/></td>
 								<td><input type="text" id="${vo.funding_id}" class="addr" name="recipient_addr" value="${vo.recipient_addr }"></td>

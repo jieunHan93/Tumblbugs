@@ -222,12 +222,13 @@ public class MyprojectExcelController {
 	}
 	
 	@RequestMapping(value="/myproject/delivery_update",method=RequestMethod.POST)
-	public ModelAndView delivery_update(ListVO vo) {
+	public ModelAndView delivery_update(ListVO vo, String pj_id) {
 		ModelAndView mv = new ModelAndView();
 		ArrayList<ListVO> list = vo.getList();
 		for(ListVO lvo : list) {
-			//System.out.println(lvo.getName());
+			System.out.println(lvo.getName());
 		}
+		mv.addObject("pj_id", pj_id);
 		mv.setViewName("redirect:/myproject/delivery");
 		return mv;
 	}

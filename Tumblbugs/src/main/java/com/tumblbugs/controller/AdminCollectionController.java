@@ -105,6 +105,18 @@ public class AdminCollectionController {
 		}
 		return status;
 	}
+	/** 기획전 메인-checkbox 반영 -- 시스템 날짜 반영의 위함  : index로 이동하는게 로직에 맞음 시스템시작시에 반영**/
+	@RequestMapping(value="admin/collection_checkbox_system", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String collection_checkbox_system() throws Exception{
+		String reuslt="";
+		ArrayList<CollectionVO> list = collectionDAO.getResultList();
+		for(CollectionVO vo : list) {
+			getResultStatus(vo);
+		}
+		return reuslt;
+	}
+	
 	/** 달력에 데이터 출력 **/
 	@RequestMapping(value="/admin/collection/calendar_list",method=RequestMethod.GET, produces = "application/text; charset=utf8")
 	@ResponseBody
