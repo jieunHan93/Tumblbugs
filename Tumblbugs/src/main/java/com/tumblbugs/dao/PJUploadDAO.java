@@ -23,6 +23,17 @@ public class PJUploadDAO {
 	private SqlSessionTemplate sqlSession; 
 	private static String namespace = "mapper.upload";
 	
+	/** pj_addr 중복체크 **/
+	public boolean getResultAddrCheck(String pj_addr) {
+		boolean result = false;
+		int val = sqlSession.selectOne(namespace+".addr_check", pj_addr);
+		
+		if(val == 0) {
+			result = true;
+		}
+		
+		return result;
+	}
 	/** item list 가져오기 **/
 	public ArrayList<ItemVO> getItemContent(String gift_id) {
 		List<ItemVO> ilist = null;

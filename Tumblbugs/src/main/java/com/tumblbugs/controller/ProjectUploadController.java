@@ -195,6 +195,19 @@ public class ProjectUploadController {
 		return res;
 	}
 	
+	/**
+	 * 프로젝트 address check process
+	 * @return
+	 */
+	@RequestMapping(value="/project_check_addr_proc", method=RequestMethod.GET)
+	@ResponseBody
+	public boolean project_check_addr_proc(String pj_addr) {
+		boolean result = false;
+		result = PJUploadDao.getResultAddrCheck(pj_addr);
+			
+		return result;
+	}
+	
 	
 	/**
 	 * 프로젝트 update process
@@ -220,7 +233,7 @@ public class ProjectUploadController {
 		
 		String session_id = (String)session.getAttribute("pj_id");
 		String semail = (String)session.getAttribute("semail");
-		//프로젝트 없다면 프로젝트 생성
+		
 		if(session_id != null){
 			ProjectVO vo = new ProjectVO();
 			MemberVO mvo = new MemberVO();

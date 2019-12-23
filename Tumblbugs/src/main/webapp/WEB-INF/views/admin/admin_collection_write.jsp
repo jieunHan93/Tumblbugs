@@ -51,6 +51,10 @@
 				alert("기획전명을 입력하세요");
 				$("#collection_name").focus();
 				return false;
+			} else if($("#collection_addr").val() == ""){
+				alert("기획전 주소를 입력하세요.");
+				$("#collection_addr").focus();
+				return false;
 			} else if($("#cpFocus").val() == ""){
 				alert("기획전 배경색을 선택하세요");
 				$("#cpFocus").focus();
@@ -88,6 +92,24 @@
 				alert("최대 200자 입력이 가능합니다");
 			}
 		});
+		
+		$("#collection_addr").focusout(function(){
+			if($("#collection_addr").val() != ""){
+				console.log("val:"+$("#collection_addr").val());
+				$.ajax({
+					url: "http://localhost:9090/tumblbugs/admin/collection/write/check?col_addr="+$("#collection_addr").val(),
+					success:function(result){
+						if(result != 0){
+							$("#col_addr_check").text("이미 있는 기획전 주소입니다. 다시 입력해주세요").css("color", "#FF6666");
+							$("#collection_addr").val("");
+							$("#collection_addr").focus();
+						} else {
+							$("#col_addr_check").text("사용 가능한 기획전 주소입니다.").css("color", "#999999");
+						}
+					}
+				}); // ajax
+			}
+		});
 	});
 	</script>
 
@@ -107,6 +129,13 @@
 					<tr>
 						<th>기획전명</th>
 						<td colspan="3"><input type="text" id="collection_name" name="col_name"></td>
+					</tr>
+					<tr>
+						<th>기획전 주소</th>
+						<td colspan="3">
+							<input type="text" id="collection_addr" name="col_addr" maxlength="20">
+							<span id="col_addr_check"></span>
+						</td>
 					</tr>
 					<tr>
 						<th>기획전 배경색</th>

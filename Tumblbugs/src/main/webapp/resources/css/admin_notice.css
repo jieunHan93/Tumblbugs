@@ -1,0 +1,923 @@
+body {background-color: #f7f7f7;}
+div#admin_mainpage{
+	/* display: inline-block; */
+}
+div#admin_mainconent{
+	display: inline-block;
+	margin: 0;
+	position: absolute;
+	margin-left: 340px;
+}
+div#admin_mainconent>div#admin_header{
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	width: 1100px;
+	height: 70px;
+	line-height:70px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #1e90ff;
+}
+div#admin_mainconent>div#admin_header p {
+	margin-left: 20px;
+}
+
+	#funding_history{
+		position: absolute;
+		margin-left: 20px;
+	}
+	#funding_history section.page_content {
+		background-color: #f6f5f5;
+	}
+	#funding_history article {
+		width: 1080px;
+		margin: auto;
+	}
+	#funding_history li {list-style-type: none;}
+	
+	
+	/* ÅÇ */
+	#funding_history article#page_content_tab {
+		padding: 20px 0px 20px 0px;
+	}
+	#funding_history #page_content_tab nav,
+	#funding_history #page_content_tab li,
+	#funding_history .search {
+		display: inline-block;
+		font-size: 10.5pt;
+	}
+	#funding_history #page_content_tab li {
+		border-radius: 4px;
+		padding: 8px 10px 8px 10px;
+		margin-right: 8px;
+		cursor: pointer;
+	}
+	#funding_history #page_content_tab li:hover {
+		background-color: rgba(0,0,0,.05);
+	}
+	#funding_history #page_content_tab li span#list_count {
+		display: inline-block;
+		margin-left: 10px;
+		border-radius: 5px;
+		width: 26px;
+		font-size: 10pt;
+		text-align: center;
+		background-color: #999999;
+		color: white;
+	}
+	
+#funding_history .select_tab {
+	background-color: rgba(0,0,0,.05);
+	color: #1d85ea;
+}
+
+#ContentBtnDiv{
+	text-align:center;
+	padding:20px 0px 15px 0px;
+}
+#ContentBtnDiv button{
+	padding:8px 30px 8px 30px;
+	border:none;
+	border-radius:4px;
+	color:white;
+	font-weight:500;
+	background:#343434;
+	cursor:pointer;
+}
+#notice_content_textarea img{
+	max-width:800px;
+}
+#notice_content_textarea p{
+	line-height:170%;
+}
+#event_date {
+	padding:30px 10px 10px 0px;
+	font-size:11pt;
+	font-weight:bold;
+}
+body {background-color: #f7f7f7;}
+div#admin_mainpage{
+	/* display: inline-block; */
+}
+div#admin_mainconent{
+	display: inline-block;
+	margin: 0;
+	position: absolute;
+	margin-left: 340px;
+}
+div#admin_mainconent>div#admin_header{
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	width: 1100px;
+	height: 70px;
+	line-height:70px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #1e90ff;
+	position:relative;
+	right:20px;
+}
+div#admin_mainconent>div#admin_header p {
+	margin-left: 20px;
+}
+
+	#funding_history{
+		position: absolute;
+		margin-left: 20px;
+	}
+	#funding_history section.page_content {
+		background-color: #f6f5f5;
+	}
+	#funding_history article {
+		width: 1080px;
+		margin: auto;
+	}
+	#funding_history li {list-style-type: none;}
+	
+	
+	/* ÅÇ */
+	#funding_history article#page_content_tab {
+		padding: 20px 0px 20px 0px;
+	}
+	#funding_history #page_content_tab nav,
+	#funding_history #page_content_tab li,
+	#funding_history .search {
+		display: inline-block;
+		font-size: 10.5pt;
+	}
+	#funding_history #page_content_tab li {
+		border-radius: 4px;
+		padding: 8px 10px 8px 10px;
+		margin-right: 8px;
+		cursor: pointer;
+	}
+	#funding_history #page_content_tab li:hover {
+		background-color: rgba(0,0,0,.05);
+	}
+	#funding_history #page_content_tab li span#list_count {
+		display: inline-block;
+		margin-left: 10px;
+		border-radius: 5px;
+		width: 26px;
+		font-size: 10pt;
+		text-align: center;
+		background-color: #999999;
+		color: white;
+	}
+	
+	#funding_history .select_tab {
+		background-color: rgba(0,0,0,.05);
+		color: #1d85ea;
+	}
+	div#admin_notice_delete {
+		width: 1080px;
+		position: absolute;
+		margin: 70px 0px 0px 20px;
+	}
+	#deleteBtnDiv{
+	text-align:center;
+	padding:20px 0px 15px 0px;
+}
+#deleteBtnDiv button{
+	padding:8px 30px 8px 30px;
+	border:none;
+	border-radius:4px;
+	color:white;
+	font-weight:500;
+	background:#343434;
+	cursor:pointer;
+}
+#admin_notice_delete>div{
+	text-align:center;
+}
+body {background-color: #f7f7f7;}
+div#admin_mainpage{
+	/* display: inline-block; */
+}
+div#admin_mainconent{
+	display: inline-block;
+	margin: 0;
+	position: absolute;
+	margin-left: 340px;
+}
+div#admin_mainconent>div#admin_header{
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	width: 1100px;
+	height: 70px;
+	line-height:70px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #1e90ff;
+}
+div#admin_mainconent>div#admin_header p {
+	margin-left: 20px;
+}
+
+	#funding_history{
+		position: absolute;
+		margin-left: 20px;
+	}
+	#funding_history section.page_content {
+		background-color: #f6f5f5;
+	}
+	#funding_history article {
+		width: 1080px;
+		margin: auto;
+	}
+	#funding_history li {list-style-type: none;}
+	
+	
+	/* ÅÇ */
+	#funding_history article#page_content_tab {
+		padding: 20px 0px 20px 0px;
+	}
+	#funding_history #page_content_tab nav,
+	#funding_history #page_content_tab li,
+	#funding_history .search {
+		display: inline-block;
+		font-size: 10.5pt;
+	}
+	#funding_history #page_content_tab li {
+		border-radius: 4px;
+		padding: 8px 10px 8px 10px;
+		margin-right: 8px;
+		cursor: pointer;
+	}
+	#funding_history #page_content_tab li:hover {
+		background-color: rgba(0,0,0,.05);
+	}
+	#funding_history #page_content_tab li span#list_count {
+		display: inline-block;
+		margin-left: 10px;
+		border-radius: 5px;
+		width: 26px;
+		font-size: 10pt;
+		text-align: center;
+		background-color: #999999;
+		color: white;
+	}
+	
+	#funding_history .select_tab {
+		background-color: rgba(0,0,0,.05);
+		color: #1d85ea;
+	}
+
+	div#admin_notice_update {
+		width: 1080px;
+		position: absolute;
+		margin: 70px 0px 0px 20px;
+	}
+	 table#notice_update_table, table#notice_update_table th, table#notice_update_table td {
+		border-collapse: collapse;
+	}
+	 table#notice_update_table td {
+	 	height: 30px;
+	 }
+	 table#notice_update_table tr#notice_update_table_item {
+	 	background-color: #eeeded;
+	 }
+	 table#notice_update_table tr#notice_update_table_item2 {
+	 	background-color: #ffffff;
+	 } 
+	 table#notice_update_table tr#notice_update_table_item2 a#td_a{
+	 	text-decoration: underline;
+	 	color: #1e90ff;
+	 }
+	 
+	 /** ÀÛ¼º Å×ÀÌºí **/
+.n_input{
+	width:98%;
+	height:30px;
+	border:1px solid #ccc;
+	border-radius:4px;
+	padding:5px;
+	
+}
+#notice_update_table input[type=date]{
+	width:30%;
+	height:20px;
+	border:1px solid #ccc;
+	border-radius:4px;
+	padding:5px;
+	
+}
+#notice_update_table{
+	width:90%;
+	margin:auto;
+	border:1px solid gray;
+	border-radius:4px !important;
+}
+	
+#notice_update_table tr:first-child th,
+#notice_update_table tr:first-child td{
+	border-top:1px solid gray;
+} 
+#notice_update_table tr, #notice_update_table th,
+#notice_update_table td {
+	border-bottom: 1px solid gray;
+	border-collapse: collapse;
+	width: 100%;
+	padding: 10px;
+}
+
+#notice_update_table tr>td {
+	border-collapse: collapse;
+	text-align: left;
+}
+
+#notice_update_table td input, #notice_update_table td select
+	{
+	margin: 0px;
+	padding: 0px;
+}
+
+#notice_update_table tr th {
+	background: #F5F5F7;
+	width: 16%;
+	border:none;
+}
+
+#notice_update_table tr {
+	height: 15px;
+	padding: 10px;
+}
+
+#notice_update_table th:last-child, #notice_update_table td:last-child
+	{
+	width: 120px;
+}
+#notice_update_table td select {
+	display: inline-block;
+	vertical-align: center;
+	width: 150px;
+	border:1px solid #ccc;
+	padding:5px;
+	font-size:14px;
+	border-radius:3px;
+}
+#updateBtnDiv{
+	text-align:center;
+	padding:20px 0px 15px 0px;
+}
+#updateBtnDiv button{
+	padding:8px 30px 8px 30px;
+	border:none;
+	border-radius:4px;
+	color:white;
+	font-weight:500;
+	background:#343434;
+	cursor:pointer;
+}
+#notice_update_table tr:first-child>th{
+	background-color: #343434;
+	color: white;
+	font-weight: bold;
+}
+
+body {background-color: #f7f7f7;}
+div#admin_mainpage{
+	/* display: inline-block; */
+}
+div#admin_mainconent{
+	display: inline-block;
+	margin: 0;
+	position: absolute;
+	margin-left: 320px;
+}
+div#admin_mainconent>div#admin_header{
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	width: 1100px;
+	height: 70px;
+	line-height:70px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #1e90ff;
+}
+div#admin_mainconent>div#admin_header p {
+	margin-left: 20px;
+}
+
+	#funding_history{
+		position: absolute;
+		margin-left: 20px;
+	}
+	#funding_history section.page_content {
+		background-color: #f6f5f5;
+	}
+	#funding_history article {
+		width: 1080px;
+		margin: auto;
+	}
+	#funding_history li {list-style-type: none;}
+	
+	
+	/* ÅÇ */
+	#funding_history article#page_content_tab {
+		padding: 20px 0px 20px 0px;
+	}
+	#funding_history #page_content_tab nav,
+	#funding_history #page_content_tab li,
+	#funding_history .search {
+		display: inline-block;
+		font-size: 10.5pt;
+	}
+	#funding_history #page_content_tab li {
+		border-radius: 4px;
+		padding: 8px 10px 8px 10px;
+		margin-right: 8px;
+		cursor: pointer;
+		/* background-color: #eeeded; */
+	}
+	#funding_history #page_content_tab li:hover {
+		background-color: rgba(0,0,0,.05);
+	}
+	#funding_history #page_content_tab li span#list_count {
+		display: inline-block;
+		margin-left: 10px;
+		border-radius: 5px;
+		width: 26px;
+		font-size: 10pt;
+		text-align: center;
+		background-color: #999999;
+		color: white;
+	}
+	
+	#funding_history .select_tab {
+		background-color: rgba(0,0,0,.05);
+		color: #1d85ea;
+	}
+	
+	/* °Ë»öÃ¢ */
+	#funding_history .search,
+	#project_table_filter {
+		float: right;
+		text-align: right;
+	}
+	#funding_history .search input,
+	#project_table_filter input {
+		border: 1px solid lightgray;
+		border-radius: 5px;
+		width: 350px;
+		padding: 7px 7px 7px 12px;
+	}
+	
+	/* ÃÑ n°ÇÀÇ ÈÄ¿øÀÌ ÀÖ½À´Ï´Ù. */
+	#funding_history div.list_count {
+		color: #545454;
+		background-color: #eeeded;
+		padding: 15px 15px 15px 15px;
+		margin-bottom: 17px;
+		border-radius: 5px;
+	}
+	.funding_list{
+		display: none;
+	}
+	#funding_history div.list_count i {
+		font-size:16px;
+		margin-right: 15px;
+		margin-left: 15px;
+	}
+	div#admin_notice {
+		width: 1080px;
+		position: absolute;
+		margin: 200px 0px 0px 20px;
+	}
+	 table#project_table {
+		width: 1080px;
+		text-align: center;
+	}
+	 table#project_table, table#project_table th, table#project_table td {
+	 	border: 1px solid #ccc;
+		border-collapse: collapse;
+	}
+	 table#project_table td {
+	 	height: 18px;
+	 }
+	 table#project_table tr#project_table_item {
+	 	background-color: #eeeded;
+	 }
+	 table#project_table tr#project_table_item2 {
+	 	background-color: #ffffff;
+	 } 
+	 table#project_table tr#project_table_item2 a#td_a{
+	 	text-decoration: underline;
+	 	color: #1e90ff;
+	 }
+	 #notice_btn_div{
+	 	display:inline-block;
+	 }
+	 #notice_write_btn{
+	 	padding:8px 30px 8px 30px;
+	 	position:relative;
+	 	top:200px;
+	 	right:102px;
+	 	color:white;
+	 	border:none;
+	 	font-weight:500;
+	 	border-radius:4px;
+	 	background:#343434;
+	 	letter-spacing:0.5px;
+	 	cursor:pointer;
+	 }
+	 #paging{
+	 	text-align:center;
+	 }
+	 #project_table th:first-child,
+	 #project_table td:first-child{
+	 	width:7%;
+	 }
+	 #project_table th:nth-child(2),
+	 #project_table td:nth-child(2){
+	 	width:7%;
+	 }
+ 	 #project_table th:nth-child(3),
+	 #project_table td:nth-child(3){
+	 	width:10%;
+	 }
+	 #project_table th:nth-child(4),
+	 #project_table td:nth-child(4){
+	 	width:46%;
+	 }
+	 #project_table th:nth-child(5),
+	 #project_table td:nth-child(5){
+	 	width:15%;
+	 }
+	 #project_table th:nth-child(6),
+	 #project_table td:nth-child(6){
+	 	width:15%;
+	 }
+	 #project_table .noticeTableTr:hover{
+	 	background:#eeeded;
+	 }
+	 
+	 body {background-color: #f7f7f7;}
+div#admin_mainpage{
+	/* display: inline-block; */
+}
+div#admin_mainconent{
+	display: inline-block;
+	margin: 0;
+	position: absolute;
+	margin-left: 340px;
+}
+div#admin_mainconent>div#admin_header{
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	width: 1100px;
+	height: 70px;
+	line-height:70px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #1e90ff;
+}
+div#admin_mainconent>div#admin_header p {
+	margin-left: 20px;
+}
+
+	#funding_history{
+		position: absolute;
+		margin-left: 20px;
+	}
+	#funding_history section.page_content {
+		background-color: #f6f5f5;
+	}
+	#funding_history article {
+		width: 1080px;
+		margin: auto;
+	}
+	#funding_history li {list-style-type: none;}
+	
+	
+	/* ÅÇ */
+	#funding_history article#page_content_tab {
+		padding: 20px 0px 20px 0px;
+	}
+	#funding_history #page_content_tab nav,
+	#funding_history #page_content_tab li,
+	#funding_history .search {
+		display: inline-block;
+		font-size: 10.5pt;
+	}
+	#funding_history #page_content_tab li {
+		border-radius: 4px;
+		padding: 8px 10px 8px 10px;
+		margin-right: 8px;
+		cursor: pointer;
+	}
+	#funding_history #page_content_tab li:hover {
+		background-color: rgba(0,0,0,.05);
+	}
+	#funding_history #page_content_tab li span#list_count {
+		display: inline-block;
+		margin-left: 10px;
+		border-radius: 5px;
+		width: 26px;
+		font-size: 10pt;
+		text-align: center;
+		background-color: #999999;
+		color: white;
+	}
+	
+	#funding_history .select_tab {
+		background-color: rgba(0,0,0,.05);
+		color: #1d85ea;
+	}
+	
+	div#admin_notice_write {
+		width: 1080px;
+		position: absolute;
+		margin: 70px 0px 0px 20px;
+	}
+	 table#notice_write_table, table#notice_write_table th, table#notice_write_table td {
+		border-collapse: collapse;
+	}
+	 table#notice_write_table td {
+	 	height: 30px;
+	 }
+	 table#notice_write_table tr#notice_write_table_item {
+	 	background-color: #eeeded;
+	 }
+	 table#notice_write_table tr#notice_write_table_item2 {
+	 	background-color: #ffffff;
+	 } 
+	 table#notice_write_table tr#notice_write_table_item2 a#td_a{
+	 	text-decoration: underline;
+	 	color: #1e90ff;
+	 }
+	 
+	 /** ÀÛ¼º Å×ÀÌºí **/
+.n_input{
+	width:98%;
+	height:30px;
+	border:1px solid #ccc;
+	border-radius:4px;
+	padding:5px;
+	
+}
+#notice_write_table input[type=date]{
+	width:30%;
+	height:20px;
+	border:1px solid #ccc;
+	border-radius:4px;
+	padding:5px;
+	
+}
+#notice_write_table{
+	width:90%;
+	margin:auto;
+	border:1px solid gray;
+	border-radius:4px !important;
+}
+	
+#notice_write_table tr:first-child th,
+#notice_write_table tr:first-child td{
+	border-top:1px solid gray;
+} 
+#notice_write_table tr, #notice_write_table th,
+#notice_write_table td {
+	border-bottom: 1px solid gray;
+	border-collapse: collapse;
+	width: 100%;
+	padding: 10px;
+}
+
+#notice_write_table tr>td {
+	border-collapse: collapse;
+	text-align: left;
+}
+
+#notice_write_table td input, #notice_write_table td select
+	{
+	margin: 0px;
+	padding: 0px;
+}
+
+#notice_write_table tr th {
+	background: #F5F5F7;
+	width: 16%;
+	border:none;
+}
+
+#notice_write_table tr {
+	height: 15px;
+	padding: 10px;
+}
+
+#notice_write_table th:last-child, #notice_write_table td:last-child
+	{
+	width: 120px;
+}
+#notice_write_table td select {
+	display: inline-block;
+	vertical-align: center;
+	width: 150px;
+	border:1px solid #ccc;
+	padding:5px;
+	font-size:14px;
+	border-radius:3px;
+}
+#writeBtnDiv{
+	text-align:center;
+	padding:20px 0px 15px 0px;
+}
+#writeBtnDiv button{
+	padding:8px 30px 8px 30px;
+	border:none;
+	border-radius:4px;
+	color:white;
+	font-weight:500;
+	background:#343434;
+	cursor:pointer;
+}
+#notice_write_table tr:first-child>th{
+	background-color: #343434;
+	color: white;
+	font-weight: bold;
+}
+
+body {background-color: #f7f7f7;}
+div#admin_mainpage{
+	/* display: inline-block; */
+}
+div#admin_mainconent{
+	display: inline-block;
+	margin: 0;
+	position: absolute;
+	margin-left: 340px;
+}
+div#admin_mainconent>div#admin_header{
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	width: 1100px;
+	height: 70px;
+	line-height:70px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #1e90ff;
+}
+div#admin_mainconent>div#admin_header p {
+	margin-left: 20px;
+}
+
+	#funding_history{
+		position: absolute;
+		margin-left: 20px;
+	}
+	#funding_history section.page_content {
+		background-color: #f6f5f5;
+	}
+	#funding_history article {
+		width: 1080px;
+		margin: auto;
+	}
+	#funding_history li {list-style-type: none;}
+	
+	
+	/* ÅÇ */
+	#funding_history article#page_content_tab {
+		padding: 20px 0px 20px 0px;
+	}
+	#funding_history #page_content_tab nav,
+	#funding_history #page_content_tab li,
+	#funding_history .search {
+		display: inline-block;
+		font-size: 10.5pt;
+	}
+	#funding_history #page_content_tab li {
+		border-radius: 4px;
+		padding: 8px 10px 8px 10px;
+		margin-right: 8px;
+		cursor: pointer;
+	}
+	#funding_history #page_content_tab li:hover {
+		background-color: rgba(0,0,0,.05);
+	}
+	#funding_history #page_content_tab li span#list_count {
+		display: inline-block;
+		margin-left: 10px;
+		border-radius: 5px;
+		width: 26px;
+		font-size: 10pt;
+		text-align: center;
+		background-color: #999999;
+		color: white;
+	}
+	
+	#funding_history .select_tab {
+		background-color: rgba(0,0,0,.05);
+		color: #1d85ea;
+	}
+
+	div#admin_notice_update {
+		width: 1080px;
+		position: absolute;
+		margin: 70px 0px 0px 20px;
+	}
+	 table#notice_update_table, table#notice_update_table th, table#notice_update_table td {
+		border-collapse: collapse;
+	}
+	 table#notice_update_table td {
+	 	height: 30px;
+	 }
+	 table#notice_update_table tr#notice_update_table_item {
+	 	background-color: #eeeded;
+	 }
+	 table#notice_update_table tr#notice_update_table_item2 {
+	 	background-color: #ffffff;
+	 } 
+	 table#notice_update_table tr#notice_update_table_item2 a#td_a{
+	 	text-decoration: underline;
+	 	color: #1e90ff;
+	 }
+	 
+	 /** ÀÛ¼º Å×ÀÌºí **/
+.n_input{
+	width:98%;
+	height:30px;
+	border:1px solid #ccc;
+	border-radius:4px;
+	padding:5px;
+	
+}
+#notice_update_table input[type=date]{
+	width:30%;
+	height:20px;
+	border:1px solid #ccc;
+	border-radius:4px;
+	padding:5px;
+	
+}
+#notice_update_table{
+	width:90%;
+	margin:auto;
+	border:1px solid gray;
+	border-radius:4px !important;
+}
+	
+#notice_update_table tr:first-child th,
+#notice_update_table tr:first-child td{
+	border-top:1px solid gray;
+} 
+#notice_update_table tr, #notice_update_table th,
+#notice_update_table td {
+	border-bottom: 1px solid gray;
+	border-collapse: collapse;
+	width: 100%;
+	padding: 10px;
+}
+
+#notice_update_table tr>td {
+	border-collapse: collapse;
+	text-align: left;
+}
+
+#notice_update_table td input, #notice_update_table td select
+	{
+	margin: 0px;
+	padding: 0px;
+}
+
+#notice_update_table tr th {
+	background: #F5F5F7;
+	width: 16%;
+	border:none;
+}
+
+#notice_update_table tr {
+	height: 15px;
+	padding: 10px;
+}
+
+#notice_update_table th:last-child, #notice_update_table td:last-child
+	{
+	width: 120px;
+}
+#notice_update_table td select {
+	display: inline-block;
+	vertical-align: center;
+	width: 150px;
+	border:1px solid #ccc;
+	padding:5px;
+	font-size:14px;
+	border-radius:3px;
+}
+#updateBtnDiv{
+	text-align:center;
+	padding:20px 0px 15px 0px;
+}
+#updateBtnDiv button{
+	padding:8px 30px 8px 30px;
+	border:none;
+	border-radius:4px;
+	color:white;
+	font-weight:500;
+	background:#343434;
+	cursor:pointer;
+}
+#notice_update_table tr:first-child>th{
+	background-color: #343434;
+	color: white;
+	font-weight: bold;
+}

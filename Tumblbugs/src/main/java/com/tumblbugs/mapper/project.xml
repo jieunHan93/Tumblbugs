@@ -42,6 +42,14 @@
 		select pj_story from tum_project where pj_id=#{pj_id}
 	</select>
 	
+	<select id="pj_addr" parameterType="String" resultType="String">
+		select pj_addr from tum_project where pj_id=#{pj_id}
+	</select>
+	
+	<select id="pj_id" parameterType="String" resultType="String">
+		select pj_id from tum_project where pj_addr=#{pj_addr}
+	</select>
+	
 	<select id="pj_title" parameterType="String" resultType="String">
 		select pj_title from tum_project where pj_id=#{pj_id}
 	</select>

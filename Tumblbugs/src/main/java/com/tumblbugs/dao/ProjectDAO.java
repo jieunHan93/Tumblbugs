@@ -14,21 +14,41 @@ import com.tumblbugs.vo.ProjectVO;
 
 @Repository
 public class ProjectDAO {
-	//22
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private static String namespace = "mapper.project";
 	
+	//관리자 페이지 - 콘텐츠
 	public ProjectVO getAdminContent(String pj_id) {
 		return sqlSession.selectOne(namespace + ".admin_content", pj_id);
 	}
 	
+	//사용자 페이지 - 콘텐츠
 	public ProjectVO getContent(String pj_id) {
 		return sqlSession.selectOne(namespace + ".content", pj_id);
 	}
 	
-	public String getStory(String pj_id) {
+	/*public String getStory(String pj_id) {
 		return sqlSession.selectOne(namespace + ".story", pj_id);
+	}*/
+	
+	/**
+	 * pj_addr을 통해 pj_id 출력 - 프로젝트 상세정보 출력 시 사용
+	 * @param pj_addr
+	 * @return
+	 */
+	public String getPj_id(String pj_addr) {
+		return sqlSession.selectOne(namespace + ".pj_id", pj_addr);
+	}
+	
+	/**
+	 * pj_id를 통해 pj_addr 출력 - 프로젝트>커뮤니티 작업 후 redirect 시 사용됨
+	 * @param pj_id
+	 * @return
+	 */
+	public String getPj_addr(String pj_id) {
+		return sqlSession.selectOne(namespace + ".pj_addr", pj_id);
 	}
 	
 	public String getProjectTitle(String pj_id) {

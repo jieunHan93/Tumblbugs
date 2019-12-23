@@ -3,13 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%-- <% boolean result = true; %> --%>
-<% String sid = (String)session.getAttribute("semail");
-	 if(sid != "" && sid != null) {
- }
-%>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,6 +12,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   	<script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+  	
+
+
   	<script>
   	$(document).ready(function(){
   		$( window ).scroll( function() {
@@ -132,7 +128,6 @@
 						} else {
 							$("div.search_keyword_content").remove();
 							var list = JSON.parse(result);
-							console.log(result)
 							var str = "";
 							for(i=0;i<list.data.length;i++){
 								str += '<div class="search_keyword_content"><a class="find_keyword">';
@@ -191,7 +186,9 @@
 	</script>
 </head>
 <body>
+
 	<header>
+
 		<div id="header_nav">
 			<div id="header_nav_left">
 				<button type="button" data-toggle="modal" data-target="#projectMenuModal"><img src="http://localhost:9090/tumblbugs/images/icon_nav.png">프로젝트 둘러보기</button>
@@ -200,18 +197,33 @@
 			<div id="header_nav_center"><a href="http://localhost:9090/tumblbugs/index"><img src="http://localhost:9090/tumblbugs/images/tumblbugs_logo.png"></a></div>
 			<button type="button" data-toggle="modal" data-target="#searchMenuModal" id="open_search_box"></button>
 			<div id="header_nav_right">
-				<% if(sid == null){ %>
-				<a href="/tumblbugs/login">
-					<span>로그인/회원가입</span>
-					<div id="user_icon"></div>
-				</a>
-				<% }else{ %>
-				<button id="mymenubtn" type="button" data-toggle="modal" data-target="#myMenuModal">${semail}<div id="user_icon"></div></button>
-				<% } %>
+			
+					<c:choose> 
+					    <c:when test="${sessionScope.svo.email == null}"> 
+					    
+					    	<a href="/tumblbugs/login">
+								<span>로그인/회원가입</span>
+								<div id="user_icon"></div>
+							</a>
+							
+					    </c:when> 
+					    
+					    <c:otherwise> 					    
+					    	<button id="mymenubtn" type="button" data-toggle="modal" 
+					    		data-target="#myMenuModal">	
+					    		${sessionScope.svo.name }	
+					    		<div id="user_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_img})"></div> 
+					    		<!-- <div id="user_icon" ></div> -->
+					    	</button>	
+					    </c:otherwise>    
+					    
+					</c:choose>  
+				
+				
 			</div>
 		</div>
 	</header>
-	
+
 	  <!-- The Modal -->
 	  <div class="modal" id="projectMenuModal">
 	    <div class="modal-dialog modal-dialog-scrollable">
@@ -246,7 +258,7 @@
 	        		<div id="modal_collection">
 	        			<div>기획전</div>
 	        			<c:forEach var="vo" items="${sessionScope.clist }">
-	        				<div><a href="http://localhost:9090/tumblbugs/collections?col_id=${vo.col_id }"><span>${vo.col_name }</span></a></div>
+	        				<div><a href="http://localhost:9090/tumblbugs/collections/${vo.col_addr }"><span>${vo.col_name }</span></a></div>
 	        			</c:forEach>
 	        		</div>
 	        		</c:if>
@@ -326,8 +338,8 @@
 	        <!-- Modal body -->
 	        <div class="modal-body">
 	          <div id="myMenu_user_profil">
-	          	<span id="myMenu_user_profil_icon"></span>
-	          	<span id="myMenu_user_profil_name">유저명</span>
+	          	<span id="myMenu_user_profil_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_img})"></span>
+	          	<span id="myMenu_user_profil_name">${sessionScope.svo.name}</span>
 	          </div>
 	          <div id="modal_space"></div>
 	          <a href="http://localhost:9090/tumblbugs/mypage/message"><div>메시지</div></a>

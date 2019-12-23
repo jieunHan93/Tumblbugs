@@ -37,7 +37,7 @@ public class LoginController {
 				
 				session.setAttribute("svo", svo);
 				session.setAttribute("semail", vo.getEmail());
-				resPage = "/index";
+				resPage = "redirect:/index";
 			}
 			
 		}else{
@@ -52,5 +52,14 @@ public class LoginController {
 	@RequestMapping(value="/idfound", method=RequestMethod.GET)
 	public String idfound() {
 		return "/login/idfound";
+	}
+	
+	@RequestMapping(value = "/logout_proc" , method = RequestMethod.GET)
+	public String logout_proc(HttpSession session) {
+		SessionVO svo = new SessionVO();
+		if(svo != null) {
+			session.invalidate();
+		}
+		return "/index";
 	}
 }

@@ -163,7 +163,7 @@
 				<div class="cancel_box">후원을 취소하시겠습니까?</div>
 				<div>
 					<button type="button" id="btn_funding_cancel">취소하기</button>
-					<a href="http://localhost:9090/tumblbugs/myfunding/detail"><button type="button" id="btn_go_funding_detail">다시 생각해보기</button></a>
+					<a href="http://localhost:9090/tumblbugs/myfunding/${funding_id }"><button type="button" id="btn_go_funding_detail">다시 생각해보기</button></a>
 				</div>
 			</div>
 		</section>

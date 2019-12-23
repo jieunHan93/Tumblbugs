@@ -31,7 +31,7 @@
 	<div id="funding_step1">
 		<div id="project_info">
 			<div>
-				<a id="backToProject" href="http://localhost:9090/tumblbugs/project_content?pj_id=${pj_id }"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
+				<a id="backToProject" href="http://localhost:9090/tumblbugs/project/${pj_addr }"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
 				<div id="project_title">${pj_title }</div>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 					<span>펀딩해주시는 금액에 따라 감사의 의미로 선물을 드립니다.</span>
 				</div>
 				<div class="gift_select">
-					<form action="http://localhost:9090/tumblbugs/funding/step2" method="post" id="gift_select_form" name="gift_select_form">
+					<form action="http://localhost:9090/tumblbugs/${pj_addr }/funding/step2" method="post" id="gift_select_form" name="gift_select_form">
 						<!-- FundingVO 데이터 -->
 						<input type="hidden" name="pj_id" value="${pj_id }">
 						<input type="hidden" name="email" value="semibold@naver.com">

@@ -369,6 +369,7 @@ $(document).ready(function(){
 			return false;
 		}else{
 			alert("등록된 이메일로 인증 주소가 전송되었습니다.이메일로 접속하여 주소를 클릭후 인증해 주세요.");
+		
 		}
 		
 		
@@ -416,6 +417,7 @@ $(document).ready(function(){
 								<br>
 								<span id="pwcheck">비밀번호를 입력해주세요.</span>
 								<span id="pwcheckform">비밀번호 형식을 맞춰주세요.4자 이상</span>
+								
 							</li>
 							<li id="li5">
 								<input type="password" name="pass2" id="pass2" placeholder="비밀번호 재입력">

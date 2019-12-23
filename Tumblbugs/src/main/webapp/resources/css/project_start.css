@@ -293,7 +293,8 @@
 		color:rgb(241,75,88);
 	}
 	#project_start_upload .upload_detail_slide:hover,
-	#project_start_upload .present_detail_slide:hover{
+	#project_start_upload .present_detail_slide:hover,
+	.upload_present_slide{
 		background:rgb(240,245,255);
 		transition: all 0.2s;
 	}
@@ -612,12 +613,12 @@
 		position:relative;
 		left:18px;
 	}
-	#project_start_upload #content_my_img_d>div:nth-child(3)>div:first-child{
+	#project_start_upload #my_d_img{
 		width: 140px;
 	    height:140px;
 	    border-radius:70px;
 	    display:inline-block;
-	    background-image: url(http://localhost:9090/tumblbugs/images/project_start/profile_sample.jpg);
+	    /* background-image: url(http://localhost:9090/tumblbugs/images/project_start/profile_sample.jpg); */
   	 	background-size: cover;
   	  	background-position: 50% 50%;
 	}
@@ -1029,6 +1030,7 @@
 		padding-left:0px;
 	}
 	.pro_present .upload_detail input.m2_check,
+	.pro_present .upload_detail input.m2_check2,
 	.pro_present #m2_c4_i6{
 		width:15%;
 		height:30px;

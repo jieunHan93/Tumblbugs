@@ -5,7 +5,8 @@ import java.util.List;
 public class FundingVO {
 	String funding_id, pj_id, email, funding_date, extra_funding_price, total_funding_price, payment_id, payment_complete_yn,
 			recipient_name, recipient_addr, recipient_phone, recipient_request, delivery_start_date, courier, invoice_number, delivery_complete_yn,
-			pj_title, pj_simg, remaining_days, name, pj_end_date, pj_pay_date, payment;
+			pj_title, pj_simg, remaining_days, name, pj_end_date, pj_pay_date, payment,
+			project_status, payment_status;	//db에서 가져온 뒤 dao에서 가공해 set해주는 필드
 	int achievement_rate;
 	List<FundingGiftVO> giftList;
 	
@@ -207,6 +208,22 @@ public class FundingVO {
 
 	public void setPj_pay_date(String pj_pay_date) {
 		this.pj_pay_date = pj_pay_date;
+	}
+
+	public String getProject_status() {
+		return project_status;
+	}
+
+	public void setProject_status(String project_status) {
+		this.project_status = project_status;
+	}
+
+	public String getPayment_status() {
+		return payment_status;
+	}
+
+	public void setPayment_status(String payment_status) {
+		this.payment_status = payment_status;
 	}
 	
 	

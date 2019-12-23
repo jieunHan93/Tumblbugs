@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -89,18 +91,18 @@
 						var jsonObj = JSON.parse(data);
 						
 						for(i=0;i<jsonObj.list.length;i++){
-							var id_name = "input#"+i+".name";
-							var id_addr = "input#"+i+".addr";
-							var id_phone_num = "input#"+i+".phone_num";
-							var id_memo = "input#"+i+".memo";
-							var id_product = "input#"+i+".product";
-							var id_option = "input#"+i+".option";
-							var id_quantity = "input#"+i+".quantity";
-							var id_cost = "input#"+i+".cost";
-							var id_tip = "input#"+i+".tip";
-							var id_delivery_com = "input#"+i+".delivery_com";
-							var id_delivery_num = "input#"+i+".delivery_num";
-							var id_delivery_date = "input#"+i+".delivery_date";
+							var id_name = "input"+jsonObj.list[i].B+".name";
+							var id_addr = "input"+jsonObj.list[i].B+".addr";
+							var id_phone_num = "input"+jsonObj.list[i].B+".phone_num";
+							var id_memo = "input"+jsonObj.list[i].B+".memo";
+							var id_product = "input"+jsonObj.list[i].B+".product";
+							var id_option = "input"+jsonObj.list[i].B+".option";
+							var id_quantity = "input"+jsonObj.list[i].B+".quantity";
+							var id_cost = "input"+jsonObj.list[i].B+".cost";
+							var id_tip = "input"+jsonObj.list[i].B+".tip";
+							var id_delivery_com = "input"+jsonObj.list[i].B+".delivery_com";
+							var id_delivery_num = "input"+jsonObj.list[i].B+".delivery_num";
+							var id_delivery_date = "input"+jsonObj.list[i].B+".delivery_date";
 							$(id_name).val(jsonObj.list[i].E);
 							$(id_addr).val(jsonObj.list[i].F);
 							$(id_phone_num).val(jsonObj.list[i].G);
@@ -126,7 +128,7 @@
 		//excel 다운로드
 		$("#btn-download").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){
-				location.href="http://localhost:9090/tumblbugs/myproject/excelDownload";
+				location.href="http://localhost:9090/tumblbugs/myproject/excelDownload?pj_id=${vo.pj_id}";
 			};
 		});
 		
@@ -155,17 +157,23 @@
 	<jsp:include page="../header.jsp" />
 	
 	<div>
-		<div id="myproject_delivery_bc">
+		<div id="myproject_delivery_bc" style="background-image:url('http://localhost:9090/tumblbugs/upload/${vo.pj_simg}')">
 			<section id="myproject_delivery_bk">
 				<div id="myproject_delivery_info">
 					<div id="myproject_info_upper">
-						<div>펀딩 진행중</div><!-- <div>펀딩 성공</div><div>펀딩 실패</div> -->
-						<a href="http://localhost:9090/tumblbugs/project_content">2019년을 정리하는 100가지 질문 <연말정산> 5주년</a><span>Day-off</span>
+						<div>${vo.status }</div>
+						<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }">${vo.pj_title }</a><span>${vo.name }</span>
 					</div>
 					<div id="myproject_info_lower">
-						<div><span>모인 금액</span><span>20,881,500원</span></div>
-						<div><span>달성률</span><span>4176%</span></div>
-						<div><span>남은 시간</span><span>7일</span></div>
+						<div><span>모인 금액</span><span>${vo.funding }원</span></div>
+						<div><span>달성률</span><span>${vo.progress }%</span></div>
+						<div><span>남은 시간</span>
+						<span>
+						<c:choose>
+							<c:when test="${vo.remaining_days < 0 }">0일</c:when>
+							<c:otherwise>${vo.remaining_days }일</c:otherwise>
+						</c:choose>
+						</span></div>
 					</div>
 				</div>
 			</section>
@@ -211,27 +219,27 @@
 							</tr>
 						</thead>
 						<tbody>
-							<% for(int i=0; i<30;i++){ %> 
+							<c:forEach var="vo" items="${list }">
 							<tr class="delivery_table_loaddata">
-								<td class="rno"><%= i+1 %></td>
-								<td class="pay_num"><%= 838765+i %></td>
-								<td class="pay_person">홍길동</td>
-								<td class="payday">2019-12-01</td>
-								<td><input type="text" id="<%= i %>" class="name" name="list[<%=i%>].name" value="한지은" required/></td>
-								<td><input type="text" id="<%= i %>" class="addr" value="[17095]경기도 용인시 기흥구 덕영대로2077번길 53 (청현마을 태영데시앙) 200동 1001호"></td>
-								<td><input type="text" id="<%= i %>" class="phone_num" value="01053519617"></td>
-								<td><input type="text" id="<%= i %>" class="memo" value="부재시 문앞에 놔주세요"></td>
-								<td><input type="text" id="<%= i %>" class="product" value="혼자서 탱탱볼"></td>
-								<td><input type="text" id="<%= i %>" class="option" value="<연말정산> ( ✕ 1 )"></td>
-								<td><input type="number" id="<%= i %>" class="quantity" value="1"></td>
-								<td><input type="number" id="<%= i %>" class="cost" value="13000"></td>
-								<td><input type="number" id="<%= i %>" class="tip" value="0"></td>
-								<td><input type="text" id="<%= i %>" class="delivery_com" value="우체국 택배"></td>
-								<td><input type="text" id="<%= i %>" class="delivery_num" value="12586184620500"></td>
-								<td><input type="date" id="<%= i %>" class="delivery_date" value="2019-12-02"></td>
-								<td>미완료</td>
+								<td class="rno">${vo.rno}<input type="hidden" name="rno" value="${vo.rno }"></td>
+								<td class="pay_num">${vo.funding_id}<input type="hidden" name="funding_id" value="${vo.funding_id}"></td>
+								<td class="pay_person">${vo.name }<input type="hidden" name="name" value=${vo.name }></td>
+								<td class="payday">${vo.funding_date }<input type="hidden" name="funding_date" value="${vo.funding_date }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="name" name="recipient_name" value="${vo.recipient_name }"/></td>
+								<td><input type="text" id="${vo.funding_id}" class="addr" name="recipient_addr" value="${vo.recipient_addr }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="phone_num" name="recipient_phone" value="${vo.recipient_phone }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="memo" name="recipient_request" value="${vo.recipient_request }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="product" name="gift_title" value="${vo.gift_title }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="option" name="gift_option" value="${vo.gift_option }"></td>
+								<td><input type="number" id="${vo.funding_id}" class="quantity" name="gift_quantity" value="${vo.gift_quantity }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="cost" name="funding_gift_price" value="${vo.funding_gift_price }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="tip" name="extra_funding_price" value="${vo.extra_funding_price }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="delivery_com" name="courier" value="${vo.courier }"></td>
+								<td><input type="text" id="${vo.funding_id}" class="delivery_num" name="invoice_number" value="${vo.invoice_number }"></td>
+								<td><input type="date" id="${vo.funding_id}" class="delivery_date" name="delivery_start_date" value="${vo.delivery_start_date }"></td>
+								<td>${vo.delivery_complete_yn }<input type="hidden" name="delivery_complete_yn" value=${vo.delivery_complete_yn }></td>
 							</tr>
-							<% } %>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

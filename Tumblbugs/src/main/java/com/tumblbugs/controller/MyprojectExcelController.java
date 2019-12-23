@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,17 +24,35 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.tumblbugs.dao.DeliveryDAO;
 import com.tumblbugs.dao.testDAO;
 import com.tumblbugs.util.ExcelRead;
 import com.tumblbugs.util.ExcelReadOption;
 import com.tumblbugs.util.ExcelWrite;
 import com.tumblbugs.util.FileDownloadUtil;
 import com.tumblbugs.util.WriteOption;
+import com.tumblbugs.vo.DeliveryVO;
 import com.tumblbugs.vo.ListVO;
+import com.tumblbugs.vo.ProjectVO;
 import com.tumblbugs.vo.testVO;
 
 @Controller
 public class MyprojectExcelController {
+	
+	@Autowired
+	private DeliveryDAO deliveryDAO;
+	
+	@RequestMapping(value="/myproject/delivery", method=RequestMethod.GET)
+	public ModelAndView myproject_delivery(String pj_id) {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<DeliveryVO> list = deliveryDAO.getResultList(pj_id);
+		ProjectVO vo = deliveryDAO.getResultProject(pj_id);
+		mv.addObject("list", list);
+		mv.addObject("vo", vo);
+		mv.setViewName("/mypage/myproject_delivery");
+		return mv;
+	}
+	
 	/**
 	 * produces="text/plain;charset=UTF-8" 한글로 response하는데 도움을 줌!
 	 * **/
@@ -75,6 +94,7 @@ public class MyprojectExcelController {
 			obj.addProperty("B", article.get("B"));
 			obj.addProperty("C", article.get("C"));
 			obj.addProperty("D", article.get("D"));*/
+            obj.addProperty("B", article.get("B"));
 			obj.addProperty("E", article.get("E"));
 			obj.addProperty("F", article.get("F"));
 			obj.addProperty("G", article.get("G"));
@@ -104,19 +124,20 @@ public class MyprojectExcelController {
 
 	@RequestMapping(value="/myproject/excelDownload", method=RequestMethod.GET)
 	/*@ResponseBody*/
-    public void excelExport(Locale locale, HttpServletRequest request, HttpServletResponse response){
+    public void excelExport(String pj_id, Locale locale, HttpServletRequest request, HttpServletResponse response){
 		
 		Date now = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		ArrayList<DeliveryVO> list = deliveryDAO.getResultList(pj_id);
 		
-		int i = 0;
+/*		int i = 0;
 		testVO vo = null;
 		if(vo == null) {
 		   vo = new testVO();
 		}
 	   
 		testDAO dao = new testDAO();
-		List<testVO> list = dao.getList();
+		List<testVO> list = dao.getList();*/
 	   
 		
 		String root_path = request.getSession().getServletContext().getRealPath("/"); 
@@ -150,29 +171,30 @@ public class MyprojectExcelController {
 		try {
 			List<String[]> contents = new ArrayList<String[]>();
 			String[] row = new String[18];
-	       
-			for(int j=0;j<list.size();j++){
+			int i = 0;
+			for(DeliveryVO vo: list){
 				row = new String[18];
 				//row[0] = pvo.getTitle();
-				row[0] = "1";
-				row[1] = "838765";
-				row[2] = "2019-12-01";
-				row[3] = "홍길동";
-				row[4] = "한지은";
-				row[5] = "[17095]경기도 용인시 기흥구 덕영대로2077번길 53 (청현마을 태영데시앙) 200동 1001호";
-				row[6] = "01053519617";
-				row[7] = "부재시 문앞에 놔주세요";
-				row[8] = "혼자서 탱탱볼";
-				row[9] = "<연말정산> (1개)";
-				row[10] = "1";
-				row[11] = "13000";
-				row[12] = "0";
-				row[13] = "우체국 택배";
-				row[14] = "12586184620500";
-				row[15] = "2019-12-02";
-				row[16] = "미완료";
+				row[0] = String.valueOf(vo.getRno());
+				row[1] = vo.getFunding_id();
+				row[2] = vo.getName();
+				row[3] = vo.getFunding_date();
+				row[4] = vo.getRecipient_name();
+				row[5] = vo.getRecipient_addr();
+				row[6] = vo.getRecipient_phone();
+				row[7] = vo.getRecipient_request();
+				row[8] = vo.getGift_title();
+				row[9] = vo.getGift_option();
+				row[10] = String.valueOf(vo.getGift_quantity());
+				row[11] = String.valueOf(vo.getFunding_gift_price());
+				row[12] = vo.getExtra_funding_price();
+				row[13] = vo.getCourier();
+				row[14] = vo.getInvoice_number();
+				row[15] = vo.getDelivery_start_date();
+				row[16] = vo.getDelivery_complete_yn();
 				
-				if(j == 0) row[17] = "업로드시에는 필터를 풀고 진행해주세요";
+				if(i == 0) row[17] = "업로드시에는 필터를 풀고 진행해주세요";
+				i++;
 				contents.add(row);
 			}
 	       

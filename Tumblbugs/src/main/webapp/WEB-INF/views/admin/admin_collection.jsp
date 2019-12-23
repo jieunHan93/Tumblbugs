@@ -161,6 +161,15 @@
 		}); // ajax
 	});
 	</script>
+	
+	<style>
+	div#admin_sidebar>div#admin_sidebar_p1{margin-bottom: 50px;}
+	div#admin_sidebar>div#admin_sidebar_p1>img {
+		display:block;
+		width:140px !important;
+		height:140px !important;
+	}
+	</style>
 </head>
 <body>
 	<jsp:include page="admin_sidebar.jsp"></jsp:include>

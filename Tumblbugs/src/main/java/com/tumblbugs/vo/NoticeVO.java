@@ -2,7 +2,76 @@ package com.tumblbugs.vo;
 
 public class NoticeVO {
 	
-	String notice_id, notice_title, notice_content, notice_category, notice_reg_date, notice_event_start, notice_event_end;
+	String notice_id, notice_title, notice_content, notice_category, notice_reg_date, notice_event_start, notice_event_end, event_extra_date, event_waiting_date;
+	int rno;
+	
+	String next_title, next_id, prev_title, prev_id, next_category, prev_category;
+	
+	
+	
+	public String getNext_title() {
+		return next_title;
+	}
+
+	public String getNext_category() {
+		return next_category;
+	}
+
+	public void setNext_category(String next_category) {
+		this.next_category = next_category;
+	}
+
+	public String getPrev_category() {
+		return prev_category;
+	}
+
+	public void setPrev_category(String prev_category) {
+		this.prev_category = prev_category;
+	}
+
+	public void setNext_title(String next_title) {
+		this.next_title = next_title;
+	}
+
+	public String getNext_id() {
+		return next_id;
+	}
+
+	public void setNext_id(String next_id) {
+		this.next_id = next_id;
+	}
+
+	public String getPrev_title() {
+		return prev_title;
+	}
+
+	public void setPrev_title(String prev_title) {
+		this.prev_title = prev_title;
+	}
+
+	public String getPrev_id() {
+		return prev_id;
+	}
+
+	public void setPrev_id(String prev_id) {
+		this.prev_id = prev_id;
+	}
+
+	public String getEvent_waiting_date() {
+		return event_waiting_date;
+	}
+
+	public void setEvent_waiting_date(String event_waiting_date) {
+		this.event_waiting_date = event_waiting_date;
+	}
+
+	public int getRno() {
+		return rno;
+	}
+
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
 
 	public String getNotice_event_end() {
 		return notice_event_end;
@@ -10,6 +79,14 @@ public class NoticeVO {
 
 	public void setNotice_event_end(String notice_event_end) {
 		this.notice_event_end = notice_event_end;
+	}
+
+	public String getEvent_extra_date() {
+		return event_extra_date;
+	}
+
+	public void setEvent_extra_date(String event_extra_date) {
+		this.event_extra_date = event_extra_date;
 	}
 
 	public String getNotice_id() {

@@ -18,13 +18,19 @@ public class CollectionVO {
 	COL_BCOLOR    NOT NULL VARCHAR2(100)  
 	COL_CCOLOR    NOT NULL VARCHAR2(100)  */
 	int rno, count1, count2, count3, pcount;
-	String col_id, col_name, col_content, col_regdate, col_startdate, col_enddate, col_controll, col_status, col_img, col_simg, col_bcolor, col_ccolor;
+	String col_id, col_name, col_content, col_regdate, col_startdate, col_enddate, col_controll, col_status, col_img, col_simg, col_bcolor, col_ccolor, col_addr;
 	CommonsMultipartFile cofile;
 	
 	// 컬렉션에 프로젝트 추가를 위한 필드
 	String pj_id, pj_category, pj_title, name, pj_start_date, pj_end_date, col_pj_regdate;
 	
 	
+	public String getCol_addr() {
+		return col_addr;
+	}
+	public void setCol_addr(String col_addr) {
+		this.col_addr = col_addr;
+	}
 	public int getPcount() {
 		return pcount;
 	}

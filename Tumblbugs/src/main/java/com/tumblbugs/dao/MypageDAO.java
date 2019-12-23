@@ -2,7 +2,9 @@ package com.tumblbugs.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,10 @@ public class MypageDAO {
 		return sqlSession.selectOne(namespace + ".select_profile_pass" , pass);	
 		
 	}
-	public int getpayment_update(PaymentVO vo) {
-
-		return sqlSession.update(namespace2 + ".payment_update_proc" , vo);	
+	public int getpayment_insert(PaymentVO vo) {
+		System.out.println(vo.getCard_number());
+		System.out.println(vo.getCard_number()+"dao");
+		return sqlSession.insert(namespace2 + ".payment_insert_proc" , vo);	
 		
 	}
 	public String getpayment(String sid) {
@@ -46,11 +49,17 @@ public class MypageDAO {
 	public int totalcount() {
 		return sqlSession.selectOne(namespace2 + ".TotalCount");			
 	}
-	public ArrayList<PaymentVO> payment_info() {
-		List list = null;
 	
-		list = sqlSession.selectList(namespace2 + ".payment_info");	
+	public ArrayList<PaymentVO> payment_info(int startCount, int endCount ,String email) {
+		List<PaymentVO> list = null;
+		Map param = new HashMap<String,String>();
+		param.put("startCount", String.valueOf(startCount));
+		param.put("endCount", String.valueOf(endCount));
+		param.put("email", email);
+		
+		list = sqlSession.selectList(namespace2 + ".payment_info" , param);	
 		return (ArrayList<PaymentVO>)list;
+
 	
 	}
 	public int select_pyment_method() {

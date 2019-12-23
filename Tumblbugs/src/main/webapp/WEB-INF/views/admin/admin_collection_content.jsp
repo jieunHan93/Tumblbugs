@@ -91,6 +91,24 @@
 			}
 			
 		});
+		/** 컬렉션 주소 중복 체크 **/
+		$("#collection_addr").focusout(function(){
+			if($("#collection_addr").val() != ""){
+				console.log("val:"+$("#collection_addr").val() + '${vo.col_addr}');
+				$.ajax({
+					url: "http://localhost:9090/tumblbugs/admin/collection/write/check?col_addr="+$("#collection_addr").val()+"&col_id=${vo.col_id}",
+					success:function(result){
+						if(result != 0){
+							$("#col_addr_check").text("이미 있는 기획전 주소입니다. 다시 입력해주세요").css("color", "#FF6666");
+							$("#collection_addr").val("");
+							$("#collection_addr").focus();
+						} else {
+							$("#col_addr_check").text("사용 가능한 기획전 주소입니다.").css("color", "#999999");
+						}
+					}
+				}); // ajax
+			}
+		});
 		
 		//파일 이름 가져오기
 		 $("#cofile").change(function(){
@@ -246,11 +264,6 @@
 				});
 			}
 		});
-		
-		
-		if('${result}' == "true"){
-			alert("정보 수정을 완료했습니다.");
-		}
 	});
 	
 	</script>
@@ -271,6 +284,13 @@
 					<tr>
 						<th>기획전명</th>
 						<td colspan="3"><input type="text" id="collection_name" name="col_name" value="${vo.col_name}"></td>
+					</tr>
+					<tr>
+						<th>기획전 주소</th>
+						<td colspan="3">
+							<input type="text" id="collection_addr" name="col_addr" value="${vo.col_addr}" maxlength="20">
+							<span id="col_addr_check"></span>
+						</td>
 					</tr>
 					<tr>
 						<th>기획전 배경색</th>
@@ -317,7 +337,7 @@
 				<input type="hidden" name="col_controll" value="${vo.col_controll }">
 				<div id="collection_update_btn">
 					<button type="button" id="collection_project_selectBtn"><i class="fas fa-plus"></i>프로젝트 추가</button>
-					<a href="http://localhost:9090/tumblbugs/collections?col_id=${vo.col_id }" target="_blank"><button type="button"><i class="far fa-eye"></i>미리보기</button></a>
+					<a href="http://localhost:9090/tumblbugs/collections/${vo.col_addr }" target="_blank"><button type="button"><i class="far fa-eye"></i>미리보기</button></a>
 				</div>
 				<div id="collection_write_btn">
 					<button type="button" id="collection_save"><i class="fas fa-save"></i>수정</button>

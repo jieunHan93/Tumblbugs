@@ -1,20 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>°ü¸®ÀÚ ÆäÀÌÁö ¸ŞÀÎ</title>
+<title>ê´€ë¦¬ì í˜ì´ì§€</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/admin_notice.css">
+<script src="http://localhost:9090/tumblbugs/js/admin_notice.js"></script>
 <script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/admin_project_member.css">
+
+
 <script>
 	$(document).ready(function() {
 		$(".funding_list#list_all").show();
 		$("nav #list_all #list_count").css("background-color", "#1d85ea");
 		
-		//ÅÇ ¼±ÅÃ
+		var table = $('#project_table').DataTable({
+			bPaginate: true, //í˜ì´ì§•ì²˜ë¦¬
+            bLengthChange: true, // nê°œì”©ë³´ê¸°
+            lengthMenu : [ [10, 30, -1], [10, 30, "ì „ì²´"] ], // 10/25/50/All ê°œì”©ë³´ê¸°
+            bAutoWidth: false, //ìë™ë„ˆë¹„
+            ordering: true,//ì¹¼ëŸ¼ë³„ ì •ë ¬
+            searching: true,
+            columnDefs: [
+                { targets: [0,1,4,5], searchable: false  } ]
+		});
+		
+		table.on( 'order.dt search.dt', function () {
+			table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+		            cell.innerHTML = i+1;
+		        } );
+		    } ).draw();
+
+		//ì„ íƒ íƒ­ css
+		var list_name = '${list_name}';
+		
+		if(list_name == "") {
+			$("nav #all li").addClass("select_tab");
+			$("nav #all #list_count").css("background-color", "#1d85ea");
+		} else {
+			$("nav #" + list_name + " li").addClass("select_tab");
+			$("nav #" + list_name + " #list_count").css("background-color", "#1d85ea");
+		}
+		
+		//íƒ­ ì„ íƒ
 		$("nav li").click(function() {
 			var id = $(this).attr("id");
 			
@@ -25,159 +60,23 @@
 			
 			$(".funding_list").hide();
 			$(".funding_list#" + id).show();
+			
+			if($(this).attr("id") == "list_notice"){
+				// Apply a search to the second table for the demo
+				table.search( '' ).draw();
+				table.columns(2).search( 'ê³µì§€ì‚¬í•­' ).draw();
+			}else if($(this).attr("id") == "list_event"){
+				table.search( '' ).draw();
+				table.columns(2).search( 'ì´ë²¤íŠ¸' ).draw();
+				
+			}else{
+				table.columns().search( '' ).draw();
+			}
+			
 		});
-		//1:1¹®ÀÇ
+		
+	
 	});
-</script>
-<style>
-body {background-color: #f7f7f7;}
-div#admin_mainpage{
-	/* display: inline-block; */
-}
-div#admin_mainconent{
-	display: inline-block;
-	margin: 0;
-	position: absolute;
-	margin-left: 320px;
-}
-div#admin_mainconent>div#admin_header{
-	border-bottom:1px solid #ccc;
-	border-right:1px solid #ccc;
-	width: 1100px;
-	height: 70px;
-	line-height:70px;
-	background-color: #ffffff;
-	display: inline-block;
-	color: #1e90ff;
-}
-div#admin_mainconent>div#admin_header p {
-	margin-left: 20px;
-}
-
-	#funding_history{
-		position: absolute;
-		margin-left: 20px;
-	}
-	#funding_history section.page_content {
-		background-color: #f6f5f5;
-	}
-	#funding_history article {
-		width: 1080px;
-		margin: auto;
-	}
-	#funding_history li {list-style-type: none;}
-	
-	
-	/* ÅÇ */
-	#funding_history article#page_content_tab {
-		padding: 20px 0px 20px 0px;
-	}
-	#funding_history #page_content_tab nav,
-	#funding_history #page_content_tab li,
-	#funding_history .search {
-		display: inline-block;
-		font-size: 10.5pt;
-	}
-	#funding_history #page_content_tab li {
-		border-radius: 4px;
-		padding: 8px 10px 8px 10px;
-		margin-right: 8px;
-		cursor: pointer;
-		/* background-color: #eeeded; */
-	}
-	#funding_history #page_content_tab li:hover {
-		background-color: rgba(0,0,0,.05);
-	}
-	#funding_history #page_content_tab li span#list_count {
-		display: inline-block;
-		margin-left: 10px;
-		border-radius: 5px;
-		width: 26px;
-		font-size: 10pt;
-		text-align: center;
-		background-color: #999999;
-		color: white;
-	}
-	
-	#funding_history .select_tab {
-		background-color: rgba(0,0,0,.05);
-		color: #1d85ea;
-	}
-	
-	/* °Ë»öÃ¢ */
-	#funding_history .search {
-		float: right;
-		text-align: right;
-	}
-	#funding_history .search input {
-		border: 1px solid lightgray;
-		border-radius: 5px;
-		width: 350px;
-		padding: 7px 7px 7px 12px;
-	}
-	
-	/* ÃÑ n°ÇÀÇ ÈÄ¿øÀÌ ÀÖ½À´Ï´Ù. */
-	#funding_history div.list_count {
-		color: #545454;
-		background-color: #eeeded;
-		padding: 15px 15px 15px 15px;
-		margin-bottom: 17px;
-		border-radius: 5px;
-	}
-	.funding_list{
-		display: none;
-	}
-	#funding_history div.list_count i {
-		font-size:16px;
-		margin-right: 15px;
-		margin-left: 15px;
-	}
-	div#admin_notice {
-		width: 1080px;
-		position: absolute;
-		margin: 200px 0px 0px 20px;
-	}
-	 table#notice_list {
-		width: 1080px;
-		text-align: center;
-	}
-	 table#notice_list, table#notice_list th, table#notice_list td {
-	 	border: 1px solid gray;
-		border-collapse: collapse;
-	}
-	 table#notice_list td {
-	 	height: 30px;
-	 }
-	 table#notice_list tr#notice_list_item {
-	 	background-color: #eeeded;
-	 }
-	 table#notice_list tr#notice_list_item2 {
-	 	background-color: #ffffff;
-	 } 
-	 table#notice_list tr#notice_list_item2 a#td_a{
-	 	text-decoration: underline;
-	 	color: #1e90ff;
-	 }
-	 #notice_btn_div{
-	 	display:inline-block;
-	 }
-	 #notice_write_btn{
-	 	padding:8px 30px 8px 30px;
-	 	position:relative;
-	 	top:200px;
-	 	right:102px;
-	 	color:white;
-	 	border:none;
-	 	font-weight:500;
-	 	border-radius:4px;
-	 	background:#343434;
-	 	letter-spacing:0.5px;
-	 	cursor:pointer;
-	 }
-	 
-</style>
-<script>
-	
 </script>
 </head>
 <body>
@@ -185,89 +84,81 @@ div#admin_mainconent>div#admin_header p {
 		<jsp:include page="admin_sidebar.jsp"></jsp:include>
 		<div id="admin_mainconent">
 			<div id="admin_header">
-				<p>°øÁö»çÇ×</p>
+				<p>ê³µì§€ì‚¬í•­</p>
 			</div>
 		   <div id="funding_history">
 				<section class="page_content">
 					<article id="page_content_tab">
 						<nav>
 							<li class="select_tab" id="list_all">
-								<span>¸ğµÎ º¸±â</span>
-								<span id="list_count">1</span>
+								<span>ëª¨ë‘ ë³´ê¸°</span>
+								<span id="list_count">${allCount}</span>
 							</li>
-							<li id="list_ongoing">
-								<span>°øÁö»çÇ×</span>
-								<span id="list_count">1</span>
+							<li id="list_notice">
+								<span>ê³µì§€ì‚¬í•­</span>
+								<span id="list_count">${noticeCount}</span>
 							</li>
-							<li id="list_finish">
-								<span>ÀÌº¥Æ®</span>
-								<span id="list_count">0</span>
+							<li id="list_event">
+								<span>ì´ë²¤íŠ¸</span>
+								<span id="list_count">${eventCount}</span>
 							</li>
 						</nav>
-						<div class="search">
-							<span><input type="text" placeholder="°Ë»ö"></span>
-						</div>
 					</article>
 					<article class="page_content_funding_list">
 						<div class="funding_list" id="list_all">
-							<div class="list_count"><i class="fas fa-list"></i>ÃÑ 1°ÇÀÇ °Ô½Ã±ÛÀÌ ÀÖ½À´Ï´Ù.</div>
+							<div class="list_count"><i class="fas fa-list"></i>ì´ ${allCount}ê±´ì˜ ê²Œì‹œê¸€ì´ ìˆìŠµë‹ˆë‹¤.</div>
 						</div>
-						<div class="funding_list" id="list_ongoing">
-							<div class="list_count"><i class="fas fa-question"></i></i>ÃÑ 1°ÇÀÇ °øÁö»çÇ×ÀÌ ÀÖ½À´Ï´Ù.</div>
+						<div class="funding_list" id="list_notice" >
+							<div class="list_count"><i class="fas fa-question"></i>ì´ ${noticeCount}ê±´ì˜ ê³µì§€ì‚¬í•­ì´ ìˆìŠµë‹ˆë‹¤.</div>
 						</div>
-						<div class="funding_list" id="list_finish">
-							<div class="list_count"><i class="far fa-check-circle"></i></i>ÃÑ 0°ÇÀÇ ÀÌº¥Æ®°¡ ÀÖ½À´Ï´Ù.</div>
+						<div class="funding_list" id="list_event">
+							<div class="list_count"><i class="far fa-check-circle"></i>ì´${eventCount}ê±´ì˜ ì´ë²¤íŠ¸ê°€ ìˆìŠµë‹ˆë‹¤.</div>
 						</div>
 					</article>
 				</section>
 			</div>
 			<div id="notice_btn_div">
-				<a href="http://localhost:9090/tumblbugs/admin/notice_write"><button type="button" id="notice_write_btn">±Û¾²±â</button></a>
+				<a href="http://localhost:9090/tumblbugs/admin/notice_write"><button type="button" id="notice_write_btn">ê¸€ì“°ê¸°</button></a>
 			</div>
 			<div id="admin_notice">
-				<table id="notice_list">
-					<tr id="notice_list_item">
-						<th>¹øÈ£</th>
-						<th>ºĞ·ù</th>
-						<th>Á¦¸ñ</th>
-						<th>µî·ÏÀÏÀÚ</th>
-						<th>ÁøÇà»óÈ²</th>
+				<table id="project_table">
+				<thead>
+					<tr id="project_table_item">
+						<th>ë²ˆí˜¸</th>
+						<th>ID</th>
+						<th>ë¶„ë¥˜</th>
+						<th>ì œëª©</th>
+						<th>ë“±ë¡ì¼ì</th>
+						<th>ì§„í–‰ìƒí™©</th>
 					</tr>
-					
-					<tr id="notice_list_item2">
-						<td>2</td>
-						<td>°øÁö»çÇ×</td>
-						<td><a href="http://localhost:9090/tumblbugs/admin/notice_content" id="td_a">°ü¸®ÀÚ´Ô ¹®ÀÇÀÔ´Ï´Ù~</a></td>
-						<td>2019-12-02</td>
-						<td>ÁøÇàÁß</td>
-					</tr>
-					<!-- <tr id="notice_list_item2">
-						<td>3</td>
-						<td>ÀÏ¹İ</td>
-						<td>bmlbmlbml</td>
-						<td>º´È£3</td>
-						<td><a href="#" id="td_a">°ü¸®ÀÚ´Ô ¹®ÀÇÀÔ´Ï´Ù~</a></td>
-						<td>2019-12-02</td>
-						<td>´äº¯¿Ï·á</td>
-					</tr>
-					<tr id="notice_list_item2">
-						<td>3</td>
-						<td>ÀÏ¹İ</td>
-						<td>bmlbmlbml</td>
-						<td>º´È£3</td>
-						<td><a href="#" id="td_a">°ü¸®ÀÚ´Ô ¹®ÀÇÀÔ´Ï´Ù~</a></td>
-						<td>2019-12-02</td>
-						<td>´äº¯¿Ï·á</td>
-					</tr>
-					<tr id="notice_list_item2">
-						<td>3</td>
-						<td>ÀÏ¹İ</td>
-						<td>bmlbmlbml</td>
-						<td>º´È£3</td>
-						<td><a href="#" id="td_a">°ü¸®ÀÚ´Ô ¹®ÀÇÀÔ´Ï´Ù~</a></td>
-						<td>2019-12-02</td>
-						<td>´äº¯¿Ï·á</td>
-					</tr> -->
+					<tbody id="noticeTbody">
+						<c:forEach var="vo" items="${list}" >
+							<tr id="project_table_item${vo.rno}" class="noticeTableTr" style="cursor:pointer" 
+								onClick = 'location.href="http://localhost:9090/tumblbugs/admin/notice_content?notice_id=${vo.notice_id}"'>
+								<td>${vo.rno}</td>
+								<td>${vo.notice_id}</td>
+								<td class="list_tab">${vo.notice_category}</td>
+								<td class="title">${vo.notice_title }</td>
+								<td>${vo.notice_reg_date}</td>
+								
+								<c:if test="${vo.event_waiting_date >= 0}">
+									<td>ì§„í–‰ëŒ€ê¸°</td>
+								</c:if>
+								<c:if test="${vo.event_waiting_date < 0}"> 
+									<c:if test="${vo.event_extra_date >= 0}"> 
+										<td>ì§„í–‰ì¤‘</td>
+									</c:if>
+									<c:if test="${vo.event_extra_date < 0}"> 
+										<td>ì¢…ë£Œ</td>
+									</c:if>
+								</c:if>
+								<c:if test="${vo.event_extra_date == null}"> 
+									<td>-</td>
+								</c:if>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</thead>
 				</table>
 			</div>
 		</div>

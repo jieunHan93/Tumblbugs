@@ -214,12 +214,12 @@ input[switch]:checked + label.checked:after {
 div.fc-bg td{
 	background-color: white;
 }
-div#admin_sidebar>div#admin_sidebar_p1{margin-bottom: 50px;}
+/* div#admin_sidebar>div#admin_sidebar_p1{margin-bottom: 50px;}
 div#admin_sidebar>div#admin_sidebar_p1>img {
 	display:block;
 	width:140px !important;
 	height:140px !important;
-}
+} */
 div#admin_sidebar>div#admin_sidebar_p1{
 	font-size:16px;
 }
@@ -240,6 +240,13 @@ div.fc-scroller.fc-day-grid-container{
 	admin_collection_content
 	ÇÑÁöÀº
 **/
+
+span#col_addr_check{
+	padding-left:10px;
+	font-size: 14px;
+	color:#999999;
+}
+
 div#admin_collection_write_body{
 	margin-left:320px;
 	background-color: #f6f5f5;

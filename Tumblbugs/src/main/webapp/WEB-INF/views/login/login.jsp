@@ -246,6 +246,7 @@ $(document).ready(function(){
 							<li>
 								<button type="submit" id="btnlogin">로그인</button>
 							</li>
+							
 						</ul>
 					</form>
 						

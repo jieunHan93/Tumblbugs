@@ -116,7 +116,7 @@ div#user_icon {
 	top:-7px; 	right:10px;
 	width:38px;
 	height:38px;
-    background-image: url("http://localhost:9090/tumblbugs/images/kurby.gif");
+    background-image: url("http://localhost:9090/tumblbugs/images/user-account.png");
     background-size: cover;
     background-position: 50% 50%;
 }

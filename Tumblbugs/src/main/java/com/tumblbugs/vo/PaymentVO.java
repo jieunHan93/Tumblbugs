@@ -4,6 +4,8 @@ public class PaymentVO {
 	String payment_id, email, payment_method, card_company, card_number, card_valid_date, card_pass, card_birth,
 	bank, account_number, account_name, account_birth, payment_date ,cardno1,cardno2,cardno3,cardno4;
 
+
+	
 	public String getPayment_id() {
 		return payment_id;
 	}

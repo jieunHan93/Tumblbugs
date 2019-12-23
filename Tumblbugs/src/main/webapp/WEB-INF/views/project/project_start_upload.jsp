@@ -27,6 +27,8 @@ $(document).ready(function(){
 	};
 	ck = CKEDITOR.replace("m3_c1_i1", editorConfig);
 	
+	CKEDITOR.config.height = 500;
+	
 	CKEDITOR.on('dialogDefinition', function( ev ){
 	   var dialogName = ev.data.name;
 	   var dialogDefinition = ev.data.definition;
@@ -41,7 +43,6 @@ $(document).ready(function(){
 	});
 	
 	/** 기존 값 세팅**/ 
-	CKEDITOR.replace("m3_c1_i1");
 	$("#m2_c2_i2").val('${vo.pj_end_date}');
 	$("#pj_start_date").val('${vo.pj_start_date}');
 	var pj_price = '${vo.pj_price}'.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -51,6 +52,7 @@ $(document).ready(function(){
 	$("#m2_c4_add_items").css('display','block');
 	$(".item_check_class td").css('background','rgb(242,233,245)');
 	$(".item_check_class input").css('background','rgb(242,233,245)');
+	  
 	if('${vo.pj_account_type}' == "개인"){
 		$("#business_account").css('display','none');
 		$("#personal_account").css('display','block');
@@ -74,11 +76,12 @@ $(document).ready(function(){
 	$("#menu_label1").css('background-color','rgb(247,247,247)').css('border-color','#ccc');
 	$("#content_up_menu1").css('display','inline-block');	
 	
-	/* $("#m3_c1_save").click(function() {
-		var content = CKEDITOR.instances.ckeditor_content.getData();
-		alert(content);
-	}); */
+	form_check();
 	
+	
+	 $("#submit_btn").click(function(){
+			alert("클릭!");
+	 });
 	
 	 $(".upload_detail_slide").on('click', function() {
 		var slide_id = "#"+$(this).attr("id");
@@ -86,12 +89,9 @@ $(document).ready(function(){
 		var save_btn = "#"+$(slide_id).next().attr("id")+" .up_save";
 		var input_file = "#"+$(slide_id).next().attr("id")+" input[type=file]";
 		
-		/* $(".present_detail_slide").css('display','inline-block'); */
 		$(".upload_detail_slide").css('display','inline-block');
-		$("upload_present_slide").css('display','block');
+		$(".upload_present_slide").css('display','block');
 		$(".upload_detail").css('display','none');
-		
-		/*$("input:radio[id ='personal_radio']").prop("checked", true);*/
 		
 		$(this).css('display','none');
 		$(save_btn).attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
@@ -113,7 +113,7 @@ $(document).ready(function(){
 		});
 		
 		/** 글자수 체크 & 버튼 활성화**/
-		$(slide_d_id+" input[type=text]").on("change keyup paste", function(){
+		$(slide_d_id+" input[type=text]").off().on("change keyup paste", function(){
 			var my_id = $(this).attr("id");
 			var input_val_len = $(this).val().length;
 			
@@ -225,6 +225,20 @@ $(document).ready(function(){
 					$(this).next().text(50-input_val_len+"자 남았습니다.").css("color","#444444");
 					$(this).css('border-color',"rgb(232,237,247)"); 
 					$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+					if(my_id=="m1_c4_i1"){
+						$.ajax({url: "project_check_addr_proc?pj_addr="+$("#m1_c4_i1").val(),
+							success: function(data){
+								if(!data){
+									$("#m1_c4_i1").next().text("이미 사용중인 페이지 주소입니다.").css("color","rgb(241,75,88)");
+									$(this).css('border-color',"rgb(241,75,88)");
+									$(save_btn).attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+								}
+								
+				        },  error:function(request,status,error){
+		                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		                    
+		                }});
+					}
 				}else if(input_val_len > 50){
 					$(this).next().text(input_val_len-50+"자 초과했습니다.").css("color","rgb(241,75,88)");
 					$(this).css('border-color',"rgb(241,75,88)");
@@ -237,7 +251,7 @@ $(document).ready(function(){
 			
 		});
 		
-		$("textarea").on("change keyup paste", function(){
+		$("textarea").off().on("change keyup paste", function(){
 			var my_id = $(this).attr("id");
 			var input_val_len = $(this).val().length;
 			 if(my_id=="m1_c3_i1"){
@@ -276,7 +290,7 @@ $(document).ready(function(){
 			}
 		});
 		
-		$("select").change(function(){
+		$("select").off().change(function(){
 			if(slide_id == "#content_m4_c3"){
 				var m4_txt_check = 0;
 				$(slide_d_id+" .m4_check").each(function(i, e){
@@ -293,10 +307,10 @@ $(document).ready(function(){
 				$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
 			}
 		});
-		$("input[type=date]").change(function(){
+		$("input[type=date]").off().change(function(){
 			$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
 		});
-		$("input[type=file]").change(function(){
+		$("input[type=file]").off().change(function(){
 			if($(this).val() != null && $(this).val() != ""){
 				$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
 			}
@@ -567,15 +581,7 @@ $(document).ready(function(){
 	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	                    
 	                }});
-				}/*else{
-					$(check_input).text(textarea_val).css('font-size','11pt').css('color','black').css('font-weight','550');
-					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
-					
-					$.ajax({url: "project_edit_proc?pj_id="+pj_id+"&pj_colname="+pj_colname+"&pj_val="+textarea_val,
-						success: function(data){
-							pj_id = data;
-					}});
-				}*/
+				}
 				
 			}else if(select_val != null && select_val !=""){
 					$(slide_d_id).css('display','none');
@@ -620,7 +626,6 @@ $(document).ready(function(){
 
 			          
 				}else if($(slide_d_id+" input[type=file]").attr("id") == "my_pro_img"){
-					alert("전송");
 						$(check_input).text("선택완료").css('font-size','11pt').css('color','black').css('font-weight','550');
 						$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
 						$(check_input).text(file_val).css('font-size','11pt').css('color','black').css('font-weight','550');
@@ -666,70 +671,7 @@ $(document).ready(function(){
 				
 				
 			}
-		
-			/** menu 전체 작성 check **/
-		 	 var m1_count = 0;
-			$(".m1_check").each(function(i, e){
-			   if($(this).val() != null && $(this).val() != ""){
-				   m1_count++;
-			   }
-			   if(m1_count == 10){//10
-				$("#menu_label1").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 프로젝트 개요");
-				$("#menu1_check").val("1");
-			   }
-			});
-			
-			 var m2_count = 0;
-			$(".m2_check").each(function(i, e){
-			   if($(this).val() != null && $(this).val() != ""){
-				   if(m2c5_origin_val != $("#m2_c5_i1").val()){
-					   m2_count++;
-				   }
-			   }
-			   if(m2_count == 9){
-				$("#menu_label2").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 펀딩 및 선물 구성");
-				$("#menu2_check").val("1");
-			   }
-			});
-			
-			 var m3_count = 0;
-			$(".m3_check").each(function(i, e){
-			   if($(this).val() != null && $(this).val() != ""){
-				   m3_count++;
-			   }
-			   if(m3_count == 1){
-				$("#menu_label3").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 스토리텔링");
-				 $("#menu3_check").val("1");
-			   }
-			});
-				
-			 var m4_count = 0;
-			$(".m4_check").each(function(i, e){
-			   if($(this).val() != null && $(this).val() != ""){
-				   m4_count++;
-			   }
-			   if(m4_count == 6){
-				$("#menu_label4").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 계좌 설정");
-				 $("#menu4_check").val("1");
-			   }
-			});
-			
-			var all = 0;
-			$(".all_check").each(function(i, e){
-				   if($(this).val() == 1){
-					   all++;
-				   }
-				   if(all == 4){
-					   $("#submit_btn").css('background','#1e90ff').css('color','white').css('cursor','pointer');
-					   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 모든 섹션을 완성하셨습니다. <span style='color:#1e90ff; font-weight:bold;'>검토 요청하기</span> 버튼을 눌러 검토를 요청하세요.");
-				   }else if(all == 1){
-					   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 1개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
-				   }else if(all == 2){
-					   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 2개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
-				   }else if(all == 3){
-					   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 3개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
-				   }
-			});
+			form_check();
 			
 		});
 	});
@@ -741,7 +683,6 @@ $(document).ready(function(){
 		slide_id = "#"+$(this).attr("id");
 		slide_d_id="#"+$(slide_id).next().attr("id");
 		save_btn = "#"+$(slide_id).next().attr("id")+" .up_save";
-	
 		/** 페이지 오픈 위치 **/
 		/*$(document).on('click',slide_id,function(){
 		    var thisTarget = $(slide_d_id);
@@ -749,7 +690,7 @@ $(document).ready(function(){
 		}); */
 		
 		$(".add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
-		
+	
 		if($(slide_d_id+" .add_items_table tr").length <= 1){
 			$(".add_items_table").css('display','none');
 		}else{
@@ -835,7 +776,6 @@ $(document).ready(function(){
             success : function(result) {
             	gift_id = result;
             	$(slide_d_id+" .gift_id").val(result);
-            	alert(gift_id);
             	
             },  error:function(request,status,error){
                 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -871,10 +811,9 @@ $(document).ready(function(){
 	                	$(slide_d_id+" .add_items_table tr:nth-child("+i+") #item_id").val(result);
 	                	$(slide_d_id+" .add_items_table tr:nth-child("+i+")").val(result);
 	                	$("item_table tr #"+t_id).val(result);
-	                	alert("아이템 성공~");
 	                },  error:function(request,status,error){
 	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                }});
+                	}});
 			}
 		}
 		
@@ -883,11 +822,11 @@ $(document).ready(function(){
 		
 		if($(this).attr("id") == "add_present_btn"){ 
 			var slide_present_id = "#"+$(slide_id).prev().attr("id");
-			alert(product_number);
 			$(slide_d_id).css('display','none');
 			$(slide_present_id).css('display','block');
-			$(slide_d_id+" .up_reset").attr("class","up_delete2").html("<i class='fas fa-trash-alt'></i> 삭제하기");
-			
+			/* $(slide_d_id+" .up_reset1").attr("class","up_delete2").html("<i class='fas fa-trash-alt'></i> 삭제하기"); */
+			$(".upload_present_slide2").attr("class","upload_present_slide");
+			$(".up_reset1").attr("class","gift_reset");
 			if($(slide_d_id+" input:checkbox[id='delivery_check']").is(":checked")){
 				$(slide_present_id+" .delivery_check_tag").text("배송 필요").css("border","1px solid gray").css("width","70px")
 					.css("padding","3px").css("border-radius","4px").css("display","inline-block").css("position","relative")
@@ -916,7 +855,7 @@ $(document).ready(function(){
 			$(slide_present_id+" .date").text($(slide_d_id+" input[id='present_date']").val());
 			
 			var new_present = "<div id='pro_present1' class='pro_present'>"+
-			"<div  class='upload_present_slide' style='display:none' id='upload_present_slide"+$('#present_number').val()+"'>"+
+			"<div class='upload_present_slide2' style='display:none' id='upload_present_slide"+$('#present_number').val()+"'>"+
 			"<label><span class='price'>5,000</span>원 이상 밀어주시는 분께</label>"+
 			"<div id='present_btn'>"+
 				"<button type='button' class='present_update'><i class='far fa-edit'></i> 수정하기</button>"+
@@ -939,7 +878,7 @@ $(document).ready(function(){
 				"<div>최소 후원금액</div>"+
 				"<div>인기 금액대인 1만원대 선물부터 특별한 의미를 담은 10만원 이상 선물까지, 다양한 금액대로 구성하면 성공률이 더욱 높아집니다."+
 					 " 배송이 필요한 선물의 경우,<span class='bold_txt'>배송비 포함</span>된 금액으로 작성해주세요.</div>"+
-				"<input type='text' placeholder='5,000' style='resize:none' class='m2_check' id='m2_c4_i2'/>"+
+				"<input type='text' placeholder='5,000' style='resize:none' class='m2_check2' id='m2_c4_i2'/>"+
 				"<label class='bold_txt' >원 이상 밀어주시는 분께 드리는 선물입니다.</label>"+
 			"</div>"+
 			"<div>"+
@@ -965,19 +904,19 @@ $(document).ready(function(){
 			"<div>"+
 				"<div>선물 제목</div>"+
 				"<div><p>구성된 선물에 대해 추가적으로 알리고 싶은 내용을 적어주세요.</div>"+
-				"<input type='text' placeholder='예)배송비 포함,얼리버드,(선물세트 A) 등' style='resize:none' class='m2_check' id='present_title'/>"+
+				"<input type='text' placeholder='예)배송비 포함,얼리버드,(선물세트 A) 등' style='resize:none' class='m2_check2' id='present_title'/>"+
 				"<label>50자 남았습니다</label>"+
 			"</div>"+
 			"<div>"+
 				"<div>선물 카드 정렬 순서</div>"+
 				"<div><p>선물 카드의 순서를 정해 주세요. 혜택이 많은 선물 카드부터 나오도록 등록하시는 것이 좋습니다.</div>"+
-				"<input type='text' placeholder='1' style='resize:none' class='m2_check'  id='m2_c4_i4'/>"+
+				"<input type='text' placeholder='1' style='resize:none' class='m2_check2'  id='m2_c4_i4'/>"+
 				"<label class='bold_txt'>번째로 보일 선물 카드입니다.</label>"+
 			"</div>"+
 			"<div>"+
 				"<div>예상 전달일</div>"+
 				"<div><p>이 선물을 선택한 후원자들에게 선물을 배송 또는 공개하기로 약속하는 날입니다. <span class='bold_txt'>결제 종료일 이후의 날짜</span>인지 확인해서 정해주세요.</div>"+
-				"<input type='date' style='resize:none' class='m2_check' id='present_date'/>"+
+				"<input type='date' style='resize:none' class='m2_check2' id='present_date'/>"+
 				"<label class='bold_txt'> 에 선물을 전달하겠습니다.</label>"+
 			"</div>"+
 			"<div>"+
@@ -986,7 +925,7 @@ $(document).ready(function(){
 				"<div>"+
 					"<input type='checkbox' id='gift_max_count'>"+
 					"<label class='bold_txt'>선물을</label>"+
-					"<input type='text' placeholder='1' style='resize:none' class='m2_check' id='m2_c4_i6'/>"+
+					"<input type='text' placeholder='1' style='resize:none' class='m2_check2' id='m2_c4_i6'/>"+
 									"<label class='bold_txt'>개로 제한합니다.</label>"+
 				"</div><div>"+
 					"<input type='checkbox' id='delivery_check'>"+
@@ -1005,6 +944,29 @@ $(document).ready(function(){
 			
 		} 
 	});
+	/** 상품 validation **/
+	$(document).on("change keyup paste",slide_d_id+" .m2_check2", function(){
+		var pro_btn_check = 0;
+		var item_check = 0;
+		
+		$(slide_d_id+" .item_check").each(function(i, e){
+			if($(this).is(":checked"))	item_check++;
+			
+		});
+		
+		$(slide_d_id+" .m2_check2").each(function(i, e){
+		   if($(this).val() != null && $(this).val() != "" ){
+			   pro_btn_check++;
+	    }
+	    if(pro_btn_check == 4 && item_check > 0 ){
+				$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+	   	}
+	    if(item_check > 0 && pro_btn_check == 4 ){
+				$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+		   }
+		});	
+	});
+
 
 	/** 상품 validation **/
 	$(document).on("change keyup paste",slide_d_id+" .m2_check", function(){
@@ -1110,9 +1072,8 @@ $(document).ready(function(){
 						item_option : $(slide_d_id+" .add_items_table tr:nth-child("+i+") #item_option").text(),
 						item_count : $(slide_d_id+" .add_items_table tr:nth-child("+i+") .pro_items_count").val()
 					  };
-				alert(item.item_id);
+				
 				if(item.item_id == '' || item.item_id == null){
-					alert("추가");
 					$.ajax({type: "POST",
 			        	url: 'project_edit_item_proc',
 			        	dataType: 'text',
@@ -1126,7 +1087,6 @@ $(document).ready(function(){
 		                	$("item_table tr #"+t_id).val(result);
 		                }});
 				}else{
-					alert("수정");
 					$.ajax({type: "POST",
 			        	url: 'project_update_item_check_proc',
 			        	dataType: 'text',
@@ -1147,33 +1107,36 @@ $(document).ready(function(){
 		$(".add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
 		slide_d_id="#"+$(this).parent().parent().next().next().attr("id");
 		
+		if($(slide_d_id+" .add_items_table tr").length <= 1){
+			$(".add_items_table").css('display','none');
+		}else{
+			$(".add_items_table").css('display','block');
+		}
+		
+		$(".upload_detail").css('display','none');
+		$(".upload_present_slide").css('display','');
 		$(this).parent().parent().css('display','none');
 		$(this).parent().parent().next().next().css('display','inline-block');
 		
 		$(slide_d_id+" .d_title").text("선물 수정하기");
 		
-		/** 페이지 오픈 위치 **/
-		$(document).on('click',slide_id,function(){
-		    var thisTarget = $(slide_d_id);
-			$(window).scrollTop($(thisTarget).offset().top);
-		});
 	});
 	
 	/** 상품 삭제 **/
-	
 	$(document).on('click','.up_delete',function(){
-		$(this).parent().parent().parent().css('display','none');
 		slide_del_id ="#"+$(this).parent().parent().next().next().attr("id"); 
+		var del_gift_id = $(slide_del_id+" .gift_id").val();
 		
-		alert($(slide_del_id+" .gift_id").val());
-		$.ajax({url: 'project_delete_gift_proc?gift_id='+$(slide_del_id+" .gift_id").val(),
+		$(this).parent().parent().parent().remove();
+		
+		$.ajax({url: 'project_delete_gift_proc?gift_id='+del_gift_id,
             success : function(result) {
             	alert(result);
         }});
 	
 	});
 	
-	$(document).on('click','.up_delete2',function(){
+/* 	$(document).on('click','.up_delete2',function(){
 		$(this).parent().parent().parent().css('display','none');
 		$.ajax({url: 'project_delete_gift_proc?gift_id='+$(this).prev().val(),
             success : function(result) {
@@ -1181,13 +1144,14 @@ $(document).ready(function(){
         }});
 	
 		
-	});
+	}); */
 	
 	/* 메뉴 카테고리 이벤트 */
 	$(".upload_menu_btn").click(function(){
 		var menu_sel = $(this).attr("id");
 		$(".upload_detail_slide").css('display','inline-block');
 		$(".upload_detail").css('display','none');
+		$(".present_detail_slide").css('display','');
 		$(".up_menu_lb").css('background-color','white').css('border-color','white');
 		$("#"+menu_sel).next().css('background-color','rgb(247,247,247)').css('border-color','#ccc');
 		
@@ -1625,7 +1589,69 @@ Date.prototype.format = function (f) {
 String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
 String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
 Number.prototype.zf = function (len) { return this.toString().zf(len); };
-
+function form_check(){
+	/** menu 전체 작성 check **/
+	 var m1_count = 0;
+	$(".m1_check").each(function(i, e){
+	   if($(this).val() != null && $(this).val() != ""){
+		   m1_count++;
+	   }
+	   if(m1_count == 6){//10
+		$("#menu_label1").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 프로젝트 개요");
+		$("#menu1_check").val("1");
+	   }
+	});
+	
+	 var m2_count = 0;
+	$(".m2_check").each(function(i, e){
+	   if($(this).val() != null && $(this).val() != ""){
+		  m2_count++;
+	   }
+	   if(m2_count == 9){
+		$("#menu_label2").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 펀딩 및 선물 구성");
+		$("#menu2_check").val("1");
+	   }
+	});
+	
+	 var m3_count = 0;
+	$(".m3_check").each(function(i, e){
+	   if($(this).val() != null && $(this).val() != ""){
+		   m3_count++;
+	   }
+	   if(m3_count == 1){
+		$("#menu_label3").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 스토리텔링");
+		 $("#menu3_check").val("1");
+	   }
+	});
+		
+	 var m4_count = 0;
+	$(".m4_check").each(function(i, e){
+	   if($(this).val() != null && $(this).val() != ""){
+		   m4_count++;
+	   }
+	   if(m4_count == 6){
+		$("#menu_label4").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 계좌 설정");
+		 $("#menu4_check").val("1");
+	   }
+	});
+	
+	var all = 0;
+	$(".all_check").each(function(i, e){
+		   if($(this).val() == 1){
+			   all++;
+		   }
+		   if(all == 4){
+			   $("#submit_btn").css('background','#1e90ff').css('color','white').css('cursor','pointer');
+			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 모든 섹션을 완성하셨습니다. <span style='color:#1e90ff; font-weight:bold;'>검토 요청하기</span> 버튼을 눌러 검토를 요청하세요.");
+		   }else if(all == 1){
+			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 1개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+		   }else if(all == 2){
+			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 2개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+		   }else if(all == 3){
+			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 3개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+		   }
+	});
+}
 function auto_hypen(num) {
 	num = num.replace(/[^0-9]/g, '');
 	var tmp = "";

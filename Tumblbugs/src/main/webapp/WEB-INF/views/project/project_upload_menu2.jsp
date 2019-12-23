@@ -159,7 +159,7 @@
 	<div  id="com_present" >선물 구성</div>
 	<div id="pro_present1" class="pro_present">
 	
-		<div  class="upload_present_slide" style="display:none" id="upload_present_slide">
+		<div class="upload_present_slide2" style="display:none" id="upload_present_slide">
 			<label><span class="price">5,000</span>원 이상 밀어주시는 분께</label>
 			<div id="present_btn">
 				<button type='button' class="present_update"><i class="far fa-edit"></i> 수정하기</button>
@@ -248,7 +248,7 @@
 	<c:forEach var="gvo" items='${glist}'>
 	<fmt:formatNumber var= "gift_price" value= "${gvo.gift_price}" />
 	<div id="pro_present1" class="pro_present">
-		<div  class="upload_present_slide"  id="upload_present_slide${gvo.rno}">
+		<div class="upload_present_slide"  id="upload_present_slide${gvo.rno}">
 			<label><span class="price">${gift_price}</span>원 이상 밀어주시는 분께</label>
 			<div id="present_btn">
 				<button type='button' class="present_update"><i class="far fa-edit"></i> 수정하기</button>

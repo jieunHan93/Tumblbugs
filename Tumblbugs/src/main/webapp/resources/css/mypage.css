@@ -543,6 +543,9 @@ div#registed_payment_not_founded>i{
 		display: inline-block;
 		font-size: 10.5pt;
 	}
+	#funding_history #page_content_tab a {
+		color: #4a4a4a;
+	}
 	#funding_history #page_content_tab li {
 		border-radius: 4px;
 		padding: 8px 10px 8px 10px;
@@ -600,9 +603,9 @@ div#registed_payment_not_founded>i{
 	
 	
 	/* 후원한 프로젝트 목록 */
-	#funding_history .funding_list {
+	/* #funding_history .funding_list {
 		display: none;
-	}
+	} */
 	#funding_history .funding_list a, .funding_list a:hover {
 		text-decoration: none;
 		color: #4a4a4a;
@@ -923,7 +926,6 @@ div#registed_payment_not_founded>i{
 		color: #676363;
 		text-align: center;
 	}
-	#funding_edit .content_wrap>div {display: none;}
 
 
 	/*** 선물 선택하기 ***/

@@ -49,10 +49,9 @@
 					alert("메시지를 입력하세요");
 					$("textarea#msg_content").focus();
 				} else {
-					var email = $("input#email").val();
 					var msg_content =$("textarea#msg_content").val();
 					$.ajax({
-						url: "http://localhost:9090/tumblbugs/mypage/message/content_insert_proc?chatroom_id=${chatroom_id}&email"+email+"&msg_content="+msg_content,
+						url: "http://localhost:9090/tumblbugs/mypage/message/content_insert_proc?chatroom_id=${chatroom_id}&msg_content="+msg_content,
 						success:function(result){
 							location.reload();
 						}
@@ -72,7 +71,7 @@
 				<div id="message_cat_box_header">
 					<div id="message_cat_box_header_title">
 						<a href="http://localhost:9090/tumblbugs/mypage/message"><span><i class="fas fa-chevron-left"></i>메시지함</span></a>
-						<a href="http://localhost:9090/tumblbugs/project_content?pj_id=${vo.pj_id }"><span>${vo.pj_title}</span></a>
+						<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }"><span>${vo.pj_title}</span></a>
 					</div>
 					<div id="message_cat_box_header_info">
 						<!-- 회사 id hidden으로 넘길것 -->
@@ -85,8 +84,6 @@
 				<div id="message_cat_box_footer">
 					<!-- <form name="ResMessageForm" method="post"> -->
 						<div>
-							<!-- 유저 아이디, 메시지 아이디 -->
-							<input type="hidden" name="email" value="semibold@naver.com">
 							<textarea class="form-control" name="msg_content" id="msg_content"></textarea>
 							<button type="button" id="send_message"><i class="fas fa-envelope"></i>보내기</button>
 						</div>

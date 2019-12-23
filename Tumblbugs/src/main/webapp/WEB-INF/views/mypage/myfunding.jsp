@@ -16,60 +16,30 @@
 <link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
 <script>
 	$(document).ready(function() {
-		var param = {"name": "category", "value": "all"};
+		var category = '${category}';
+		if(category == null || category == "") {
+			category = "all";
+		}
 		
-		$(".funding_list#all").show();
-		$("nav #all #list_count").css("background-color", "#1d85ea");
+		$("nav #" + category + " #list_count").css("background-color", "#1d85ea");
+		$("li#" + category).addClass("select_tab");
+		$("#search_result").hide();
 		
-		list(param);
-		
-		/**
-		후원 목록 출력 함수 - object를 파라미터로 받는다.
-		**/
-		function list(param, page) {
-			$(".funding_list a").remove();
-			$(".funding_list .list_none").remove();
-			
-			//페이징 시 해당 조건을 같이 파라미터로 넘겨주기 위해 리스트 필터링 조건에 쓰인 값을 전역변수에 저장해놓는다.
-			param = {"name":param.name, "value":param.value};
+		//검색 결과 출력
+		function search(keyword) {
+			$(".funding_list#search_result a").remove();
+			$(".funding_list#search_result .list_none").remove();
 			
 			$.ajax({
-				url: "http://localhost:9090/tumblbugs/funding_list?" + param.name + "=" + param.value,
+				url: "http://localhost:9090/tumblbugs/myfunding/search?search=" + keyword,
 				success: function(data) {
 					var obj = JSON.parse(data);
 					var appendData = "";
 					
 					if(obj.flist.length == 0) {
-						if(param.name == "search") {
-							appendData = "<div class='list_none'><i class='fas fa-search'></i><div>검색 결과가 없습니다.</div></div>";
-						} else if(param.name == "category") {
-							if(param.value == "all") {
-								appendData = "<div class='list_none'><i class='far fa-meh'></i><div>후원 내역이 없습니다.</div></div>";
-							} else if(param.value == "ongoing") {
-								appendData = "<div class='list_none'><i class='fas fa-rocket'></i><div>펀딩 진행중인 후원이 없습니다.</div></div>";
-							} else if(param.value == "payment") {
-								appendData = "<div class='list_none'><i class='far fa-credit-card'></i><div>결제 완료된 후원이 없습니다.</div></div>";
-							}
-						}
+						appendData = "<div class='list_none'><i class='fas fa-search'></i><div>검색 결과가 없습니다.</div></div>";
 					} else {
 						for(i=0;i<obj.flist.length;i++) {
-							//프로젝트 상태
-							/* var project_status = "";
-							if(obj.flist[i].remaining_days >= 0) {
-								project_status = "펀딩 진행중";
-							} else {
-								if(obj.flist[i].achievement_rate >= 100) {
-									project_status = "펀딩 성공";
-								} else {
-									project_status = "무산";
-								}
-							}
-							
-							//결제 상태
-							var payment_status = "";
-							if(obj.flist[i].payment_complete_yn == 'n') payment_status = "미결제";
-							else payment_status = "결제 완료"; */
-							
 							appendData += "<a href='http://localhost:9090/tumblbugs/myfunding/detail?funding_id="+ obj.flist[i].funding_id +"'>"
 												+ "<table>"
 													+ "<tr>"
@@ -80,10 +50,10 @@
 														+ "<td class='funding_image'><img id='project_main_img' src='http://localhost:9090/tumblbugs/upload/"
 															+ obj.flist[i].pj_simg +"'></td>"
 														+ "<td class='funding_detail'>"
-															+ "<div class='project_status'>" + project_status + "</div>"
+															+ "<div class='project_status'>" + obj.flist[i].project_status + "</div>"
 															+ "<div class='project_title'><b>" + obj.flist[i].pj_title + "<span class='creator_name'>"
 															+ obj.flist[i].name + "</span></b></div>"
-															+ "<div class='payment_status'><b>" + payment_status + "</b></div>"
+															+ "<div class='payment_status'><b>" + obj.flist[i].payment_status + "</b></div>"
 															+ "<div class='funding_price'>"
 																+ "<b>" + obj.flist[i].total_funding_price + "원</b>을 후원하셨습니다."
 															+ "</div>"
@@ -95,36 +65,24 @@
 						}
 					}
 					
-					if(param.name == "category") {
-						$(".funding_list#" + param.value).append(appendData);
-					} else if(param.name == "search") {
-						$("span#searchResultCount").text(obj.flist.length);
-						$(".funding_list#search").append(appendData);
-					}
+					$(".funding_list#category_result").hide();
+					$("nav li").removeClass("select_tab");
+					$("nav li #list_count").css("background-color", "#999999");
+					$("#paging").hide();
+					
+					$("span#searchResultCount").text(obj.flist.length);
+					$(".funding_list#search_result").append(appendData).show();
 				}
 			});
 		}
 		
-		
-		//탭 선택
-		$("nav li").click(function() {
-			tabChange($(this).attr("id"));
-		});
-		
-		
-		function tabChange(id) {
-			$("nav li").removeClass("select_tab");
-			$("nav li #list_count").css("background-color", "#999999");
-			$("nav li#" + id).addClass("select_tab");
-			$("nav li#" + id + " #list_count").css("background-color", "#1d85ea");
-			
-			//리스트를 다시 불러오는 함수 호출
-			list({"name":"category", "value": id});
-			
-			$(".funding_list").hide();
-			$(".funding_list#" + id).show();
+		function showCategoryResult() {
+			$("nav li#" + category).addClass("select_tab");
+			$("nav li#" + category + " #list_count").css("background-color", "#1d85ea");
+			$(".funding_list#category_result").show();
+			$(".funding_list#search_result").hide();
+			$("#paging").show();
 		}
-		
 		
 		//후원 취소 알림
 		if('${cancelResult}' == "1") {
@@ -135,28 +93,6 @@
 		$("#modalClose i").click(function() {
 			$("#alertModal").remove();
 		});
-		
-		
-		/** 페이징 **/
-		var pager = jQuery('#ampaginationsm').pagination({
-		    maxSize: 5,	    		// max page size
-		    totals: '${dbCount}',	// total pages
-		    page: '${page}',		// initial page		
-		    pageSize: '${pageSize}',			// max number items per page
-		
-		    // custom labels		
-		    lastText: '&raquo;&raquo;', 		
-		    firstText: '&laquo;&laquo;',		
-		    prevText: '&laquo;',		
-		    nextText: '&raquo;',
-				     
-		    btnSize:'sm'	// 'sm'  or 'lg'		
-		});
-		
-		jQuery('#ampaginationsm').on('am.pagination.change',function(e){
-			   jQuery('.showlabelsm').text('The selected page no: '+e.page);
-	           $(location).attr('href', "http://localhost:9090/tumblbugs/myfunding?page="+e.page+ "&" + param.name + "=" + param.value);
-	    });
 		
 		
 		/** 검색 **/
@@ -175,17 +111,15 @@
 				$("#searchClear").show();
 				$("#searchIcon").hide();
 				
-				list({"name": "search", "value": $(this).val()});
+				search($(this).val());
 				
 				$("nav li").removeClass("select_tab");
 				$("nav li #list_count").css("background-color", "#999999");
-				
-				$(".funding_list").hide();
-				$(".funding_list#search").show();
 			} else {
 				$("#searchClear").hide();
 				$("#searchIcon").show();
-				tabChange("all");
+				
+				showCategoryResult();
 			}
 		});
 		
@@ -195,10 +129,34 @@
 			$("#searchClear").hide();
 			$("#searchIcon").show();
 			
-			tabChange("all");
+			showCategoryResult();
 		});
 		
 		
+		/** 페이징 **/
+		var pager = jQuery('#ampaginationsm').pagination({
+		    maxSize: 5,	    			// max page size
+		    totals: '${dbCount}',		// total pages
+		    page: '${page}',			// initial page		
+		    pageSize: '${pageSize}',	// max number items per page
+		
+		    // custom labels		
+		    lastText: '&raquo;&raquo;', 		
+		    firstText: '&laquo;&laquo;',		
+		    prevText: '&laquo;',		
+		    nextText: '&raquo;',
+				     
+		    btnSize:'sm'	// 'sm'  or 'lg'
+		});
+		
+		jQuery('#ampaginationsm').on('am.pagination.change',function(e){
+		   jQuery('.showlabelsm').text('The selected page no: '+e.page);
+		   if('${category}' != null) {
+			   $(location).attr('href', "http://localhost:9090/tumblbugs/myfunding?category=" + '${category}' + "&page="+e.page);
+		   } else {
+			   $(location).attr('href', "http://localhost:9090/tumblbugs/myfunding?page="+e.page);
+		   }
+	    });
 	});
 </script>
 </head>
@@ -219,18 +177,21 @@
 		<section class="page_content">
 			<article id="page_content_tab">
 				<nav>
-					<li class="select_tab" id="all">
-						<span>모두 보기</span>
-						<span id="list_count">${fundingCount.totalCount }</span>
-					</li>
-					<li id="ongoing">
-						<span>펀딩 진행중</span>
-						<span id="list_count">${fundingCount.ongoingCount }</span>
-					</li>
-					<li id="payment">
-						<span>결제 완료</span>
-						<span id="list_count">${fundingCount.paymentCount }</span>
-					</li>
+					<a href="http://localhost:9090/tumblbugs/myfunding?category=all">
+						<li id="all">
+							<span>모두 보기</span>
+							<span id="list_count">${fundingCount.totalCount }</span>
+					</li></a>
+					<a href="http://localhost:9090/tumblbugs/myfunding?category=ongoing">
+						<li id="ongoing">
+							<span>펀딩 진행중</span>
+							<span id="list_count">${fundingCount.ongoingCount }</span>
+						</li></a>
+					<a href="http://localhost:9090/tumblbugs/myfunding?category=payment">
+						<li id="payment">
+							<span>결제 완료</span>
+							<span id="list_count">${fundingCount.paymentCount }</span>
+						</li></a>
 				</nav>
 				<div class="search">
 					<span>
@@ -241,20 +202,73 @@
 				</div>
 			</article>
 			<article class="page_content_funding_list">
-				<div class="funding_list" id="search">
+				<div class="funding_list" id="category_result">
+					<c:choose>
+						<c:when test="${category eq 'all' || category eq null}">
+							<div class="list_count"><i class="fas fa-list"></i>총 ${fundingCount.totalCount }건의 후원 결과가 있습니다.</div>
+						</c:when>
+						<c:when test="${category eq 'ongoing'}">
+							<div class="list_count"><i class="fas fa-rocket"></i>총 ${fundingCount.ongoingCount }건의 펀딩 진행중인 후원이 있습니다.</div>
+						</c:when>
+						<c:when test="${category eq 'payment'}">
+							<div class="list_count"><i class="far fa-credit-card"></i>총 ${fundingCount.paymentCount }건의 결제 완료된 후원이 있습니다.</div>
+						</c:when>
+					</c:choose>
+					<c:choose>
+						<c:when test="${fn:length(flist) eq 0}">
+							<div class="list_none">
+								<c:choose>
+									<c:when test="${category eq 'all'}">
+										<i class="far fa-meh"></i>
+										<div>후원 내역이 없습니다.</div>
+									</c:when>
+									<c:when test="${category eq 'ongoing'}">
+										<i class="fas fa-rocket"></i>
+										<div>펀딩 진행중인 후원이 없습니다.</div>
+									</c:when>
+									<c:when test="${category eq 'payment'}">
+										<i class="far fa-credit-card"></i>
+										<div>결제 완료된 후원이 없습니다.</div>
+									</c:when>
+								</c:choose>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${flist}" var="fvo">
+								<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }">
+									<table>
+										<tr>
+											<td colspan="2"><b>${fvo.funding_date }</b></td>
+											<td>후원번호 <b>${fvo.funding_id }</b></td>
+										</tr>
+										<tr>
+											<td class="funding_image">
+											<img id="project_main_img" src="http://localhost:9090/tumblbugs/upload/${fvo.pj_simg }"></td>
+											<td class='funding_detail'>
+												<div class='project_status'>${fvo.project_status }</div>
+												<div class='project_title'>
+													<b>${fvo.pj_title }<span class='creator_name'>${fvo.name }</span></b>
+												</div>
+												<div class='payment_status'><b>${fvo.payment_status }</b></div>
+												<div class='funding_price'>
+													<b>${fvo.total_funding_price }</b>을 후원하셨습니다.
+												</div>
+											</td>
+											<td><i class='fas fa-angle-right'></i></td>
+										</tr>
+									</table>
+								</a>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="funding_list" id="search_result">
 					<div class="list_count"><i class="fas fa-search"></i>총 <span id="searchResultCount"></span>건의 검색 결과가 있습니다.</div>
 				</div>
-				<div class="funding_list" id="all">
-					<div class="list_count"><i class="fas fa-list"></i>총 ${fundingCount.totalCount }건의 후원 결과가 있습니다.</div>
-				</div>
-				<div class="funding_list" id="ongoing">
-					<div class="list_count"><i class="fas fa-rocket"></i>총 ${fundingCount.ongoingCount }건의 펀딩 진행중인 후원이 있습니다.</div>
-				</div>
-				<div class="funding_list" id="payment">
-					<div class="list_count"><i class="far fa-credit-card"></i>총 ${fundingCount.paymentCount }건의 결제 완료된 후원이 있습니다.</div>
-				</div>
 			</article>
-			<article id="paging"><div id="ampaginationsm"></div></article>
+			<c:if test="${fn:length(flist) ne 0}">
+				<article id="paging"><div id="ampaginationsm"></div></article>
+			</c:if>
 		</section>
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>

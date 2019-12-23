@@ -4,10 +4,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class MemberVO {
 	String email,name,pass,profile_img,profile_simg,intro,phone,website,reg_date,use_yn,signkey,certificate;
+	
 	int rno;
 	CommonsMultipartFile profile_cimg;
 	
 	
+
+	
+
 	public CommonsMultipartFile getProfile_cimg() {
 		return profile_cimg;
 	}

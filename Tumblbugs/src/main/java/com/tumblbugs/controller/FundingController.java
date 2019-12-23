@@ -1,13 +1,12 @@
 package com.tumblbugs.controller;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,14 +36,17 @@ public class FundingController {
 	 * @param gift_id
 	 * @return
 	 */
-	@RequestMapping(value="/funding/step1", method=RequestMethod.GET)
-	public ModelAndView step1(String pj_id, String gift_id) {
+	@RequestMapping(value="/{pj_addr}/funding/step1", method=RequestMethod.GET)
+	public ModelAndView step1(@PathVariable("pj_addr") String pj_addr, String gift_id) {
 		ModelAndView mv = new ModelAndView();
+		
+		String pj_id = projectDAO.getPj_id(pj_addr);
 		
 		mv.setViewName("/funding/step1_gift_select");
 		mv.addObject("pj_id", pj_id);
-		mv.addObject("gift_id", gift_id);
+		mv.addObject("pj_addr", pj_addr);
 		mv.addObject("pj_title", projectDAO.getProjectTitle(pj_id));
+		mv.addObject("gift_id", gift_id);
 		mv.addObject("giftList", projectDAO.getGiftList(pj_id));
 		
 		return mv;
@@ -55,8 +57,8 @@ public class FundingController {
 	 * @param vo
 	 * @return
 	 */
-	@RequestMapping(value="/funding/step2", method=RequestMethod.POST)
-	public ModelAndView step2(FundingVO vo) {
+	@RequestMapping(value="/{pj_addr}/funding/step2", method=RequestMethod.POST)
+	public ModelAndView step2(@PathVariable("pj_addr") String pj_addr, FundingVO vo) {
 		ModelAndView mv = new ModelAndView();
 		
 		List<FundingGiftVO> list = (ArrayList<FundingGiftVO>)vo.getGiftList();
@@ -79,6 +81,7 @@ public class FundingController {
 		
 		mv.setViewName("/funding/step2_payment_reservation");
 		mv.addObject("vo", vo);
+		mv.addObject("pj_addr", pj_addr);
 		mv.addObject("pj_title", projectDAO.getProjectTitle(vo.getPj_id()));
 		mv.addObject("paymentList", paymentDAO.getPaymentList(vo.getEmail()));	//결제수단 리스트
 		mv.addObject("recentDeliveryInfo", fundingDAO.getRecentDeliveryInfo(vo.getEmail()));	//최근 배송지
@@ -92,8 +95,8 @@ public class FundingController {
 	 * @param pvo
 	 * @return
 	 */
-	@RequestMapping(value="/funding/complete", method=RequestMethod.POST)
-	public ModelAndView step3(FundingVO vo, PaymentVO pvo) {
+	@RequestMapping(value="/{pj_addr}/funding/complete", method=RequestMethod.POST)
+	public ModelAndView step3(@PathVariable("pj_addr") String pj_addr, FundingVO vo, PaymentVO pvo) {
 		
 		ModelAndView mv = new ModelAndView();
 		

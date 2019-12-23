@@ -3,7 +3,16 @@ package com.tumblbugs.vo;
 import java.io.Serializable;
 
 public class HeaderVO implements Serializable{
-	String col_id, col_name;
+	String col_id, col_name, col_addr;
+
+	
+	public String getCol_addr() {
+		return col_addr;
+	}
+
+	public void setCol_addr(String col_addr) {
+		this.col_addr = col_addr;
+	}
 
 	public String getCol_id() {
 		return col_id;

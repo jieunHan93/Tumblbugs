@@ -115,7 +115,7 @@
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<a href="http://localhost:9090/tumblbugs/project_content?pj_id=${fvo.pj_id }"><div class="project_title"><b>${fvo.pj_title }<span class="creator_name">${fvo.name }</span></b></div></a>
+							<a href="http://localhost:9090/tumblbugs/project/${pj_addr }"><div class="project_title"><b>${fvo.pj_title }<span class="creator_name">${fvo.name }</span></b></div></a>
 						</td>
 						<td class="button_td">
 							<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${fvo.pj_id }"><button type="button" id="btn_sendMessage"><i class="fas fa-envelope"></i> 문의하기</button></a>
@@ -141,7 +141,7 @@
 					<tr>
 						<td class="button_td" colspan="2">
 							<span>총 <fmt:formatNumber value="${fvo.total_funding_price }" groupingUsed="true"/>원을 후원하셨습니다.</span>
-							<a href="http://localhost:9090/tumblbugs/myfunding/edit_gift?pj_id=${fvo.pj_id }"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a>
+							<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/edit_gift"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a>
 						</td>
 					</tr>
 					<c:forEach items="${giftList }" var="gift">
@@ -177,7 +177,7 @@
 							<div class="data_title">결제 수단</div>
 							<div class="data_value">${fvo.payment }</div>
 						</td>
-						<td class="button_td"><a href="http://localhost:9090/tumblbugs/myfunding/edit_payment"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a></td>
+						<td class="button_td"><a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/edit_payment"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a></td>
 					</tr>
 					<tr>
 						<td class="data_td" colspan="2">
@@ -268,7 +268,7 @@
 				</form>
 			</div>
 			<div class="last_div">
-				<a href="http://localhost:9090/tumblbugs/myfunding/cancel_funding?funding_id=${fvo.funding_id }&pj_id=${fvo.pj_id }">
+				<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/cancel_funding">
 					<button id="btn_funding_cancle">후원 취소하기</button>
 				</a>
 			</div>

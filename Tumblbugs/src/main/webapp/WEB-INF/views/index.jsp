@@ -154,7 +154,7 @@ $(document).ready(function(){
 		<div>
 		  <div>
 			<div id="main_content_title1">
-			<a href="http://localhost:9090/tumblbugs/collections?col_id=C00005">
+			<a href="http://localhost:9090/tumblbugs/collections/spotlight">
 				주목할 만한 프로젝트
 				<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" data-reactid="98"><polyline points="9 18 15 12 9 6"></polyline></svg>
 			</a>
@@ -169,7 +169,7 @@ $(document).ready(function(){
 		  	<c:forEach var="vo" items="${cplist }">
 		  	<div>
 		  		<div class="slick-card">
-		      		<a href="http://localhost:9090/tumblbugs/project_content?pj_id=${vo.pj_id }">
+		      		<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr}">
 		      			<img id="product_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg }">
 		      			<div class="slick-card-content">
 		      				<div class="slick-card-content-title">
@@ -223,7 +223,7 @@ $(document).ready(function(){
 				<div id="main_banner_title">진행중인 기획전</div>
 				<div class="multiple-items">
 				<c:forEach var="vo" items="${main_clist }">
-				 <a href="http://localhost:9090/tumblbugs/collections?col_id=${vo.col_id }">
+				 <a href="http://localhost:9090/tumblbugs/collections/${vo.col_addr }">
 				 	<div class="main_banner_card">
 				 		<div class="main_banner_card_img"><img src="http://localhost:9090/tumblbugs/upload/${vo.col_simg }"></div>
 				 		<span class="main_banner_card_title">
@@ -257,7 +257,7 @@ $(document).ready(function(){
 		  	<c:forEach var="vo" items="${favlist }">
 		  	<div>
 		  		<div class="slick-card">
-		      		<a href="http://localhost:9090/tumblbugs/project_content?pj_id=${vo.pj_id }">
+		      		<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }">
 		      			<img id="product_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg }">
 		      			<div class="slick-card-content">
 		      				<div class="slick-card-content-title">
@@ -326,7 +326,7 @@ $(document).ready(function(){
 		  	<c:forEach var="vo" items="${ddlist }">
 		  	<div>
 		  		<div class="slick-card">
-		      		<a href="http://localhost:9090/tumblbugs/project_content?pj_id=${vo.pj_id }">
+		      		<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }">
 		      			<img id="product_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg }">
 		      			<div class="slick-card-content">
 		      				<div class="slick-card-content-title">
@@ -395,7 +395,7 @@ $(document).ready(function(){
 		  	<c:forEach var="vo" items="${newlist }">
 		  	<div>
 		  		<div class="slick-card">
-		      		<a href="http://localhost:9090/tumblbugs/project_content?pj_id=${vo.pj_id }">
+		      		<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }">
 		      			<img id="product_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg }">
 		      			<div class="slick-card-content">
 		      				<div class="slick-card-content-title">

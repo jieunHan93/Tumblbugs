@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,11 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<input type="hidden" id="menu1_check" value="0" class="all_check">
- <div class="content_menu_title">га╥на╖ф╝ ╟Ё©Д</div>
+<input type="hidden" id="menu1_check" value="0" class="all_check">
+ <div class="content_menu_title">М■└К║°Л═²М┼╦ Й╟°Л ■</div>
 	<div id="pro_intro">
 		<div id="content_pro_title" class="upload_detail_slide" >
-			<label>га╥на╖ф╝ а╕╦Я</label>
+			<label>М■└К║°Л═²М┼╦ Л═°К╙╘</label>
 			<div id="title_info" class="sub_info">
 				<c:if test="${vo.pj_title != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_title}</span>
@@ -21,297 +21,297 @@
 					<span id='stitle_info'>${vo.pj_stitle}</span>
 				</c:if>
 				<c:if test="${vo.pj_title == null}">
-					<i class="far fa-hand-point-right"></i> га╥на╖ф╝ а╕╦Яю╩ ют╥бгьаж╪╪©Д.  <span id="stitle_info" style="display:none"></span>
+					<i class="far fa-hand-point-right"></i> М■└К║°Л═²М┼╦ Л═°К╙╘Л²└ Л·┘К═╔М∙╢Лё╪Л└╦Л ■.  <span id="stitle_info" style="display:none"></span>
 				</c:if>
 			</div>
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_title == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${vo.pj_title != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${vo.pj_title == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${vo.pj_title != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>
 		</div>
 		<div id="content_pro_title_d" class="upload_detail">
-			<div class="d_title">га╥на╖ф╝ а╕╦Я</div>
-			<div><p>га╥на╖ф╝©║ ╦заЬ а╕╦Яю╩ ╨ы©╘аж╪╪©Д. ╟╗а╓©║ хё╪рго╢б а╕╦Я╨╦╢ы╢б ╦╦╣Е╫ц╥а╢б ц╒юш╧╟, 
-					юшг╟╦М, х╓ю╨ га╥на╖ф╝юг ажа╕╟║ ╣Е╥╞Ё╙╟т ╫Ааж╫ц╢б ╟мюл аа╫ю╢о╢ы. 
-					╟Ь╟ёюл ╨на╥гя ╟В©║ ╬╡юо 7юз юлЁ╩юг б╙ю╨ а╕╦Я╣╣ а╓гьаж╪╪©Д.</div>
+			<div class="d_title">М■└К║°Л═²М┼╦ Л═°К╙╘</div>
+			<div><p>М■└К║°Л═²М┼╦Л≈░ К╘▀Л╖└ Л═°К╙╘Л²└ К╤≥Л≈╛Лё╪Л└╦Л ■. Й╟░Л═∙Л≈░ М≤╦Л├▄М∙≤К┼■ Л═°К╙╘КЁ╢К▀╓К┼■ К╖▄К⌠°Л▀°К═╓К┼■ Л╟╫Л·▒К╛╪, 
+					Л·▒М▓┬К╙┘, М≤╧Л²─ М■└К║°Л═²М┼╦Л²≤ Лё╪Л═°Й╟─ К⌠°К÷╛К┌≤Й╡▄ Л█╗Лё╪Л▀°К┼■ Й╡┐Л²╢ Л╒▀Л┼╣К▀┬К▀╓. 
+					ЙЁ╣Й╟└Л²╢ К╤─Л║╠М∙° ЙЁЁЛ≈░ Л⌠╟Л²╪ 7Л·░ Л²╢К┌╢Л²≤ Л╖╖Л²─ Л═°К╙╘К▐└ Л═∙М∙╢Лё╪Л└╦Л ■.</div>
 			<ul>
 				<li>
-					<div><i class="fas fa-question-circle"></i> га╥на╖ф╝ а╕╦Яю╨ ╬Н╣П©║ ╬╡юлЁ╙©Д?</div>
+					<div><i class="fas fa-question-circle"></i> М■└К║°Л═²М┼╦ Л═°К╙╘Л²─ Л√╢К■■Л≈░ Л⌠╟Л²╢К┌≤Л ■?</div>
 					<img src="http://localhost:9090/tumblbugs/images/project_start/title_1.png "/>
-					<div>га╥на╖ф╝ а╕╦Я</div>
-					<input type="text" placeholder="га╥на╖ф╝ а╕╦Яю╩ ют╥бгьаж╪╪©Д" class="m1_check" id="m1_c1_i1" value="${vo.pj_title }">
-					<div id="m1_c1_i1_check">32юз Ё╡╬р╫ю╢о╢ы.</div>
+					<div>М■└К║°Л═²М┼╦ Л═°К╙╘</div>
+					<input type="text" placeholder="М■└К║°Л═²М┼╦ Л═°К╙╘Л²└ Л·┘К═╔М∙╢Лё╪Л└╦Л ■" class="m1_check" id="m1_c1_i1" value="${vo.pj_title }">
+					<div id="m1_c1_i1_check">32Л·░ К┌╗Л∙≤Л┼╣К▀┬К▀╓.</div>
 				</li>
 				<li>
-					<div><i class="fas fa-question-circle"></i> га╥на╖ф╝ б╙ю╨ а╕╦Яю╨ ╬Н╣П©║ ╬╡юлЁ╙©Д?</div>
+					<div><i class="fas fa-question-circle"></i> М■└К║°Л═²М┼╦ Л╖╖Л²─ Л═°К╙╘Л²─ Л√╢К■■Л≈░ Л⌠╟Л²╢К┌≤Л ■?</div>
 					<img src="http://localhost:9090/tumblbugs/images/project_start/title_2.png "/>
-					<div>га╥на╖ф╝ б╙ю╨ а╕╦Я</div>
-					<input type="text" placeholder="га╥на╖ф╝ б╙ю╨ а╕╦Я" class="m1_check" id="m1_c1_i2" value="${vo.pj_stitle }" >
-					<div id="m1_c1_i2_check">7юз Ё╡╬р╫ю╢о╢ы.</div>
+					<div>М■└К║°Л═²М┼╦ Л╖╖Л²─ Л═°К╙╘</div>
+					<input type="text" placeholder="М■└К║°Л═²М┼╦ Л╖╖Л²─ Л═°К╙╘" class="m1_check" id="m1_c1_i2" value="${vo.pj_stitle }" >
+					<div id="m1_c1_i2_check">7Л·░ К┌╗Л∙≤Л┼╣К▀┬К▀╓.</div>
 				</li>
 			</ul>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>
 		<div id="content_pro_img" class="upload_detail_slide" >
-			<label>га╥на╖ф╝ ╢Кг╔ юл╧лаЖ</label>
+			<label>М■└К║°Л═²М┼╦ К▄─М▒° Л²╢К╞╦Л╖─</label>
 			<div id="img_info" class="sub_info">
 				<c:if test="${vo.pj_simg != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_img}</span>
 				</c:if>
 				<c:if test="${vo.pj_simg == null}">
-					<i class="far fa-hand-point-right"></i> га╥на╖ф╝ ╢Кг╔ юл╧лаЖ╦╕ ╣Н╥огьаж╪╪©Д.	
+					<i class="far fa-hand-point-right"></i> М■└К║°Л═²М┼╦ К▄─М▒° Л²╢К╞╦Л╖─К╔╪ К⌠╠К║²М∙╢Лё╪Л└╦Л ■.	
 				</c:if>
 			</div>
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_title == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${vo.pj_title != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${vo.pj_title == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${vo.pj_title != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>
 		</div>
 		<div id="content_pro_img_d" class="upload_detail">
-			<div class="d_title">га╥на╖ф╝ ╢Кг╔ юл╧лаЖ</div>
-			<div><p>╢Кг╔ юл╧лаЖ╢б га╥на╖ф╝юг ╟║юЕ аъ©Дгя ╫ц╟╒юШ ©Д╪рют╢о╢ы.<br>
-					хд©Ьюз╣Июл га╥на╖ф╝юг Ё╩©Кю╩ ╫╠╟т фд╬гго╟М ааю╨ юн╩Сю╩ ╧чю╩ ╪Ж юж╟т 
-					го╠Б ю╖гь ╢ыю╫ ╟║юл╣Е╤Сюн©║ ╣Ш╤С ╣Пюзюнгь аж╪╪©Д.</div>
+			<div class="d_title">М■└К║°Л═²М┼╦ К▄─М▒° Л²╢К╞╦Л╖─</div>
+			<div><p>К▄─М▒° Л²╢К╞╦Л╖─К┼■ М■└К║°Л═²М┼╦Л²≤ Й╟─Л·╔ Л╓▒Л ■М∙° Л▀°Й╟│Л═│ Л ■Л├▄Л·┘К▀┬К▀╓.<br>
+					М⌡└Л⌡░Л·░К⌠╓Л²╢ М■└К║°Л═²М┼╦Л²≤ К┌╢Л ╘Л²└ Л┴╫Й╡▄ М▄▄Л∙┘М∙≤ЙЁ═ Л╒▀Л²─ Л²╦Л┐│Л²└ К╟⌡Л²└ Л┬≤ Л·┬Й╡▄ 
+					М∙≤Й╦╟ Л°└М∙╢ К▀╓Л²▄ Й╟─Л²╢К⌠°К²╪Л²╦Л≈░ К■╟К²╪ К■■Л·░Л²╦М∙╢ Лё╪Л└╦Л ■.</div>
 			<div><img src="http://localhost:9090/tumblbugs/images/project_start/pro_img2.png"></div>	
 			<div><img src="http://localhost:9090/tumblbugs/images/project_start/pro_img3.png"></div>
 			<div id="img_uploadzone" >
 				<label for="pro_img" id="img_upload_btn">
 					<i class="far fa-file-image"></i>
-					<span>юл╧лаЖ ╬В╥н╣Е</span>
-					<span>фдюо гЭ╫дю╨ jpg ╤г╢б png╥н, ╩ГюлаН╢б ╟║╥н 1,240px ╪╪╥н 930px юл╩Сю╦╥н ©ц╥ааж╪╪©Д.</span>
-					<span>юл╧лаЖ фдюо ╪╠ецго╠Б</span>
+					<span>Л²╢К╞╦Л╖─ Л≈┘К║°К⌠°</span>
+					<span>М▄▄Л²╪ М≤∙Л▀²Л²─ jpg К≤░К┼■ pngК║°, Л┌╛Л²╢Л╕┬К┼■ Й╟─К║° 1,240px Л└╦К║° 930px Л²╢Л┐│Л°╪К║° Л≤╛К═╓Лё╪Л└╦Л ■.</span>
+					<span>Л²╢К╞╦Л╖─ М▄▄Л²╪ Л└═М┐²М∙≤Й╦╟</span>
 				</label>
 				<div><input type="file" class="m1_check" id="pro_img" style="display:none" name="pj_cimg" value="${vo.pj_img }"></div>
 				
 			</div>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>
 		
 		<div id="content_pro_summ" class="upload_detail_slide" >
-			<label>га╥на╖ф╝ ©Д╬Ю</label>
+			<label>М■└К║°Л═²М┼╦ Л ■Л∙╫</label>
 			<div id="summ_info" class="sub_info">
 				<c:if test="${vo.pj_summary != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_summary}</span>
 				</c:if>
 				<c:if test="${vo.pj_summary == null}">
-					<i class="far fa-hand-point-right"></i> га╥на╖ф╝ ©Д╬Юю╩ ют╥бгьаж╪╪©Д.	
+					<i class="far fa-hand-point-right"></i> М■└К║°Л═²М┼╦ Л ■Л∙╫Л²└ Л·┘К═╔М∙╢Лё╪Л└╦Л ■.	
 				</c:if>
 			</div>
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_title == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${vo.pj_title != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${vo.pj_title == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${vo.pj_title != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>
 		</div>
 		<div id="content_pro_summ_d" class="upload_detail">
-			<div class="d_title">га╥на╖ф╝ ©Д╬Ю</div>
-			<div><p>хд©Ьюз ╨п╣И©║╟т ╨╩ га╥на╖ф╝╦╕ ╟ё╥╚го╟т ╪р╟Ёгь ╨╬╫ц╢ы.</div>	
-			<div><textarea placeholder="га╥на╖ф╝ ©Д╬Юю╩ ют╥бгьаж╪╪©Д" style="resize:none" class="m1_check" id="m1_c3_i1">${vo.pj_summary }</textarea></div>	
-			<div id="m1_c3_len">50юз Ё╡╬р╫ю╢о╢ы</div>				
+			<div class="d_title">М■└К║°Л═²М┼╦ Л ■Л∙╫</div>
+			<div><p>М⌡└Л⌡░Л·░ К╤└К⌠╓Л≈░Й╡▄ КЁ╦ М■└К║°Л═²М┼╦К╔╪ Й╟└К·╣М∙≤Й╡▄ Л├▄Й╟°М∙╢ К╢┘Л▀°К▀╓.</div>	
+			<div><textarea placeholder="М■└К║°Л═²М┼╦ Л ■Л∙╫Л²└ Л·┘К═╔М∙╢Лё╪Л└╦Л ■" style="resize:none" class="m1_check" id="m1_c3_i1">${vo.pj_summary }</textarea></div>	
+			<div id="m1_c3_len">50Л·░ К┌╗Л∙≤Л┼╣К▀┬К▀╓</div>				
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>
 		
 		<div id="content_pro_category" class="upload_detail_slide" >
-			<label>га╥на╖ф╝ д╚ев╟М╦╝</label>
+			<label>М■└К║°Л═²М┼╦ Л╧╢М┘▄ЙЁ═К╕╛</label>
 			<div id="category_info" class="sub_info">
 				<c:if test="${vo.pj_category != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_category}</span>
 				</c:if>
 				<c:if test="${vo.pj_category == null}">
-					<i class="far fa-hand-point-right"></i> га╥на╖ф╝ д╚ев╟М╦╝╦╕ ют╥бгьаж╪╪©Д.
+					<i class="far fa-hand-point-right"></i> М■└К║°Л═²М┼╦ Л╧╢М┘▄ЙЁ═К╕╛К╔╪ Л·┘К═╔М∙╢Лё╪Л└╦Л ■.
 				</c:if>
 			</div>		
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_category == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${vo.pj_category != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${vo.pj_category == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${vo.pj_category != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>	
 		</div>
 		<div id="content_pro_category_d" class="upload_detail">
-			<div class="d_title">га╥на╖ф╝ д╚ев╟М╦╝</div>
-			<div><p>га╥на╖ф╝юг ╪╨╟щ©║ ╦б╢б д╚ев╟М╦╝╦╕ ╪╠ецгь аж╪╪©Д.<br>
-					(га╥на╖ф╝ ╪╨╟щ╟З ╦баЖ ╬й╢б д╚ев╟М╦╝╦╕ ╪╠ецго╫г ╫ц хд©Ьюз╟║ гь╢Г га╥на╖ф╝╦╕ цё╠Б ╬Н╥а©ЖаЖ╠Б©║ ©║╣Пем©║ юггь а╤а╓╣и ╪Ж юж╫ю╢о╢ы.)</div>	
+			<div class="d_title">М■└К║°Л═²М┼╦ Л╧╢М┘▄ЙЁ═К╕╛</div>
+			<div><p>М■└К║°Л═²М┼╦Л²≤ Л└╠Й╡╘Л≈░ К╖·К┼■ Л╧╢М┘▄ЙЁ═К╕╛К╔╪ Л└═М┐²М∙╢ Лё╪Л└╦Л ■.<br>
+					(М■└К║°Л═²М┼╦ Л└╠Й╡╘ЙЁ╪ К╖·Л╖─ Л∙┼К┼■ Л╧╢М┘▄ЙЁ═К╕╛К╔╪ Л└═М┐²М∙≤Л▀╓ Л▀° М⌡└Л⌡░Л·░Й╟─ М∙╢К▀╧ М■└К║°Л═²М┼╦К╔╪ Л╟╬Й╦╟ Л√╢К═╓Л⌡▄Л╖─Й╦╟Л≈░ Л≈░К■■М└╟Л≈░ Л²≤М∙╢ Л║╟Л═∙К░═ Л┬≤ Л·┬Л┼╣К▀┬К▀╓.)</div>	
 			<div><select class="m1_check" id="m1_select">
-				<option value="" selected disabled hidden>га╥на╖ф╝ д╚ев╟М╦╝╦╕ а╓гьаж╪╪©Д.</option>
-				<option id="game">╟тюс</option>
-				<option id="concert">╟Ь©╛</option>
-				<option id="design">╣Пюзюн</option>
-				<option id="comic">╦╦х╜</option>
-				<option id="art">╧л╪З</option>
-				<option id="craft">╟Ь©╧</option>
-				<option id="photo">╩ГаЬ</option>
-				<option id="movie">©╣х╜&╨Я╣П©ю</option>
-				<option id="food">г╙╣Е</option>
-				<option id="music">ю╫╬г</option>
-				<option id="book">цБфг</option>	
-				<option id="tech">еве╘ЁН╥наЖ</option>	
-				<option id="fashion">фп╪г</option>	
-				<option id="campagn">д╥фДюн</option>	
+				<option value="" selected disabled hidden>М■└К║°Л═²М┼╦ Л╧╢М┘▄ЙЁ═К╕╛К╔╪ Л═∙М∙╢Лё╪Л└╦Л ■.</option>
+				<option id="game">Й╡▄Л·└</option>
+				<option id="concert">ЙЁ╣Л≈╟</option>
+				<option id="design">К■■Л·░Л²╦</option>
+				<option id="comic">К╖▄М≥■</option>
+				<option id="art">К╞╦Л┬═</option>
+				<option id="craft">ЙЁ╣Л≤┬</option>
+				<option id="photo">Л┌╛Л╖└</option>
+				<option id="movie">Л≤│М≥■&К╧└К■■Л≤╓</option>
+				<option id="food">М▒╦К⌠°</option>
+				<option id="music">Л²▄Л∙┘</option>
+				<option id="book">Л╤°М▄░</option>	
+				<option id="tech">М┘▄М│╛К├─К║°Л╖─</option>	
+				<option id="fashion">М▄╗Л┘≤</option>	
+				<option id="campagn">Л╨═М▌≤Л²╦</option>	
 			</select></div>				
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>
 		
 		<div id="content_pro_addr" class="upload_detail_slide" >
-			<label>га╥на╖ф╝ фДюлаЖ аж╪р</label>
+			<label>М■└К║°Л═²М┼╦ М▌≤Л²╢Л╖─ Лё╪Л├▄</label>
 			<div id="addr_info" class="sub_info">
 				<c:if test="${vo.pj_addr != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_addr}</span>
 				</c:if>
 				<c:if test="${vo.pj_addr == null}">
-					<i class="far fa-hand-point-right"></i> га╥на╖ф╝ фДюлаЖ аж╪р╦╕ ют╥бгьаж╪╪©Д.
+					<i class="far fa-hand-point-right"></i> М■└К║°Л═²М┼╦ М▌≤Л²╢Л╖─ Лё╪Л├▄К╔╪ Л·┘К═╔М∙╢Лё╪Л└╦Л ■.
 				</c:if>
 			</div>	
-			<div id="title_write"><i class="far fa-edit"></i> ют╥бго╠Б</div>
+			<div id="title_write"><i class="far fa-edit"></i> Л·┘К═╔М∙≤Й╦╟</div>
 		</div>
 		<div id="content_pro_addr_d" class="upload_detail">
-			<div class="d_title">га╥на╖ф╝ фДюлаЖ аж╪р</div>
-			<div><p>га╥на╖ф╝ фДюлаЖ╥н а╒╪сгр ╪Ж юж╢б аж╪р(URL)╦╕ ╪Ёа╓гьаж╪╪©Д.</div>	
+			<div class="d_title">М■└К║°Л═²М┼╦ М▌≤Л²╢Л╖─ Лё╪Л├▄</div>
+			<div><p>М■└К║°Л═²М┼╦ М▌≤Л²╢Л╖─К║° Л═▒Л├█М∙═ Л┬≤ Л·┬К┼■ Лё╪Л├▄(URL)К╔╪ Л└╓Л═∙М∙╢Лё╪Л└╦Л ■.</div>	
 			<div>
 				<span>https://localhost:9090/tumblbugs/</span>
 				<input type="text" style="resize:none" class="m1_check" id="m1_c4_i1" value="${vo.pj_addr }"/>
-				<div id="m1_c4_len">50юз Ё╡╬р╫ю╢о╢ы</div>
+				<div id="m1_c4_len">50Л·░ К┌╗Л∙≤Л┼╣К▀┬К▀╓</div>
 			</div>			
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>
 		
 		<div id="content_pro_tag" class="upload_detail_slide" >
-			<label>╟к╩Ж©К еб╠в</label>
+			<label>Й╡─Л┐┴Л ╘ М┐°Й╥╦</label>
 			<div id="tag_info" class="sub_info">
 				<c:if test="${vo.pj_tag != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_tag}</span>
 				</c:if>
 				<c:if test="${vo.pj_tag == null}">
-					<i class="far fa-hand-point-right"></i> ©╧╫ц:╧НаЖ, ю╔еВ, ©║дз╧И, ╟М╬Гюл, ю╞╠Б╟ъ
+					<i class="far fa-hand-point-right"></i> Л≤┬Л▀°:К╠┐Л╖─, Л⌡╧М┬╟, Л≈░Л╫■К╟╠, ЙЁ═Л√▒Л²╢, Л°═Й╦╟Й╡╛
 				</c:if>
 			</div>	
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_tag == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${vo.pj_tag != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${vo.pj_tag == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${vo.pj_tag != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>
 		</div>
 		<div id="content_pro_tag_d" class="upload_detail">
-			<div class="d_title">╟к╩Ж©К еб╠в</div>
-			<div><p>Ё╩©э╨н ╟к╩Ж ©ёаЬ©║╪╜ га╥на╖ф╝╟║ юъ ╟к╩Ж╣и ╪Ж юж╣╣╥о, ╩Г╤В╣Июл ╟к╩Жгр╦╦гя га╥на╖ф╝юг гы╫и ╢э╬Н╦╕ ют╥бгьаж╪╪©Д.<br>
-					©╘╥╞ ╟Ёюг еб╠в╦╕ ют╥бго╫ц╢б ╟Ф©Л ╫╟г╔(,)╥н ╠╦╨пго©╘ юш╪╨го╫г ╪Ж юж╫ю╢о╢ы.<br>
-					га╥на╖ф╝©м ╟Э╥ц ╬Ь╟еЁ╙ ╟к╩Ж©║ ╨р╦╝гя е╟©Ж╣Е╢б ©Н©╣аЬ©║ юггь а╤а╓╣и ╪Ж юж╫ю╢о╢ы.<br>
-					╫╟г╔╦╕ а╕©эгя ф╞╪Ж╧╝юз╢б ют╥бго╫г ╪Ж ╬Ь╫ю╢о╢ы.</div>	
+			<div class="d_title">Й╡─Л┐┴Л ╘ М┐°Й╥╦</div>
+			<div><p>К┌╢Л≥╦К╤─ Й╡─Л┐┴ Л≈■Л╖└Л≈░Л└° М■└К║°Л═²М┼╦Й╟─ Л·≤ Й╡─Л┐┴К░═ Л┬≤ Л·┬К▐└К║², Л┌╛К·▄К⌠╓Л²╢ Й╡─Л┐┴М∙═К╖▄М∙° М■└К║°Л═²М┼╦Л²≤ М∙╣Л▀╛ К▀╗Л√╢К╔╪ Л·┘К═╔М∙╢Лё╪Л└╦Л ■.<br>
+					Л≈╛К÷╛ Й╟°Л²≤ М┐°Й╥╦К╔╪ Л·┘К═╔М∙≤Л▀°К┼■ Й╡╫Л ╟ Л┴╪М▒°(,)К║° Й╣╛К╤└М∙≤Л≈╛ Л·▒Л└╠М∙≤Л▀╓ Л┬≤ Л·┬Л┼╣К▀┬К▀╓.<br>
+					М■└К║°Л═²М┼╦Л≥─ Й╢─К═╗ Л≈├Й╠╟К┌≤ Й╡─Л┐┴Л≈░ К╤┬К╕╛М∙° М┌╓Л⌡▄К⌠°К┼■ Л ╢Л≤│Л╖└Л≈░ Л²≤М∙╢ Л║╟Л═∙К░═ Л┬≤ Л·┬Л┼╣К▀┬К▀╓.<br>
+					Л┴╪М▒°К╔╪ Л═°Л≥╦М∙° М┼╧Л┬≤К╛╦Л·░К┼■ Л·┘К═╔М∙≤Л▀╓ Л┬≤ Л≈├Л┼╣К▀┬К▀╓.</div>	
 			<div>
-				<input type="text" placeholder="  ©╧╫ц:╧НаЖ, ю╔еВ, ©║дз╧И, ╟М╬Гюл, ю╞╠Б╟ъ" style="resize:none" class="m1_check" id="m1_c5_i1" value="${vo.pj_tag}"/>
+				<input type="text" placeholder="  Л≤┬Л▀°:К╠┐Л╖─, Л⌡╧М┬╟, Л≈░Л╫■К╟╠, ЙЁ═Л√▒Л²╢, Л°═Й╦╟Й╡╛" style="resize:none" class="m1_check" id="m1_c5_i1" value="${vo.pj_tag}"/>
 			</div>	
-			<div>╫╟г╔╦╕ а╕©эгя ф╞╪Ж╧╝юз╢б ют╥бго╫г ╪Ж ╬Ь╫ю╢о╢ы.</div>	
-			<div id="m1_c5_len"><span>50юз Ё╡╬р╫ю╢о╢ы</span></div>				
+			<div>Л┴╪М▒°К╔╪ Л═°Л≥╦М∙° М┼╧Л┬≤К╛╦Л·░К┼■ Л·┘К═╔М∙≤Л▀╓ Л┬≤ Л≈├Л┼╣К▀┬К▀╓.</div>	
+			<div id="m1_c5_len"><span>50Л·░ К┌╗Л∙≤Л┼╣К▀┬К▀╓</span></div>				
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>
 		</div>
 	
-	<div class="content_menu_title">ц╒юшюз а╓╨╦</div>
+	<div class="content_menu_title">Л╟╫Л·▒Л·░ Л═∙КЁ╢</div>
 	<div id="pro_my_info">
 		<div id="content_my_img" class="upload_detail_slide" >
-			<label>га╥нгй юл╧лаЖ</label>
+			<label>М■└К║°М∙└ Л²╢К╞╦Л╖─</label>
 			<div id="my_img_info" class="sub_info">
 				<c:if test="${mvo.profile_img != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${mvo.profile_img}</span>
 				</c:if>
 				<c:if test="${mvo.profile_img == null}">
-					<i class="far fa-hand-point-right"></i> га╥нгй юл╧лаЖ╦╕ ╣Н╥огьаж╪╪©Д.
+					<i class="far fa-hand-point-right"></i> М■└К║°М∙└ Л²╢К╞╦Л╖─К╔╪ К⌠╠К║²М∙╢Лё╪Л└╦Л ■.
 				</c:if>
 			</div>
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${mvo.profile_img == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${mvo.profile_img != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${mvo.profile_img == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${mvo.profile_img != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>
 		</div>
 		<div id="content_my_img_d" class="upload_detail">
-			<div class="d_title" id="my_profile_img">га╥нгй юл╧лаЖ</div>
-			<div><p>ц╒юшюз╢т ╟ЁюнюлЁ╙ фююг ╩ГаЬю╩ ©ц╥ааж╪╪©Д. ╬С╠╪юл Ё╙©б ╩ГаЬю╩ Ёжю╦╦И га╥на╖ф╝юг ╫е╥з╪╨ гБ╩С©║ ╣╣©Рюл ╣к╢о╢ы.</div>	
+			<div class="d_title" id="my_profile_img">М■└К║°М∙└ Л²╢К╞╦Л╖─</div>
+			<div><p>Л╟╫Л·▒Л·░К▀≤ Й╟°Л²╦Л²╢К┌≤ М▄─Л²≤ Л┌╛Л╖└Л²└ Л≤╛К═╓Лё╪Л└╦Л ■. Л√╪Й╣╢Л²╢ К┌≤Л≤╗ Л┌╛Л╖└Л²└ К└ёЛ°╪К╘╢ М■└К║°Л═²М┼╦Л²≤ Л▀═К╒╟Л└╠ М√╔Л┐│Л≈░ К▐└Л⌡─Л²╢ К░╘К▀┬К▀╓.</div>	
 			<div>
-				<div id="my_d_img"></div>
-				<div>фдюо гЭ╫дю╨ jpg ╤г╢б png╥н, ╩ГюлаН╢б ╟║╥н 200px, ╪╪╥н 200px юл╩Сю╦╥н ©ц╥ааж╪╪©Д.</div>
+				<div id="my_d_img" style="background-image:url('http://localhost:9090/tumblbugs/resources/upload/${mvo.profile_simg}')"></div>
+				<div>М▄▄Л²╪ М≤∙Л▀²Л²─ jpg К≤░К┼■ pngК║°, Л┌╛Л²╢Л╕┬К┼■ Й╟─К║° 200px, Л└╦К║° 200px Л²╢Л┐│Л°╪К║° Л≤╛К═╓Лё╪Л└╦Л ■.</div>
 				<div>
-					<label for="my_pro_img"><i class="fas fa-upload"></i>  фдюо ╪╠ецго╠Б</label>
-					<input type=file id="my_pro_img" style="display:none" class="m1_check" name="profile_cimg">
+					<label for="my_pro_img"><i class="fas fa-upload"></i>  М▄▄Л²╪ Л└═М┐²М∙≤Й╦╟</label>
+					<input type=file id="my_pro_img" style="display:none" name="profile_cimg">
 				</div>
 			</div>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>	
 	
 		<div id="content_my_name" class="upload_detail_slide" >
-			<label>ц╒юшюз юл╦╖</label>
+			<label>Л╟╫Л·▒Л·░ Л²╢К╕└</label>
 			<div id="my_name_info" class="sub_info">
 				<c:if test="${mvo.name != null}">
 					<span style="color:black; font-size:11pt; font-weight:550;">${mvo.name}</span>
 				</c:if>
 				<c:if test="${mvo.name == null}">
-					<i class="far fa-hand-point-right"></i> ц╒юшюз юл╦╖ю╩ ют╥бгьаж╪╪©Д.
+					<i class="far fa-hand-point-right"></i> Л╟╫Л·▒Л·░ Л²╢К╕└Л²└ Л·┘К═╔М∙╢Лё╪Л└╦Л ■.
 				</c:if>
 			</div>
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${mvo.name == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${mvo.name != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${mvo.name == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${mvo.name != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>
 		</div>
 		<div id="content_my_name_d" class="upload_detail">
-			<div class="d_title">ц╒юшюз юл╦╖</div>
-			<div><p>ц╒юшюз╢тю╩ ╢Кг╔гр ╪Ж юж╢б юл╦╖ю╩ ╫А аж╪╪©Д. фюю╦╥н аЬгЮго╫е╢ы╦И фю юл╦╖ю╩ ╬╡╪е╣╣ ╣к╢о╢ы</div>	
+			<div class="d_title">Л╟╫Л·▒Л·░ Л²╢К╕└</div>
+			<div><p>Л╟╫Л·▒Л·░К▀≤Л²└ К▄─М▒°М∙═ Л┬≤ Л·┬К┼■ Л²╢К╕└Л²└ Л█╗ Лё╪Л└╦Л ■. М▄─Л°╪К║° Л╖└М√┴М∙≤Л▀═К▀╓К╘╢ М▄─ Л²╢К╕└Л²└ Л⌠╟Л┘■К▐└ К░╘К▀┬К▀╓</div>	
 			<div>
-				<input type="text" placeholder=" юл╦╖ю╩ ют╥бгьаж╪╪©Д." style="resize:none" class="m1_check" id="m1_c6_i1" value="${mvo.name}"/>
-				<div id="m1_c6_len">20юз Ё╡╬р╫ю╢о╢ы.</div>
+				<input type="text" placeholder=" Л²╢К╕└Л²└ Л·┘К═╔М∙╢Лё╪Л└╦Л ■." style="resize:none"id="m1_c6_i1" value="${mvo.name}"/>
+				<div id="m1_c6_len">20Л·░ К┌╗Л∙≤Л┼╣К▀┬К▀╓.</div>
 			</div>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button" class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>	
 		
 		<div id="content_my_intro" class="upload_detail_slide" >
-			<label>ц╒юшюз ╪р╟Ё</label>
+			<label>Л╟╫Л·▒Л·░ Л├▄Й╟°</label>
 			<div id="my_intro_info" class="sub_info">
 			<c:if test="${mvo.intro != null}">
 				<span style="color:black; font-size:11pt; font-weight:550;">${mvo.intro}</span>
 			</c:if>
 			<c:if test="${mvo.intro == null}">
-				<i class="far fa-hand-point-right"></i> ц╒юшюз ╪р╟Ё╦╕ ют╥бгьаж╪╪©Д.
+				<i class="far fa-hand-point-right"></i> Л╟╫Л·▒Л·░ Л├▄Й╟°К╔╪ Л·┘К═╔М∙╢Лё╪Л└╦Л ■.
 			</c:if>
 			</div>
 			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${mvo.intro == null}"> ют╥бго╠Б</c:if>
-				<c:if test="${mvo.intro != null}"> ╪Жа╓го╠Б</c:if>
+				<c:if test="${mvo.intro == null}"> Л·┘К═╔М∙≤Й╦╟</c:if>
+				<c:if test="${mvo.intro != null}"> Л┬≤Л═∙М∙≤Й╦╟</c:if>
 			</div>
 		</div>
 		<div id="content_my_intro_d" class="upload_detail">
-			<div class="d_title">ц╒юшюз ╪р╟Ё</div>
-			<div><p>ц╒юшюз╢тюг юл╥б╟З ╟ё╢эгя ╪р╟Ё╦╕ ╫А аж╪╪©Д.</div>	
+			<div class="d_title">Л╟╫Л·▒Л·░ Л├▄Й╟°</div>
+			<div><p>Л╟╫Л·▒Л·░К▀≤Л²≤ Л²╢К═╔ЙЁ╪ Й╟└К▀╗М∙° Л├▄Й╟°К╔╪ Л█╗ Лё╪Л└╦Л ■.</div>	
 			<div>
-				<div><i class="fas fa-question-circle"></i> ц╒юшюз ╪р╟Ё╢б ╬Н╣П©║ ╬╡юлЁ╙©Д?</div>
-				<div><p>га╥на╖ф╝ фДюлаЖ╦╕ ╧Ф╧╝го╢б хд©Ьюз╣Июл 'е╘╦╝©║юлем юз╪╪хВ ╨╦╠Б'╦╕ е╛╦╞го╦И, ц╒юшюз╢тюг ╟З╟е ер╨М╧В га╥на╖ф╝╣И╟З гт╡╡ ц╒юшюз ╪р╟Ё ╧╝╠╦╟║ г╔╫ц╣к╢о╢ы. 
-						2~3╧╝юЕю╦╥н ╟ё╥╚го╟т ╬Н╤╡ юш╬Вю╩ ю╖аж╥н х╟╣©гь ©б ц╒юшюзюнаЖ ╬к╥ааж╪╪©Д.
+				<div><i class="fas fa-question-circle"></i> Л╟╫Л·▒Л·░ Л├▄Й╟°К┼■ Л√╢К■■Л≈░ Л⌠╟Л²╢К┌≤Л ■?</div>
+				<div><p>М■└К║°Л═²М┼╦ М▌≤Л²╢Л╖─К╔╪ К╟╘К╛╦М∙≤К┼■ М⌡└Л⌡░Л·░К⌠╓Л²╢ 'М│╛К╕╛Л≈░Л²╢М└╟ Л·░Л└╦М·┬ КЁ╢Й╦╟'К╔╪ М│╢К╕╜М∙≤К╘╢, Л╟╫Л·▒Л·░К▀≤Л²≤ ЙЁ╪Й╠╟ М┘─К╦■К╡┘ М■└К║°Л═²М┼╦К⌠╓ЙЁ╪ М∙╗Й╩≤ Л╟╫Л·▒Л·░ Л├▄Й╟° К╛╦Й╣╛Й╟─ М▒°Л▀°К░╘К▀┬К▀╓. 
+						2~3К╛╦Л·╔Л°╪К║° Й╟└К·╣М∙≤Й╡▄ Л√╢К√╓ Л·▒Л≈┘Л²└ Л°└Лё╪К║° М≥°К▐≥М∙╢ Л≤╗ Л╟╫Л·▒Л·░Л²╦Л╖─ Л∙▄К═╓Лё╪Л└╦Л ■.
 				</div>
 			</div>
-			<div><textarea placeholder="ц╒юшюз ╪р╟Ё╦╕ ют╥бгьаж╪╪©Д." style="resize:none" class="m1_check" id="m1_c7_i1"><c:if test="${mvo.intro != null}">${mvo.intro}</c:if>
+			<div><textarea placeholder="Л╟╫Л·▒Л·░ Л├▄Й╟°К╔╪ Л·┘К═╔М∙╢Лё╪Л└╦Л ■." style="resize:none" id="m1_c7_i1"><c:if test="${mvo.intro != null}">${mvo.intro}</c:if>
 			</textarea></div>
-			<div id="m1_c7_len">300юз Ё╡╬р╫ю╢о╢ы</div>
+			<div id="m1_c7_len">300Л·░ К┌╗Л∙≤Л┼╣К▀┬К▀╓</div>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> цК╪рго╠Б</button>
-				<button type="button"  class="up_save"><i class="fas fa-check"></i> юЗюЕго╠Б</button>
+				<button type="button" class="up_reset"><i class="fas fa-times"></i> Л╥╗Л├▄М∙≤Й╦╟</button>
+				<button type="button"  class="up_save"><i class="fas fa-check"></i> Л═─Л·╔М∙≤Й╦╟</button>
 			</div>
 		</div>	
 		</div>

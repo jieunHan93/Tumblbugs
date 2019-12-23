@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>관리자 페이지 메인</title>
+<title>관리자 페이지</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/admin_notice.css">
 <script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
 <script src="http://localhost:9090/tumblbugs/ckeditor/ckeditor.js"></script>
 <script>
@@ -37,7 +38,7 @@
 		
 		$("#noticeCategory").on("change", function(){
 			
-			if($(this).val()=="event"){
+			if($(this).val()=="이벤트"){
 				$("#eventCategory").css('display','');
 			}else{
 				$("#eventCategory").css('display','none');
@@ -66,190 +67,7 @@
 	});
 </script>
 <style>
-body {background-color: #f7f7f7;}
-div#admin_mainpage{
-	/* display: inline-block; */
-}
-div#admin_mainconent{
-	display: inline-block;
-	margin: 0;
-	position: absolute;
-	margin-left: 340px;
-}
-div#admin_mainconent>div#admin_header{
-	border-bottom:1px solid #ccc;
-	border-right:1px solid #ccc;
-	width: 1100px;
-	height: 70px;
-	line-height:70px;
-	background-color: #ffffff;
-	display: inline-block;
-	color: #1e90ff;
-}
-div#admin_mainconent>div#admin_header p {
-	margin-left: 20px;
-}
 
-	#funding_history{
-		position: absolute;
-		margin-left: 20px;
-	}
-	#funding_history section.page_content {
-		background-color: #f6f5f5;
-	}
-	#funding_history article {
-		width: 1080px;
-		margin: auto;
-	}
-	#funding_history li {list-style-type: none;}
-	
-	
-	/* 탭 */
-	#funding_history article#page_content_tab {
-		padding: 20px 0px 20px 0px;
-	}
-	#funding_history #page_content_tab nav,
-	#funding_history #page_content_tab li,
-	#funding_history .search {
-		display: inline-block;
-		font-size: 10.5pt;
-	}
-	#funding_history #page_content_tab li {
-		border-radius: 4px;
-		padding: 8px 10px 8px 10px;
-		margin-right: 8px;
-		cursor: pointer;
-	}
-	#funding_history #page_content_tab li:hover {
-		background-color: rgba(0,0,0,.05);
-	}
-	#funding_history #page_content_tab li span#list_count {
-		display: inline-block;
-		margin-left: 10px;
-		border-radius: 5px;
-		width: 26px;
-		font-size: 10pt;
-		text-align: center;
-		background-color: #999999;
-		color: white;
-	}
-	
-	#funding_history .select_tab {
-		background-color: rgba(0,0,0,.05);
-		color: #1d85ea;
-	}
-	
-	div#admin_notice_write {
-		width: 1080px;
-		position: absolute;
-		margin: 70px 0px 0px 20px;
-	}
-	 table#notice_write_table, table#notice_write_table th, table#notice_write_table td {
-		border-collapse: collapse;
-	}
-	 table#notice_write_table td {
-	 	height: 30px;
-	 }
-	 table#notice_write_table tr#notice_write_table_item {
-	 	background-color: #eeeded;
-	 }
-	 table#notice_write_table tr#notice_write_table_item2 {
-	 	background-color: #ffffff;
-	 } 
-	 table#notice_write_table tr#notice_write_table_item2 a#td_a{
-	 	text-decoration: underline;
-	 	color: #1e90ff;
-	 }
-	 
-	 /** 작성 테이블 **/
-.n_input{
-	width:98%;
-	height:30px;
-	border:1px solid #ccc;
-	border-radius:4px;
-	padding:5px;
-	
-}
-#notice_write_table input[type=date]{
-	width:30%;
-	height:20px;
-	border:1px solid #ccc;
-	border-radius:4px;
-	padding:5px;
-	
-}
-#notice_write_table{
-	width:90%;
-	margin:auto;
-	border:1px solid gray;
-	border-radius:4px !important;
-}
-	
-#notice_write_table tr:first-child th,
-#notice_write_table tr:first-child td{
-	border-top:1px solid gray;
-} 
-#notice_write_table tr, #notice_write_table th,
-#notice_write_table td {
-	border-bottom: 1px solid gray;
-	border-collapse: collapse;
-	width: 100%;
-	padding: 10px;
-}
-
-#notice_write_table tr>td {
-	border-collapse: collapse;
-	text-align: left;
-}
-
-#notice_write_table td input, #notice_write_table td select
-	{
-	margin: 0px;
-	padding: 0px;
-}
-
-#notice_write_table tr th {
-	background: #F5F5F7;
-	width: 16%;
-	border:none;
-}
-
-#notice_write_table tr {
-	height: 15px;
-	padding: 10px;
-}
-
-#notice_write_table th:last-child, #notice_write_table td:last-child
-	{
-	width: 120px;
-}
-#notice_write_table td select {
-	display: inline-block;
-	vertical-align: center;
-	width: 150px;
-	border:1px solid #ccc;
-	padding:5px;
-	font-size:14px;
-	border-radius:3px;
-}
-#writeBtnDiv{
-	text-align:center;
-	padding:20px 0px 15px 0px;
-}
-#writeBtnDiv button{
-	padding:8px 30px 8px 30px;
-	border:none;
-	border-radius:4px;
-	color:white;
-	font-weight:500;
-	background:#343434;
-	cursor:pointer;
-}
-#notice_write_table tr:first-child>th{
-	background-color: #343434;
-	color: white;
-	font-weight: bold;
-}
 </style>
 </head>
 <body>
@@ -277,8 +95,8 @@ div#admin_mainconent>div#admin_header p {
 								<th>분류</th>
 								<td>
 									<select id="noticeCategory" name="notice_category" >
-										<option value="notice">공지사항</option>
-										<option value="event">이벤트</option>
+										<option value="공지사항">공지사항</option>
+										<option value="이벤트">이벤트</option>
 									</select>
 								</td>
 							</tr>

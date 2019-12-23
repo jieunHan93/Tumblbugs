@@ -73,7 +73,12 @@
 					</div>
 				</div>
 				<h1>${mvo.name}</h1>
-				<p id="myproject_header_info_web"><a href="http://www.raspberry-studio.com">${mvo.website}</a></p>
+				<c:if test="${mvo.website != 'null' && mvo.website != null && mvo.website !=''}"> 
+					<p id="myproject_header_info_web"><a href="http://www.raspberry-studio.com">${mvo.website}</a></p>
+				</c:if>
+				<c:if test="${mvo.website == 'null'}"> 
+					<p id="myproject_header_info_web"><a>창작자 웹사이트가 없습니다!</a></p>
+				</c:if>
 				<p id="myproject_header_info_detail"><i class="fas fa-check-circle"></i><span>${pj_count}개 프로젝트의 창작자</span></p>
 			</div>
 		</section>
@@ -103,19 +108,32 @@
 								  		<i class="fas fa-ellipsis-v"></i>
 								  	</button>
 							  		<div class="dropdown-menu">
-									    <div class="dropdown-item"><a id="${vo.pj_id}" class="update_project_page">수정</a></div>
-									   	<div class="dropdown-item"><a id="${vo.pj_id}" class="delete_project_page">삭제</a></div>
-									    <div class="dropdown-item"><a href="http://localhost:9090/tumblbugs/myproject/delivery">선물배송</a></div>
+									    <div class="dropdown-item"><a id="${vo.pj_id}" class="update_project_page" style="cursor:pointer">수정</a></div>
+									   	<div class="dropdown-item"><a id="${vo.pj_id}" class="delete_project_page" style="cursor:pointer">삭제</a></div>
+									    <div class="dropdown-item"><a href="http://localhost:9090/tumblbugs/myproject/delivery?pj_id=${vo.pj_id }" style="cursor:pointer">선물배송</a></div>
 								  	</div>
 								</div>
-								<a class="project_card_img_link" href="http://localhost:9090/tumblbugs/project_content?pj_id=${vo.pj_id }">
+								<c:if test="${vo.pj_addr != null && vo.pj_check_yn == 'y'}"> 
+								<a class="project_card_img_link" href="http://localhost:9090/tumblbugs/project/${vo.pj_addr}">
 									<div class="project_card_img_box">
 										<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg}">
 									</div>
 								</a>
+								</c:if>
+								<c:if test="${vo.pj_addr == null || vo.pj_check_yn != 'y'}"> 
+									<div class="project_card_img_box">
+										<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg}">
+									</div>
+								</c:if>
+								
 								<div class="project_card_content">
 									<h3 class="project_card_content_title">
-										<a href="http://localhost:9090/tumblbugs/project_content">${vo.pj_title}</a>
+									<c:if test="${vo.pj_addr != null && vo.pj_check_yn == 'y'}"> 
+										<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr}">${vo.pj_title}</a>
+									</c:if>
+									<c:if test="${vo.pj_addr == null || vo.pj_check_yn != 'y'}"> 
+										<a>${vo.pj_title}</a>
+									</c:if>
 									</h3>
 									<p class="project_card_content_creator">${mvo.name}의 프로젝트</p>
 									<p class="project_card_content_detail">${vo.pj_summary}</p>
@@ -155,11 +173,13 @@
 											<c:if test="${vo.pj_check_yn == null}"> 
 												<span>작성 중</span>
 											</c:if>
-											<c:if test="${vo.pj_extra_date < 0 && per_total >= 100}"> 
-												<span class="project_card_status_success">성공!</span>
-											</c:if>
-											<c:if test="${vo.pj_extra_date < 0 && per_total < 100}"> 
-												<span class="project_card_status_success">무산!</span>
+											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date < 0}"> 
+												<c:if test="${vo.pj_extra_date < 0 && per_total >= 100}"> 
+													<span class="project_card_status_success">성공!</span>
+												</c:if>
+												<c:if test="${vo.pj_extra_date < 0 && per_total < 100}"> 
+													<span class="project_card_status_success">무산!</span>
+												</c:if>
 											</c:if>
 										</div>
 									</div>

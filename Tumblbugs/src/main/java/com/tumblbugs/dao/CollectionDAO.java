@@ -48,6 +48,13 @@ public class CollectionDAO {
 		list= sqlSession.selectList(namespace+".calendar_list");
 		return (ArrayList<CollectionVO>)list;
 	}
+	/** 컬렉션 등록에서 주소 중복체크 **/
+	public int getResultCheckCol_addr(String col_addr, String col_id) {
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("col_addr", col_addr);
+		param.put("col_id", col_id);
+		return sqlSession.selectOne(namespace+".col_addr_check", param);
+	}
 	/** 컬렉션 등록 **/
 	public boolean getResultWrite(CollectionVO vo) {
 		boolean result = false;
@@ -106,8 +113,6 @@ public class CollectionDAO {
 	public CollectionVO getResultCollectionCount() {
 		 return sqlSession.selectOne(namespace +".collection_count");
 	}
-	/** 컬렉션 상세화면의 해당 컬렉션에 참여중인 프로젝트 목록 **/
-	
 	/** 컬렉션 상세화면 프로젝트 추가 버튼 **/
 	public int getResultAddProject(CollectionVO vo) {
 		int val = 0;
@@ -138,6 +143,10 @@ public class CollectionDAO {
 	}
 	
 	/**user 페이지**/
+	public String getResultCol_id(String col_addr) {
+		return sqlSession.selectOne(namespace+".col_id", col_addr);
+	}
+	
 	public CollectionVO getResultTitle(String col_id) {
 		CollectionVO vo = sqlSession.selectOne(namespace+".collection_title", col_id);
 		return vo;

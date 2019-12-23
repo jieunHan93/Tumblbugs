@@ -20,9 +20,9 @@
 		parameterType="com.tumblbugs.vo.MemberVO" 
 		resultType="com.tumblbugs.vo.SessionVO"> 
 		<!-- SELECT email , name , pass FROM tum_member where email = #{email} -->
-		    select count(*) result, name from tum_member 
+		    select count(*) result, name ,email, profile_simg , profile_img from tum_member 
 		    where email=#{email} and pass=#{pass} 
-		    group by name
+		    group by name ,email, profile_simg , profile_img
 	</select>
 	
 	<select id="email_reg_check"
@@ -36,7 +36,7 @@
 		parameterType="java.lang.String"
 		resultType="int">
 			select count(*) from tum_member
-				 where pass=#{pass} and email='tumblbugs.service@gmail.com'
+				 where pass=#{pass} and email=#{email}
 	</select>
 	
 	
@@ -44,7 +44,7 @@
 	parameterType="com.tumblbugs.vo.MemberVO"	>
 		UPDATE tum_member
 		SET pass=#{pass}, name=#{name},intro=#{intro},website=#{website},phone=#{phone},profile_img=#{profile_img},profile_simg=#{profile_img} 
-		where email='tumblbugs.service@gmail.com'
+		where email=#{email}
 	
 	</update>
 	

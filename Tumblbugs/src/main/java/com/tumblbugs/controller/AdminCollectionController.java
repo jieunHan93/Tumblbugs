@@ -79,6 +79,7 @@ public class AdminCollectionController {
 		for(CollectionVO vo : list) {
 			JsonObject obj = new JsonObject();
 			obj.addProperty("rno", vo.getRno());
+			obj.addProperty("col_addr", vo.getCol_addr());
 			obj.addProperty("col_id", vo.getCol_id());
 			obj.addProperty("col_name", vo.getCol_name());
 			obj.addProperty("col_startdate", vo.getCol_startdate());
@@ -155,6 +156,13 @@ public class AdminCollectionController {
 	public String admin_collection_write() {
 		return "/admin/admin_collection_write";
 	}
+	/** 컬렉션 주소 체크 **/
+	@RequestMapping(value="/admin/collection/write/check", method=RequestMethod.GET)
+	@ResponseBody
+	public int admin_collection_write_check(String col_addr, String col_id) {
+		return collectionDAO.getResultCheckCol_addr(col_addr, col_id);
+	}
+	
 	/** 컬렉션 등록 과정 **/
 	@RequestMapping(value="/admin/collection/write_proc", method=RequestMethod.POST)
 	public String admin_collection_write_proc(CollectionVO vo, HttpServletRequest request) throws Exception {
@@ -227,7 +235,6 @@ public class AdminCollectionController {
 				}
 			}
 			mv.addObject("col_id", vo.getCol_id());
-			mv.addObject("result", "true");
 			mv.setViewName("redirect:/admin/collection/content");
 		} else {
 			mv.setViewName("error_page");
@@ -242,7 +249,6 @@ public class AdminCollectionController {
 		boolean result = false;
 		result = collectionDAO.getResultDelete(col_id);
 		if(result) {
-			mv.addObject("delete_result", "true");
 			mv.setViewName("redirect:/admin/collection");
 		} else {
 			mv.setViewName("error_page");

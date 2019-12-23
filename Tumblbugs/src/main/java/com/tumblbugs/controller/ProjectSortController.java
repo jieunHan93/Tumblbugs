@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -117,6 +118,7 @@ public class ProjectSortController {
 			obj.addProperty("icon", icon);
 			obj.addProperty("color", color); 
 			obj.addProperty("remaining_days", remaining_days);
+			obj.addProperty("pj_addr", vo.getPj_addr());
 			obj.addProperty("dbCount", dbCount);
 			jlist.add(obj);
 		}
@@ -126,9 +128,10 @@ public class ProjectSortController {
 	}
 	
 	/** 컬렉션 페이지 오픈 **/
-	@RequestMapping(value="/collections", method=RequestMethod.GET)
-	public ModelAndView collections(String col_id) {
+	@RequestMapping(value="/collections/{col_addr}", method=RequestMethod.GET)
+	public ModelAndView collections(@PathVariable("col_addr") String col_addr) {
 		ModelAndView mv = new ModelAndView();
+		String col_id = collectionDAO.getResultCol_id(col_addr);
 		CollectionVO vo =collectionDAO.getResultTitle(col_id);
 		mv.addObject("vo", vo);
 		mv.addObject("col_id",col_id);
@@ -204,6 +207,7 @@ public class ProjectSortController {
 			obj.addProperty("icon", icon);
 			obj.addProperty("color", color); 
 			obj.addProperty("remaining_days", remaining_days);
+			obj.addProperty("pj_addr", vo.getPj_addr());
 			obj.addProperty("dbCount", dbCount);
 			jlist.add(obj);
 		}

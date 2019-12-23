@@ -31,7 +31,7 @@
 		select payment_id from tum_payment where email=#{sid}
 	</select> 
 
-	<insert id="payment_update_proc" parameterType="com.tumblbugs.vo.PaymentVO" >	
+	<insert id="payment_insert_proc" parameterType="com.tumblbugs.vo.PaymentVO" >	
 		insert into tum_payment VALUES(
 			'PM' || LPAD(tum_payment_sequ.nextval, 5, 0),
 			#{email},
@@ -53,8 +53,24 @@
 		select count(*) from tum_payment
 	</select>
 	
-	<select id="payment_info" resultType="com.tumblbugs.vo.PaymentVO">
-		select * from tum_payment
+	<select id="payment_info" parameterType="map" resultType="com.tumblbugs.vo.PaymentVO" >
+	
+	<!-- SELECT * from (select ROWNUM rno, payment_id,email,payment_method,card_company,card_number,
+	card_valid_date,card_pass,bank,account_number,account_name,account_birth,
+	payment_date,card_birth 
+	from (select payment_id,email,payment_method,card_company,card_number,
+	card_valid_date,card_pass,bank,account_number,account_name,account_birth,
+	payment_date,card_birth 
+	from  tum_payment order by rownum asc)) 
+	where rno BETWEEN #{startCount} AND #{endCount} -->
+	
+	  SELECT * from (select ROWNUM rno, payment_id,email,payment_method,card_company,card_number,
+	card_valid_date,card_pass,bank,account_number,account_name,account_birth,
+	payment_date,card_birth from (select payment_id,email,trim(payment_method) payment_method,card_company,card_number,
+	card_valid_date,card_pass,bank,account_number,account_name,account_birth,
+	payment_date,card_birth from  tum_payment  where email = #{email} order by rownum asc)) 
+  	where rno BETWEEN #{startCount} AND #{endCount}
+	
 	</select>
 	
 

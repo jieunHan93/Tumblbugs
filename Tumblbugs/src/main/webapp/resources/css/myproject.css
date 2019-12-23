@@ -266,7 +266,7 @@ div#myproject_info_lower>div>span:first-child {
 }
 
 div#myproject_delivery_body{
-	width:1080px;
+	width:1500px;
 	margin:auto;
 	padding-bottom:80px;
 }
@@ -425,11 +425,8 @@ div#btn-save_reset button:hover{
 	background-color: #1d85ea;
 }
 
-table#myproject_delivery_table th.title_rno{width:45px;}
-table#myproject_delivery_table th.title_pay_name,
-table#myproject_delivery_table th.title_name,
-table#myproject_delivery_table th.title_end{width:80px;}
-table#myproject_delivery_table th.title_pay_num{width:80px;}
+div#myproject_delivery_table_box tr#delivery_table_titles th.title_pay_name.sorting{ width:150px; }
+table#myproject_delivery_table td.pay_person{ width:150px; }
 
 table.dataTable thead th, table.dataTable thead td {
     padding: 5px 6px 5px 5px;
@@ -449,13 +446,30 @@ table.dataTable thead th.title_end.sorting{
 	overflow: hidden;
 } 
 div#myproject_delivery_table_box .dataTables_wrapper .dataTables_paginate {
-  		float: left;
-	width: 620px;
+  	float: left;
+	width: 830px;
     margin-top: 10px;
 }
-  	div#myproject_delivery_table_box .dataTables_wrapper .dataTables_length{
-  		margin-top: 10px;
-  	}
+div#myproject_delivery_table_box .dataTables_wrapper .dataTables_length{
+	margin-top: 10px;
+}
 #paging{
 	text-align:center;
 }  	
+div#nolistfordelivery{
+	width:1080px;
+	margin:auto;
+	height:100px;
+	padding-top:150px;
+	padding-bottom:250px;
+	color:#dddcdc;
+	text-align: center;
+}
+div#nolistfordelivery i {
+	font-size:70pt;
+	margin-bottom:10px;
+}
+div#nolistfordelivery div{
+	font-size:20pt;
+	font-weight: bold;
+}

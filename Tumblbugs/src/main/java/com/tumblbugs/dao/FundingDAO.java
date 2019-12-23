@@ -87,17 +87,31 @@ public class FundingDAO {
 		map.put("email", email);
 		map.put("category", category);
 		map.put("search", search);
-		map.put("start", 1);
-		map.put("end", 5);
-		
-		System.out.println(map.get("email"));
-		System.out.println(map.get("category"));
-		System.out.println(map.get("search"));
-		System.out.println(map.get("start"));
-		System.out.println(map.get("end"));
+		map.put("start", start);
+		map.put("end", end);
 		
 		List list = sqlSession.selectList(namespace + ".fundingList", map);
-		return (ArrayList<FundingVO>)list;
+		ArrayList<FundingVO> flist = (ArrayList<FundingVO>)list;
+		
+		for(FundingVO vo:flist) {
+			if(Integer.parseInt(vo.getRemaining_days()) >= 0) {
+				vo.setProject_status("펀딩 진행중");
+			} else {
+				if(vo.getAchievement_rate() >= 100) {
+					vo.setProject_status("펀딩 성공");
+				} else {
+					vo.setProject_status("무산");
+				}
+			}
+			
+			if(vo.getPayment_complete_yn().equals("n")) {
+				vo.setPayment_status("미결제");
+			} else {
+				vo.setPayment_status("결제 완료");
+			}
+		}
+		
+		return flist;
 	}
 	
 	public int execTotalCount(String email, String category, String search) {

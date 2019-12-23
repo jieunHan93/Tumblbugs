@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +30,14 @@ public class ProjectMessageController {
 	//String email="yappihan@naver.com";
 	//String email="semibold@naver.com";
 	//String email="test3@naver.com";
-	String email="aaa@naver.com";
+	//String email="aaa@naver.com";
 	
 	/** 프로젝트 상세페이지에서 문의하기 **/
 	@RequestMapping(value="/sendMessage", method=RequestMethod.GET)
 	public ModelAndView send_message(String pj_id) {
 		ModelAndView mv = new ModelAndView();
+		/*String email = (String)session.getAttribute("email");
+		System.out.println("email::"+email);*/
 		String name = messageDAO.getResultCreatorName(pj_id);
 		mv.addObject("pj_id", pj_id);
 		mv.addObject("name", name);
@@ -42,8 +46,9 @@ public class ProjectMessageController {
 	}
 	/** 문의 등록 **/
 	@RequestMapping(value="/messageWrite_proc", method=RequestMethod.POST)
-	public ModelAndView messagewrite_proc(MessageVO vo) {
+	public ModelAndView messagewrite_proc(MessageVO vo, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		String email = (String)session.getAttribute("semail");
 		vo.setEmail(email);
 		boolean result = messageDAO.getResultWrite(vo);
 		if(result) {
@@ -64,8 +69,9 @@ public class ProjectMessageController {
 	/** 채팅방 가져오기 **/
 	@RequestMapping(value="/mypage/message_proc", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String message_proc(String user, String sort) throws Exception {
+	public String message_proc(String user, String sort, HttpSession session) throws Exception {
 		// 아이디 세션으로 받아오기!!
+		String email = (String)session.getAttribute("semail");
 		ArrayList<MessageVO> list = messageDAO.getResultChatroom(user, email, sort);
 		
 		BeforeTimeUtil util = new BeforeTimeUtil();
@@ -104,7 +110,8 @@ public class ProjectMessageController {
 	/** 메세지 상세목록 호출   **/
 	@RequestMapping(value="/mypage/message/content_proc", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String content_proc(String chatroom_id) throws Exception {
+	public String content_proc(String chatroom_id, HttpSession session) throws Exception {
+		String email = (String)session.getAttribute("semail");
 		messageDAO.getResultCheck(chatroom_id, email);
 		
 		ArrayList<MessageVO> list = messageDAO.getResultMessage(chatroom_id);
@@ -134,11 +141,12 @@ public class ProjectMessageController {
 	/** 마이페이지에서 메시지 등록하기 **/
 	@RequestMapping(value="/mypage/message/content_insert_proc", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String content_insert_proc(String chatroom_id, String email, String msg_content) {
+	public String content_insert_proc(String chatroom_id, String msg_content, HttpSession session) {
 		MessageVO vo = new MessageVO();
 		// 삭제 할것
+		String email = (String)session.getAttribute("semail");
 		vo.setChatroom_id(chatroom_id);
-		vo.setEmail(this.email);
+		vo.setEmail(email);
 		vo.setMsg_content(msg_content);
 		int val = messageDAO.getResultInsert(vo);
 		return String.valueOf(val);

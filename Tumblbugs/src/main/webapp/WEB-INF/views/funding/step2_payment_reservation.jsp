@@ -47,12 +47,12 @@
 	<div id="funding_step2">
 		<div id="project_info">
 			<div>
-				<a id="backToProject" href="http://localhost:9090/tumblbugs/project_content?pj_id=${vo.pj_id }"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
+				<a id="backToProject" href="http://localhost:9090/tumblbugs/project/${pj_addr }"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
 				<div id="project_title">${pj_title }</div>
 			</div>
 		</div>
 		<div id="step2_content">
-			<form action="http://localhost:9090/tumblbugs/funding/complete" method="post" name="fundingForm">
+			<form action="http://localhost:9090/tumblbugs/${pj_addr}/funding/complete" method="post" name="fundingForm">
 				
 				<input type="hidden" name="pj_id" value="${vo.pj_id }">
 				<input type="hidden" name="email" value="${vo.email }">

@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="project_info" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MessageVO">
-		SELECT DISTINCT(MSG.PJ_ID), PJ_TITLE, NAME, PROFILE_SIMG FROM TUM_MESSAGE MSG, TUM_MEMBER M, TUM_PROJECT P WHERE MSG.PJ_ID = P.PJ_ID 
+		SELECT DISTINCT(MSG.PJ_ID), PJ_TITLE, NAME, PROFILE_SIMG, PJ_ADDR FROM TUM_MESSAGE MSG, TUM_MEMBER M, TUM_PROJECT P WHERE MSG.PJ_ID = P.PJ_ID 
 		AND P.EMAIL = M.EMAIL AND CHATROOM_ID = #{chatroom_id}
 	</select>
 	
