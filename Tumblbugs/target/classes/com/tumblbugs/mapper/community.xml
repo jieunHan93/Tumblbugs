@@ -6,12 +6,17 @@
 
 <mapper namespace="mapper.community">
 	<select id="communityList" parameterType="map" resultType="com.tumblbugs.vo.CommunityVO">
-		select c.community_id, name, profile_simg, c.email, community_content, community_date, community_udate, nvl(rcount, 0) rcount
+		select c.community_id, name, profile_simg, c.email, community_content, to_char(community_date, 'yyyy/mm/dd hh:mi:ss') community_date,
+				to_char(community_udate, 'yyyy/mm/dd hh:mi:ss') community_udate, nvl(rcount, 0) rcount
 		from tum_community c, tum_member m, (select count(*) rcount, community_id from tum_community_reply group by community_id) r
 		where c.email = m.email
 		and c.community_id = r.community_id(+)
 		and pj_id = #{pj_id}
 		order by community_date desc
+	</select>
+	
+	<select id="content" parameterType="String" resultType="com.tumblbugs.vo.CommunityVO">
+		select community_id, community_content from tum_community where community_id=#{community_id} 
 	</select>
 	
 	<select id="replyList" parameterType="String" resultType="com.tumblbugs.vo.CommunityReplyVO">
@@ -22,7 +27,31 @@
 		and c.community_id = #{community_id}
 	</select>
 	
+	<select id="replyOne" parameterType="map" resultType="com.tumblbugs.vo.CommunityReplyVO">
+		select reply_id, r.email, m.name, m.profile_simg, reply_content,  to_char(reply_date,'yyyy.mm.dd hh24:mi') reply_date
+		from tum_community_reply r, tum_member m
+		where r.email = m.email
+		and r.reply_id = #{reply_id}
+		and r.email = #{email}
+	</select>
+	
 	<insert id="write" parameterType="com.tumblbugs.vo.CommunityVO">
 		insert into tum_community values('CM'||LPAD(tum_community_sequ.nextval, 5, '0'), #{pj_id}, #{email}, #{community_content}, sysdate, null)
 	</insert>
+	
+	<update id="update" parameterType="com.tumblbugs.vo.CommunityVO">
+		update tum_community set community_content = #{community_content}, community_udate = sysdate where community_id = #{community_id}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from tum_community where community_id = #{community_id}
+	</delete>
+	
+	<insert id="replyWrite" parameterType="com.tumblbugs.vo.CommunityReplyVO">
+		insert into tum_community_reply values('CR'||LPAD(tum_community_reply_sequ.nextval, 5, '0'), #{community_id}, #{email}, #{reply_content}, sysdate)
+	</insert>
+	
+	<delete id="replyDelete" parameterType="String">
+		delete from tum_community_reply where reply_id = #{reply_id}
+	</delete>
 </mapper>

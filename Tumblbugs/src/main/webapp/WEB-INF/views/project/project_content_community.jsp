@@ -153,25 +153,33 @@
 				<div class="menu_content" id="community">
 					<div id="community_content">
 						<div id="community_top">
-							<!-- 미로그인 회원 -->
-							<div class="white_box" id="box1_login_request">
-								<a href="#">
-									<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png"></span>
-									<span id="message">로그인해주세요</span>
-								</a>
-							</div>
-							<!-- 비후원자 회원 -->
-							<div class="white_box" id="box2_nonsponser">
-								<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
-								<span id="message">후원자만 글을 쓸 수 있어요</span>
-							</div>
-							<!-- 후원자 -->
-							<div class="white_box" id="box3_sponser">
-								<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }/community/new">
-									<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/project_content/profile_sample.jpg"></span>
-									<span id="message">창작자에게 응원의 한 마디를!</span>
-								</a>
-							</div>
+							<c:choose>
+								<c:when test="${empty sessionScope.semail}">
+									<!-- 미로그인 회원 -->
+									<div class="white_box" id="box1_login_request">
+										<a href="http://localhost:9090/tumblbugs/login">
+											<span id="member_img"><img src="http://localhost:9090/tumblbugs/images/avatar_2.png" id="default_member_image"></span>
+											<span id="message">로그인해주세요</span>
+										</a>
+									</div>
+								</c:when>
+								<c:when test="${fundingYn eq 0}">
+									<!-- 비후원자 회원 -->
+									<div class="white_box" id="box2_nonsponser">
+										<span id="member_img"><img src="http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_simg }"></span>
+										<span id="message">후원자만 글을 쓸 수 있어요</span>
+									</div>
+								</c:when>
+								<c:when test="${fundingYn > 0}">
+									<!-- 후원자 -->
+									<div class="white_box" id="box3_sponser">
+										<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }/community/new">
+											<span id="member_img"><img src="http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_simg }"></span>
+											<span id="message">창작자에게 응원의 한 마디를!</span>
+										</a>
+									</div>
+								</c:when>
+							</c:choose>
 						</div>
 						<div id="community_tab">
 							<span id="all_posting">모든 게시글</span>

@@ -28,4 +28,9 @@ public class DeliveryDAO {
 		list = sqlSession.selectList(namespace+".list", pj_id);
 		return (ArrayList<DeliveryVO>)list;
 	}
+	
+	/** 배송 정보 업데이트 **/
+	public int getResultUpdate(ArrayList<DeliveryVO> list) {
+		return sqlSession.update(namespace+".update", list);
+	}
 }

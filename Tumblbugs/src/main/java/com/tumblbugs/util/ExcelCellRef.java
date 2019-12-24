@@ -1,9 +1,14 @@
 package com.tumblbugs.util;
 
+import java.text.SimpleDateFormat;
+
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.util.CellReference;
  
 public class ExcelCellRef {
+	
     /**
      * Cell에 해당하는 Column Name을 가젼온다(A,B,C..)
      * 만약 Cell이 Null이라면 int cellIndex의 값으로
@@ -25,6 +30,11 @@ public class ExcelCellRef {
     }
     
     public static String getValue(Cell cell) {
+    	// 데이터 포멧터
+    	DataFormatter formatter = new DataFormatter();
+    	// 데이트 포맷
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	
         String value = "";
         
         if(cell == null) {
@@ -36,7 +46,15 @@ public class ExcelCellRef {
                 break;
             
             case Cell.CELL_TYPE_NUMERIC :
-                value = (int)cell.getNumericCellValue() + "";
+            	// 날짜형 예외
+				if (HSSFDateUtil.isInternalDateFormat(cell.getCellStyle().getDataFormat())) {
+					value = sdf.format(cell.getDateCellValue());
+				}
+				// 기타
+				else {
+					value = formatter.formatCellValue(cell);
+				}
+                //value = (int)cell.getNumericCellValue() + "";
                 break;
                 
             case Cell.CELL_TYPE_STRING :

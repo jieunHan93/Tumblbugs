@@ -38,8 +38,9 @@ public class ProjectUploadController {
 	@RequestMapping(value="/project_edit_memberFile_proc", method=RequestMethod.POST)
 	@ResponseBody
 	public String project_edit_memberFile_proc(MemberVO vo, HttpSession session, HttpServletRequest request) throws Exception{
-
-		/*String session_id = (String)session.getAttribute("pj_id");*/
+		String semail = (String)session.getAttribute("semail");
+		String file_name = "";
+		file_name = PJUploadDao.getMemberfileName(semail);
 		
 		//파일 전송 및 복사
 				if(vo.getProfile_cimg().getOriginalFilename() != null && vo.getProfile_cimg().getOriginalFilename() != ""){
@@ -52,17 +53,21 @@ public class ProjectUploadController {
 					/*vo.setPj_id(session_id);*/
 					vo.setProfile_img(vo.getProfile_cimg().getOriginalFilename());
 					vo.setProfile_simg(uuid+"_"+vo.getProfile_cimg().getOriginalFilename());
-					vo.setEmail((String)session.getAttribute("semail"));
+					vo.setEmail(semail);
 					int val = PJUploadDao.resultInsertMemberFile(vo);
 					
 					if(val != 0) {
 
 						File file = new File(root_path + attach_path + uuid +"_"+vo.getProfile_cimg().getOriginalFilename());
 						vo.getProfile_cimg().transferTo(file);
+						
+						if(file_name != null && file_name != "") {
+							String del_path = root_path + attach_path + file_name;
+							File delfile = new File(del_path);
+							
+							if(delfile.exists()) delfile.delete();
+						}
 					}
-				}else{
-					
-					System.out.println("선택 파일 없음~");
 				}
 		
 		return "success";
@@ -79,6 +84,7 @@ public class ProjectUploadController {
 
 		String session_id = (String)session.getAttribute("pj_id");
 		String semail = (String)session.getAttribute("semail");
+		
 		//프로젝트 없다면 프로젝트 생성
 		if(session_id == null){
 			session_id = "null";
@@ -341,7 +347,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="redirect:/error_page";
+			res="error_page";
 		}
 		return res;
 	}
@@ -374,7 +380,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="redirect:/error_page";
+			res="error_page";
 		}
 		
 		return "success";
@@ -407,7 +413,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="redirect:/error_page";
+			res="error_page";
 		}
 		
 		return res;
@@ -442,7 +448,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="redirect:/error_page";
+			res="error_page";
 		}
 		
 		return res;
@@ -477,18 +483,43 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="redirect:/error_page";
+			res="error_page";
 		}
 		
 		return res;
 	}
 
 	/**
+	 * 프로젝트 검토
+	 * @return
+	 */
+	@RequestMapping(value="/project_upload_proc", method=RequestMethod.GET)
+	public String project_upload_proc(HttpSession session) {
+		String session_id = (String)session.getAttribute("pj_id");
+		String res = "error_page";
+		boolean result = PJUploadDao.resultUploadProject(session_id);	
+		if(result) {
+			res = "redirect:/project_start_upload";
+		}
+		
+		return res;
+	}
+	
+	
+	/**
 	 * 프로젝트 정책 안내 페이지
 	 * @return
 	 */
 	@RequestMapping(value="/project_start_agreement", method=RequestMethod.GET)
-	public String project_start_agreement() {
+	public String project_start_agreement(HttpSession session) {
+		String session_id = (String)session.getAttribute("pj_id");
+		if(session_id == null){
+			session_id = "null";
+		}
+		
+		if(!session_id.equals("null")){
+			session.removeAttribute("pj_id");
+		}
 		return "/project/project_start_agreement";
 	}
 	

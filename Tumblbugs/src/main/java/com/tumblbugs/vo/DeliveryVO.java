@@ -3,16 +3,22 @@ package com.tumblbugs.vo;
 import java.util.ArrayList;
 
 public class DeliveryVO {
-	String funding_id, name, funding_date, recipient_name,recipient_addr,recipient_phone, recipient_request;
+	String funding_id, name, funding_date, recipient_name,recipient_addr,recipient_phone, recipient_request, gift_id, funding_gift_price;
 	String gift_title, gift_option, extra_funding_price, courier, invoice_number, delivery_start_date, delivery_complete_yn;
-	int rno, gift_quantity, funding_gift_price;
-	ArrayList<DeliveryVO> list;
+	int rno, gift_quantity;
+	ArrayList<DeliveryVO> list = new ArrayList<DeliveryVO>();
 	
 	public ArrayList<DeliveryVO> getList() {
 		return list;
 	}
 	public void setList(ArrayList<DeliveryVO> list) {
 		this.list = list;
+	}
+	public String getGift_id() {
+		return gift_id;
+	}
+	public void setGift_id(String gift_id) {
+		this.gift_id = gift_id;
 	}
 	public int getRno() {
 		return rno;
@@ -110,12 +116,13 @@ public class DeliveryVO {
 	public void setGift_quantity(int gift_quantity) {
 		this.gift_quantity = gift_quantity;
 	}
-	public int getFunding_gift_price() {
+	public String getFunding_gift_price() {
 		return funding_gift_price;
 	}
-	public void setFunding_gift_price(int funding_gift_price) {
+	public void setFunding_gift_price(String funding_gift_price) {
 		this.funding_gift_price = funding_gift_price;
 	}
+	
 	
 	
 }

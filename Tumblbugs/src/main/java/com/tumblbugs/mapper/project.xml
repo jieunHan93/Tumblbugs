@@ -78,4 +78,8 @@
 	<update id="hits" parameterType="String">
 		update tum_project set pj_hits = pj_hits + 1 where pj_id = #{pj_id}
 	</update>
+	
+	<select id="fundingYn" parameterType="map" resultType="int">
+		select count(*) from tum_funding where pj_id = #{pj_id} and email = #{email}
+	</select>
 </mapper>

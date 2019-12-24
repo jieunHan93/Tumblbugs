@@ -43,12 +43,13 @@ public class MyprojectExcelController {
 	private DeliveryDAO deliveryDAO;
 	
 	@RequestMapping(value="/myproject/delivery", method=RequestMethod.GET)
-	public ModelAndView myproject_delivery(String pj_id) {
+	public ModelAndView myproject_delivery(String pj_id, String rpage) {
 		ModelAndView mv = new ModelAndView();
 		ArrayList<DeliveryVO> list = deliveryDAO.getResultList(pj_id);
 		ProjectVO vo = deliveryDAO.getResultProject(pj_id);
 		mv.addObject("list", list);
 		mv.addObject("vo", vo);
+		mv.addObject("rpage", rpage);
 		mv.setViewName("/mypage/myproject_delivery");
 		return mv;
 	}
@@ -75,7 +76,7 @@ public class MyprojectExcelController {
         
         ExcelReadOption excelReadOption = new ExcelReadOption();
         excelReadOption.setFilePath(destFile.getAbsolutePath());
-        excelReadOption.setOutputColumns("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q");
+        excelReadOption.setOutputColumns("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R");
 
         excelReadOption.setStartRow(2);
         
@@ -86,17 +87,10 @@ public class MyprojectExcelController {
 		JsonObject jdata = new JsonObject();
         
         for(Map<String, String> article: excelContent){
-            /*System.out.println(article.get("A"));
-            System.out.println(article.get("B"));
-            System.out.println(article.get("C"));*/
             JsonObject obj = new JsonObject();
-			/*obj.addProperty("A", article.get("A"));
-			obj.addProperty("B", article.get("B"));
-			obj.addProperty("C", article.get("C"));
-			obj.addProperty("D", article.get("D"));*/
-            obj.addProperty("B", article.get("B"));
-			obj.addProperty("E", article.get("E"));
-			obj.addProperty("F", article.get("F"));
+            obj.addProperty("B", article.get("B"));	// funding_id
+            obj.addProperty("C", article.get("C"));	// gift_id
+			/*obj.addProperty("F", article.get("F"));
 			obj.addProperty("G", article.get("G"));
 			obj.addProperty("H", article.get("H"));
 			obj.addProperty("I", article.get("I"));
@@ -104,53 +98,39 @@ public class MyprojectExcelController {
 			obj.addProperty("K", article.get("K"));
 			obj.addProperty("L", article.get("L"));
 			obj.addProperty("M", article.get("M"));
-			obj.addProperty("N", article.get("N"));
+			obj.addProperty("N", article.get("N"));*/
 			obj.addProperty("O", article.get("O"));
 			obj.addProperty("P", article.get("P"));
-			/*obj.addProperty("Q", article.get("Q"));*/
+			obj.addProperty("Q", article.get("Q"));
 			jlist.add(obj);
         }
         
 		jdata.add("list", jlist);
 		String result = gson.toJson(jdata);
-        
-        //ExcelUploadService service = new ExcelUploadService();
-        //service.excelUpload(destFile);
-        
         destFile.delete();
         
         return result;
     }
 
-	@RequestMapping(value="/myproject/excelDownload", method=RequestMethod.GET)
-	/*@ResponseBody*/
-    public void excelExport(String pj_id, Locale locale, HttpServletRequest request, HttpServletResponse response){
+	@RequestMapping(value="/myproject/excelDownload", method=RequestMethod.POST)
+    public void excelExport(DeliveryVO vo, String pj_title, Locale locale, HttpServletRequest request, HttpServletResponse response){
 		
 		Date now = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		ArrayList<DeliveryVO> list = deliveryDAO.getResultList(pj_id);
-		
-/*		int i = 0;
-		testVO vo = null;
-		if(vo == null) {
-		   vo = new testVO();
-		}
-	   
-		testDAO dao = new testDAO();
-		List<testVO> list = dao.getList();*/
-	   
+		ArrayList<DeliveryVO> list = vo.getList();
 		
 		String root_path = request.getSession().getServletContext().getRealPath("/"); 
 		String attach_path = "\\resources\\upload\\";
 		
 		
 		WriteOption writeOption = new WriteOption();
-		writeOption.setFileName("확인용"+format.format(now)+".xlsx");
-		writeOption.setSheetName("확인");
+		writeOption.setFileName(pj_title+"_배송목록_"+format.format(now)+".xlsx");
+		writeOption.setSheetName("배송목록");
 		writeOption.setFilePath(root_path+attach_path);
 		List<String> titles = new ArrayList<String>();
 		titles.add("번호");
 		titles.add("후원번호");
+		titles.add("선물번호");
 		titles.add("후원자명");
 		titles.add("후원일자");
 		titles.add("수령자명");
@@ -160,40 +140,42 @@ public class MyprojectExcelController {
 		titles.add("선물");
 		titles.add("선택옵션");
 		titles.add("수량");
-		titles.add("후원액");
+		titles.add("후원금액");
 		titles.add("추가후원금");
 		titles.add("택배사");
 		titles.add("송장번호");
-		titles.add("배송시작인");
+		titles.add("배송시작일");
 		titles.add("수령완료");
 		writeOption.setTitles(titles);
 	   
 		try {
 			List<String[]> contents = new ArrayList<String[]>();
-			String[] row = new String[18];
+			String[] row = new String[19];
 			int i = 0;
-			for(DeliveryVO vo: list){
-				row = new String[18];
-				//row[0] = pvo.getTitle();
-				row[0] = String.valueOf(vo.getRno());
-				row[1] = vo.getFunding_id();
-				row[2] = vo.getName();
-				row[3] = vo.getFunding_date();
-				row[4] = vo.getRecipient_name();
-				row[5] = vo.getRecipient_addr();
-				row[6] = vo.getRecipient_phone();
-				row[7] = vo.getRecipient_request();
-				row[8] = vo.getGift_title();
-				row[9] = vo.getGift_option();
-				row[10] = String.valueOf(vo.getGift_quantity());
-				row[11] = String.valueOf(vo.getFunding_gift_price());
-				row[12] = vo.getExtra_funding_price();
-				row[13] = vo.getCourier();
-				row[14] = vo.getInvoice_number();
-				row[15] = vo.getDelivery_start_date();
-				row[16] = vo.getDelivery_complete_yn();
+			for(DeliveryVO dvo: list){
+				row = new String[19];
+				row[0] = String.valueOf(dvo.getRno());
+				row[1] = dvo.getFunding_id();
+				row[2] = dvo.getGift_id();
+				row[3] = dvo.getName();
+				row[4] = dvo.getFunding_date();
+				row[5] = dvo.getRecipient_name();
+				row[6] = dvo.getRecipient_addr();
+				row[7] = dvo.getRecipient_phone();
+				row[8] = dvo.getRecipient_request();
+				row[9] = dvo.getGift_title();
+				row[10] = dvo.getGift_option();
+				row[11] = String.valueOf(dvo.getGift_quantity());
+				row[12] = String.valueOf(dvo.getFunding_gift_price());
+				row[13] = dvo.getExtra_funding_price();
+				row[14] = dvo.getCourier();
+				row[15] = dvo.getInvoice_number();
+				row[16] = dvo.getDelivery_start_date();
+				row[17] = dvo.getDelivery_complete_yn();
 				
-				if(i == 0) row[17] = "업로드시에는 필터를 풀고 진행해주세요";
+				if(i == 0) row[18] = "번호, 후원번호와 선물번호 는 수정하지마세요. 정상적인 업로드가 불가능합니다.";
+				if(i == 1) row[18] = "택배사, 송장번호, 배송시작일 이외의 정보는 후원자가 수정해야합니다.";
+				if(i == 2) row[18] = "수령 완료는 후원자가 선물 수령 확인시 업데이트 됩니다.";
 				i++;
 				contents.add(row);
 			}
@@ -220,15 +202,14 @@ public class MyprojectExcelController {
 	  		e.printStackTrace();
 	  	}
 	}
-	
+	/** 수정 데이터 저장 **/
 	@RequestMapping(value="/myproject/delivery_update",method=RequestMethod.POST)
-	public ModelAndView delivery_update(ListVO vo, String pj_id) {
+	public ModelAndView delivery_update(DeliveryVO vo, String pj_id, String rpage) {
 		ModelAndView mv = new ModelAndView();
-		ArrayList<ListVO> list = vo.getList();
-		for(ListVO lvo : list) {
-			System.out.println(lvo.getName());
-		}
+		ArrayList<DeliveryVO> list = vo.getList();
+		int result = deliveryDAO.getResultUpdate(list);
 		mv.addObject("pj_id", pj_id);
+		mv.addObject("rpage", rpage);
 		mv.setViewName("redirect:/myproject/delivery");
 		return mv;
 	}

@@ -47,12 +47,21 @@
 		
 		$("#updateBtn").click(function(){
 			$("#notice_content").val(CKEDITOR.instances.notice_content.getData());
-			/*  if($("#noticeCategory").val()=="이벤트"){
+			
+			if($("#noticeCategory").val()=="공지사항"){
 				$("#event_start").val("");
 				$("#event_end").val("");
-				}  */
+			}
 			
-			$("form").submit();
+			if($("#nTitle").val() == '' || $("#nTitle").val() == null){
+				alert("제목을 작성해주세요.");
+					
+			}else if($("#notice_content").val() == '' || $("#notice_content").val() == null){
+				alert("내용을 작성해주세요.");
+				
+			}else{
+				$("form").submit();
+			}
 		});
 		
 		$("#noticeCategory").on("change", function(){
@@ -78,10 +87,23 @@
 			$(".funding_list").hide();
 			$(".funding_list#" + id).show();
 		});
+		
+		$("input[type=file]").change(function(){
+			if(window.FileReader){
+				$("#fileName").text("").text($(this)[0].files[0].name);
+			}
+		});
+		
 	});
 </script>
 <style>
-
+	#fileName{
+		font-size:10.5pt;
+		position:relative;
+		right:198px;
+		background:rgb(245, 245, 247);
+		padding:0px 100px 0px 8px;
+	}
 </style>
 </head>
 <body>
@@ -96,14 +118,14 @@
 				</div>
 			</div>
 			<div id="admin_notice_update">
-			<form action="http://localhost:9090/tumblbugs/admin/notice_update_proc" method="post" name="admin_notice_update">
+			<form action="http://localhost:9090/tumblbugs/admin/notice_update_proc" id="admin_notice_update"method="post" name="admin_notice_update" enctype="multipart/form-data">
 					<table id="notice_update_table">
 						<tr>
 							<th colspan=2>공지사항 수정</th>
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td><input type="text" class="n_input" name="notice_title" value="${vo.notice_title }"/></td>
+							<td><input type="text" class="n_input" name="notice_title" value="${vo.notice_title }" id="nTitle"/></td>
 						</tr>	
 						<tr>
 							<th>분류</th>
@@ -117,6 +139,11 @@
 						<tr id="eventCategory">
 							<th>이벤트 기간</th>
 							<td><input type="date" name="notice_event_start" id="event_start"/> ~ <input type="date" id="event_end" name="notice_event_end"/></td>
+						</tr>
+						<tr>
+							<th>썸네일</th>
+							<td><input type="file" name="notice_cthumbnail"/>
+								<span id="fileName">  ${vo.notice_thumbnail}</span></td>
 						</tr>
 						<tr>
 							<td colspan=2>

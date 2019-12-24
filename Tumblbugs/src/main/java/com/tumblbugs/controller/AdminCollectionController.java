@@ -116,7 +116,6 @@ public class AdminCollectionController {
 		}
 		return reuslt;
 	}
-	
 	/** 달력에 데이터 출력 **/
 	@RequestMapping(value="/admin/collection/calendar_list",method=RequestMethod.GET, produces = "application/text; charset=utf8")
 	@ResponseBody

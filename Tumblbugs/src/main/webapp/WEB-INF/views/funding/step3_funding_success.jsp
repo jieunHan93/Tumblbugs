@@ -1,122 +1,146 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>텀블벅스</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/slick.min.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/swiper.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/funding.css">
+<style>
+	#step3_content_header {
+		padding: 20px;
+		text-align: center;
+	}
+	#step3_content_header>div {
+		padding: 15px;
+	}
+	#step3_content_header #header_title {
+		width: 250px;
+		font-size: 20pt;
+		border-bottom: 2px solid #1d85ea;
+		margin: auto;
+	}
+	#step3_content_body {
+		font-size: 9.5pt;
+	}
+	#step3_content_button {
+		padding: 30px 0px;
+	}
+	#editorpick_project>div:first-child {
+		font-weight: bold;
+	}
+</style>
+<script>
+	$(document).ready(function () {
+	    var swiper = new Swiper('div#main_header>section>div.swiper-container', {
+	        spaceBetween: 30,
+	        centeredSlides: true,
+	        autoplay: {
+	          delay: 5000,
+	          disableOnInteraction: false,
+	        },
+	        pagination: {
+	          el: '.swiper-pagination',
+	          clickable: true,
+	        },
+	        navigation: {
+	            nextEl: '.swiper-button-next',
+	            prevEl: '.swiper-button-prev',
+	        }
+	        
+	    });
+	    
+		$('div.multiple-items').slick({
+			infinite: false,
+			slidesToShow: 4,
+			slidesToScroll: 4
+		});
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div id="funding_step3">
 		<div id="project_info">
 			<div>
-				<a id="backToProject" href="http://localhost:9090/tumblbugs/project_content"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
-				<div id="project_title">오차원 크리스마스 리스 DIY 키트</div>
+				<a id="backToProject" href="http://localhost:9090/tumblbugs/project/${project.pj_addr }"><i class="fas fa-angle-left"></i> 프로젝트로 돌아가기</a>
+				<div id="project_title">${project.pj_title }</div>
 			</div>
 		</div>
 		<div id="step3_content">
-			<div class="page_title">
-				<label>
-					후원이 완료되었습니다.
-					<div style="font-size: 10pt; font-weight: normal;">후원금은 2019년 12월 7일에 결제됩니다.</div>
-				</label>
+			<div id="step3_content_header">
+				<div id="header_title">축하합니다</div>
+				<div>${nthSupporter }번째 공식 후원자가 되셨습니다</div>
 			</div>
-			<div id="funding_info_wrap">
-				<div class="table_title">후원번호 00000001</div>
-				<table>
-					<tr>
-						<td><img id="project_main_img" src="http://localhost:9090/tumblbugs/images/project_content/project_main_sample.jpg"></td>
-						<td>
-							<div>
-								<span id="project_title">오차원 크리스마스 리스 DIY 키트</span>
-								<span id="creator_name">오차원</span>
-							</div>
-							<div>
-								<div id="reward">
-									<label>A 스몰 리스 만들기 키트 1개 + 무료 배송</label>
-									<ul id="reward_component">
-										<li>• &nbsp;&nbsp;스몰 리스 만들기 키트 ( x 1 )</li>
-									</ul>
-									<div>선택 옵션: 레드 / 수량 : 1개 / 39,000원</div>
-								</div>
-								<div id="reward">
-									<label>C 스몰 리스 완성품 1개 + 무료배송</label>
-									<ul id="reward_component">
-										<li>• &nbsp;&nbsp;C 스몰 리스 완성품 ( x 1 )</li>
-										<li>• &nbsp;&nbsp;랜덤 오너먼트  ( x 1 )</li>
-									</ul>
-									<div>선택 옵션: 레드 / 수량 : 1개 / 48,000원</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-				</table>
+			<div id="step3_content_body">프로젝트가 목표금액을 모두 달성할 경우에만 <b>${project.pj_pay_date }</b>에 자동 결제됩니다. 목표액에 미달할 경우 예정된 모든 결제는 자동으로 취소됩니다.</div>
+			<div id="step3_content_button">
+				<a href="http://localhost:9090/tumblbugs/index"><button type="button"><i class="fas fa-home"></i> 메인으로 가기</button></a>
+				<a href="http://localhost:9090/tumblbugs/myfunding"><button type="button"><i class="far fa-list-alt"></i> 내 후원현황 보기</button></a>
 			</div>
-			<div id="payment_info_wrap">
-				<div class="table_title">결제예약 정보</div>
-				<table>
-					<tr>
-						<td>선물금액</td>
-						<td>87,000원</td>
-					</tr>
-					<tr>
-						<td>추가 후원금</td>
-						<td>3,000원</td>
-					</tr>
-					<tr>
-						<td>총결제금액</td>
-						<td>90,000원</td>
-					</tr>
-					<tr>
-						<td>결제 수단</td>
-						<td>신한카드/1234</td>
-					</tr>
-					<tr>
-						<td>결제 상태</td>
-						<td>2019년 12월 7일에 결제 예정입니다.</td>
-					</tr>
-				</table>
-			</div>
-			<div id="supporter_info_wrap">
-				<div class="table_title">후원자 정보</div>
-				<table>
-					<tr>
-						<td>이름</td>
-						<td>조수윤</td>
-					</tr>
-					<tr>
-						<td>이메일</td>
-						<td>josoo126@naver.com</td>
-					</tr>
-					<tr>
-						<td>휴대폰 번호</td>
-						<td>01055861326</td>
-					</tr>
-				</table>
-			</div>
-			<div id="delivery_info_wrap">
-				<div class="table_title">배송 정보</div>
-				<table>
-					<tr>
-						<td>받는 분 이름</td>
-						<td>조수윤</td>
-					</tr>
-					<tr>
-						<td>받는 분 연락처</td>
-						<td>01055861326</td>
-					</tr>
-					<tr>
-						<td>배송 주소</td>
-						<td>[18600] 경기 화성시 향남읍 행정중앙1로 95 (행정리, 향남시범살구꽃마을한일베라체아파트) 1302동 801호</td>
-					</tr>
-				</table>
-			</div>
-			<div id="button_div">
-				<a href="http://localhost:9090/tumblbugs/myfunding"><button type="button">내 후원현황 보기</button></a>
+			<div id="editorpick_project">
+				<div>추천 프로젝트</div>
+				<section id="main_title2" class="main_content_section">
+				<div>
+					<!-- slick -->
+					<div class="multiple-items">
+						<c:forEach var="vo" items="${favlist }">
+						<div>
+					  		<div class="slick-card">
+					      		<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }">
+					      			<img id="product_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg }">
+					      			<div class="slick-card-content">
+					      				<div class="slick-card-content-title">
+					      					<h1>${vo.pj_title }</h1>
+					      					<p>${vo.name }</p>
+					      				</div>
+					      				<div class="progress">
+										  	<div class="progress-bar" role="progressbar" aria-valuenow="${vo.progress }" aria-valuemin="0" aria-valuemax="100" style="width:${vo.progress }%"></div>
+										</div>
+					      				<div class="slick-card-content-others">
+					      					<div>
+					      						<c:choose>
+					      							<c:when test="${vo.status eq '진행중'}">
+					      								<i class="far fa-calendar-alt"></i>
+					      								<c:choose>
+					      									<c:when test="${vo.remaining_days != '0' }">
+					      										<span>${vo.remaining_days }일 남음</span>
+					      									</c:when>
+					      									<c:otherwise>
+					      										<span>오늘 마감</span>
+					      									</c:otherwise>
+					      								</c:choose>
+					      							</c:when>
+					      							<c:when test="${vo.status eq '펀딩 성공'}">
+				      									<i class="fas fa-gift" style="color:#1e90ff;"></i>
+				      									<span style="color:#1e90ff;">${vo.status}</span>
+				      								</c:when>
+				      								<c:when test="${vo.status eq '펀딩 무산'}">
+				      									<i class="fas fa-rocket" style="color:#757575;"></i>
+				      									<span style="color:#757575;">${vo.status}</span>
+				      								</c:when>
+					      						</c:choose>
+					      					</div>
+					      					<div>
+					      						<span>${vo.funding }원</span>
+					      						<span>${vo.progress }%</span>
+					      					</div>
+					      				</div>
+					      			</div>
+					      		</a>
+					      	</div>
+					  	</div>
+						</c:forEach>
+					</div>
+				</div>
+				</section>
 			</div>
 		</div>
 	</div>

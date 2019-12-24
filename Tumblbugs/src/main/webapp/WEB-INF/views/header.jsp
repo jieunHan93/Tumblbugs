@@ -212,7 +212,7 @@
 					    	<button id="mymenubtn" type="button" data-toggle="modal" 
 					    		data-target="#myMenuModal">	
 					    		${sessionScope.svo.name }	
-					    		<div id="user_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_img})"></div> 
+					    		<div id="user_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_simg})"></div> 
 					    		<!-- <div id="user_icon" ></div> -->
 					    	</button>	
 					    </c:otherwise>    
@@ -338,7 +338,7 @@
 	        <!-- Modal body -->
 	        <div class="modal-body">
 	          <div id="myMenu_user_profil">
-	          	<span id="myMenu_user_profil_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_img})"></span>
+	          	<span id="myMenu_user_profil_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_simg})"></span>
 	          	<span id="myMenu_user_profil_name">${sessionScope.svo.name}</span>
 	          </div>
 	          <div id="modal_space"></div>
@@ -348,7 +348,7 @@
 	          <div id="modal_space"></div>
 	          <a href="http://localhost:9090/tumblbugs/mypage/profile"><div>프로필 정보</div></a>
 	          <a href="http://localhost:9090/tumblbugs/mypage/payment"><div>지불 정보 설정</div></a>
-	          <a><div>로그아웃</div></a>
+	          <a href="http://localhost:9090/tumblbugs/logout"><div>로그아웃</div></a>
 	        </div>
 	        
 	      </div>

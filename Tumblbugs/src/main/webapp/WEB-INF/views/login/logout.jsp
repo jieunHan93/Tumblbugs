@@ -9,9 +9,8 @@
  	String svo = (String)session.getAttribute("email");
 
 	if(svo != null){
-		session.invalidate();
-		
+		session.invalidate();		
 	}
-	response.sendRedirect("../index.jsp");
+	response.sendRedirect("../index");
 	
 %>  

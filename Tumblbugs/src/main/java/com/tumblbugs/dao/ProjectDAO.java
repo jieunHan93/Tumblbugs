@@ -1,6 +1,7 @@
 package com.tumblbugs.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +30,6 @@ public class ProjectDAO {
 		return sqlSession.selectOne(namespace + ".content", pj_id);
 	}
 	
-	/*public String getStory(String pj_id) {
-		return sqlSession.selectOne(namespace + ".story", pj_id);
-	}*/
-	
 	/**
 	 * pj_addr을 통해 pj_id 출력 - 프로젝트 상세정보 출력 시 사용
 	 * @param pj_addr
@@ -51,14 +48,28 @@ public class ProjectDAO {
 		return sqlSession.selectOne(namespace + ".pj_addr", pj_id);
 	}
 	
+	/**
+	 * pj_title 출력
+	 * @param pj_id
+	 * @return
+	 */
 	public String getProjectTitle(String pj_id) {
 		return sqlSession.selectOne(namespace + ".pj_title", pj_id);
 	}
 	
+	/**
+	 * 조회수 업데이트
+	 * @param pj_id
+	 */
 	public void hitsUpdate(String pj_id) {
 		sqlSession.update(namespace + ".hits", pj_id);
 	}
 	
+	/**
+	 * 선물 리스트 출력
+	 * @param pj_id
+	 * @return
+	 */
 	public ArrayList<GiftVO> getGiftList(String pj_id) {
 		List list = sqlSession.selectList(namespace + ".gift", pj_id);
 		ArrayList<GiftVO> giftList = (ArrayList<GiftVO>)list;
@@ -71,8 +82,26 @@ public class ProjectDAO {
 		return giftList;
 	}
 	
+	/**
+	 * 선물의 아이템 리스트 출력
+	 * @param gift_id
+	 * @return
+	 */
 	public ArrayList<ItemVO> getItemList(String gift_id) {
 		List list = sqlSession.selectList(namespace + ".item", gift_id);
 		return (ArrayList<ItemVO>)list;
+	}
+	
+	/**
+	 * 커뮤니티 > 후원자/비후원자 별 다른 화면을 보여주기 위한 후원 여부 체크
+	 * @param email
+	 * @return
+	 */
+	public int getFundingYn(String email, String pj_id) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		map.put("pj_id", pj_id);
+		
+		return sqlSession.selectOne(namespace + ".fundingYn", map);
 	}
 }

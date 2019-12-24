@@ -14,7 +14,7 @@
 			<div id="box_header">창작자 소개</div>
 			<div>
 				<span id="creator_img"><img src="http://localhost:9090/tumblbugs/upload/${vo.profile_simg }"></span>
-				<span id="creator_name"><a href="http://localhost:9090/tumblbugs/myproject">${vo.name }</a></span>
+				<span id="creator_name"><a href="http://localhost:9090/tumblbugs/myproject/${vo.email }">${vo.name }</a></span>
 			</div>
 			<div class="line_div" id="creator_intro">${vo.intro }</div>
 			<div id="creator_login">마지막 로그인&nbsp; <b>8시간 전</b></div>

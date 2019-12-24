@@ -31,9 +31,14 @@ public class MypageDAO {
 		return sqlSession.update(namespace + ".update_profile" , vo);		
 	}
 	
-	public int getselect_profile_pass(String pass) {
-
-		return sqlSession.selectOne(namespace + ".select_profile_pass" , pass);	
+	public int getmypage_pass_chk(String pass,String email) {
+		Map prame = new HashMap<String,String>();
+		
+		prame.put("pass", pass);
+		prame.put("email", email);
+		System.out.println("daopass="+pass);
+		System.out.println("daoemail="+email);
+		return sqlSession.selectOne(namespace + ".mypage_pass_chk" , prame);	
 		
 	}
 	public int getpayment_insert(PaymentVO vo) {

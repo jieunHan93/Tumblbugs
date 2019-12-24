@@ -182,7 +182,7 @@
 					<tr>
 						<td class="data_td" colspan="2">
 							<div class="data_title">결제 금액</div>
-							<div class="data_value">90,000원</div>
+							<div class="data_value"><fmt:formatNumber value="${fvo.total_funding_price }" groupingUsed="true"/>원</div>
 						</td>
 					</tr>
 					<tr>

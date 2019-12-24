@@ -84,11 +84,15 @@
 	</select>
 	
 	<select id="fundingGiftList" parameterType="String" resultType="com.tumblbugs.vo.FundingGiftVO">
-		select fg.gift_id, g.gift_title, fg.gift_quantity, fg.gift_option, funding_gift_price
+		select fg.funding_id, fg.gift_id, g.gift_title, fg.gift_quantity, fg.gift_option, funding_gift_price
 		from tum_funding_gift fg, tum_gift g
 		where fg.gift_id = g.gift_id
 		and funding_id=#{funding_id}
 		order by gift_id
+	</select>
+	
+	<select id="nthSupporter" parameterType="String" resultType="int">
+		select count(*) from tum_funding where pj_id = #{pj_id}
 	</select>
 	
 	<select id="totalCount" parameterType="String" resultType="int">
@@ -116,6 +120,21 @@
 		insert into tum_funding_gift values(#{funding_id}, #{gift_id}, #{gift_quantity}, #{gift_option}, #{funding_gift_price})
 	</insert>
 	
+	<update id="priceUpdate" parameterType="com.tumblbugs.vo.FundingVO">
+		update tum_funding set extra_funding_price = #{extra_funding_price}, total_funding_price = #{total_funding_price}
+		where funding_id = #{funding_id}
+	</update>
+	
+	<update id="fundingGiftUpdate" parameterType="com.tumblbugs.vo.FundingGiftVO">
+		update tum_funding_gift
+		set gift_quantity = #{gift_quantity}, gift_option = #{gift_option}, funding_gift_price = #{funding_gift_price}
+		where funding_id = #{funding_id} and gift_id = #{gift_id}
+	</update>
+	
+	<delete id="fundingGiftDelete" parameterType="com.tumblbugs.vo.FundingGiftVO">
+		delete from tum_funding_gift where funding_id = #{funding_id} and gift_id = #{gift_id}
+	</delete>
+	
 	<select id="fundingId" parameterType="String" resultType="String">
 		select max(funding_id) from tum_funding where email = #{email}
 	</select>
@@ -126,6 +145,10 @@
 		where funding_id = (select max(funding_id) from tum_funding where email = #{email})
 	</select>
 	
+	<update id="paymentUpdate" parameterType="map">
+		update tum_funding set payment_id = #{payment_id} where funding_id = #{funding_id}
+	</update>
+	
 	<update id="deliveryUpdate" parameterType="map">
 		update tum_funding set ${column_name} = #{value} where funding_id = #{funding_id}
 	</update>
@@ -134,7 +157,7 @@
 		delete from tum_funding where funding_id = #{funding_id}
 	</delete>
 	
-	<delete id="fundingGiftDelete" parameterType="String">
+	<delete id="fundingGiftDeleteAll" parameterType="String">
 		delete from tum_funding_gift where funding_id = #{funding_id}
 	</delete>
 </mapper>

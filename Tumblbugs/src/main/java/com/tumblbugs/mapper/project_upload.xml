@@ -116,4 +116,11 @@
 		select count(*) from tum_project where pj_addr=#{pj_addr}
 	</select>
 	
+	<update id="pj_check" parameterType="java.lang.String">
+		update tum_project set pj_check_request_date=sysdate, pj_check_yn='c' where pj_id=#{pj_id}
+	</update>
+	<select  id="member_fileName" parameterType="java.lang.String" resultType="java.lang.String">
+		select PROFILE_SIMG from tum_member where email=#{semail}
+	</select>
+	
 </mapper>

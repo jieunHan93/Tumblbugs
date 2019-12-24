@@ -4,11 +4,11 @@
 
 <mapper namespace="mapper.main">
 	<select id="collection_name_list" resultType="com.tumblbugs.vo.HeaderVO">
-		SELECT COL_ID, COL_NAME FROM TUM_COLLECTION WHERE COL_STATUS = '진행중'
+		SELECT COL_ID, COL_NAME, COL_ADDR FROM TUM_COLLECTION WHERE COL_STATUS = '진행중'
 	</select>
 	
 	<select id="collection_main_list" resultType="com.tumblbugs.vo.CollectionVO">
-		SELECT C.COL_ID, COL_NAME,NVL(PCOUNT, 0) PCOUNT, COL_SIMG FROM TUM_COLLECTION C,
+		SELECT C.COL_ID, COL_NAME,NVL(PCOUNT, 0) PCOUNT, COL_SIMG, COL_ADDR FROM TUM_COLLECTION C,
 		(SELECT COUNT(PJ_ID) PCOUNT, COL_ID FROM TUM_COLLECTION_PROJECT GROUP BY COL_ID) CP
 		WHERE COL_STATUS = '진행중'AND C.COL_ID = CP.COL_ID(+)
 	</select>

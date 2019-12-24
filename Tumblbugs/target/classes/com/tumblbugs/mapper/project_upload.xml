@@ -54,7 +54,7 @@
 	
 	<insert id="add_gift" parameterType="map">
 		insert into tum_gift values('G' || LPAD(tum_gift_sequ.nextval, 5, 0) , #{pj_id}, #{gift_title}, #{gift_price}, #{gift_sort_num},
-									to_date(#{gift_delivery_date}, 'yyyy/mm/dd'), #{gift_max_count}, #{gift_delivery_yn})
+									to_date(#{gift_delivery_date ,jdbcType=TIMESTAMP }, 'yyyy/mm/dd'), #{gift_max_count}, #{gift_delivery_yn})
 	</insert>
 	
 	<select id="get_gift_id" resultType="java.lang.String">
@@ -75,7 +75,7 @@
 	
 	<update id="update_gift" parameterType="map">
 		update tum_gift set gift_title=#{gift_title}, gift_price=#{gift_price}, gift_sort_num=#{gift_sort_num},
-									gift_delivery_date = #{gift_delivery_date ,jdbcType=TIMESTAMP}, gift_max_count=#{gift_max_count}, gift_delivery_yn = #{gift_delivery_yn}
+									gift_delivery_date = to_date(#{gift_delivery_date ,jdbcType=TIMESTAMP}), gift_max_count=#{gift_max_count}, gift_delivery_yn = #{gift_delivery_yn}
 									where gift_id=#{gift_id}
 	</update>
 	
@@ -111,4 +111,16 @@
 	<select id="get_member_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MemberVO">
 		select email, name, profile_img, profile_simg, intro from tum_member where email=#{email}
 	</select>
+	
+	<select id="addr_check" parameterType="java.lang.String" resultType="int">
+		select count(*) from tum_project where pj_addr=#{pj_addr}
+	</select>
+	
+	<update id="pj_check" parameterType="java.lang.String">
+		update tum_project set pj_check_request_date=sysdate, pj_check_yn='c' where pj_id=#{pj_id}
+	</update>
+	<select  id="member_fileName" parameterType="java.lang.String" resultType="java.lang.String">
+		select PROFILE_SIMG from tum_member where email=#{semail}
+	</select>
+	
 </mapper>

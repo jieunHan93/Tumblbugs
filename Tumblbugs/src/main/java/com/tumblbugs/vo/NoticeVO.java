@@ -1,14 +1,41 @@
 package com.tumblbugs.vo;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class NoticeVO {
 	
-	String notice_id, notice_title, notice_content, notice_category, notice_reg_date, notice_event_start, notice_event_end, event_extra_date, event_waiting_date;
+	String notice_id, notice_title, notice_content, notice_category, notice_reg_date, notice_event_start, notice_event_end, event_extra_date, event_waiting_date,
+			notice_thumbnail, notice_sthumbnail;
 	int rno;
+	CommonsMultipartFile notice_cthumbnail;
 	
 	String next_title, next_id, prev_title, prev_id, next_category, prev_category;
 	
 	
-	
+	public String getNotice_thumbnail() {
+		return notice_thumbnail;
+	}
+
+	public void setNotice_thumbnail(String notice_thumbnail) {
+		this.notice_thumbnail = notice_thumbnail;
+	}
+
+	public String getNotice_sthumbnail() {
+		return notice_sthumbnail;
+	}
+
+	public void setNotice_sthumbnail(String notice_sthumbnail) {
+		this.notice_sthumbnail = notice_sthumbnail;
+	}
+
+	public CommonsMultipartFile getNotice_cthumbnail() {
+		return notice_cthumbnail;
+	}
+
+	public void setNotice_cthumbnail(CommonsMultipartFile notice_cthumbnail) {
+		this.notice_cthumbnail = notice_cthumbnail;
+	}
+
 	public String getNext_title() {
 		return next_title;
 	}

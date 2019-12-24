@@ -26,8 +26,8 @@ public class FundingDAO {
 	 * @param vo
 	 * @return
 	 */
-	public boolean fundingInsert(FundingVO vo) {
-		boolean result = false;
+	public int fundingInsert(FundingVO vo) {
+		int nthSupporter = 0;
 		
 		if(sqlSession.insert(namespace + ".fundingInsert", vo) != 0) {
 			int insertCount = 0;
@@ -39,11 +39,11 @@ public class FundingDAO {
 			}
 			
 			if(insertCount == vo.getGiftList().size()) {
-				result = true;
+				nthSupporter = sqlSession.selectOne(namespace + ".nthSupporter", vo.getPj_id());
 			}
 		}
 		
-		return result;
+		return nthSupporter;
 	}
 	
 	/**
@@ -150,6 +150,73 @@ public class FundingDAO {
 	}
 	
 	/**
+	 * 후원 선물 변경
+	 * @param list
+	 * @return
+	 */
+	public int getFundingUpdateResult(FundingVO vo) {
+		ArrayList<FundingGiftVO> oldList = getFundingGiftList(vo.getFunding_id());	//기존 선물 리스트
+		List newList = vo.getGiftList();	//새로운 선물 리스트
+		ArrayList<FundingGiftVO> newList2 = (ArrayList<FundingGiftVO>)newList;
+		ArrayList<FundingGiftVO> updateList = new ArrayList<FundingGiftVO>();
+		
+		for(int i=oldList.size()-1;i>=0;i--) {
+			for(int j=newList.size()-1;j>=0;j--) {
+				if(oldList.get(i).getGift_id().equals(newList2.get(j).getGift_id())) {
+					updateList.add(newList2.get(j));
+					oldList.remove(i);
+					newList.remove(j);
+					j=-1;
+				}
+			}
+		}
+		
+		/*System.out.println("삭제할  선물 수: " + oldList.size());
+		System.out.println("추가할 선물 수: " + newList.size());
+		System.out.println("바꿀 선물 수: " + updateList.size());*/
+		
+		//update 작업 수행
+		for(FundingGiftVO fgvo:updateList) {
+			fundingGiftUpdate(fgvo);
+		}
+		
+		//insert 작업 수행
+		for(FundingGiftVO fgvo:newList2) {
+			fundingGiftInsert(fgvo);
+		}
+		
+		//delete 작업 수행
+		for(FundingGiftVO fgvo:oldList) {
+			fundingGiftDelete(fgvo);
+		}
+		
+		//추가후원금, 총 후원금 업데이트
+		return sqlSession.update(namespace + ".priceUpdate", vo);
+	}
+	
+	public int fundingGiftUpdate(FundingGiftVO vo) {
+		return sqlSession.update(namespace + ".fundingGiftUpdate", vo);
+	}
+	
+	public int fundingGiftDelete(FundingGiftVO vo) {
+		return sqlSession.delete(namespace + ".fundingGiftDelete", vo);
+	}
+	
+	/**
+	 * 결제 수단 변경
+	 * @param funding_id
+	 * @param payment_id
+	 * @return
+	 */
+	public int getPaymentUpdateResult(String funding_id, String payment_id) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("funding_id", funding_id);
+		map.put("payment_id", payment_id);
+		
+		return sqlSession.update(namespace + ".paymentUpdate", map);
+	}
+	
+	/**
 	 * 배송 정보 변경
 	 * @param map
 	 * @return
@@ -165,7 +232,7 @@ public class FundingDAO {
 	 */
 	public int getFundingCancelResult(String funding_id) {
 		//tum_funding_gift 테이블 먼저 delete
-		sqlSession.delete(namespace + ".fundingGiftDelete", funding_id);
+		sqlSession.delete(namespace + ".fundingGiftDeleteAll", funding_id);
 		
 		return sqlSession.delete(namespace + ".fundingDelete", funding_id);
 	}

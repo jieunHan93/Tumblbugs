@@ -18,12 +18,23 @@
 		$(".content_wrap>div." + '${edit_menu}').show();
 		$(".edit_menu a#" + '${edit_menu}').css("color", "#1d85ea");
 		
+		
+		
 		//결제수단 변경
 		$(".payment_option").click(function() {
-			var payment = $(this).attr("id");
+			var payment_id = $(this).attr("id");
+			var payment = $(this).find("span").text();
 			if(confirm("[" + payment + "]로 변경하시겠습니까?")) {
-				//변경 후 후원현황으로 돌아가기
-				alert("변경이 완료되었습니다.");
+				$.ajax({
+					url: "http://localhost:9090/tumblbugs/edit_payment_proc?funding_id=" + '${funding_id}'+ "&payment_id=" + payment_id,
+					success: function(result) {
+						if(result != "0") {
+							location.href = "http://localhost:9090/tumblbugs/myfunding/" + '${funding_id}';
+						} else {
+							alert("일시적인 오류로 인하여 결제 수단 변경에 실패하였습니다.");
+						}
+					}
+				});
 			}
 		});
 	});
@@ -49,8 +60,22 @@
 			<div class="payment_edit">
 				<div>변경할 예약 결제 수단을 선택해주세요.</div>
 				<div id="my_payment">
-					<div class="payment_option" id="신한카드 1234"><i class="far fa-credit-card"></i> 신한카드 1234</div>
-					<div class="payment_option" id="신한은행 5678"><i class="fas fa-money-check"></i> 신한은행 5678</div>
+					<c:forEach items="${paymentList }" var="payment">
+						<c:choose>
+							<c:when test="${payment.payment_method eq '01'}">
+								<div class="payment_option" id="${payment.payment_id }">
+									<i class="far fa-credit-card"></i>
+									<span>${payment.card_company } ${payment.card_number }</span>
+								</div>
+							</c:when>
+							<c:when test="${payment.payment_method eq '02'}">
+								<div class="payment_option" id="${payment.payment_id }">
+									<i class="fas fa-money-check"></i>
+									<span>${payment.bank } ${payment.account_number }</span>
+								</div>
+							</c:when>
+						</c:choose>
+					</c:forEach>
 					<a href="http://localhost:9090/tumblbugs/mypage/payment"><div><i class="fas fa-plus"></i> 신규 결제 수단 등록</div></a>
 				</div>
 			</div>

@@ -224,11 +224,13 @@
 	#community_content {color: #5c5c5c;}
 	
 	/* 유저별로 다르게 노출되는 상단 white_box */
-	#community_top>div {display: none;}
 	#community_top .white_box {
 		padding: 0px;
 		margin-bottom: 30px;
-		cursor: pointer;
+		font-size: 11pt;
+	}
+	#community_top #box2_nonsponser {
+		padding: 15px 25px 15px 25px;
 	}
 	#community_top .white_box a {
 		display: block;
@@ -238,7 +240,7 @@
 	}
 	#community_top .white_box span#message {
 		display: inline-block;
-		vertical-align: top; padding-top: 8px;
+		vertical-align: top; padding-top: 10px;
 		margin-left: 10px;
 		font-weight: bold;
 	}

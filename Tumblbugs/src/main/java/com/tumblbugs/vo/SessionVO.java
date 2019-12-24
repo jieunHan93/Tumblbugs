@@ -2,7 +2,7 @@ package com.tumblbugs.vo;
 
 public class SessionVO {
 		boolean result;
-		String name,email,profile_simg,profile_img;
+		String name,email,profile_simg;
 		public boolean isResult() {
 			return result;
 		}
@@ -27,19 +27,5 @@ public class SessionVO {
 		public void setProfile_simg(String profile_simg) {
 			this.profile_simg = profile_simg;
 		}
-		public String getProfile_img() {
-			return profile_img;
-		}
-		public void setProfile_img(String profile_img) {
-			this.profile_img = profile_img;
-		}
-		
-		
-		
-		
-		
-		
-		
-	
 
 }

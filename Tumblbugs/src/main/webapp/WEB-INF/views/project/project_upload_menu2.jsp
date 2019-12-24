@@ -95,7 +95,7 @@
 							마감일이 시작일보다 이른 날짜에 있지는 않은지 꼭 확인해주세요. <label class="bold_text">검토는 최대 48시간</label>이 소요됩니다. 검토시간을 고려해서 시작일을 설정해주세요. </p></div>
 				</div>
 				<div>
-					<input type="date" style="resize:none" class="m2_check" id="pj_start_date"/>
+					<input type="date" class="m2_check" id="pj_start_date"/>
 					<label>에 펀딩을 시작합니다.</label>
 				</div>
 				<div class="content_btn">
@@ -129,7 +129,7 @@
 							선물 실행일 중에 마감일보다 이른 날짜가 있지는 않은지 꼭 확인해주세요.</p></div>
 				</div>
 				<div>
-					<input type="date" style="resize:none" class="m2_check" id="m2_c2_i2"/>
+					<input type="date"  class="m2_check" id="m2_c2_i2"/>
 					<input type="hidden" value="date"/>
 					<label>에 펀딩을 마감합니다.</label>
 				</div>
@@ -272,7 +272,7 @@
 				<div class="delivery_check_tag">배송 필요</div>
 			</c:if>
 		</div>
-		<div id="content_m2_c4${gvo.rno}" class="present_detail_slide" style="display:none"></div>
+		<div id="content_m2_c4${gvo.rno}" class="present_detail_slide2" style="display:none"></div>
 		<div id="content_m2_c4_d${gvo.rno}" class="upload_detail">
 			<div class="d_title">선물 추가하기</div>
 			<div><p>후원자 분들에게 드릴 선물 내용을 입력해주세요. <span style='color:rgb(241,75,88)'>선물 설정을 제외한 모든 항목을 입력해야 합니다.</span></p></div>	

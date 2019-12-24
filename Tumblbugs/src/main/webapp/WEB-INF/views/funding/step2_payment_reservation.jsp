@@ -55,7 +55,7 @@
 			<form action="http://localhost:9090/tumblbugs/${pj_addr}/funding/complete" method="post" name="fundingForm">
 				
 				<input type="hidden" name="pj_id" value="${vo.pj_id }">
-				<input type="hidden" name="email" value="${vo.email }">
+				<input type="hidden" name="email" value="${sessionScope.semail }">
 				<input type="hidden" name="extra_funding_price" value="${vo.extra_funding_price }">
 				<input type="hidden" name="total_funding_price" value="${vo.total_funding_price }">
 				
@@ -142,7 +142,10 @@
 				</div>
 				<div id="payment_wrap">
 					<input type="hidden" name="payment_id">
-					<input type="hidden" name="payment_method" value="">
+					<c:choose>
+						<c:when test="${fn:length(paymentList) != 0}"><input type="hidden" name="payment_method" value=""></c:when>
+						<c:otherwise><input type="hidden" name="payment_method" value="01"></c:otherwise>
+					</c:choose>
 					<div id="page_subtitle">결제 수단</div>
 					<nav>
 						<c:if test="${fn:length(paymentList) != 0}">

@@ -271,8 +271,7 @@ div#myproject_delivery_body{
 	padding-bottom:80px;
 }
 table#myproject_delivery_table{
-	width:2320px;
-	font-size:15px;
+	width:2500px;	font-size:15px;
 }
 table#myproject_delivery_table,
 table#myproject_delivery_table th,
@@ -343,6 +342,7 @@ div#myproject_funding_search button i{
 }
 tr.delivery_table_loaddata input {
 	border:1px solid #ebe8e8;
+	width:120px;
 }
 tr.delivery_table_loaddata input.name {
 	width: 80px;
@@ -425,7 +425,19 @@ div#btn-save_reset button:hover{
 	background-color: #1d85ea;
 }
 
-div#myproject_delivery_table_box tr#delivery_table_titles th.title_pay_name.sorting{ width:150px; }
+a#backtoproject{
+	display :inline-block;
+	margin-left: -20px;
+    padding-right: 7px;
+    font-size: 15px !important;
+    position: relative;
+    top: -5px;
+}
+/* div#myproject_delivery_table_box tr#delivery_table_titles th.title_pay_name.sorting,
+div#myproject_delivery_table_box tr#delivery_table_titles th.title_pay_name.sorting_asc,
+div#myproject_delivery_table_box tr#delivery_table_titles th.title_pay_name.sorting_desc{ width:150px; }
+div#myproject_delivery_table_box tr#delivery_table_titles th.title_funding.sorting{ width:70px; }
+div#myproject_delivery_table_box tr#delivery_table_titles th.title_gift_title.sorting { width:300px; } */
 table#myproject_delivery_table td.pay_person{ width:150px; }
 
 table.dataTable thead th, table.dataTable thead td {

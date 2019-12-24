@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,22 +27,73 @@
 				
 				for(i=0;i<obj.fglist.length;i++) {
 					var giftId = obj.fglist[i].gift_id;
-					$("label#" + giftId).css("background-color", "#f9f9f9");
-					$("label#" + giftId).find(".gift_quantity_and_option").show();
-					$("label#" + giftId).find(".select_cancel").show();
+					var giftBox = $("label#" + giftId);
 					
-					$("label#" + giftId).find("#quantity").val(obj.fglist[i].gift_quantity);	//수량
+					giftBox.find("input[type='checkbox']").prop("checked", true).val("y");
+					giftBox.css("background-color", "#f9f9f9");
+					giftBox.find(".gift_quantity_and_option").show();
+					giftBox.find(".select_cancel").show();
+					giftBox.find("#quantity").val(obj.fglist[i].gift_quantity);	//수량
 					
-					//수량이 2 이상이며 옵션이 존재할 때 옵션 입력란 붙여주기
-					if(obj.fglist[i].gift_quantity >= 2 && obj.fglist[i].gift_option != null) {
+					//선택 수량 만큼 옵션 수 증가
+					for(k=0;k<obj.fglist[i].gift_quantity-1;k++) {
+						var clone = giftBox.find(".option_box").first().clone();
+						giftBox.find(".option_box:last-child").after(clone);
+					}
+					
+					//옵션 set
+					if(obj.fglist[i].gift_option != null) {
 						var optionArr = obj.fglist[i].gift_option.split(",");
 						
-						//var clone = $(this).closest(".gift_quantity_and_option").find(".option_box").first().clone();
-						//$(this).closest(".gift_quantity_and_option").find(".option_box:last-child").after(clone);
+						for(j=0;j<optionArr.length;j++) {
+							giftBox.find(".gift_option #option").eq(j).val(optionArr[j]);
+						}
 					}
-					$("label#" + giftId).find("#option").val(obj.fglist[i].gift_option);	//옵션
+					
 				}
 			}
+		});
+		
+		$("#btn_edit_gift").click(function() {
+			//옵션 하나로 합쳐서 배열에 넣기
+			var idx = 0;
+			$("label").each(function() {
+				var option = "";
+				
+				$(this).find(".select_option").each(function() {
+					option += $(this).val() + ",";
+				});
+				$(this).find(".write_option").each(function() {
+					option += $(this).val() + ",";
+				});
+				
+				$(this).find("input#gift_option").val(option.substr(0, option.length-1));
+			});
+			
+			//validation check
+			var giftSelect = false;
+			var optionSelect = true;
+			$("input.gift_select_yn").each(function() {
+				if($(this).val() == "y") {
+					giftSelect = true;
+					
+					$(this).siblings(".gift_detail").find("#option").each(function() {
+						if($(this).val() == "") {
+							alert("선물 옵션을 선택해주세요.");
+							$(this).focus();
+							optionSelect = false;
+							return false;
+						}
+					});
+				}
+			});
+			
+			if(!giftSelect) {
+				alert("선물을 선택해주세요.");
+			} else if(optionSelect) {
+				gift_update_form.submit();
+			}
+			
 		});
 	});
 </script>
@@ -64,9 +116,9 @@
 		</section>
 		<section class="content_wrap">
 			<div class="gift_select">
-				<form action="http://localhost:9090/tumblbugs/gift_update_proc" method="post" id="gift_select_form" name="gift_update_form">
+				<form action="http://localhost:9090/tumblbugs/edit_gift_proc" method="post" id="gift_select_form" name="gift_update_form">
 					<!-- FundingVO 데이터 -->
-					<input type="hidden" name="pj_id" value="${pj_id }">
+					<input type="hidden" name="funding_id" value="${funding_id }">
 					<input type="hidden" name="total_funding_price">
 					<c:forEach items="${giftList }" var="gift" varStatus="status">
 						<c:choose>
@@ -79,6 +131,7 @@
 						</c:choose>
 						
 						<!-- FundingGiftVO 데이터 -->
+						<input type="hidden" name="giftList[${status.index }].funding_id" value="${funding_id }">
 						<input type="hidden" name="giftList[${status.index }].gift_id" value="${gift.gift_id }">
 						<input type="hidden" name="giftList[${status.index }].gift_title" value="${gift.gift_title }">
 						<input type="hidden" name="giftList[${status.index }].gift_price" value="${gift.gift_price }">
@@ -145,13 +198,16 @@
 					<label id="extra_funding">
 						<div class="gift_price">후원금 더하기</div>
 						<div class="extra_funding_price">
-							<input type="text" id="extra_funding_price" name="extra_funding_price" placeholder="0"> 원을 추가로 후원합니다.
+							<input type="text" id="extra_funding_price" name="extra_funding_price" placeholder="0" value="${fvo.extra_funding_price }"> 원을 추가로 후원합니다.
 						</div>
 					</label>
 				</form>
-				<div class="confirm">${pvo.pj_title }에 <span id="total_price">0</span>원을 펀딩합니다.</div>
+				<div class="confirm">${pvo.pj_title }에 <span id="total_price">
+					<fmt:formatNumber value="${fvo.total_funding_price }" groupingUsed="true"/>
+					</span>원을 펀딩합니다.
+				</div>
 				<div>
-					<button id="btn_gift_edit">변경하기</button>
+					<button id="btn_edit_gift">변경하기</button>
 				</div>
 			</div>
 		</section>

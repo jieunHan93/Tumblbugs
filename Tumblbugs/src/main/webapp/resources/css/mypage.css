@@ -1059,7 +1059,7 @@ div#registed_payment_not_founded>i{
 	}
 	
 	/* 변경 버튼 */
-	#btn_gift_edit {
+	#btn_edit_gift {
 		width: 120px; height: 40px;
 		border: none;
 		border-radius: 5px;
@@ -1067,7 +1067,7 @@ div#registed_payment_not_founded>i{
 		background-color: #1e90ff;
 		color: white;
 	}
-	#btn_gift_edit:hover {
+	#btn_edit_gift:hover {
 		background-color: #1d85ea;
 	}
 

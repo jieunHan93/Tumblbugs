@@ -110,7 +110,7 @@
 							  		<div class="dropdown-menu">
 									    <div class="dropdown-item"><a id="${vo.pj_id}" class="update_project_page" style="cursor:pointer">수정</a></div>
 									   	<div class="dropdown-item"><a id="${vo.pj_id}" class="delete_project_page" style="cursor:pointer">삭제</a></div>
-									    <div class="dropdown-item"><a href="http://localhost:9090/tumblbugs/myproject/delivery?pj_id=${vo.pj_id }" style="cursor:pointer">선물배송</a></div>
+									    <div class="dropdown-item"><a href="http://localhost:9090/tumblbugs/myproject/delivery?pj_id=${vo.pj_id }&rpage=${rpage}" style="cursor:pointer">선물배송</a></div>
 								  	</div>
 								</div>
 								<c:if test="${vo.pj_addr != null && vo.pj_check_yn == 'y'}"> 

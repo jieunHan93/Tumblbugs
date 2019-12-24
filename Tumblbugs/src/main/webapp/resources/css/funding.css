@@ -326,65 +326,25 @@
 /**
 	step3_funding_success style ----------------------------------------------------------------------------------------------------------
 **/
-	#funding_step3 .page_title {text-align: center;}
 	#step3_content {
-		width: 800px; margin: auto;
+		width: 1080px;
+		margin: auto;
 		padding-bottom: 50px;
 		font-size: 10.5pt;
 		color: #4a4a4a;
-	}
-	#step3_content table {
-		width: 100%;
-		margin: 10px 0px 40px 0px;
-		border-top: 2px solid #867e74;
-		border-bottom: 1px solid lightgray;
-	}
-	#step3_content td {
-		/* border: 1px solid green; */
-		padding: 10px;
-	}
-	#step3_content .table_title {
-		font-size: 14pt;
-		font-weight: bold;
+		padding-bottom: 50px;
 	}
 	
-	/* 프로젝트 */
-	/* 프로젝트 대표 이미지 */
-	#step3_content #funding_info_wrap img#project_main_img {
-		width: 170px;
-	}
-	#step3_content td:first-child {width: 170px; color: black;}
-	
-	#step3_content #funding_info_wrap #project_title {
-		width: auto;
+	#step3_content #step3_content_button button {
+		width: 140px; height: 45px;
 		font-size: 10pt;
+		border: 1px solid lightgray;
+		border-radius: 4px;
+		background-color: white;
+		color: #4a4a4a;
+		outline: none;
 		margin-right: 5px;
-		text-align: left;
 	}
-	#step3_content #funding_info_wrap #creator_name {
-		font-size: 9pt;
-	}
-	#step3_content #funding_info_wrap table * {
-		margin: 0px;
-		line-height: 1.6;
-		font-size: 9pt;
-	}
-	#step3_content #reward {
-		padding: 5px 0px 5px 0px;
-	}
-	#step3_content #reward>label {font-weight: bold; color: #8e8780;}
-	
-	#step3_content #button_div {text-align: center;}
-	#step3_content button {
-		width: 150px; height: 50px;
-		font-size: 11pt;
-		font-weight: bold;
-		border: none;
-		border-radius: 5px;
-		background-color: #1e90ff;
-		color: white;
-	}
-	#step3_content button:hover {background-color: #1d85ea;}
 
 	
 	footer {

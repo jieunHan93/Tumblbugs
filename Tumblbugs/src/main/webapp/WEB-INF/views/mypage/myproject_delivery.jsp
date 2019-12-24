@@ -64,7 +64,6 @@
                 { 'orderable'    : false, 'targets'       : [6] },
                 { 'orderable'    : false, 'targets'       : [7] },
                 { 'orderable'    : false, 'targets'       : [8] },
-                { 'orderable'    : false, 'targets'       : [9] },
                 { 'orderable'    : false, 'targets'       : [13] },
                 { 'orderable'    : false, 'targets'       : [15] },
                 { 'orderable'    : false, 'targets'       : [16] },
@@ -89,32 +88,31 @@
 				var options = {
 					success : function(data) {
 						var jsonObj = JSON.parse(data);
-						
 						for(i=0;i<jsonObj.list.length;i++){
-							var id_name = "input"+jsonObj.list[i].B+".name";
-							var id_addr = "input"+jsonObj.list[i].B+".addr";
-							var id_phone_num = "input"+jsonObj.list[i].B+".phone_num";
-							var id_memo = "input"+jsonObj.list[i].B+".memo";
-							var id_product = "input"+jsonObj.list[i].B+".product";
-							var id_option = "input"+jsonObj.list[i].B+".option";
-							var id_quantity = "input"+jsonObj.list[i].B+".quantity";
-							var id_cost = "input"+jsonObj.list[i].B+".cost";
-							var id_tip = "input"+jsonObj.list[i].B+".tip";
-							var id_delivery_com = "input"+jsonObj.list[i].B+".delivery_com";
-							var id_delivery_num = "input"+jsonObj.list[i].B+".delivery_num";
-							var id_delivery_date = "input"+jsonObj.list[i].B+".delivery_date";
-							$(id_name).val(jsonObj.list[i].E);
-							$(id_addr).val(jsonObj.list[i].F);
-							$(id_phone_num).val(jsonObj.list[i].G);
-							$(id_memo).val(jsonObj.list[i].H);
-							$(id_product).val(jsonObj.list[i].I);
-							$(id_option).val(jsonObj.list[i].J);
-							$(id_quantity).val(jsonObj.list[i].K);
-							$(id_cost).val(jsonObj.list[i].L);
-							$(id_tip).val(jsonObj.list[i].M);
-							$(id_delivery_com).val(jsonObj.list[i].N);
-							$(id_delivery_num).val(jsonObj.list[i].O);
-							$(id_delivery_date).val(jsonObj.list[i].P);
+							/* var id_name = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".name";
+							var id_addr = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".addr";
+							var id_phone_num = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".phone_num";
+							var id_memo = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".memo";
+							var id_product = "select#"+jsonObj.list[i].B+jsonObj.list[i].C+".product";
+							var id_option = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".option";
+							var id_quantity = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".quantity";
+							var id_cost = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".cost";
+							var id_tip = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".tip"; */
+							var id_delivery_com = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".delivery_com";
+							var id_delivery_num = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".delivery_num";
+							var id_delivery_date = "input#"+jsonObj.list[i].B+jsonObj.list[i].C+".delivery_date";
+							/* $(id_name).val(jsonObj.list[i].F);
+							$(id_addr).val(jsonObj.list[i].G);
+							$(id_phone_num).val(jsonObj.list[i].H);
+							$(id_memo).val(jsonObj.list[i].I);
+							$(id_product).val(jsonObj.list[i].J).prop("selected", true);
+							$(id_option).val(jsonObj.list[i].K);
+							$(id_quantity).val(jsonObj.list[i].L);
+							$(id_cost).val(jsonObj.list[i].M);
+							$(id_tip).val(jsonObj.list[i].N); */
+							$(id_delivery_com).val(jsonObj.list[i].O);
+							$(id_delivery_num).val(jsonObj.list[i].P);
+							$(id_delivery_date).val(jsonObj.list[i].Q);
 						}
 						alert("모든 데이터가 업로드 되었습니다.");
 					},
@@ -128,26 +126,59 @@
 		//excel 다운로드
 		$("#btn-download").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){
-				location.href="http://localhost:9090/tumblbugs/myproject/excelDownload?pj_id=${vo.pj_id}";
+				var url = "http://localhost:9090/tumblbugs/myproject/excelDownload?pj_title="+'${vo.pj_title }';
+				$("#delivery_update").attr("action", url);
+				$("#delivery_update").submit();
+				//location.href="http://localhost:9090/tumblbugs/myproject/excelDownload?pj_id=${vo.pj_id}";
 			};
 		});
 		
 		// DB업데이트
 		$("button#btn-save").click(function(){
-			/* $(".name").each(function(){
-				//alert("11");
+			var result = false;
+			$(".delivery_com").each(function(){
 				if($(this).val() == ""){
 					$(this).css("border","1px solid red");
 					$(this).focus();
-					return false;
+					result = false;
+					return result;
+				} else {
+					result = true;
+					return result;
+				}
+			});
+			$(".delivery_num").each(function(){
+				if($(this).val() == ""){
+					$(this).css("border","1px solid red");
+					$(this).focus();
+					result = false;
+					return result;
+				} else {
+					result = true;
+					return result;
 				}
 				
-			}) */
-			
-			$("#delivery_update").submit();
+			});
+			$(".delivery_date").each(function(){
+				if($(this).val() == ""){
+					$(this).css("border","1px solid red");
+					$(this).focus();
+					result = false;
+					return result;
+				} else {
+					result = true;
+					return result;
+				}
+				
+			});
+			if(result == true){
+				$("#delivery_update").attr("action","http://localhost:9090/tumblbugs/myproject/delivery_update?pj_id=${vo.pj_id}&rpage=${rpage}");
+				$("#delivery_update").submit();
+				alert("저장을 완료했습니다.");
+			}
 		});
 		
-		$("input[type=text]").keypress(function(){
+		$("input").change(function(){
 			$(this).css("border","1px solid #ebe8e8")
 		});
 	});
@@ -162,6 +193,7 @@
 				<div id="myproject_delivery_info">
 					<div id="myproject_info_upper">
 						<div>${vo.status }</div>
+						<a id="backtoproject" href="http://localhost:9090/tumblbugs/myproject?rpage=${rpage }"><i class="fas fa-chevron-left"></i></a>
 						<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }">${vo.pj_title }</a><span>${vo.name }</span>
 					</div>
 					<div id="myproject_info_lower">
@@ -191,26 +223,27 @@
 						</form>
 					</div>
 					<div id="myproject_tooltip">
-						<span data-toggle="tooltip" placement="top" data-html="true" title="<div id='tooltip_div'>데이터의 변경이 있다면 <span>저장</span> 후<br>다운로드를 진행해주세요<br>업로드 후에 꼭 <span>저장</span>을 눌러주세요.<br>업로드와 저장은 <span>전체줄보기</span> 설정 후 진행해주세요.<div id='tooltip_space'></div>일부 항복은 수정이 불가능합니다.</div>"><i class="fas fa-question-circle"></i></span>
+						<span data-toggle="tooltip" placement="top" data-html="true" title="<div id='tooltip_div'>데이터의 변경이 있다면 <span>저장</span> 후<br>다운로드를 진행해주세요<br>업로드 후에 꼭 <span>저장</span>을 눌러주세요.<br>다운로드, 업로드와 저장은 <span>전체줄보기</span> 설정 후 진행해주세요.<div id='tooltip_space'></div>일부 항복은 수정이 불가능합니다.</div>"><i class="fas fa-question-circle"></i></span>
 					</div>
 				</div>
-				<form id="delivery_update" name="delivery_update" enctype="multipart/form-data" method="post" action="http://localhost:9090/tumblbugs/myproject/delivery_update?pj_id=${vo.pj_id }" >
+				<form id="delivery_update" name="delivery_update" enctype="multipart/form-data" method="post"><!--  action="http://localhost:9090/tumblbugs/myproject/delivery_update"  -->
 				<div id="myproject_delivery_table_box">
 					<table id="myproject_delivery_table" >
 						<thead>
 							<tr id="delivery_table_titles">
 								<th class="title_rno">번호</th>
 								<th class="title_pay_num">후원번호</th>
+								<th class="title_pay_num">선물번호</th>
 								<th class="title_pay_name">후원자명</th>
 								<th class="title_payday">후원일자</th>
 								<th class="title_name">수령자명</th>
 								<th>배송주소</th>
 								<th>핸드폰번호</th>
 								<th>배송요청사항</th>
-								<th>선물</th>
+								<th class="title_gift_title">선물</th>
 								<th>선택옵션</th>
 								<th>수량</th>
-								<th>후원액</th>
+								<th class="title_funding">후원금액</th>
 								<th>추가후원금</th>
 								<th>택배사</th>
 								<th>송장번호</th>
@@ -219,26 +252,26 @@
 							</tr>
 						</thead>
 						<tbody>
-							<%-- <c:forEach var="vo" items="${list }"> --%>
 							<c:forEach items="${list}" var="vo" varStatus="status">
 							<tr class="delivery_table_loaddata">
-								<td class="rno">${vo.rno}<input type="hidden" name="rno" value="${vo.rno }"></td>
-								<td class="pay_num">${vo.funding_id}<input type="hidden" name="funding_id" value="${vo.funding_id}"></td>
+								<td class="rno">${vo.rno}<input type="hidden" name="list[${status.index}].rno" value="${vo.rno }"></td>
+								<td class="pay_num">${vo.funding_id}<input type="hidden" name="list[${status.index}].funding_id" value="${vo.funding_id}"></td>
+								<td class="pay_num">${vo.gift_id}<input type="hidden" name="list[${status.index}].gift_id" value="${vo.gift_id }"></td>
 								<td class="pay_person">${vo.name }<input type="hidden" name="list[${status.index}].name" value=${vo.name }></td>
-								<td class="payday">${vo.funding_date }<input type="hidden" name="funding_date" value="${vo.funding_date }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="name" name="recipient_name" value="${vo.recipient_name }"/></td>
-								<td><input type="text" id="${vo.funding_id}" class="addr" name="recipient_addr" value="${vo.recipient_addr }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="phone_num" name="recipient_phone" value="${vo.recipient_phone }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="memo" name="recipient_request" value="${vo.recipient_request }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="product" name="gift_title" value="${vo.gift_title }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="option" name="gift_option" value="${vo.gift_option }"></td>
-								<td><input type="number" id="${vo.funding_id}" class="quantity" name="gift_quantity" value="${vo.gift_quantity }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="cost" name="funding_gift_price" value="${vo.funding_gift_price }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="tip" name="extra_funding_price" value="${vo.extra_funding_price }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="delivery_com" name="courier" value="${vo.courier }"></td>
-								<td><input type="text" id="${vo.funding_id}" class="delivery_num" name="invoice_number" value="${vo.invoice_number }"></td>
-								<td><input type="date" id="${vo.funding_id}" class="delivery_date" name="delivery_start_date" value="${vo.delivery_start_date }"></td>
-								<td>${vo.delivery_complete_yn }<input type="hidden" name="delivery_complete_yn" value=${vo.delivery_complete_yn }></td>
+								<td class="payday">${vo.funding_date }<input type="hidden" name="list[${status.index}].funding_date" value="${vo.funding_date }"></td>
+								<td>${vo.recipient_name }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="name" name="list[${status.index}].recipient_name" value="${vo.recipient_name }"/></td>
+								<td>${vo.recipient_addr }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="addr" name="list[${status.index}].recipient_addr" value="${vo.recipient_addr }"></td>
+								<td>${vo.recipient_phone }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="phone_num" name="list[${status.index}].recipient_phone" value="${vo.recipient_phone }"></td>
+								<td>${vo.recipient_request }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="memo" name="list[${status.index}].recipient_request" value="${vo.recipient_request }"></td>
+								<td>${vo.gift_title }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="product" name="list[${status.index}].gift_title" value="${vo.gift_title }"></td>
+								<td>${vo.gift_option }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="option" name="list[${status.index}].gift_option" value="${vo.gift_option }"></td>
+								<td>${vo.gift_quantity }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="quantity" name="list[${status.index}].gift_quantity" value="${vo.gift_quantity }"></td>
+								<td>${vo.funding_gift_price }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="cost" name="list[${status.index}].funding_gift_price" value="${vo.funding_gift_price }"></td>
+								<td>${vo.extra_funding_price }<input type="hidden" id="${vo.funding_id}${vo.gift_id }" class="tip" name="list[${status.index}].extra_funding_price" value="${vo.extra_funding_price }"></td>
+								<td><input type="text" id="${vo.funding_id}${vo.gift_id }" class="delivery_com" name="list[${status.index}].courier" value="${vo.courier }"></td>
+								<td><input type="text" id="${vo.funding_id}${vo.gift_id }" class="delivery_num" name="list[${status.index}].invoice_number" value="${vo.invoice_number }"></td>
+								<td><input type="date" id="${vo.funding_id}${vo.gift_id }" class="delivery_date" name="list[${status.index}].delivery_start_date" value="${vo.delivery_start_date }"></td>
+								<td>${vo.delivery_complete_yn }<input type="hidden" name="list[${status.index}].delivery_complete_yn" value=${vo.delivery_complete_yn }></td>
 							</tr>
 							</c:forEach>
 						</tbody>
@@ -246,6 +279,7 @@
 				</div>
 				
 				<div id="btn-save_reset">
+					<!-- <button type="button" id="btn-end"><i class="fas fa-clipboard-check"></i></i>배송 완료</button> -->
 					<button type="button" id="btn-save"><i class="fas fa-save"></i>저장</button>
 					<button type="reset"><i class="fas fa-sync"></i>다시쓰기</button>
 				</div>

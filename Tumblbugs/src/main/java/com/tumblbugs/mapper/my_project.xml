@@ -7,7 +7,7 @@
 <mapper namespace="mapper.myproject">
 	
 	<select id="my_profile" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MemberVO"> 
-		select name, profile_img, profile_simg, intro, website from tum_member where email=#{email}
+		select email, name, profile_img, profile_simg, intro, website from tum_member where email=#{email}
 	</select>
 
 	<select id="pj_count" parameterType="java.lang.String" resultType="int"> 

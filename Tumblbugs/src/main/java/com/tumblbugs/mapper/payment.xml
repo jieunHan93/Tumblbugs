@@ -6,7 +6,7 @@
 
 <mapper namespace="mapper.payment">
 	<select id="paymentList" parameterType="String" resultType="com.tumblbugs.vo.PaymentVO">
-		select payment_id, payment_method, card_company, substr(card_number, 1, 4) card_number, bank, substr(account_number, 1, 4) account_number
+		select payment_id, payment_method, card_company, substr(card_number, -4) card_number, bank, substr(account_number, -4) account_number
 		from tum_payment
 		where email = #{email}
 		order by payment_date desc

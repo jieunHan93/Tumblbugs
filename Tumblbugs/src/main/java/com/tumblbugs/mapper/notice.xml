@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.notice">
+	<insert id="notice_write" parameterType="com.tumblbugs.vo.NoticeVO">
+		insert into tum_notice values('NO' || LPAD(tum_notice_sequ.nextval, 5, 0), #{notice_title}, #{notice_content:VARCHAR}, 
+								#{notice_category}, sysdate, #{notice_event_start}, #{notice_event_end}, #{notice_thumbnail}, #{notice_sthumbnail})
+	</insert>
+	
+	<select id="notice_list" resultType="com.tumblbugs.vo.NoticeVO">
+		select rownum rno, notice_title, notice_category, notice_id, to_char(notice_reg_date, 'yyyy/mm/dd') notice_reg_date, notice_event_start, notice_event_end,
+		trunc(notice_event_end-sysdate) event_extra_date, trunc(notice_event_start-sysdate) event_waiting_date  
+		from(select * from tum_notice order by notice_id desc)
+	</select>
+	
+	<select id="all_count" resultType="int">
+		select count(*) from tum_notice
+	</select>
+	<select id="notice_count" resultType="int">
+		select count(*) from tum_notice where notice_category='공지사항'
+	</select>
+	<select id="event_count" resultType="int">
+		select count(*) from tum_notice where notice_category='이벤트'
+	</select>
+	
+	<select id="notice_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.NoticeVO">
+		select * from(select notice_id, notice_title, notice_content, notice_reg_date, notice_category, to_char(notice_event_start,'yyyy-mm-dd') notice_event_start
+			, to_char(notice_event_end,'yyyy-mm-dd') notice_event_end, notice_thumbnail, notice_sthumbnail 
+			,LEAD(notice_category,1,'noData') OVER(ORDER BY notice_id desc) next_category, LAG(notice_category,1,'noData.') OVER(ORDER BY notice_id desc) prev_category
+			,LEAD(notice_title,1,'noData') OVER(ORDER BY notice_id desc) next_title, LAG(notice_title,1,'noData.') OVER(ORDER BY notice_id desc) prev_title
+			,LEAD(notice_id,1,'noData') OVER(ORDER BY notice_id desc) next_id, LAG(notice_id,1,'noData') OVER(ORDER BY notice_id desc) prev_id
+		 from tum_notice) where notice_id=#{notice_id}
+		 
+		   
+
+	</select>
+	
+	<update id="notice_update" parameterType="com.tumblbugs.vo.NoticeVO">
+		update tum_notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_category=#{notice_category},
+							notice_event_start=#{notice_event_start}, notice_event_end=#{notice_event_end} , notice_thumbnail=#{notice_thumbnail}, notice_sthumbnail=#{notice_sthumbnail} 
+				where notice_id=#{notice_id}
+	</update>
+	
+	<update id="notice_nofile_update" parameterType="com.tumblbugs.vo.NoticeVO">
+		update tum_notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_category=#{notice_category},
+							notice_event_start=#{notice_event_start}, notice_event_end=#{notice_event_end} where notice_id=#{notice_id}
+	</update>
+	
+	<delete id="notice_delete" parameterType="java.lang.String">
+		delete from tum_notice where notice_id=#{notice_id}
+	</delete>
+	
+	<select id="notice_all_list" parameterType="map" resultType="com.tumblbugs.vo.NoticeVO">
+		select * from(select rownum rno, notice_title, notice_thumbnail, notice_sthumbnail,  notice_category, notice_id, to_char(notice_reg_date, 'yyyy/mm/dd') notice_reg_date, notice_event_start, notice_event_end,
+		trunc(notice_event_end-sysdate) event_extra_date, trunc(notice_event_start-sysdate) event_waiting_date  
+		from(select * from tum_notice order by notice_id desc)) where rno between #{start} and #{end}
+	</select>
+	
+	<select id="notice_cat_list" parameterType="map" resultType="com.tumblbugs.vo.NoticeVO">
+		select * from(select rownum rno, notice_title, notice_thumbnail, notice_sthumbnail, notice_category, notice_id, to_char(notice_reg_date, 'yyyy/mm/dd') notice_reg_date, notice_event_start, notice_event_end,
+		trunc(notice_event_end-sysdate) event_extra_date, trunc(notice_event_start-sysdate) event_waiting_date  
+		from(select * from tum_notice where notice_category=#{category} order by notice_id desc)) where rno between #{start} and #{end}
+	</select>
+	
+	<select id="thumbnail_name" parameterType="java.lang.String" resultType="java.lang.String">
+		select notice_sthumbnail from tum_notice where notice_id = #{notice_id}
+	</select>
+</mapper>

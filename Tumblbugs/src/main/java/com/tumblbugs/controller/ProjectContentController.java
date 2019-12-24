@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,7 +62,7 @@ public class ProjectContentController {
 	}
 	
 	@RequestMapping(value={"/project/{pj_addr}/{tab}"})
-	public ModelAndView project_content_tab(@PathVariable("pj_addr") String pj_addr, @PathVariable("tab") String tab) throws Exception {
+	public ModelAndView project_content_tab(@PathVariable("pj_addr") String pj_addr, @PathVariable("tab") String tab, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		String pj_id = projectDAO.getPj_id(pj_addr);	//pj_id 가져오기
@@ -76,6 +77,11 @@ public class ProjectContentController {
 		mv.addObject("vo", vo);
 		mv.addObject("clist", communityDAO.getList(map));
 		mv.addObject("giftList", projectDAO.getGiftList(pj_id));
+		
+		if(tab.equals("community") && session.getAttribute("semail") != null) {
+			String email = (String)session.getAttribute("semail");
+			mv.addObject("fundingYn", projectDAO.getFundingYn(email, pj_id));
+		}
 		
 		return mv;
 	}

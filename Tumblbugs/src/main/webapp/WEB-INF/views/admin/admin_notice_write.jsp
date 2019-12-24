@@ -48,7 +48,14 @@
 		$("#noticeWrite").click(function(){
 			$("#notice_content").val(CKEDITOR.instances.notice_content.getData());
 			
-			admin_notice.submit();
+			if($("#nTitle").val() == '' || $("#nTitle").val() == null){
+				alert("제목을 작성해주세요.");
+				
+			}else if($("#notice_content").val() == '' || $("#notice_content").val() == null){
+				alert("내용을 작성해주세요.");
+			}else{
+				admin_notice.submit();
+			}
 		});
 		
 		//탭 선택
@@ -64,6 +71,8 @@
 			$(".funding_list#" + id).show();
 		});
 		//1:1문의
+		
+		
 	});
 </script>
 <style>
@@ -89,7 +98,7 @@
 							</tr>
 							<tr>
 								<th>제목</th>
-								<td><input type="text" class="n_input" name="notice_title"/></td>
+								<td><input type="text" class="n_input" name="notice_title" id="nTitle"/></td>
 							</tr>	
 							<tr>
 								<th>분류</th>
@@ -103,6 +112,10 @@
 							<tr id="eventCategory">
 								<th>이벤트 기간</th>
 								<td><input type="date" name="notice_event_start" id="notice_event_start"/> ~ <input type="date" name="notice_event_end" id="notice_event_end"/></td>
+							</tr>
+							<tr>
+								<th>썸네일</th>
+								<td><input type="file" name="notice_cthumbnail"/></td>
 							</tr>
 							<tr>
 								<td colspan=2>

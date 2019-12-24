@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>       
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,14 +9,49 @@
 	<link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
 	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/notice.css">
-	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>  	
+	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>  
+	<script src="http://localhost:9090/tumblbugs/js/am-pagination.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/am-pagination.css">
   	<script>
   		$(document).ready(function(){
   			var input= "input[value='${category}']";
-  			console.log(input);
   			var link = $(input).parent();
+  			var category = '${category}'
   			$(link).css("color","#000000");
   			$(link).parent().css("border-bottom","2px solid #000000");
+  			
+  			var pager = jQuery('#ampaginationsm').pagination({
+  				
+  			    maxSize: 7,	    		// max page size
+  			    totals: '${dbcount}',	// total pages	
+  			    page: '${rpage}',		// initial page		
+  			    pageSize: '${pagesize}',			// max number items per page
+  			
+  			    // custom labels		
+  			    lastText: '&raquo;&raquo;', 		
+  			    firstText: '&laquo;&laquo;',		
+  			    prevText: '&laquo;',		
+  			    nextText: '&raquo;',
+  					     
+  			    btnSize:'sm'	// 'sm'  or 'lg'		
+  			});
+  			
+  			jQuery('#ampaginationsm').on('am.pagination.change',function(e){
+  				   jQuery('.showlabelsm').text('The selected page no: '+e.page);
+  		           $(location).attr('href', "http://localhost:9090/tumblbugs/notice/list?category="+category+"&rpage="+e.page);         
+  		    });
+  			
+  			
+  			
+            $("#input_notice_list_search").keyup(function() {
+                var keyVal = $(this).val();
+                $("#notice_list_content > ul > #notice_li_card").hide();
+                $("#notice_list_paging_box").hide();
+                
+                var liLoc = $("#notice_list_content .notice_list_card_title:contains('" + keyVal + "')");
+
+                $(liLoc).parent().parent().parent().parent().show();
+            });
   		});
   	</script>
 </head>
@@ -37,22 +73,37 @@
 		<section>
 			<div id="notice_list_content">
 				<ul>
-					<% for(int i=0; i<10; i++){ %>
-					<li class="notice_list_card_size">
-						<a href="http://localhost:9090/tumblbugs/notice/content?category=${category}">
+					<c:forEach var="vo" items="${list}" >
+					<li class="notice_list_card_size" id="notice_li_card">
+						<a href="http://localhost:9090/tumblbugs/notice/content?notice_id=${vo.notice_id}&category=${category}">
 							<div class="notice_list_card">
-								<div class="notice_list_card_img"><img src="http://localhost:9090/tumblbugs/images/2019_best.jpg"></div>
+								<c:if test="${vo.notice_sthumbnail != null }">
+									<div class="notice_list_card_img"><img src="http://localhost:9090/tumblbugs/resources/upload/${vo.notice_sthumbnail }"></div>
+								</c:if>
 								<div class="notice_list_card_content">
-									<div class="notice_list_card_status"><span>이벤트</span><span>진행중</span></div>
-									<div class="notice_list_card_title">"올해 가장 마음에 들었던 텀블벅 리워드를 제보해 주세요"</div>
-									<div class="notice_list_card_date">2019.11.22</div>
+									<div class="notice_list_card_status"><span>${vo.notice_category }</span>
+										<c:if test="${vo.event_waiting_date >= 0}">
+										<span>진행대기</span>
+										</c:if>
+										<c:if test="${vo.event_waiting_date < 0}"> 
+											<c:if test="${vo.event_extra_date >= 0}"> 
+												<span>진행중</span>
+											</c:if>
+											<c:if test="${vo.event_extra_date < 0}"> 
+												<span>종료</span>
+											</c:if>
+										</c:if>
+								</div>
+									<div class="notice_list_card_title">${vo.notice_title}</div>
+									<div class="notice_list_card_date">${vo.notice_reg_date }</div>
 								</div>
 							</div>
 						</a>
 					</li>
-					<% } %>
-					<li class="notice_list_card_size">
-						<div id="notice_list_paging_box">페이징!</div>
+					</c:forEach>
+					
+						<li class="notice_list_card_size">
+						<div id="notice_list_paging_box"><div id="ampaginationsm"></div></div>
 						<div id="notice_list_search_box">
 							<div id="notice_list_search">
 								<input type="text" id="input_notice_list_search" val="검색">

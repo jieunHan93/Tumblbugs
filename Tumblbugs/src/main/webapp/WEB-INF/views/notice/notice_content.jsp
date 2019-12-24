@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,30 +39,39 @@
 				<div>
 					<div id="notice_content_title">
 						<div>
-							<div id="notice_cotent_title_category">이벤트</div>
-							<div id="notice_content_title_title">❝올해 가장 마음에 들었던 텀블벅 리워드를 제보해 주세요❞</div>
-							<div id="notice_content_title_date">2019-11-22 13:53:42</div>
+							<div id="notice_cotent_title_category">${vo.notice_category}</div>
+							<div id="notice_content_title_title">${vo.notice_title}</div>
+							<div id="notice_content_title_date">${vo.notice_reg_date}</div>
 						</div>
 					</div>
 					<div id="notice_content_textarea">
-						<!-- ckeditor -->
-						<img src="http://localhost:9090/tumblbugs/images/notice_content_text1.png">
-						<img src="http://localhost:9090/tumblbugs/images/notice_content_text2.png">
-						<img src="http://localhost:9090/tumblbugs/images/notice_content_text3.png">
+						${vo.notice_content}
 					</div>
 					<div id="notice_content_bottom">
 						<ul>
 							<li>
-								<span class="notice_content_bottom_page">이전글</span>	
-								<span class="notice_content_bottom_category">공지사항</span>
-								<a href="#"><span class="notice_content_bottom_title">캐릭터 격전지로 떠오른 ‘텀블벅’..웹툰 플랫폼 흥행작부터 크리에이터까지</span></a>
+								<span class="notice_content_bottom_page">이전글</span>
+								<c:if test="${vo.prev_id !='noData'}"> 	
+									<span class="notice_content_bottom_category">${vo.prev_category}</span>
+									<a href="http://localhost:9090/tumblbugs/notice/content?notice_id=${vo.prev_id}">
+										<span class="notice_content_bottom_title">${vo.prev_title }</span></a>
+								</c:if>
+								<c:if test="${vo.prev_id =='noData'}"> 
+									<span class="notice_content_bottom_category" style="width:150px">이전글이 없습니다.</span>
+								</c:if>
 							</li>
 							<li>
 								<span class="notice_content_bottom_page">다음글</span>	
-								<span class="notice_content_bottom_category">이벤트</span>
-								<a href="#"><span class="notice_content_bottom_title">텀블벅, 맛과 건강 두 마리 토끼 잡는 푸드 프로젝트 활성화</span></a>
+								<c:if test="${vo.next_id !='noData'}"> 	
+									<span class="notice_content_bottom_category">${vo.next_category}</span>
+									<a href="http://localhost:9090/tumblbugs/notice/content?notice_id=${vo.next_id}">
+										<span class="notice_content_bottom_title">${vo.next_title }</span></a>
+								</c:if>
+								<c:if test="${vo.next_id =='noData'}"> 
+									<span class="notice_content_bottom_category" style="width:150px">다음글이 없습니다.</span>
+								</c:if>
 							</li>
-						</ul>
+							</ul>
 						<div id="notice_content_button">
 							<a id="notice_content_forward" href="http://localhost:9090/tumblbugs/notice/list?category=${category}">
 								<button type="button">목록으로 돌아가기</button>

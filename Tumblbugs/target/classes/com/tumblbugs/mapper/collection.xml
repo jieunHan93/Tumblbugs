@@ -5,8 +5,8 @@
 <mapper namespace="mapper.collection">
 	<select id="list" resultType="com.tumblbugs.vo.CollectionVO">
 		SELECT ROWNUM RNO,COL_ID,COL_NAME, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, 
-				TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTROLL, COL_STATUS
-		FROM (SELECT COL_ID,COL_NAME, COL_STARTDATE, COL_ENDDATE, COL_CONTROLL, COL_STATUS 
+				TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTROLL, COL_STATUS, COL_ADDR 
+		FROM (SELECT COL_ID,COL_NAME, COL_STARTDATE, COL_ENDDATE, COL_CONTROLL, COL_STATUS, COL_ADDR 
 				FROM TUM_COLLECTION ORDER BY COL_REGDATE)
 	</select>
 
@@ -22,23 +22,29 @@
 		SELECT COL_ID, COL_NAME, COL_CONTENT, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, 
 		TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_STATUS, COL_CCOLOR FROM TUM_COLLECTION
 	</select>
-
+	
+	<select id="col_addr_check" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM TUM_COLLECTION WHERE COL_ADDR=#{col_addr}
+		<if test="col_id != null and col_id != ''">
+			AND COL_ID NOT IN(#{col_id})
+		</if>
+	</select>
 	<insert id="write" parameterType="com.tumblbugs.vo.CollectionVO">
 		INSERT INTO TUM_COLLECTION VALUES('C'||LPAD(TUM_COLLECTION_SEQU.NEXTVAL, 5, '0'), #{col_name}, #{col_content}, SYSDATE, #{col_startdate}, 
-		#{col_enddate}, '0', '대기중', #{col_img}, #{col_simg}, #{col_bcolor}, #{col_ccolor})
+		#{col_enddate}, '0', '대기중', #{col_img}, #{col_simg}, #{col_bcolor}, #{col_ccolor}, #{col_addr})
 	</insert>
 	
 	<select id="content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.CollectionVO">
 		SELECT COL_ID, COL_NAME, COL_BCOLOR, COL_CCOLOR, TO_CHAR(COL_STARTDATE, 'YYYY-MM-DD') COL_STARTDATE, COL_CONTROLL,
-		 TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTENT, COL_IMG, COL_SIMG FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+		 TO_CHAR(COL_ENDDATE, 'YYYY-MM-DD') COL_ENDDATE, COL_CONTENT, COL_IMG, COL_SIMG, COL_ADDR FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
 	</select>
 	
 	<update id="update" parameterType="com.tumblbugs.vo.CollectionVO">
-		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, COL_ENDDATE = #{col_enddate},
+		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_ADDR = #{col_addr}, COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, COL_ENDDATE = #{col_enddate},
 			COL_STATUS = #{col_status}, COL_CONTROLL =#{col_controll}, COL_BCOLOR = #{col_bcolor}, COL_CCOLOR = #{col_ccolor}, COL_IMG = #{col_img}, COL_SIMG = #{col_simg} WHERE COL_ID = #{col_id}
 	</update>
 	<update id="updatenofile" parameterType="com.tumblbugs.vo.CollectionVO">
-		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, COL_STATUS = #{col_status}, COL_CONTROLL =#{col_controll},
+		UPDATE TUM_COLLECTION SET COL_NAME =  #{col_name}, COL_ADDR = #{col_addr} , COL_CONTENT = #{col_content}, COL_STARTDATE = #{col_startdate}, COL_STATUS = #{col_status}, COL_CONTROLL =#{col_controll},
 		COL_ENDDATE = #{col_enddate}, COL_BCOLOR = #{col_bcolor}, COL_CCOLOR = #{col_ccolor} WHERE COL_ID = #{col_id}
 	</update>
 	
@@ -100,5 +106,9 @@
 	<!-- user page -->
 	<select id="collection_title" parameterType="java.lang.String" resultType="com.tumblbugs.vo.CollectionVO">
 		SELECT COL_ID, COL_NAME, COL_CONTENT, COL_SIMG, COL_BCOLOR FROM TUM_COLLECTION WHERE COL_ID=#{col_id}
+	</select>
+	
+	<select id="col_id" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT COL_ID FROM TUM_COLLECTION WHERE COL_ADDR = #{col_addr}
 	</select>
 </mapper>

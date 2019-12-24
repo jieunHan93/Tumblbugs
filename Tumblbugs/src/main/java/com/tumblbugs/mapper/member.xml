@@ -9,6 +9,18 @@
 			values(#{email},#{name},#{pass},'null','null','null','null','null',sysdate,'y',#{signkey},'n')
 	</insert>
 	 
+	<select  id="email_chk" 
+		parameterType="java.lang.String" resultType="int"> 
+		     select count(*)  from tum_member
+		     where  email=#{email}
+	</select>
+	
+	<select  id="pass_chk" 
+		parameterType="map" resultType="int"> 
+		     select count(*)  from tum_member
+		     where  pass=#{pass} and email=#{email}
+	</select>
+	 
 	<update id="reg_update" 
 		parameterType="map">
 		UPDATE tum_member
@@ -32,8 +44,8 @@
 				 where email=#{email}	
 	</select>
 	
-	<select id="select_profile_pass"
-		parameterType="java.lang.String"
+	<select id="mypage_pass_chk"
+		parameterType="map"
 		resultType="int">
 			select count(*) from tum_member
 				 where pass=#{pass} and email=#{email}

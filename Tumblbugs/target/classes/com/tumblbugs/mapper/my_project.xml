@@ -7,7 +7,7 @@
 <mapper namespace="mapper.myproject">
 	
 	<select id="my_profile" parameterType="java.lang.String" resultType="com.tumblbugs.vo.MemberVO"> 
-		select name, profile_img, profile_simg, intro, website from tum_member where email=#{email}
+		select email, name, profile_img, profile_simg, intro, website from tum_member where email=#{email}
 	</select>
 
 	<select id="pj_count" parameterType="java.lang.String" resultType="int"> 
@@ -15,8 +15,8 @@
 	</select>
 	
 	<select id="pj_list" parameterType="map" resultType="com.tumblbugs.vo.ProjectVO"> 
-	select * from(select rownum rno, pj_id, email, pj_title, pj_summary, pj_img, pj_simg, pj_price, pj_end_date-sysdate pj_extra_date, total_price, pj_check_yn, to_char(sysdate, 'yyyy-mm-dd') today_date, to_char(pj_end_date,'yyyy-mm-dd') pj_end_date  
-	from (select  t.pj_id, email, pj_title, pj_summary, pj_img, pj_simg, pj_price, pj_end_date, pj_start_date, total_price, pj_check_yn from tum_project t, 
+	select * from(select rownum rno, pj_id, email, pj_title, pj_summary, pj_addr, pj_img, pj_simg, pj_price, pj_end_date-sysdate pj_extra_date, total_price, pj_check_yn, to_char(sysdate, 'yyyy-mm-dd') today_date, to_char(pj_end_date,'yyyy-mm-dd') pj_end_date  
+	from (select  t.pj_id, email, pj_title, pj_summary, pj_addr, pj_img, pj_simg, pj_price, pj_end_date, pj_start_date, total_price, pj_check_yn from tum_project t, 
 	(select t.pj_id, sum(total_funding_price) total_price from  tum_funding f, tum_project t where t.pj_id = f.pj_id group by t.pj_id) f 
 	where t.pj_id=f.pj_id(+) order by t.pj_id desc) where email=#{email}) where rno between #{start} and #{end}
 	</select>

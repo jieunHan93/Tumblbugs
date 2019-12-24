@@ -115,18 +115,24 @@ color: #1d85ea;
 span#emailcheck,
 span#emailcheckform,
 span#pwcheck,
-span#pwcheckform{
+span#pwcheckform,
+span#login_success,
+span#login_fail
+{
 color: #1e90ff;
 font-size: 12px;
 }
 
 </style>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	$("#emailcheck").hide();
 	$("#emailcheckform").hide();
 	$("#pwcheck").hide();
 	$("#pwcheckform").hide();
+	$("#login_success").hide();
+	$("#login_fail").hide();
 	
 	$("#email").focus(function () {
 		$("#emailcheck").hide();
@@ -142,11 +148,13 @@ $(document).ready(function(){
 		$("#pwcheckform").hide();
 	});
 	
-	$("#email").focusout(function(){
+	$("#email").keyup(function(){
 		$("#emailcheck").hide();
 		$("#emailcheckform").hide();
 		$("#pwcheck").hide();
 		$("#pwcheckform").hide();
+		$("#login_success").hide();
+
 		
 		if($("#email").val() == "" ){
 			$("#emailcheck").show();
@@ -176,14 +184,36 @@ $(document).ready(function(){
 					
 			}
 		}
-		
-	})
 	
-	$("#pass").focusout(function (){
+		//email ajax
+		$("#email").keyup(function(){
+			 $.ajax({
+					url:"email_chk?email="+$("#email").val(),			
+					success:function(data){
+						if(data == '0'){
+							$("#login_fail").show();
+							$("#login_success").hide();
+						}else{
+							$("#login_success").show();
+							$("#login_fail").hide();
+						}			
+					}
+				}); 	
+		});
+	});
+	
+	
+
+	
+	
+	
+	$("#pass").keyup(function (){
 		$("#emailcheck").hide();
 		$("#emailcheckform").hide();
 		$("#pwcheck").hide();
 		$("#pwcheckform").hide();
+		$("#login_success").hide();
+		$("#login_fail").hide();
 		
 		if($("#pass").val() == ""){
 			
@@ -216,8 +246,30 @@ $(document).ready(function(){
 		}
 		
 	});
-		
 	
+	/* $("#btnlogin").click(function(){
+		 $.ajax({
+				url:"email_chk?email="+$("#email").val(),			
+				success:function(data){
+					if(data == '0'){
+					alert("아이디틀림");
+					}else{
+						 $.ajax({
+								url:"pass_chk?pass="+$("#pass").val(),			
+								success:function(data){
+									if(data == '0'){
+										alert("비밀번호 틀림");
+									}else{
+										alert("로그인성공");
+										login_proc.submit();
+									}			
+								}
+							}); 
+					}			
+				}
+			}); 
+		
+	}); */
 	
 });
 </script>
@@ -231,13 +283,16 @@ $(document).ready(function(){
 				<b id="b1"></b>
 				<b id="b2">로그인</b>
 				<b id="b3"></b> 
-					<form action="/tumblbugs/login_proc" method="POST" class="login" id="login">
+					<form name="login_proc" action="/tumblbugs/login_proc" method="POST" class="login" id="login">
 						<ul id="ul1">
+							<span id="login_success">로그인 가능한 아이디입니다.</span>
+							<span id="login_fail">존재하지않는 아이디입니다.</span>
 							<li id="li1">
 								<input type="text" name="email" id="email" placeholder="이메일주소를입력하세요.">
 							</li>
 							<span id="emailcheck">이메일을 입력해 주세요.</span>
 							<span id="emailcheckform">이메일형식을 맞춰주세요.abc@abc.com</span>
+							
 							<li>
 								<input type="password" name="pass" id="pass" placeholder="비밀번호 입력하세요.">
 							</li>							

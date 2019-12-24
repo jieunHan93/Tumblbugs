@@ -23,6 +23,22 @@ public class PJUploadDAO {
 	private SqlSessionTemplate sqlSession; 
 	private static String namespace = "mapper.upload";
 	
+	/** 멤버 사진파일 이름 가져오기 **/
+	public String getMemberfileName(String semail) {
+		return sqlSession.selectOne(namespace+".member_fileName", semail);
+	}
+	
+	/** 프로젝트 검토 요청 **/
+	public boolean resultUploadProject(String pj_id) {
+		boolean result = false;
+		int val = sqlSession.update(namespace+".pj_check", pj_id);
+		
+		if(val != 0) {
+			result = true;
+		}
+		
+		return result;
+	}
 	/** pj_addr 중복체크 **/
 	public boolean getResultAddrCheck(String pj_addr) {
 		boolean result = false;

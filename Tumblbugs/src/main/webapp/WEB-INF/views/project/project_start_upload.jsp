@@ -68,9 +68,16 @@ $(document).ready(function(){
 		$("#pj_account_name2").val("${vo.pj_account_name}");
 		$("#pj_account_id2").val("${vo.pj_account_id}");
 		$("#pj_account_number2").val("${vo.pj_account_number}");
+	}else{
+		$("input:radio[id ='personal_radio']").prop("checked", true)
 	}
+	
 	if(pj_price != null && pj_price != ""){
 		$("#content_m2_c1 .sub_info").text(pj_price).css('font-size','11pt').css('color','black').css('font-weight','550');
+	}
+	
+	if('${vo}' == null || '${vo}' == ""){
+		CKEDITOR.instances.m3_c1_i1.setData("");
 	}
 	
 	$("#menu_label1").css('background-color','rgb(247,247,247)').css('border-color','#ccc');
@@ -80,7 +87,12 @@ $(document).ready(function(){
 	
 	
 	 $("#submit_btn").click(function(){
-			alert("클릭!");
+		 alert("검토 요청이 완료되었습니다!");
+		 location.href = 'http://localhost:9090/tumblbugs/project_upload_proc';
+	 });
+	 $("#submit_btn_n").click(function(){
+		 alert("재검토 요청이 완료되었습니다!");
+		 location.href = 'http://localhost:9090/tumblbugs/project_upload_proc';
 	 });
 	
 	 $(".upload_detail_slide").on('click', function() {
@@ -560,6 +572,7 @@ $(document).ready(function(){
 						url: 'project_editor_proc', 
 						data: pj_story, 
 						processData: false,  
+						
 						contentType: false,  
 						cache: false, 
 						success: function (result) {}, 
@@ -824,7 +837,6 @@ $(document).ready(function(){
 			var slide_present_id = "#"+$(slide_id).prev().attr("id");
 			$(slide_d_id).css('display','none');
 			$(slide_present_id).css('display','block');
-			/* $(slide_d_id+" .up_reset1").attr("class","up_delete2").html("<i class='fas fa-trash-alt'></i> 삭제하기"); */
 			$(".upload_present_slide2").attr("class","upload_present_slide");
 			$(".up_reset1").attr("class","gift_reset");
 			if($(slide_d_id+" input:checkbox[id='delivery_check']").is(":checked")){
@@ -941,6 +953,7 @@ $(document).ready(function(){
 			$('#present_number').val(parseInt($('#present_number').val()+1));
 			$("#com_present").after(new_present).css('display','block');
 			
+			$(slide_id).attr('class','present_detail_slide2');
 			
 		} 
 	});
@@ -1133,25 +1146,18 @@ $(document).ready(function(){
             success : function(result) {
             	alert(result);
         }});
-	
-	});
-	
-/* 	$(document).on('click','.up_delete2',function(){
-		$(this).parent().parent().parent().css('display','none');
-		$.ajax({url: 'project_delete_gift_proc?gift_id='+$(this).prev().val(),
-            success : function(result) {
-            	alert(result);
-        }});
-	
 		
-	}); */
+		form_check();
+	});
 	
 	/* 메뉴 카테고리 이벤트 */
 	$(".upload_menu_btn").click(function(){
 		var menu_sel = $(this).attr("id");
 		$(".upload_detail_slide").css('display','inline-block');
 		$(".upload_detail").css('display','none');
+		$(".present_detail_slide2").css('display','none');
 		$(".present_detail_slide").css('display','');
+		$(".upload_present_slide").css('display','block');
 		$(".up_menu_lb").css('background-color','white').css('border-color','white');
 		$("#"+menu_sel).next().css('background-color','rgb(247,247,247)').css('border-color','#ccc');
 		
@@ -1534,7 +1540,7 @@ $(document).ready(function(){
 	
 	
 	/** 프로필 사진 미리보기 업로드 **/
-	$("#my_pro_img").on('change', function(){
+	$(document).on('change',"#my_pro_img", function(){
 	    readInputFile(this);
 	});
 	
@@ -1614,15 +1620,13 @@ function form_check(){
 	});
 	
 	 var m3_count = 0;
-	$(".m3_check").each(function(i, e){
-	   if($(this).val() != null && $(this).val() != ""){
+	   if(CKEDITOR.instances.m3_c1_i1.getData() != null && CKEDITOR.instances.m3_c1_i1.getData() != ""){
 		   m3_count++;
 	   }
 	   if(m3_count == 1){
 		$("#menu_label3").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 스토리텔링");
 		 $("#menu3_check").val("1");
 	   }
-	});
 		
 	 var m4_count = 0;
 	$(".m4_check").each(function(i, e){
@@ -1640,15 +1644,18 @@ function form_check(){
 		   if($(this).val() == 1){
 			   all++;
 		   }
-		   if(all == 4){
-			   $("#submit_btn").css('background','#1e90ff').css('color','white').css('cursor','pointer');
-			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 모든 섹션을 완성하셨습니다. <span style='color:#1e90ff; font-weight:bold;'>검토 요청하기</span> 버튼을 눌러 검토를 요청하세요.");
-		   }else if(all == 1){
-			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 1개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
-		   }else if(all == 2){
-			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 2개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
-		   }else if(all == 3){
-			   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 3개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+		   if('${vo.pj_check_yn}' == null || '${vo.pj_check_yn}' == ""){
+			   if(all == 4){
+					$("#submit_btn").css('background','#1e90ff').css('color','white').css('cursor','pointer');
+					$("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 모든 섹션을 완성하셨습니다. <span style='color:#1e90ff; font-weight:bold;'>검토 요청하기</span> 버튼을 눌러 검토를 요청하세요.");
+					
+			   }else if(all == 1){
+				   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 1개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+			   }else if(all == 2){
+				   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 2개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+			   }else if(all == 3){
+				   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 3개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+			   }
 		   }
 	});
 }
@@ -1728,7 +1735,6 @@ function readInputFile(input) {
 						<i class="fas fa-info-circle"></i> 프로젝트를 작성하면서 궁금하신 사항은 <a href="http://localhost:9090/tumblbugs/help/createcenter">창작자 센터</a>에서 도움말을 찾아보세요.
 					</c:if>
 				</div>	
-				
 					<c:if test="${vo.pj_check_yn == 'y'}">
 						<div id="all_pro_info_y">
 							<i class="fas fa-bullhorn"></i> 축하합니다! 이제 프로젝트를 공개하고 펀딩을 시작하실 수 있습니다.
@@ -1768,8 +1774,14 @@ function readInputFile(input) {
 						<c:if test="${vo.pj_check_yn == 'n' }">
 							<button type="button" id="submit_btn_n"><i class="fab fa-telegram-plane"></i> 재검토 요청하기</button>
 						</c:if>
-						<c:if test="${vo.pj_check_yn != 'n' }">
-							<button type="button" id="submit_btn"><i class="fab fa-telegram-plane"></i> 검토 요청하기</button>
+						 <c:if test="${vo.pj_check_yn == 'y' }">
+							<button type="button" id="submit_btn" disabled><i class="fab fa-telegram-plane"></i> 승인 완료</button>
+						</c:if> 
+						<c:if test="${vo.pj_check_yn == 'c' }">
+							<button type="button" id="submit_btn" disabled><i class="fab fa-telegram-plane"></i> 프로젝트 검토중</button>
+						</c:if>
+						<c:if test="${vo.pj_check_yn == null }">
+							<button type="button" id="submit_btn" disabled><i class="fab fa-telegram-plane"></i> 검토 요청하기</button>
 						</c:if>
 					</div>
 				</div>

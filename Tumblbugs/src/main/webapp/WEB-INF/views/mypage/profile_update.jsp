@@ -14,20 +14,28 @@
 
 <script type="text/javascript">
 $(document).ready(function(){	
-
-		  $("#nowpass").focusout(function(){
+	$("#pw_chk_ok").hide();
+	$("#pw_chk_fail").hide();
+	
+		  $("#nowpass").keyup(function(){
 			  var pass = $("#nowpass").val();
-			  alert(pass);
 			  $.ajax({
 					 url:"select_profile_pass?pass="+pass,
-					 success:function(result){
-						 alert(result);
+					 success:function(result){			
+						 
 						 if(result == '1'){
-							alert("비밀번호가 동일합니다.");
+						
+							 $("#pw_chk_ok").show();
+							 $("#pw_chk_fail").hide();
 							 
+							 $("#newpass").focus();
+							 
+							 	
 						 }else{
-							 alert("비밀번호가 동일하지않습니다.");
 							 
+							 $("#pw_chk_ok").hide();
+							 $("#pw_chk_fail").shows();					 
+						 	return false;
 						 }  
 					 }
 			  });
@@ -53,7 +61,7 @@ $(document).ready(function(){
 				if (nameVal.match(nameExp) != null) {	
 					 alert("사용가능.")
 				  }else {  
-					  alert("웹사이트형식으로해주세요.http://")		
+					  alert("웹사이트형식으로해주세요.http://www.dd.com")		
 				  }	  
 		  });
 		  $("#phone").focusout(function(){
@@ -89,8 +97,8 @@ $(document).ready(function(){
 				<form action="/tumblbugs/profile_proc" method="post">
 					<div>
 						<label class="profile_editor_label">프로필 사진</label>
-						<div id="profilel_editor_img">
-							<span></span>
+						<div id="profilel_editor_img" >
+							<span  style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_img})"></span>
 							<div>
 							
 								<input type="file" id="profile_img" name="profile_img">
@@ -100,19 +108,20 @@ $(document).ready(function(){
 					</div>
 					<div>
 						<label class="profile_editor_label">이메일</label>
-						<input type="text" value="test@naver.com" readonly>
+						<input type="text" value="${sessionScope.svo.email }" readonly>
 						<span class="profile_input_guide">이메일는 변경이 불가능합니다.</span>
 					</div>
 					<div>
 						<label class="profile_editor_label">비밀번호 설정</label>
-						<input type="password" class="form-control" placeholder="현재 비밀번호" name="nowpass"id="nowpass">
-						<input type="password" class="form-control" placeholder="변경할 비밀번호" name="pass">
-
-				
+						<input type="password" class="form-control" placeholder="현재 비밀번호" name="nowpass" id="nowpass">
+						<input type="password" class="form-control" placeholder="변경할 비밀번호" name="pass" id="newpass" maxlength="40">
+						<br>
+						<span id="pw_chk_ok">원래 비밀번호와 일치합니다.변경할 비밀번호를 입력해주세요.</span>
+						<span id="pw_chk_fail">비밀번호가 일치하지않습니다.</span>
 					</div>
 					<div>
 						<label class="profile_editor_label">이름</label>
-						<input type="text" class="form-control" value="기존 유저명" name="name" id="name">
+						<input type="text" class="form-control" value="${sessionScope.svo.name }" name="name" id="name">
 					</div>
 					<div>
 						<label class="profile_editor_label">소개</label>
@@ -139,8 +148,8 @@ $(document).ready(function(){
 				<div id="profile_pre_header">
 					<div>프로필 카드 미리보기</div>
 					<div id="profile_pre_header_card">
-						<span id="profile_pre_header_card_icon"></span>
-						<span id="profile_pre_header_card_name">아주 긴~~~ 유저명</span>
+						<span id="profile_pre_header_card_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_img})"></span>
+						<span id="profile_pre_header_card_name">${sessionScope.svo.name }</span>
 					</div>
 				</div>
 				<div id="profile_pre_middle"><a href="#"><i class="fas fa-check-circle"></i><span>2개의 프로젝트</span></a>의 창작자</div>

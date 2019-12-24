@@ -17,7 +17,7 @@
 	
 	<script>
 	$(document).ready(function(){
-
+		
 		$("div#payment_regist_editor").hide();
 		//$("div#registed_payment_list").hide();
 		$("button#payment_nav_list").click(function(){
@@ -66,14 +66,13 @@
 		
 		
 		$("#payment_regist_submit").click(function(){
-		
+			
 			if($('input[name=payment_method]').val() == "00"){
 				alert("결제수단선택");
 				return false;
 			}else if($('input[name=payment_method]').val() == "01"){
 				
-				if ($("#cardno1").val() != "") {
-					
+				if ($("#cardno1").val() != "") {					
 					var cardval = $("#cardno1").val();
 					var regExp = /^[0-9]+$/;
 					
@@ -175,7 +174,9 @@
 				}else if($("#card_birth").val()== ""){
 					alert("생년월일을 입력하세요.6자리");
 					return false;
-				}	
+				}
+				$("#card_number").val($("#cardno1").val()+$("#cardno2").val()+$("#cardno3").val()+$("#cardno4").val());
+				payment_regist_form.submit();
 			}else if($('input[name=payment_method]').val() == "02"){
 				
 				if ($("#account_number").val() != "") {
@@ -222,10 +223,10 @@
 				}else if($("#account_birth").val()== ""){
 					alert("형식에 맞지않습니다 숫자만 입력해주세요.생년월일6자리");
 					return false;
-				}	
+				}
+				$("#car	d_number").val($("#cardno1").val() + $("#cardno2").val() + $("#cardno3").val() + $("#cardno4").val());
+				payment_regist_form.submit();
 			}			
-			card_number.val($("#cardno1")+$("#cardno2")+$("#cardno3")+$("#cardno4"));
-			payment_regist_form.submit();
 		});
 		
 	/* 	
@@ -257,7 +258,7 @@
 </head>
 
 <body>
-<input type="hidden" name="card_number" id="card_number"> 
+
 	<jsp:include page="../header.jsp" />
 	
 	<div>
@@ -338,9 +339,8 @@
 					    	 <div class="dropdown-item" id="pay_card" >체크/신용카드</div>
 					     	 <div class="dropdown-item" id="pay_account">은행계좌</div>					  
 					    </div>
-
 					</div>
-					
+					<input type="hidden" name="card_number" id="card_number"> 
 					<input type="hidden" id="payment_method" name="payment_method" value="00">
 					<input type="hidden" name="payment_id" id="payment_id" value="${payment_id}">
 					<input type="hidden" name="email" value="${sessionScope.semail}">
@@ -429,7 +429,7 @@
 						</div>
 						
 						<div id="payment_regist_button">
-							<button id="payment_regist_submit" type="input">등록하기</button>
+							<button id="payment_regist_submit" type="button">등록하기</button>
 							<button id="payment_regist_reset" type="reset">취소하기</button>
 						</div>
 					</form>
