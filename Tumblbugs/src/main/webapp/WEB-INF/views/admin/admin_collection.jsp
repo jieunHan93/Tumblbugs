@@ -27,6 +27,13 @@
 		} );
 	}; 
 	$(document).ready(function(){
+		$.ajax({
+			url: "http://localhost:9090/tumblbugs/admin/collection_checkbox_system",
+			success:function(result){
+				//...
+			}
+		}); // ajax
+		
 		var table = $('#admin_collection_table').DataTable({
 			bPaginate: true, //페이징처리
 			pageLength :10,
