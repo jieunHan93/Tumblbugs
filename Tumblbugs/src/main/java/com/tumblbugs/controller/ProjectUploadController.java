@@ -239,10 +239,12 @@ public class ProjectUploadController {
 		
 		String session_id = (String)session.getAttribute("pj_id");
 		String semail = (String)session.getAttribute("semail");
+		MemberVO mvo = new MemberVO();
+		mvo = PJUploadDao.getMemberContent(semail);
 		
 		if(session_id != null){
 			ProjectVO vo = new ProjectVO();
-			MemberVO mvo = new MemberVO();
+			
 			ArrayList<GiftVO> glist = new ArrayList<GiftVO>();
 			vo = PJUploadDao.getProjectContent(session_id);
 			glist = PJUploadDao.getGiftContent(session_id);
@@ -253,14 +255,12 @@ public class ProjectUploadController {
 				gvo.setItemList(ilist);
 			}
 			
-			mvo = PJUploadDao.getMemberContent(semail);
-			
-			mv.addObject("mvo", mvo);
 			mv.addObject("vo", vo);
 			mv.addObject("glist", glist);
 		}
-		
+			mv.addObject("mvo", mvo);
 			mv.setViewName("/project/project_start_upload");
+			
 		return mv;
 	}
 	

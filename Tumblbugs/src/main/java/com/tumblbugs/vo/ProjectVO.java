@@ -6,10 +6,10 @@ public class ProjectVO {
 	
 	//project Å×ÀÌºí
 	String pj_id, pj_title, pj_stitle, pj_img, pj_simg, pj_summary, pj_category, pj_addr, pj_tag, email, pj_reg_date, pj_start_date,
-			pj_end_date, pj_class, pj_refund, pj_story, pj_account_type, pj_account_name, pj_bank, pj_check_yn, pj_reject, pj_success_yn, pj_price,
+			pj_end_date, pj_class, pj_refund, pj_story, pj_account_type, pj_account_name, pj_bank, pj_check_yn, pj_reject, pj_success_yn, pj_price, pj_account_number,
 			pj_email, pj_phone, today_date;
 	
-	int pj_account_id, pj_account_number, rno, total_price;
+	int pj_account_id, rno, total_price;
 	Double pj_extra_date;
 	
 	CommonsMultipartFile pj_cimg;
@@ -295,11 +295,11 @@ public class ProjectVO {
 		this.pj_account_id = pj_account_id;
 	}
 
-	public int getPj_account_number() {
+	public String getPj_account_number() {
 		return pj_account_number;
 	}
 
-	public void setPj_account_number(int pj_account_number) {
+	public void setPj_account_number(String pj_account_number) {
 		this.pj_account_number = pj_account_number;
 	}
 
