@@ -41,7 +41,32 @@ div#admin_sidebar>div#admin_sidebar_p1>p:nth-child(2) {margin-bottom: 20px;}
 	font-size: 15px;
 	width: 15px;
 }
+ul#p2_content_detail{
+	color:#ccc;
+	list-style: square;
+	padding-left:100px;
+	margin-bottom:5px;
+}
+ul#p2_content_detail li {
+	padding-bottom:13px;
+	font-size:15px;
+}
+ul#p2_content_detail li a{
+	text-decoration: none;
+	color:#ccc;
+}
+div#p2_content{
+	cursor: pointer;
+}
 </style>
+<script>
+	$(document).ready(function(){
+		$("ul#p2_content_detail").hide();
+		$(".project_menu").toggle(function(){
+			
+		});
+	});
+</script>
 </head>
 <body>
 	    <div id="admin_sidebar">
@@ -52,8 +77,13 @@ div#admin_sidebar>div#admin_sidebar_p1>p:nth-child(2) {margin-bottom: 20px;}
 				<a href="#"><p>로그아웃</p></a>
 			</div>
 			<div id="admin_sidebar_p2">
-				<div id="p2_content">
-					<i class="fas fa-project-diagram"></i><a href="http://localhost:9090/tumblbugs/admin/project"><p>프로젝트</p></a>
+				<div id="p2_content" class="project_menu">
+					<i class="fas fa-project-diagram"></i><p>프로젝트</p>
+					<!-- <i class="fas fa-project-diagram"></i><a href="http://localhost:9090/tumblbugs/admin/project"><p>프로젝트</p></a> -->
+						<ul id="p2_content_detail">
+							<li><a href="http://localhost:9090/tumblbugs/admin/project">관리</a></li>
+							<li><a href="#">배너 등록</a></li>
+						</ul>
 				</div>
 				<div id="p2_content">
 					<i class="fas fa-layer-group"></i><a href="http://localhost:9090/tumblbugs/admin/collection"><p>기획전</p></a>
