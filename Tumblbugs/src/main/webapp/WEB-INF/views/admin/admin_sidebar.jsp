@@ -62,8 +62,8 @@ div#p2_content{
 <script>
 	$(document).ready(function(){
 		$("ul#p2_content_detail").hide();
-		$(".project_menu").toggle(function(){
-			
+		$(".project_menu").click(function(){
+			$("ul#p2_content_detail").slideToggle("slow");
 		});
 	});
 </script>
