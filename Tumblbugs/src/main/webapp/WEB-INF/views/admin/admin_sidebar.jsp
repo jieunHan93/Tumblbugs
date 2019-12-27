@@ -45,7 +45,7 @@ ul#p2_content_detail{
 	color:#ccc;
 	list-style: square;
 	padding-left:100px;
-	margin-bottom:5px;
+	margin-bottom:0px;
 }
 ul#p2_content_detail li {
 	padding-bottom:13px;
@@ -82,7 +82,7 @@ div#p2_content{
 					<!-- <i class="fas fa-project-diagram"></i><a href="http://localhost:9090/tumblbugs/admin/project"><p>프로젝트</p></a> -->
 						<ul id="p2_content_detail">
 							<li><a href="http://localhost:9090/tumblbugs/admin/project">관리</a></li>
-							<li><a href="#">배너 등록</a></li>
+							<li><a href="http://localhost:9090/tumblbugs/admin/banner">배너 등록</a></li>
 						</ul>
 				</div>
 				<div id="p2_content">
