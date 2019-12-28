@@ -360,7 +360,7 @@ span#cofile_name{
     width: 400px;
     height: 29px;
     background-color: white;
-    margin-left: -210px;
+    margin-left: -190px;
     vertical-align: middle;
     color: gray;
     font-size:13px;
@@ -368,7 +368,7 @@ span#cofile_name{
     margin-bottom: -5px;
 }
 table#admin_collection_write_table textarea.collection_update{
-	width:547px;
+	width:545px;
 	height:100px;
 	resize: none;
 }
