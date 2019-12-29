@@ -141,7 +141,7 @@
 						<th>기획전 배경색</th>
 						<td>
 							<div class="demoPanel ui-widget ui-widget-content ui-corner-all" style="width:130px">
-								<input id="cpFocus" placeholder="배너색을 선택하세요" name="col_bcolor">
+								<input id="cpFocus" placeholder="배너색을 선택하세요" name="col_bcolor" autocomplete="off">
 							</div>
 						</td>
 						<th>달력 표시색</th>

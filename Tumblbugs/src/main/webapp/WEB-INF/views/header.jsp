@@ -241,7 +241,7 @@
 	        		<div>
 	        			<div id="modal_search_title">검색</div>
 	        			<div id="modal_search_box">
-        					<input type="text" id="searchKeyword" placeholder="프로젝트를 검색해주세요">
+        					<input type="text" id="searchKeyword" placeholder="프로젝트를 검색해주세요" autocomplete="off">
         					<button id="searchBtn" type="button">검색하기</button>
 	        			</div>
 	        		</div>
@@ -311,7 +311,7 @@
 	        <div class="modal-header">
 	          <div>
 	          	<img src="http://localhost:9090/tumblbugs/images/icon_search.png">
-	          	<input type="text" id="searchKeyword2" name="keyword" placeholder="검색어를 입력해주세요">
+	          	<input type="text" id="searchKeyword2" name="keyword" placeholder="검색어를 입력해주세요" autocomplete="off">
 	          </div>
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div>

@@ -129,15 +129,7 @@
 								var td_select = $(this).closest("tr").find("input.col_status").parent();
 								$(td_select).text(result);
 								/** 기획전 카운트 **/
-								$.ajax({
-									url: "http://localhost:9090/tumblbugs/admin/collection/count",
-									success:function(result){
-										var jsonObj = JSON.parse(result);
-										$("div#collection_count1").text(jsonObj.list[0].count1);
-										$("div#collection_count2").text(jsonObj.list[0].count2);
-										$("div#collection_count3").text(jsonObj.list[0].count3);
-									}
-								}); // ajax
+								collection_count();
 								table.ajax.reload(null, false);
 							} else {
 								alert("해당 기획전에 등록된 프로젝트가 없습니다.먼저 등록을 진행해주세요.");
@@ -156,16 +148,20 @@
 		if('${delete_result}' == "true"){
 			alert("기획전이 삭제되었습니다.");
 		}
+		collection_count();
+		
 		/** 기획전 카운트 **/
-		$.ajax({
-			url: "http://localhost:9090/tumblbugs/admin/collection/count",
-			success:function(result){
-				var jsonObj = JSON.parse(result);
-				$("div#collection_count1").text(jsonObj.list[0].count1);
-				$("div#collection_count2").text(jsonObj.list[0].count2);
-				$("div#collection_count3").text(jsonObj.list[0].count3);
-			}
-		}); // ajax
+		function collection_count(){
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/admin/collection/count",
+				success:function(result){
+					var jsonObj = JSON.parse(result);
+					$("div#collection_count1").text(jsonObj.list[0].count1);
+					$("div#collection_count2").text(jsonObj.list[0].count2);
+					$("div#collection_count3").text(jsonObj.list[0].count3);
+				}
+			}); // ajax
+		};
 	});
 	</script>
 	

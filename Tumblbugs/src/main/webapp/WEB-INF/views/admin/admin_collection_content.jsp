@@ -258,7 +258,7 @@
 				$.ajax({
 					url: "http://localhost:9090/tumblbugs/admin/collection/remove_project?col_id="+col_id+"&pj_id="+pj_id,
 					success:function(result){
-						alert("프로젝트를 제거했습니다");
+						alert("프로젝트를 제외했습니다");
 						table.ajax.reload(null,false);
 					}
 				});

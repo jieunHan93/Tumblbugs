@@ -268,7 +268,7 @@
 	<script type="text/html" id="photo-item-template">
 	<div class="scroll-card">
 	<input type="hidden" id="project_total_count" value="{{dbCount}}">
-		<a href="http://localhost:9090/tumblbugs/project_content?pj_id={{pj_id}}">
+		<a href="http://localhost:9090/tumblbugs/project/{{pj_addr}}">
 			<img id="product_img" src="http://localhost:9090/tumblbugs/upload/{{pj_simg}}">
 			<div class="slick-card-content">
 				<div class="slick-card-content-title">
