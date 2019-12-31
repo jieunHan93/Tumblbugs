@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.banner">
+	<insert id="insert" parameterType="com.tumblbugs.vo.BannerVO">
+		INSERT INTO TUM_BANNER VALUES('BA'||LPAD(TUM_BANNER_SEQU.NEXTVAL, 5, '0'), #{ba_title}, #{ba_content}, #{pj_addr}, #{ba_img}, #{ba_simg},
+		#{ba_startdate}, #{ba_enddate},'', '0', '대기중', SYSDATE)
+	</insert>
+	
+	<select id="pj_addr_check" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(*) FROM TUM_PROJECT WHERE PJ_ADDR = #{pj_addr}
+	</select>
+	
+	<select id="list" resultType="com.tumblbugs.vo.BannerVO">
+		SELECT ROWNUM RNO, BA_ID, BA_TITLE, BA_SIMG, TO_CHAR(BA_STARTDATE, 'YYYY/MM/DD') BA_STARTDATE,
+		 TO_CHAR(BA_ENDDATE, 'YYYY/MM/DD') BA_ENDDATE, BA_REGDATE, BA_CONTROLL, BA_STATUS FROM
+		(SELECT BA_ID, BA_TITLE, BA_SIMG, BA_STARTDATE, BA_ENDDATE, BA_REGDATE, BA_CONTROLL, BA_STATUS FROM TUM_BANNER
+		ORDER BY CASE WHEN BA_STATUS ='진행중' THEN 0 WHEN BA_STATUS='대기중' THEN 1 ELSE 2 END ASC, BA_REGDATE DESC)
+	</select>
+	
+	<select id="content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.BannerVO">
+		SELECT BA_ID, BA_TITLE, BA_IMG, BA_SIMG, BA_CONTENT, PJ_ADDR,
+		TO_CHAR(BA_STARTDATE, 'YYYY-MM-DD') BA_STARTDATE, TO_CHAR(BA_ENDDATE, 'YYYY-MM-DD') BA_ENDDATE 
+		FROM TUM_BANNER WHERE BA_ID=#{ba_id}
+	</select>
+</mapper>

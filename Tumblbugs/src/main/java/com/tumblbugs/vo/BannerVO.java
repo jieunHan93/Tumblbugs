@@ -15,10 +15,29 @@ public class BannerVO {
 	BA_CONTROLL  NOT NULL VARCHAR2(1)    
 	BA_STATUS    NOT NULL VARCHAR2(100)  */
 	
-	String ba_id, ba_content, pj_id, ba_img, ba_simg, ba_startdate, ba_enddate, ba_controll, ba_status;
-	int ba_order;
+	String ba_id, ba_title, ba_content, pj_addr, ba_img, ba_simg, ba_startdate, ba_enddate, ba_controll, ba_status, ba_regdate;
+	int rno, ba_order;
 	CommonsMultipartFile ba_cimg;
 	
+	
+	public String getBa_regdate() {
+		return ba_regdate;
+	}
+	public void setBa_regdate(String ba_regdate) {
+		this.ba_regdate = ba_regdate;
+	}
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
+	public String getBa_title() {
+		return ba_title;
+	}
+	public void setBa_title(String ba_title) {
+		this.ba_title = ba_title;
+	}
 	public CommonsMultipartFile getBa_cimg() {
 		return ba_cimg;
 	}
@@ -37,11 +56,11 @@ public class BannerVO {
 	public void setBa_content(String ba_content) {
 		this.ba_content = ba_content;
 	}
-	public String getPj_id() {
-		return pj_id;
+	public String getPj_addr() {
+		return pj_addr;
 	}
-	public void setPj_id(String pj_id) {
-		this.pj_id = pj_id;
+	public void setPj_addr(String pj_addr) {
+		this.pj_addr = pj_addr;
 	}
 	public String getBa_img() {
 		return ba_img;
