@@ -125,7 +125,6 @@
 						url: "http://localhost:9090/tumblbugs/admin/collection_checkbox?col_id="+col_id+"&col_controll="+col_controll+"&col_startdate="+startdate+"&col_enddate="+enddate,
 						success:function(result){
 							if(result != "fail"){
-								$(this).toggleClass("checked");
 								var td_select = $(this).closest("tr").find("input.col_status").parent();
 								$(td_select).text(result);
 								/** 기획전 카운트 **/

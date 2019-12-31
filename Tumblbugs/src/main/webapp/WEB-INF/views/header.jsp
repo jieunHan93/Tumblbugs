@@ -77,7 +77,7 @@
 	        	searchProject(keyword);
 	        }
 	    });
-		
+	    
 	    /** 자동완성 **/
 	    $("input#searchKeyword2").keyup(function (e) {
 	    	console.log($("input#searchKeyword2").val().length);
