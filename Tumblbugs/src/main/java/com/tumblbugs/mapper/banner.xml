@@ -13,15 +13,33 @@
 	</select>
 	
 	<select id="list" resultType="com.tumblbugs.vo.BannerVO">
-		SELECT ROWNUM RNO, BA_ID, BA_TITLE, BA_SIMG, TO_CHAR(BA_STARTDATE, 'YYYY/MM/DD') BA_STARTDATE,
-		 TO_CHAR(BA_ENDDATE, 'YYYY/MM/DD') BA_ENDDATE, BA_REGDATE, BA_CONTROLL, BA_STATUS FROM
+		SELECT ROWNUM RNO, BA_ID, BA_TITLE, BA_SIMG, TO_CHAR(BA_STARTDATE, 'YYYY-MM-DD') BA_STARTDATE,
+		 TO_CHAR(BA_ENDDATE, 'YYYY-MM-DD') BA_ENDDATE, BA_REGDATE, BA_CONTROLL, BA_STATUS FROM
 		(SELECT BA_ID, BA_TITLE, BA_SIMG, BA_STARTDATE, BA_ENDDATE, BA_REGDATE, BA_CONTROLL, BA_STATUS FROM TUM_BANNER
 		ORDER BY CASE WHEN BA_STATUS ='진행중' THEN 0 WHEN BA_STATUS='대기중' THEN 1 ELSE 2 END ASC, BA_REGDATE DESC)
 	</select>
 	
 	<select id="content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.BannerVO">
-		SELECT BA_ID, BA_TITLE, BA_IMG, BA_SIMG, BA_CONTENT, PJ_ADDR,
+		SELECT BA_ID, BA_TITLE, BA_IMG, BA_SIMG, BA_CONTENT, PJ_ADDR, BA_STATUS, BA_CONTROLL,
 		TO_CHAR(BA_STARTDATE, 'YYYY-MM-DD') BA_STARTDATE, TO_CHAR(BA_ENDDATE, 'YYYY-MM-DD') BA_ENDDATE 
 		FROM TUM_BANNER WHERE BA_ID=#{ba_id}
 	</select>
+	
+	<update id="update" parameterType="com.tumblbugs.vo.BannerVO">
+		UPDATE TUM_BANNER SET BA_TITLE=#{ba_title}, BA_CONTENT=#{ba_content}, PJ_ADDR=#{pj_addr}, BA_STARTDATE=#{ba_startdate},
+		BA_ENDDATE=#{ba_enddate}, BA_IMG=#{ba_img}, BA_SIMG=#{ba_simg} WHERE BA_ID=#{ba_id}
+	</update>
+	
+	<update id="updatenofile" parameterType="com.tumblbugs.vo.BannerVO">
+		UPDATE TUM_BANNER SET BA_TITLE=#{ba_title}, BA_CONTENT=#{ba_content}, PJ_ADDR=#{pj_addr}, BA_STARTDATE=#{ba_startdate},
+		BA_ENDDATE=#{ba_enddate} WHERE BA_ID=#{ba_id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM TUM_BANNER WHERE BA_ID=#{ba_id}
+	</delete>
+	
+		<update id="checkbox" parameterType="map"> 
+		UPDATE TUM_BANNER SET BA_CONTROLL =#{ba_controll}, BA_STATUS=#{ba_status} WHERE BA_ID = #{ba_id}
+	</update>
 </mapper>

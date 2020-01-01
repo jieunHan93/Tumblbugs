@@ -1,8 +1,9 @@
 package com.tumblbugs.controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,18 +20,57 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.tumblbugs.dao.BannerDAO;
 import com.tumblbugs.vo.BannerVO;
+import com.tumblbugs.vo.CollectionVO;
 
 @Controller
 public class AdminBannerController {
 	
 	@Autowired
 	private BannerDAO bannerDAO;
-
+	
 	@RequestMapping(value="/admin/banner", method=RequestMethod.GET)
 	public ModelAndView admin_banner() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/admin_banner");
 		return mv;
+	}
+	
+	/** 기간에 따른 status 설정 **/
+	public String getResultStatus(BannerVO vo) throws Exception {
+		String ba_status = "";		String status="";	boolean result = false;
+		int ba_controll = Integer.valueOf(vo.getBa_controll());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentTime = new Date();
+		String current = format.format(currentTime);
+		Date today = format.parse(current);		//현재날짜
+		
+		Date start = format.parse(vo.getBa_startdate());	//기획전 시작일
+		Date end = format.parse(vo.getBa_enddate());		// 기획전 종료일
+		
+		int result1 = today.compareTo(start);		// today>start = 1, today==start = 0, today < start = -1
+		int result2 = today.compareTo(end);			// today>end = 1, today==end = 0, today < end = -1
+		
+		//에러찾자
+		if((result1 == 0 || result1 == 1) && (result2 == -1 || result2 == 0) && ba_controll == 1) {
+			ba_status = "진행중";
+		} else if(result2 == 1 ) {
+			ba_status = "종료";
+			vo.setBa_controll("0");
+		} else {
+			ba_status = "대기중";
+			vo.setBa_controll("0");
+		}
+		result = bannerDAO.getResultCheckbox(vo.getBa_id(), vo.getBa_controll(), ba_status);
+		if(result) {
+			status = ba_status;
+		}
+		return status;
+	}
+	
+	@RequestMapping(value="/admin/banner_checkbox", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String getResultCheckBoxUpdate(BannerVO vo) throws Exception {
+		return getResultStatus(vo);
 	}
 	
 	/** 배너 리스트 **/
@@ -118,6 +158,8 @@ public class AdminBannerController {
 		obj.addProperty("ba_simg", vo.getBa_simg());
 		obj.addProperty("ba_startdate", vo.getBa_startdate());
 		obj.addProperty("ba_enddate", vo.getBa_enddate());
+		obj.addProperty("ba_status", vo.getBa_status());
+		obj.addProperty("ba_controll", vo.getBa_controll());
 		jlist.add(obj);
 		
 		jdata.add("data", jlist);
@@ -132,6 +174,7 @@ public class AdminBannerController {
 		String ba_cimg = vo.getBa_cimg().getOriginalFilename();
 		String ba_simg = "";
 		String result = "";
+		boolean confirm = false;
 		
 		if(ba_cimg != "" && ba_cimg != null) {
 			UUID uuid = UUID.randomUUID();
@@ -141,7 +184,8 @@ public class AdminBannerController {
 			vo.setBa_img(ba_img);
 			vo.setBa_simg(ba_simg);
 		}
-		boolean confirm = bannerDAO.getResultUpdate(vo);
+		confirm = bannerDAO.getResultUpdate(vo);
+		getResultStatus(vo);
 		if(confirm) {
 			if(ba_cimg != "" && ba_cimg != null) {
 				String root_path = request.getSession().getServletContext().getRealPath("/");
@@ -158,7 +202,21 @@ public class AdminBannerController {
 		} else {
 			result = "fail";
 		}
-		
 		return result;
+	}
+	
+	/** 배너 삭제 **/
+	@RequestMapping(value="/admin/banner_delete", method=RequestMethod.GET)
+	@ResponseBody
+	public String banner_delete(String ba_id, String ba_simg, HttpServletRequest request) {
+		boolean result=false;
+		result = bannerDAO.getResultDelete(ba_id);
+		if(result) {
+			String root_path = request.getSession().getServletContext().getRealPath("/");
+			String attach_path="\\resources\\upload\\";
+			File file = new File(root_path+attach_path+ba_simg);
+			if(file.exists()) file.delete();
+		}
+		return "";
 	}
 }

@@ -240,7 +240,7 @@ public class AdminCollectionController {
 				File file = new File(root_path+attach_path+col_simg);
 				vo.getCofile().transferTo(file);
 				
-				if(vo.getCol_simg() != "" && vo.getCol_simg() != null) {
+				if(del_img != "" && del_img != null) {
 					File dfile = new File(root_path+attach_path+del_img);
 					if(dfile.exists()) dfile.delete();
 				}
