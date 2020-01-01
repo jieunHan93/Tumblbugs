@@ -292,7 +292,7 @@ $(document).ready(function(){
         columns: [
             {"data": "rno"}, 
             {"data":  function (data, type, dataToSet) {
-            	return data.ba_title + '<input type="hidden" id="ba_id" value="'+data.ba_id+'"><input type="hidden" name="ba_order" class="ba_order">';
+            	return data.ba_title + '<input type="hidden" id="ba_id" name="ba_id" value="'+data.ba_id+'"><input type="hidden" name="ba_order" class="ba_order">';
         		}
             },
             {"data": function (data, type, dataToSet) {
@@ -301,28 +301,27 @@ $(document).ready(function(){
             },
             {"data": function (data, type, dataToSet) {
             	return data.ba_startdate+"~ "+ data.ba_enddate +
-				'<input type="hidden" class="ba_startdate" value="'+data.ba_startdate+'">'+
-				'<input type="hidden" class="ba_enddate" value="'+data.ba_enddate+'">';
+				'<input type="hidden" name="ba_startdate" id="ba_startdate" value="'+data.ba_startdate+'">'+
+				'<input type="hidden" name="ba_enddate" id="ba_enddate" value="'+data.ba_enddate+'">';
             	}
             }, 
             {"data": function (data, type, dataToSet) {
             	var str = "";
 	            	if(data.ba_controll == '1'){
-	            		str='<input type="checkbox" id="switch_'+data.ba_id+'" switch="none" checked /><label class="switchBtn checked" for="switch_'+data.ba_id+'" data-on-label="On" data-off-label="Off"></label>';
+	            		str='<input type="checkbox" name="ba_controll" id="switch_'+data.ba_id+'" switch="none" checked /><label class="switchBtn checked" for="switch_'+data.ba_id+'" data-on-label="On" data-off-label="Off"></label>';
 	            	} else if(data.ba_controll == '0' && data.ba_status == '종료'){
-	            		str='<input type="checkbox" id="switch_'+data.ba_id+'" switch="none" disabled/><label class="switchBtn disabled" for="switch_'+data.ba_id+'" data-on-label="On" data-off-label="Off"></label>';
+	            		str='<input type="checkbox" name="ba_controll" id="switch_'+data.ba_id+'" switch="none" disabled/><label class="switchBtn disabled" for="switch_'+data.ba_id+'" data-on-label="On" data-off-label="Off"></label>';
 	            	} else {
-	            		str='<input type="checkbox" id="switch_'+data.ba_id+'" switch="none" /><label class="switchBtn " for="switch_'+data.ba_id+'" data-on-label="On" data-off-label="Off"></label>';
+	            		str='<input type="checkbox" name="ba_controll" id="switch_'+data.ba_id+'" switch="none" /><label class="switchBtn " for="switch_'+data.ba_id+'" data-on-label="On" data-off-label="Off"></label>';
 	            	}
 	            	return str;
                 }
             },
             {"data" : function (data, type, dataToSet) {
-            	return data.ba_status + "<input type='hidden' id='ba_status'>";
+            	return data.ba_status + "<input type='hidden' name='ba_status' value='"+data.ba_status+"'><input type='hidden' name='ba_controll' value='"+data.ba_controll+"'>";
             	}
             }
         ],
-       	
        	
         "language": {
             "emptyTable": "데이터가 없어요.",
@@ -346,7 +345,7 @@ $(document).ready(function(){
             { "orderDataType": "dom-checkbox", "targets": [4] },
         ],
         /** 리스트 로딩 후 sortable을 위한 클래스 부여 **/
-        "initComplete": function(){
+        "drawCallback": function(){
         	$(".switchBtn.checked").each(function(){
     			$(this).closest("tr").addClass("switchon");
     		});
@@ -377,25 +376,25 @@ $(document).ready(function(){
 	$("#admin_banner_table tbody").on('click', 'label.switchBtn', function(){
 		$(this).toggleClass("checked");
 		if($(this).hasClass("disabled") === false) {
-			var col_id = $(this).closest("tr").find("input#col_id").val();
+			var ba_id = $(this).closest("tr").find("input#ba_id").val();
 			var checkbox = $(this).parent().find("input:checkbox");
-			var startdate = $(this).closest("tr").find("input.col_startdate").val();
-			var enddate = $(this).closest("tr").find("input.col_enddate").val();
-			var col_controll = "";
-			//alert("col_id:" + col_id + "checkbox:"+checkbox +"startdate:" + startdate +"enddate:" +enddate);
+			var startdate = $(this).closest("tr").find("input#ba_startdate").val();
+			var enddate = $(this).closest("tr").find("input#ba_enddate").val();
+			var ba_controll = "";
+			//alert("ba_id:" + ba_id + "checkbox:"+checkbox +"startdate:" + startdate +"enddate:" +enddate);
 			
 	        if($(checkbox).is(":checked")){
 	        	//alert("체크박스 체크 해제!");
-	            col_controll="0";
+	            ba_controll="0";
 	        }else{
 	            //alert("체크박스 체크했음!");
-	            col_controll="1";
+	            ba_controll="1";
 	        }
-	       	/* $.ajax({
-					url: "http://localhost:9090/tumblbugs/admin/collection_checkbox?col_id="+col_id+"&col_controll="+col_controll+"&col_startdate="+startdate+"&col_enddate="+enddate,
+	       	$.ajax({
+					url: "http://localhost:9090/tumblbugs/admin/banner_checkbox?ba_id="+ba_id+"&ba_controll="+ba_controll+"&ba_startdate="+startdate+"&ba_enddate="+enddate,
 					success:function(result){
 						if(result != "fail"){
-							var td_select = $(this).closest("tr").find("input.col_status").parent();
+							var td_select = $(this).closest("tr").find("input.ba_status").parent();
 							$(td_select).text(result);
 							table.ajax.reload(null, false);
 						} else {
@@ -407,7 +406,6 @@ $(document).ready(function(){
 						alert("시스템 관리자에게 문의하세요.");
 					}
 			}); // ajax
-			*/
 		} else {
 			alert("기획전 기간이 지나 종료되었습니다.");
 		}
@@ -419,11 +417,11 @@ $(document).ready(function(){
 	});
 	
 	/** 추가 validation check **/
-	var ba_cimg = "";
-	 $("#ba_cimg").change(function(){
+	var insert_ba_cimg = "";
+	 $("#add_banner_table #ba_cimg").change(function(){
 		//FileReader
 		if(window.FileReader){
-			ba_cimg = $(this)[0].files[0].name;
+			insert_ba_cimg = $(this)[0].files[0].name;
 		}
 	});
 	 // 시작일 종료일 체크
@@ -460,7 +458,7 @@ $(document).ready(function(){
 		} else if($("#add_banner_table #ba_enddate").val() == ""){
 			alert("프로젝트 종료일을 입력하세요");
 			$("#add_banner_table #ba_startdate").focus();
-		} else if(ba_cimg == ""){
+		} else if(insert_ba_cimg == ""){
 			alert("배너 이미지를 선택하세요");
 		} else {
 			var options = {
@@ -499,7 +497,7 @@ $(document).ready(function(){
 	
 	
 	/** 상세 정보 불러오기 **/
-	$("#admin_banner_table tbody").on('click','tr',function() {
+	$("#admin_banner_table tbody").on('click','tr>td:nth-child(2)',function() {
 		var ba_id = $(this).find("input#ba_id").val();
 		if($("div#admin_banner_detail_box").css("display") == 'none'){
 			$("div#admin_banner_detail_box").fadeIn("200");
@@ -508,8 +506,10 @@ $(document).ready(function(){
 			url: "http://localhost:9090/tumblbugs/admin/banner_content?ba_id="+ba_id,
 			success:function(result){
 				var obj = JSON.parse(result);
-				$("table#banner_update_table").find("input#ba_id").val(obj.data[0].ba_id);
-				$("table#banner_update_table").find("input#del_simg").val(obj.data[0].ba_simg);
+				$("form#bannerUpdate").find("input#ba_id").val(obj.data[0].ba_id);
+				$("form#bannerUpdate").find("input#del_simg").val(obj.data[0].ba_simg);
+				$("form#bannerUpdate").find("input#ba_status").val(obj.data[0].ba_status);
+				$("form#bannerUpdate").find("input#ba_controll").val(obj.data[0].ba_controll);
 				$("table#banner_update_table").find("input#ba_title").val(obj.data[0].ba_title);
 				$("table#banner_update_table").find("input#ba_content").val(obj.data[0].ba_content);
 				$("table#banner_update_table").find("input#pj_addr").val(obj.data[0].pj_addr);
@@ -529,9 +529,11 @@ $(document).ready(function(){
 		$("div#admin_banner_detail_box").fadeOut("200");
 	});
 	/** 새로운 이미지 선택 **/
+	var update_ba_cimg = "";
 	$("#banner_update_table #ba_cimg").change(function(){
 		if(window.FileReader){
-			$("#banner_update_table span#ba_img").text("").text($(this)[0].files[0].name);
+			update_ba_cimg = $(this)[0].files[0].name;
+			$("#banner_update_table span#ba_img").text("").text(update_ba_cimg);
 			readInputFile($(this)[0]);
 		}
 	});
@@ -540,7 +542,6 @@ $(document).ready(function(){
        if(input.files && input.files[0]) {
            var reader = new FileReader();
            reader.onload = function (e) {
-               console.log(e.target.result);
                $('#preview_img').css("background-image", 'url(\"' + e.target.result + '\")');
            }
            reader.readAsDataURL(input.files[0]);
@@ -561,30 +562,28 @@ $(document).ready(function(){
 		if($("#banner_update_table #ba_title").val() == ""){
 			alert("배너 제목을 입력하세요");
 			$("#banner_update_table #ba_title").focus();
-		} else if($("#add_banner_table #ba_content").val() == ""){
+		} else if($("#banner_update_table #ba_content").val() == ""){
 			alert("배너 내용을 입력하세요");
 			$("#banner_update_table #ba_content").focus();
 		} else if($("#banner_update_table #pj_addr").val() == ""){
 			alert("프로젝트 아이디를 입력하세요");
 			$("#banner_update_table #pj_addr").focus();
-		} else if($("#add_banner_table #ba_startdate").val() == ""){
+		} else if($("#banner_update_table #ba_startdate").val() == ""){
 			alert("프로젝트 시작일을 입력하세요");
 			$("#banner_update_table #ba_startdate").focus();
 		} else if($("#banner_update_table #ba_enddate").val() == ""){
 			alert("프로젝트 종료일을 입력하세요");
 			$("#banner_update_table #ba_startdate").focus();
-		} else if(ba_cimg == ""){
-			alert("배너 이미지를 선택하세요");
 		} else {
 			var options = {
 				type : "POST",
 				success : function(data) {
 					// AJAX 성공
 					if(data="success"){
-						alert("정보를 저장했습니다.");
+						alert("정보 수정을 완료해습니다");
 						table.ajax.reload(null, false);
 					} else {
-						alert("정보 저장을 실패했습니다.");
+						alert("정보 수정을 실패했습니다.");
 					}
 				}
 			}
@@ -625,6 +624,22 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+	/** 배너 삭제 **/
+	$("button#delete_banner_button").click(function(){
+		if(confirm('해당 배너를 삭제하시겠습니까?')){
+			var ba_id = $("form#bannerUpdate").find("input#ba_id").val();
+			var ba_simg =$("form#bannerUpdate").find("input#del_simg").val();
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/admin/banner_delete?ba_id="+ba_id+"&ba_simg="+ba_simg,
+				success:function(result){
+					$("#bannerUpdate")[0].reset();
+					$('#admin_banner_detail_box').css("display", "none");
+					table.ajax.reload(null,false);
+				}
+			});
+		}
+	});
 });
 </script>
 </head>
@@ -640,7 +655,7 @@ $(document).ready(function(){
 				<div>
 					<span id="banner_detail_exit"><i class="fas fa-times"></i></span>
 					<form action="http://localhost:9090/tumblbugs/admin/banner_update" method="post" enctype="multipart/form-data" id="bannerUpdate">
-						<table id="banner_update_table">
+						<table id="banner_update_table">											
 							<tr>
 								<th>배너 제목</th>
 								<td><input type="text" name="ba_title" id="ba_title" autocomplete="off" placeholder="줄바꿈은 , 로 구분해주세요"></td>
@@ -667,8 +682,10 @@ $(document).ready(function(){
 									<span id="ba_img"></span>
 								</td>						
 						</table>
-						<input type="hidden" id="ba_id" name="ba_id" value="">
-						<input type="hidden" id="del_simg" name="del_simg" value="">
+						<input type="hidden" id="ba_id" name="ba_id">
+						<input type="hidden" id="del_simg" name="del_simg">
+						<input type="hidden" id="ba_status" name="ba_status">
+						<input type="hidden" id="ba_controll" name="ba_controll">
 						<div id="update_from_button">
 							<button type="button" id="update_banner_button"><i class="fas fa-save" aria-hidden="true"></i>수정</button>
 							<button type="button" id="delete_banner_button"><i class="fas fa-trash-alt" aria-hidden="true"></i>삭제</button>
@@ -735,7 +752,6 @@ $(document).ready(function(){
 								<td><input type="file" id="ba_cimg" name="ba_cimg"></td>
 							</tr>
 						</table>
-						
 						<button type="button" id="add_banner_write"><i class="fas fa-save" aria-hidden="true"></i>저장</button>
 					</form>
 				</div>
