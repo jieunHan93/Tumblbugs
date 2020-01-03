@@ -21,9 +21,13 @@
 							<i class="far fa-hand-point-right"></i> 이메일 주소를 인증해주세요.
 						</c:if>
 					</div>
-					<div id="title_write"><i class="far fa-edit"></i>
-						<c:if test="${vo.pj_email == null}"> 입력하기</c:if>
-						<c:if test="${vo.pj_email != null}"> 수정하기</c:if>
+					<div id="title_write">
+						<c:if test="${vo.pj_email == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+						<c:if test="${vo.pj_email != null}">
+							<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+								<i class="far fa-edit"></i> 수정하기
+							</c:if>
+						</c:if>
 					</div>
 				</div>
 				<div id="content_m4_c1_d" class="upload_detail">
@@ -32,8 +36,13 @@
 							프로젝트 관련 중요 안내사항이 모두 이메일로 전달되므로 평소 자주 확인하는 이메일을 입력하시는 것이 좋습니다.</div>	
 					<div><input type="text" id="m4_c1_i1" placeholder="gildong@tumblbugs.com" class="m4_check" value="${vo.pj_email }"/></div>
 					<div class="content_btn">
-						<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-						<button type="button" class="up_save"><i class="fas fa-check"></i> 인증하기</button>
+						<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+							<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+							<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+						</c:if>
+						<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+							<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+						</c:if>
 					</div>
 				</div>	
 			</div>
@@ -50,9 +59,13 @@
 							<i class="far fa-hand-point-right"></i> 휴대폰 번호를 인증해주세요.
 						</c:if>
 					</div>	
-					<div id="title_write"><i class="far fa-edit"></i>
-						<c:if test="${vo.pj_phone == null}"> 입력하기</c:if>
-						<c:if test="${vo.pj_phone != null}"> 수정하기</c:if>
+					<div id="title_write">
+						<c:if test="${vo.pj_phone == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+						<c:if test="${vo.pj_phone != null}">
+							<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+								<i class="far fa-edit"></i> 수정하기
+							</c:if>
+						</c:if>
 					</div>
 				</div>
 				<div id="content_m4_c2_d" class="upload_detail">
@@ -62,8 +75,13 @@
 						<input type="text" id="m4_c2_i1" placeholder="010-****-****" class="m4_check" value="${vo.pj_phone}"/>
 					</div>
 					<div class="content_btn">
-						<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-						<button type="button" class="up_save"><i class="fas fa-check"></i> 인증하기</button>
+						<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+							<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+							<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+						</c:if>
+						<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+							<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+						</c:if>
 					</div>
 				</div>	
 			</div>
@@ -82,11 +100,13 @@
 							<i class="far fa-hand-point-right"></i> 본인 인증 후 입금 계좌 등록이 가능합니다.
 						</c:if>
 					</div>
-					<div id="title_write"><i class="far fa-edit"></i>
-						<c:if test="${vo.pj_account_type == null || vo.pj_account_id == null || 
-						vo.pj_account_name == null || vo.pj_bank == null || vo.pj_account_number == null }"> 입력하기</c:if>
-						<c:if test="${vo.pj_account_type != null && vo.pj_account_id != null && 
-						vo.pj_account_name != null && vo.pj_bank != null && vo.pj_account_number != null }"> 수정하기</c:if>
+					<div id="title_write">
+						<c:if test="${vo.pj_account_type == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+						<c:if test="${vo.pj_account_type != null}">
+							<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+								<i class="far fa-edit"></i> 수정하기
+							</c:if>
+						</c:if>
 					</div>	
 				</div>
 				<div id="content_m4_c3_d" class="upload_detail">
@@ -193,8 +213,13 @@
 						</div>
 					</div>
 					<div class="content_btn">
+						<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
 							<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-						<button type="button" class="up_save" id="m4_c3_save"><i class="fas fa-check"></i> 인증하기</button>
+							<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+						</c:if>
+						<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+							<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+						</c:if>
 					</div>
 				</div>	
 			</div>

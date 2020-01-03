@@ -40,7 +40,7 @@
 						appendData = "<div class='list_none'><i class='fas fa-search'></i><div>검색 결과가 없습니다.</div></div>";
 					} else {
 						for(i=0;i<obj.flist.length;i++) {
-							appendData += "<a href='http://localhost:9090/tumblbugs/myfunding/detail?funding_id="+ obj.flist[i].funding_id +"'>"
+							appendData += "<a href='http://localhost:9090/tumblbugs/myfunding/detail/"+ obj.flist[i].funding_id +"'>"
 												+ "<table>"
 													+ "<tr>"
 														+ "<td colspan='2'><b>" + obj.flist[i].funding_date + "</b></td>"
@@ -152,7 +152,7 @@
 		jQuery('#ampaginationsm').on('am.pagination.change',function(e){
 		   jQuery('.showlabelsm').text('The selected page no: '+e.page);
 		   if('${category}' != null) {
-			   $(location).attr('href', "http://localhost:9090/tumblbugs/myfunding?category=" + '${category}' + "&page="+e.page);
+			   $(location).attr('href', "http://localhost:9090/tumblbugs/myfunding/" + '${category}' + "?page="+e.page);
 		   } else {
 			   $(location).attr('href', "http://localhost:9090/tumblbugs/myfunding?page="+e.page);
 		   }
@@ -171,23 +171,23 @@
 			<div id="alertMessage">후원을 취소하셨습니다.</div>
 		</div>
 		<section class="page_title">
-			<span><img src="http://localhost:9090/tumblbugs/upload/${member.profile_simg }" id="img1"></span>
+			<span style="background-image: url('http://localhost:9090/tumblbugs/upload/${member.profile_simg }')"></span>
 			<div>${member.name }님의 후원 현황</div>
 		</section>
 		<section class="page_content">
 			<article id="page_content_tab">
 				<nav>
-					<a href="http://localhost:9090/tumblbugs/myfunding?category=all">
+					<a href="http://localhost:9090/tumblbugs/myfunding/all">
 						<li id="all">
 							<span>모두 보기</span>
 							<span id="list_count">${fundingCount.totalCount }</span>
 					</li></a>
-					<a href="http://localhost:9090/tumblbugs/myfunding?category=ongoing">
+					<a href="http://localhost:9090/tumblbugs/myfunding/ongoing">
 						<li id="ongoing">
 							<span>펀딩 진행중</span>
 							<span id="list_count">${fundingCount.ongoingCount }</span>
 						</li></a>
-					<a href="http://localhost:9090/tumblbugs/myfunding?category=payment">
+					<a href="http://localhost:9090/tumblbugs/myfunding/payment">
 						<li id="payment">
 							<span>결제 완료</span>
 							<span id="list_count">${fundingCount.paymentCount }</span>
@@ -218,7 +218,7 @@
 						<c:when test="${fn:length(flist) eq 0}">
 							<div class="list_none">
 								<c:choose>
-									<c:when test="${category eq 'all'}">
+									<c:when test="${category eq 'all' or (empty category)}">
 										<i class="far fa-meh"></i>
 										<div>후원 내역이 없습니다.</div>
 									</c:when>
@@ -235,7 +235,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${flist}" var="fvo">
-								<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }">
+								<a href="http://localhost:9090/tumblbugs/myfunding/detail/${fvo.funding_id }">
 									<table>
 										<tr>
 											<td colspan="2"><b>${fvo.funding_date }</b></td>

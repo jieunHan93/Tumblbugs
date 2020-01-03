@@ -344,7 +344,7 @@
 	          <div id="modal_space"></div>
 	          <a href="http://localhost:9090/tumblbugs/mypage/message"><div>메시지</div></a>
 	          <a href="http://localhost:9090/tumblbugs/myfunding"><div>내 후원현황</div></a>
-	          <a href="http://localhost:9090/tumblbugs/myproject"><div>내가 만든 프로젝트</div></a>
+	          <a href="http://localhost:9090/tumblbugs/projects/${sessionScope.svo.member_id}"><div>내가 만든 프로젝트</div></a>
 	          <div id="modal_space"></div>
 	          <a href="http://localhost:9090/tumblbugs/mypage/profile"><div>프로필 정보</div></a>
 	          <a href="http://localhost:9090/tumblbugs/mypage/payment"><div>지불 정보 설정</div></a>

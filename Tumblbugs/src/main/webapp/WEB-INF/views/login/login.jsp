@@ -285,8 +285,7 @@ $(document).ready(function(){
 				<b id="b3"></b> 
 					<form name="login_proc" action="/tumblbugs/login_proc" method="POST" class="login" id="login">
 						<ul id="ul1">
-							<span id="login_success">로그인 가능한 아이디입니다.</span>
-							<span id="login_fail">존재하지않는 아이디입니다.</span>
+							
 							<li id="li1">
 								<input type="text" name="email" id="email" placeholder="이메일주소를입력하세요.">
 							</li>
@@ -298,6 +297,8 @@ $(document).ready(function(){
 							</li>							
 							<span id="pwcheck">비밀번호를 입력해주세요.</span>
 							<span id="pwcheckform">비밀번호형식을 맞춰주세요. 4자리 이상</span>
+							<span id="login_success">로그인 가능한 아이디입니다.</span>
+							<span id="login_fail">존재하지않는 아이디입니다.</span>
 							<li>
 								<button type="submit" id="btnlogin">로그인</button>
 							</li>
@@ -311,7 +312,7 @@ $(document).ready(function(){
 					</div>
 						
 					<div id="div3">
-						<a href="http://localhost:9090/tumblbugs/idfound">혹시 비밀번호를 잊으셨나요?</a>
+						<a href="http://localhost:9090/tumblbugs/found">혹시 비밀번호를 잊으셨나요?</a>
 					</div>
 					
 				</div>

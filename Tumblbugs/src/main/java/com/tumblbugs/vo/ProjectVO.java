@@ -6,36 +6,44 @@ public class ProjectVO {
 	
 	//project 테이블
 	String pj_id, pj_title, pj_stitle, pj_img, pj_simg, pj_summary, pj_category, pj_addr, pj_tag, email, pj_reg_date, pj_start_date,
-			pj_end_date, pj_class, pj_refund, pj_story, pj_account_type, pj_account_name, pj_bank, pj_check_yn, pj_reject, pj_success_yn, pj_price, pj_account_number,
-			pj_email, pj_phone, today_date;
+			pj_end_date, pj_class, pj_refund, pj_story, pj_account_type, pj_account_name, pj_bank, pj_check_request_date, pj_check_yn, pj_reject,
+			pj_success_yn, pj_price, pj_account_number,
+			pj_email, pj_phone;
 	
-	int pj_account_id, rno, total_price;
-	Double pj_extra_date;
+	int pj_account_id, rno, total_price, start_extra_date, pj_extra_date;
 	
 	CommonsMultipartFile pj_cimg;
 	
 	//추가 정보
 	String pj_pay_end_date, pj_bill_date; //결제 마감일, 정산일 - 프로젝트 관리 페이지에서 사용
 	String total_funding_price, achievement_rate, remaining_days, total_sponsor_count, pj_pay_date, community_count;	//모인 금액, 달성률, 남은 기간, 후원자 수, 결제 예정일, 커뮤니티 게시글 수
-	String name, profile_simg, intro, member_pj_count, member_funding_count;	//창작자 이름, 프로필이미지, 소개, 진행한 프로젝트 수, 밀어준 프로젝트 수
+	String name, profile_simg, intro;	//창작자 이름, 프로필이미지, 소개
 	
 	String funding, status, progress;
 	
 	
-	
-	public String getToday_date() {
-		return today_date;
+
+	public int getStart_extra_date() {
+		return start_extra_date;
 	}
 
-	public void setToday_date(String today_date) {
-		this.today_date = today_date;
+	public void setStart_extra_date(int start_extra_date) {
+		this.start_extra_date = start_extra_date;
 	}
 
-	public Double getPj_extra_date() {
+	public String getPj_check_request_date() {
+		return pj_check_request_date;
+	}
+
+	public void setPj_check_request_date(String pj_check_request_date) {
+		this.pj_check_request_date = pj_check_request_date;
+	}
+
+	public int getPj_extra_date() {
 		return pj_extra_date;
 	}
 
-	public void setPj_extra_date(Double pj_extra_date) {
+	public void setPj_extra_date(int pj_extra_date) {
 		this.pj_extra_date = pj_extra_date;
 	}
 
@@ -357,22 +365,6 @@ public class ProjectVO {
 
 	public void setIntro(String intro) {
 		this.intro = intro;
-	}
-
-	public String getMember_pj_count() {
-		return member_pj_count;
-	}
-
-	public void setMember_pj_count(String member_pj_count) {
-		this.member_pj_count = member_pj_count;
-	}
-
-	public String getMember_funding_count() {
-		return member_funding_count;
-	}
-
-	public void setMember_funding_count(String member_funding_count) {
-		this.member_funding_count = member_funding_count;
 	}
 
 	public String getCommunity_count() {

@@ -87,23 +87,34 @@
              bLengthChange: true, // n개씩보기
              lengthMenu : [ [15, 30, -1], [15, 30, "전체"] ], // 10/25/50/All 개씩보기
              bAutoWidth: false, //자동너비
-             ordering: true, //칼럼별 정렬
-             searching: false, //검색기능
+             order: [[ 0, "desc" ]],	//정렬
+             searching: true, //검색기능
+             
+             
 		});
 		
 		//선택 탭 css
-		var list_name = '${list_name}';
+		var category = '${category}';
 		
-		if(list_name == "") {
+		if(category == "") {
 			$("nav #all li").addClass("select_tab");
 			$("nav #all #list_count").css("background-color", "#1d85ea");
 		} else {
-			$("nav #" + list_name + " li").addClass("select_tab");
-			$("nav #" + list_name + " #list_count").css("background-color", "#1d85ea");
+			$("nav #" + category + " li").addClass("select_tab");
+			$("nav #" + category + " #list_count").css("background-color", "#1d85ea");
 		}
 		
 		//정산 모달창 띄우기
-		$("#btn_bill_open").click(function() {
+		$("tbody tr td #btn_bill_open").click(function() {
+			var pj_id = $(this).closest("tr").attr("id");
+			
+			/* $.ajax({
+				url: "http://localhost:9090/tumblbugs/project_bill/pj_id=" + pj_id,
+				success: function(data) {
+					
+				}
+			}); */
+			
 			$(".modal").modal("show");
 		});
 		
@@ -122,28 +133,25 @@
 		<div class="admin_project_content">
 			<article id="page_content_tab">
 				<nav>
-					<a href="http://localhost:9090/tumblbugs/admin/project?list=all" id="all">
+					<a href="http://localhost:9090/tumblbugs/admin/projects/all" id="all">
 						<li>
 							<span>모두 보기</span>
-							<span id="list_count">1</span>
+							<span id="list_count">${adminProjectCount.totalCount}</span>
 						</li>
 					</a>
-					<a href="http://localhost:9090/tumblbugs/admin/project?list=review" id="review">
+					<a href="http://localhost:9090/tumblbugs/admin/projects/check" id="check">
 						<li>
 							<span>검토 요청</span>
-							<span id="list_count">1</span>
+							<span id="list_count">${adminProjectCount.checkRequestCount}</span>
 						</li>
 					</a>
-					<a href="http://localhost:9090/tumblbugs/admin/project?list=bill" id="bill">
+					<a href="http://localhost:9090/tumblbugs/admin/projects/success" id="success">
 						<li>
-							<span>정산 대기</span>
-							<span id="list_count">0</span>
+							<span>펀딩 성공</span>
+							<span id="list_count">${adminProjectCount.successCount}</span>
 						</li>
 					</a>
 				</nav>
-				<div class="search">
-					<span><input type="text" placeholder="프로젝트 ID, 제목, 창작자를 검색하세요"></span>
-				</div>
 			</article>
 			<table id="project_table">
 				<thead>
@@ -152,41 +160,41 @@
 						<th class="id">프로젝트 ID</th>
 						<th class="title">제목</th>
 						<th class="creator_name">창작자</th>
-						<th class="pj_end_date">마감일</th>
-						<th class="upload_date">등록일</th>
-						<th class="pj_check_date">검토 완료일</th>
+						<th class="pj_check_request_date">검토 요청일</th>
 						<th class="pj_check_yn">검토 결과</th>
-						<th class="pj_success_yn">진행 결과</th>
-						<th class="pj_calculate_yn">정산</th>
+						<th class="pj_start_date">시작일</th>
+						<th class="pj_end_date">마감일</th>
+						<th class="pj_price">목표 금액</th>
+						<th class="total_funding_price">달성 금액</th>
+						<th class="achievement_rate">달성률</th>
+						<th class="pj_bill">정산</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%-- <c:forEach var="vo" items="${list}"> --%>
-					<tr>
-						<td class="no">2</td>
-						<td class="id">PJ00002</td>
-						<td class="title"><a href="http://localhost:9090/tumblbugs/admin/project_detail?pj_id=PJ00001">무의식으로의 탐험을 그린 <Youth And Island></a></td>
-						<td class="creator_name">두라</td>
-						<td class="pj_end_date">2020.01.30</td>
-						<td class="upload_date">2019.12.04</td>
-						<td class="pj_check_date">-</td>
-						<td class="pj_check_yn">-</td>
-						<td class="pj_success_yn">-</td>
-						<td class="pj_calculate_yn"></td>
+					<c:forEach var="vo" items="${list}">
+					<tr id="${vo.pj_id}">
+						<td class="no">${vo.rno}</td>
+						<td class="id">${vo.pj_id}</td>
+						<td class="title"><a href="http://localhost:9090/tumblbugs/admin/project/${vo.pj_id}">${vo.pj_title}</a></td>
+						<td class="creator_name">${vo.name}</td>
+						<td class="pj_check_request_date">${vo.pj_check_request_date}</td>
+						<td class="pj_check_yn">
+							<c:choose>
+								<c:when test="${vo.pj_check_yn eq 'y'}">승인</c:when>
+								<c:when test="${vo.pj_check_yn eq 'n'}">반려</c:when>
+								<c:when test="${(empty vo.pj_check_yn) or (vo.pj_check_yn eq 'c')}">검토 중</c:when>
+							</c:choose>
+						</td>
+						<td class="pj_start_date">${vo.pj_start_date}</td>
+						<td class="pj_end_date">${vo.pj_end_date}</td>
+						<td class="pj_price">${vo.pj_price}</td>
+						<td class="total_funding_price">${vo.total_funding_price}</td>
+						<td class="achievement_rate">${vo.achievement_rate}%</td>
+						<td class="pj_bill">
+							<button class="btn btn-default" data-target="#layerpop" data-toggle="modal" id="btn_bill_open">정산</button>
+						</td>
 					</tr>
-					<tr>
-						<td class="no">1</td>
-						<td class="id">PJ00001</td>
-						<td class="title"><a href="http://localhost:9090/tumblbugs/admin/project_detail?pj_id=PJ00001">완벽하게 고양이를 모시기 위한, 2020 집사 캘린더</a></td>
-						<td class="creator_name">소금툰</td>
-						<td class="pj_end_date">2019.12.01</td>
-						<td class="upload_date">2019.11.01</td>
-						<td class="pj_check_date">2019.10.30</td>
-						<td class="pj_check_yn">승인</td>
-						<td class="pj_success_yn">진행중</td>
-						<td class="pj_calculate_yn"><button class="btn btn-default" data-target="#layerpop" data-toggle="modal" id="btn_bill_open">정산</button></td>
-					</tr>
-					<%-- </c:forEach> --%>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>

@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tumblbugs.dao.NoticeDAO;
 import com.tumblbugs.vo.NoticeVO;
 
+import net.sf.json.JSONObject;
+
 @Controller
 public class NoticeController {
 
@@ -19,7 +21,7 @@ public class NoticeController {
 	
 	/** 공지사항 리스트 **/
 	@RequestMapping(value="/notice/list", method=RequestMethod.GET)
-	public ModelAndView list(String category, String rpage) {
+	public ModelAndView list(String category, String searchVal, String rpage) {
 		ArrayList<NoticeVO> list = new ArrayList<NoticeVO>();
 		ModelAndView mv = new ModelAndView();
 		
@@ -35,7 +37,9 @@ public class NoticeController {
 		int pageCount = 1;	//전체 페이지 수
 		int dbCount = 0;
 		
-		if(category.equals("all")) {
+		if(searchVal != null && searchVal != "") {
+			dbCount = noticeDAO.searchCount(searchVal);
+		}else if(category.equals("all")) {
 			dbCount = noticeDAO.allCount();
 			
 		}else if(category.equals("notice")) {
@@ -46,8 +50,7 @@ public class NoticeController {
 			category="이벤트";
 			dbCount = noticeDAO.eventCount();
 		}
-		
-		
+				
 		//총 페이지 수 계산
 		if(dbCount % pageSize == 0){
 			pageCount = dbCount/pageSize;
@@ -64,13 +67,20 @@ public class NoticeController {
 			startCount = 1;
 			endCount = 10;
 		}
-		
-		if(category.equals("all")) {
+		if(searchVal != null && searchVal != "") {
+			list = noticeDAO.getNoticeSearchList(startCount, endCount, searchVal);
+		}else if(category.equals("all")) {
 			list = noticeDAO.getNoticeAllList(startCount, endCount);
 		}else {
 			list = noticeDAO.getNoticeCategoryList(startCount, endCount, category);
 		}
 		
+		if(category.equals("공지사항")) {
+			category="notice";
+		}else if(category.equals("이벤트")) {
+			category="event";
+		}
+		 
 		mv.addObject("category",category);
 		mv.setViewName("/notice/notice_list");
 		mv.addObject("list", list);

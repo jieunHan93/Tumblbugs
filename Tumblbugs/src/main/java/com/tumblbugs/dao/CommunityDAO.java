@@ -41,12 +41,24 @@ public class CommunityDAO {
 		return (ArrayList<CommunityReplyVO>)list;
 	}
 	
-	public CommunityReplyVO getReply(String email, String reply_id) {
+	/*public CommunityReplyVO getReply(String email, String reply_id) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("email", email);
 		map.put("reply_id", reply_id);
 		
 		return sqlSession.selectOne(namespace + ".replyOne", map);
+	}*/
+	
+	public CommunityReplyVO getReply(CommunityReplyVO vo) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", vo.getEmail());
+		map.put("community_id", vo.getCommunity_id());
+		
+		return sqlSession.selectOne(namespace + ".replyOne", map);
+	}
+	
+	public int getRcount(String community_id) {
+		return sqlSession.selectOne(namespace + ".rcount", community_id);
 	}
 	
 	/** 커뮤니티 게시글 등록 **/

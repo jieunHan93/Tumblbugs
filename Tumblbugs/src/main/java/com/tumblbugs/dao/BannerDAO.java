@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tumblbugs.vo.BannerVO;
+import com.tumblbugs.vo.DeliveryVO;
 
 @Repository
 public class BannerDAO {
@@ -75,5 +76,17 @@ public class BannerDAO {
 		int val = sqlSession.update(namespace+".checkbox", param);
 		if(val != 0) result=true;
 		return result;
+	}
+	
+	/** 순서 업데이트 **/
+	public int getResultUpdateOrder(ArrayList<BannerVO> list) {
+		return sqlSession.update(namespace+".update_order", list);
+	}
+	
+	/** 배너 메인에 뿌리기 **/
+	public ArrayList<BannerVO> getResultMainList(){
+		List list = null;
+		list = sqlSession.selectList(namespace+".main_list");
+		return (ArrayList<BannerVO>)list;
 	}
 }

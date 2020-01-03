@@ -1,5 +1,7 @@
 package com.tumblbugs.vo;
 
+import java.util.ArrayList;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class BannerVO {
@@ -11,15 +13,28 @@ public class BannerVO {
 	BA_SIMG               VARCHAR2(1000) 
 	BA_STARTDATE NOT NULL DATE           
 	BA_ENDDATE   NOT NULL DATE           
-	BA_ORDER              NUMBER(2)      
+	BA_ORDER              VARCHAR2(10)      
 	BA_CONTROLL  NOT NULL VARCHAR2(1)    
 	BA_STATUS    NOT NULL VARCHAR2(100)  */
 	
-	String ba_id, ba_title, ba_content, pj_addr, ba_img, ba_simg, ba_startdate, ba_enddate, ba_controll, ba_status, ba_regdate;
-	int rno, ba_order;
+	String ba_id, ba_title, ba_content, pj_addr, ba_img, ba_simg, ba_startdate, ba_enddate, ba_controll, ba_status, ba_regdate, ba_order;
+	int rno;
 	CommonsMultipartFile ba_cimg;
+	ArrayList<BannerVO> list;
 	
 	
+	public ArrayList<BannerVO> getList() {
+		return list;
+	}
+	public void setList(ArrayList<BannerVO> list) {
+		this.list = list;
+	}
+	public String getBa_order() {
+		return ba_order;
+	}
+	public void setBa_order(String ba_order) {
+		this.ba_order = ba_order;
+	}
 	public String getBa_regdate() {
 		return ba_regdate;
 	}
@@ -98,12 +113,5 @@ public class BannerVO {
 	public void setBa_status(String ba_status) {
 		this.ba_status = ba_status;
 	}
-	public int getBa_order() {
-		return ba_order;
-	}
-	public void setBa_order(int ba_order) {
-		this.ba_order = ba_order;
-	}
-	
 	
 }

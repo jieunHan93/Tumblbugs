@@ -55,6 +55,8 @@
 			}
 		});
 		
+		
+		alert($("input[name='pj_id']").val());
 	});
 </script>
 <body>
@@ -68,7 +70,7 @@
 						<!-- 커뮤니티 글 작성 -->
 						<div id="box4_community_write">
 							<div>
-								<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr}/community">
+								<a href="http://localhost:9090/tumblbugs/project/${pvo.pj_addr}/community">
 									<button id="btn_back_to_community"><i class="fas fa-angle-left"></i> &nbsp;커뮤니티로 돌아가기</button>
 								</a>
 							</div>
@@ -79,7 +81,7 @@
 										<input type="hidden" name="community_id" value="${cvo.community_id }">
 									</c:if>
 									<input type="hidden" name="email" value="${sessionScope.semail }">
-									<input type="hidden" name="pj_id" value="${vo.pj_id }">
+									<input type="hidden" name="pj_id" value="${pvo.pj_id }">
 									<textarea class="form-control" id="ckeditor_content" name="community_content">
 										<c:if test="${not empty cvo.community_content}">${cvo.community_content}</c:if>
 									</textarea>

@@ -8,11 +8,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
 	$(document).ready(function() {
+		//미리보기 설정
+		if('${preview}' == "y") {
+			$("a:not(.active)").css("pointer-events","none").css("cursor","default").css("opacity","0.6");
+			$("button").css("pointer-events","none").css("cursor","default").css("opacity","0.6");
+		}
+		
 		var menu = '${tab}';
 		if(menu == "") {
-			tab = "story";
+			menu = "story";
 		} else {
 			$(document).scrollTop($("#menu_tab").offset().top);
 		}
@@ -32,36 +39,139 @@
 		//카테고리 목록으로 이동
 		$("a#category").click(function(){
 			sessionStorage.clear();
-			sessionStorage.setItem("category",'${vo.pj_category}');
+			sessionStorage.setItem("category",'${pvo.pj_category}');
 			location.href="http://localhost:9090/tumblbugs/discover";
 		});
+		
+		$("#shareModalBackground").hide();
+		$("#shareModal").hide();
+		
+		//공유하기 모달
+		$("#shareProject").click(function() {
+			$("#shareModalBackground").show();
+			$("#shareModal").show();
+		});
+		
+		$("#shareModal #times").click(function() {
+			$("#shareModalBackground").hide();
+			$("#shareModal").hide();
+		});
+		
+		$("#shareKakaoTalk a").click(function() {
+			shareKakaotalk();
+		});
+		
+		//카카오톡 공유
+		function shareKakaotalk() {
+	        Kakao.init("77213dce7d91d4ec2bd5e608ef304498");      // 사용할 앱의 JavaScript 키를 설정
+	        Kakao.Link.sendDefault({
+	              objectType:"feed"
+	            , content : {
+	                  title: "${pvo.pj_title}"   // 콘텐츠의 타이틀
+	                , description: "${pvo.pj_summary}"   // 콘텐츠 상세설명
+	                , imageUrl:"http://localhost:9090/tumblbugs/upload/" + '${pvo.pj_simg}'   // 썸네일 이미지
+	                , link : {
+	                      mobileWebUrl:"http://localhost:9090/tumblbugs/project/" + '${pvo.pj_addr}'   // 모바일 카카오톡에서 사용하는 웹 링크 URL
+	                    , webUrl:"http://localhost:9090/tumblbugs/project/" + '${pvo.pj_addr}' // PC버전 카카오톡에서 사용하는 웹 링크 URL
+	                }
+	            }
+	            , buttons : [
+	                {
+	                      title:"${pvo.pj_title}"    // 버튼 제목
+	                    , link : {
+	                        mobileWebUrl:"http://localhost:9090/tumblbugs/project/" + '${pvo.pj_addr}'   // 모바일 카카오톡에서 사용하는 웹 링크 URL
+	                      , webUrl:"http://localhost:9090/tumblbugs/project/" + '${pvo.pj_addr}' // PC버전 카카오톡에서 사용하는 웹 링크 URL
+	                    }
+	                }
+	            ]
+	        });
+	    }
 	});
 </script>
+<style>
+	#shareModalBackground {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		background-color: black;
+		opacity: 0.5;
+	}
+	#shareModal {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-left: -250px;
+		margin-top: -300px;
+		width: 500px;
+		height: 600px;
+		font-weight: bold;
+		font-size: 10pt;
+		text-align: center;
+		background-color: white;
+	}
+	#shareModal #shareModalHeader {
+		box-shadow: 0px 1px 2px 0px rgba(10,10,10,0.1);
+		padding: 20px;
+	}
+	#shareModal #shareModalHeader #modalTitle {
+		display: inline-block;
+		margin-right: -20px;
+	}
+	#shareModal #shareModalHeader #times {
+		display: inline-block;
+		cursor: pointer;
+		float: right;
+		font-size: 12pt;
+	}
+	#shareModal #shareModalBody {
+		padding: 15px;
+	}
+	#shareModal #shareModalBody a {
+		display: block;
+		padding: 13px 0px;
+		color: white;
+		text-decoration: none;
+	}
+	#shareModal #shareFacebook {
+		background-color: rgb(59,89,152);
+		margin: 15px 0px 10px 0px;
+	}
+	#shareModal #shareTwitter {
+		background-color: rgb(0,172,237);
+		margin-bottom: 10px;
+	}
+	#shareModal #shareKakaoTalk a {
+		background-color: rgb(255,232,18);
+		color: black;
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
 	<section id="overview">
 		<div>
-			<a id="category">${vo.pj_category }</a>
-			<div id="title">${vo.pj_title }</div>
+			<a id="category" class="active">${pvo.pj_category }</a>
+			<div id="title">${pvo.pj_title }</div>
 			<div id="creator">
-				<span id="creator_img"><img src="http://localhost:9090/tumblbugs/upload/${vo.profile_simg }"></span>
-				<span id="creator_name"><a href="http://localhost:9090/tumblbugs/myproject">${vo.name }</a></span>
+				<span id="creator_img"><img src="http://localhost:9090/tumblbugs/upload/${mvo.profile_simg }"></span>
+				<span id="creator_name"><a href="http://localhost:9090/tumblbugs/projects/${mvo.member_id}" class="active">${mvo.name }</a></span>
 			</div>
 		</div>
 		<div>
-			<div id="main_img"><img src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg }"></div>
+			<div id="main_img"><img src="http://localhost:9090/tumblbugs/upload/${pvo.pj_simg }"></div>
 			<div id="introduction">
 				<div>
 					<div class="introduction_subtitle">모인금액</div>
-					<span class="introduction_value">${vo.total_funding_price }</span>
+					<span class="introduction_value">${pvo.total_funding_price }</span>
 					<span class="introduction_quantity">원</span>
-					<span id="percentage">${vo.achievement_rate }%</span>
+					<span id="percentage">${pvo.achievement_rate }%</span>
 				</div>
 				<div>
 					<div class="introduction_subtitle">남은시간</div>
 					<span class="introduction_value">
 						<c:choose>
-							<c:when test="${vo.remaining_days >= 0}">${vo.remaining_days }</c:when>
+							<c:when test="${pvo.remaining_days >= 0}">${pvo.remaining_days + 1 }</c:when>
 							<c:otherwise>0</c:otherwise>
 						</c:choose>
 					</span>
@@ -69,17 +179,17 @@
 				</div>
 				<div>
 					<div class="introduction_subtitle">후원자</div>
-					<span class="introduction_value">${vo.total_sponsor_count }</span>
+					<span class="introduction_value">${pvo.total_sponsor_count }</span>
 					<span class="introduction_quantity">명</span>
 				</div>
 				<div id="funding_information">
 					<div id="funding_information_title">펀딩 진행중</div>
-					<div id="funding_information_content">목표 금액인 ${vo.pj_price }원이 모여야만 결제됩니다.<br>결제는 ${vo.pj_pay_date }에 다함께 진행됩니다.</div>
+					<div id="funding_information_content">목표 금액인 ${pvo.pj_price }원이 모여야만 결제됩니다.<br>결제는 ${pvo.pj_pay_date }에 다함께 진행됩니다.</div>
 				</div>
 				<div>
 					<c:choose>
-						<c:when test="${vo.remaining_days >= 0 }">
-							<a href="http://localhost:9090/tumblbugs/${vo.pj_addr}/funding/step1">
+						<c:when test="${pvo.remaining_days >= 0 }">
+							<a href="http://localhost:9090/tumblbugs/${pvo.pj_addr}/funding/step1">
 								<button type="button" class="goFunding">프로젝트 밀어주기</button>
 							</a>
 						</c:when>
@@ -115,14 +225,32 @@
 	</section>
 	<section id="menu_tab">
 		<nav>
-			<a id="story" href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }/story">스토리</a>
-			<a id="community" href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }/community">커뮤니티
-				<c:if test="${vo.community_count ne '0'}">
-					<span id="community_count">${vo.community_count }</span>
+			<c:set var="content" value="project"/>
+			<c:set var="addr" value="${pvo.pj_addr}"/>
+			<c:if test="${not empty preview}">
+				<c:set var="content" value="preview"/>
+				<c:set var="addr" value="${pvo.pj_id}"/>
+			</c:if>
+			<a class="active" id="story" href="http://localhost:9090/tumblbugs/${content}/${addr}/story">스토리</a>
+			<a class="active" id="community" href="http://localhost:9090/tumblbugs/${content}/${addr}/community">커뮤니티
+				<c:if test="${pvo.community_count ne '0'}">
+					<span id="community_count">${pvo.community_count}</span>
 				</c:if>
 			</a>
-			<a id="policy" href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }/policy">펀딩 안내</a>
+			<a class="active" id="policy" href="http://localhost:9090/tumblbugs/${content}/${addr}/policy">펀딩 안내</a>
 		</nav>
 	</section>
+	<div id="shareModalBackground"></div>
+	<div id="shareModal">
+		<div id="shareModalHeader">
+			<div id="modalTitle">프로젝트 공유하기</div>
+			<div id="times"><i class="fas fa-times"></i></div>
+		</div>
+		<div id="shareModalBody">
+			<div id="shareFacebook"><a href="http://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:9090/tumblbugs/project/${pvo.pj_addr}" target="blank" onClick="window.open(this.href, '', 'width=400, height=550'); return false;"><i class="fab fa-facebook-f"></i>&nbsp;&nbsp;페이스북 공유하기</a></div>
+			<div id="shareTwitter"><a href="http://twitter.com/intent/tweet?url=http://localhost:9090/tumblbugs/project/${pvo.pj_addr}" target="blank" onClick="window.open(this.href, '', 'width=400, height=550'); return false;"><i class="fab fa-twitter"></i>&nbsp;&nbsp;트위터 공유하기</a></div>
+			<div id="shareKakaoTalk"><a><i class="fas fa-comment"></i>&nbsp;&nbsp;카카오톡 공유하기</a></div>
+		</div>
+	</div>
 </body>
 </html>

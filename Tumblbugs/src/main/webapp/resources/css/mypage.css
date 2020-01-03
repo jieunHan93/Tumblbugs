@@ -149,8 +149,9 @@ div#profile_pre{
 	border-radius: 5px;
 }
 div#profile_pre_header_space{
-	border:3px solid #1e90ff;
-	border-radius: 5px 5px 0px 0px;
+	border: 2px solid #1e90ff;
+    border-radius: 5px 5px 0px 0px;
+    background-color: #1e90ff;
 }
 
 span#profile_pre_header_card_icon{
@@ -332,7 +333,7 @@ div#payment_regist_select button{
 	padding: 3px 7px;
 	margin-right:5px;
 	font-size: 15px;
-	width:118px;
+	width:130px;
 	text-align: left;
 }
 div#payment_regist_select button.dropdown-toggle::after{
@@ -466,9 +467,8 @@ div#registed_payment_not_founded>i{
 		width: 105px; height: 105px;
 		border-radius: 105px;
 		overflow: hidden;
-	}
-	#funding_history section.page_title img {
-		width: 105px;
+		background-size: cover;
+   	 	background-position: 50% 50%;
 	}
 	#funding_history section.page_title div {
 		padding: 10px 0px 10px 0px;
@@ -680,7 +680,7 @@ div#registed_payment_not_founded>i{
 	funding_detail(내 후원현황>상세) ---------------------------------------------------------------------------------------------------
 	조수윤 --------------------------------------------------------------------------------------------------------------------------
 **/
-	#funding_detail {background-color: #f6f5f5; overflow: auto;}
+	#funding_detail {background-color: #f6f5f5; overflow: auto; padding-bottom: 50px;}
 	#funding_detail section:not(.background_wrap) {
 		width: 1080px;
 		margin: auto;
@@ -703,7 +703,7 @@ div#registed_payment_not_founded>i{
 		color: #767676;
 	}
 	#funding_detail td {
-		padding: 10px 20px 10px 20px;
+		padding: 12px 20px 12px 20px;
 	}
 	#funding_detail td.button_td,
 	#funding_detail td.button_td_update {
@@ -718,7 +718,14 @@ div#registed_payment_not_founded>i{
 		margin-bottom: 5px;
 	}
 	#funding_detail td .data_value {
-		color: black;
+		color: rgba(0,0,0,.87);
+		font-weight: bold;
+		font-size: 11pt;
+	}
+	
+	#funding_detail #recipient_addr .data_value,
+	#invoice_number td .data_value {
+		font-size: 10.5pt;
 	}
 	
 	/* 최상단 프로젝트 배경 이미지 */
@@ -751,8 +758,9 @@ div#registed_payment_not_founded>i{
 	#funding_detail table button {
 		font-size: 10pt;
 	}
-	#funding_detail #btn_sendMessage {	/* 문의하기 */
-		padding: 7px 10px 7px 10px;
+	#funding_detail #btn_sendMessage,
+	#funding_detail #btn_edit {	/* 문의하기 */
+		padding: 8px 12px 8px 12px;
 		color: #4a4a4a;
 		font-weight: bold;
 		background-color: #ececec;
@@ -840,8 +848,13 @@ div#registed_payment_not_founded>i{
 		border: 1px solid lightgray;
 		border-radius: 4px;
 	}
-	#funding_detail tr.data_tr_update#recipient_addr td.data_td_update input {
-		width: 600px;
+	#funding_detail tr.data_tr_update#recipient_addr td.data_td_update input#address {
+		width: 680px;
+		margin-left: -3.5px;
+		background-color: white;
+	}
+	#funding_detail tr.data_tr_update#recipient_addr td.data_td_update input#address_detail {
+		width: 760px;
 	}
 	#funding_detail .button_div {
 		text-align: right;

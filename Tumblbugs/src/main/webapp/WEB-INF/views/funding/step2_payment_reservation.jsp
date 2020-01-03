@@ -56,7 +56,9 @@
 				
 				<input type="hidden" name="pj_id" value="${vo.pj_id }">
 				<input type="hidden" name="email" value="${sessionScope.semail }">
-				<input type="hidden" name="extra_funding_price" value="${vo.extra_funding_price }">
+				<c:set var="extra_funding_price" value="${vo.extra_funding_price }"/>
+				<c:if test="${vo.extra_funding_price eq '' }"><c:set var="extra_funding_price" value="0"/></c:if>
+				<input type="hidden" name="extra_funding_price" value="${extra_funding_price }">
 				<input type="hidden" name="total_funding_price" value="${vo.total_funding_price }">
 				
 				<div class="page_title"><label>결제 예약</label></div>

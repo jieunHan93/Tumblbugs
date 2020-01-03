@@ -55,6 +55,55 @@
     	where faq_list_num like 'spon_4%' 
 	</select>
 	
+	<select id="clist_1" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'create_1%' 
+	</select>
+	
+	<select id="clist_2" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'create_2%' 
+	</select>
+	
+	<select id="clist_3" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'create_3%' 
+	</select>
+	
+	<select id="clist_4" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'create_4%' 
+	</select>
+	
+	<select id="clist_5" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'create_5%' 
+	</select>
+	
+	<select id="colist_1" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'common_1%' 
+	</select>
+	
+	<select id="colist_2" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select * from (select rownum rno, FAQ_NUM, FAQ_LIST_NUM,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE
+		from (select FAQ_NUM,FAQ_LIST_NUM,FAQ_LIST_TITLE,REG_DATE
+		from tum_faq order by reg_date))
+    	where faq_list_num like 'common_2%' 
+	</select>
+	
 	<select id="spon_count1" resultType="int">
 		select count(*) from tum_faq where faq_list_num like 'spon_1%'
 	</select>
@@ -63,8 +112,28 @@
 		select count(*) from tum_faq where faq_list_num like 'spon_2%'
 	</select>
 	
-	<select id="spon_article_content" resultType="java.lang.String">
-		select faq_content from tum_faq where faq_num=62
+	<select id="create_count1" resultType="int">
+		select count(*) from tum_faq where faq_list_num like 'create_1%'
+	</select>
+	
+	<select id="create_count2" resultType="int">
+		select count(*) from tum_faq where faq_list_num like 'create_2%'
+	</select>
+	
+	<select id="create_count3" resultType="int">
+		select count(*) from tum_faq where faq_list_num like 'create_3%'
+	</select>
+	
+	<select id="create_count4" resultType="int">
+		select count(*) from tum_faq where faq_list_num like 'create_4%'
+	</select>
+	
+	<select id="common_count1" resultType="int">
+		select count(*) from tum_faq where faq_list_num like 'common_2%'
+	</select>
+	
+	<select id="spon_article_content" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
+		select faq_num,faq_list_title, to_char(reg_date, 'yyyy/mm/dd hh24:mi:ss') reg_date, faq_content from tum_faq where faq_num=#{faq_num}
 	</select>
 	
 </mapper>    

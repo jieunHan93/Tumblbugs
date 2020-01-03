@@ -20,7 +20,7 @@
 		<section id="menu_content">
 			<div>
 				<div class="menu_content" id="story">
-					<div class="white_box" id="story_content">${vo.pj_story }</div>
+					<div class="white_box" id="story_content">${pvo.pj_story }</div>
 				</div>
 				<jsp:include page="project_content_aside.jsp"></jsp:include>
 			</div>

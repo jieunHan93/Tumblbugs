@@ -6,7 +6,7 @@
 	<insert id="reg" 
 		parameterType="com.tumblbugs.vo.MemberVO">
 		insert into tum_member 
-			values(#{email},#{name},#{pass},'null','null','null','null','null',sysdate,'y',#{signkey},'n')
+			values(#{email},#{name},#{pass},'null','null','null','null','null',sysdate,'y',#{signkey},'n', 'M' || LPAD(tum_member_sequ.nextval, 5, 0))
 	</insert>
 	 
 	<select  id="email_chk" 
@@ -32,9 +32,9 @@
 		parameterType="com.tumblbugs.vo.MemberVO" 
 		resultType="com.tumblbugs.vo.SessionVO"> 
 		<!-- SELECT email , name , pass FROM tum_member where email = #{email} -->
-		    select count(*) result, name ,email, profile_simg , profile_img from tum_member 
-		    where email=#{email} and pass=#{pass} 
-		    group by name ,email, profile_simg , profile_img
+		    select count(*) result, name ,email, profile_simg , member_id from tum_member 
+		    where email=#{email} and pass=#{pass}
+		    group by name ,email, profile_simg , member_id
 	</select>
 	
 	<select id="email_reg_check"
@@ -50,15 +50,30 @@
 			select count(*) from tum_member
 				 where pass=#{pass} and email=#{email}
 	</select>
+
 	
-	
-	<update id="update_profile"
+	<!-- <update id="update_profile"
 	parameterType="com.tumblbugs.vo.MemberVO"	>
 		UPDATE tum_member
-		SET pass=#{pass}, name=#{name},intro=#{intro},website=#{website},phone=#{phone},profile_img=#{profile_img},profile_simg=#{profile_img} 
+		SET pass=#{pass}, name=#{name}, intro=#{intro}, website=#{website}, phone=#{phone}, profile_img=#{profile_img}, profile_simg=#{profile_img} 
 		where email=#{email}
+	</update> -->
 	
+	<update id="profileUpdate" parameterType="com.tumblbugs.vo.MemberVO">
+		update tum_member
+		set pass=#{pass}, name=#{name}, intro=#{intro}, website=#{website}, phone=#{phone}, profile_img=#{profile_img}, profile_simg=#{profile_simg}
+		where email = #{email}
 	</update>
+	
+	<update id="profileUpdateNofile" parameterType="com.tumblbugs.vo.MemberVO">
+		update tum_member
+		set pass=#{pass}, name=#{name}, intro=#{intro}, website=#{website}, phone=#{phone}
+		where email = #{email}
+	</update>
+	
+	<select id="profile_simg" parameterType="String" resultType="String">
+		select profile_simg from tum_member where email = #{email}
+	</select>
 	
 	<select id="list" resultType="com.tumblbugs.vo.MemberVO">
 		select rownum rno, email, name, to_char(reg_date, 'yyyy.mm.dd') reg_date, use_yn
@@ -66,13 +81,27 @@
 	</select>
 	
 	<select id="content" parameterType="String" resultType="com.tumblbugs.vo.MemberVO">
-		select email, name, profile_simg, intro, phone, website, use_yn
-		from tum_member where email = #{email}
+		select m.email, name, profile_simg, intro, phone, website, use_yn, member_id, nvl(pj_count, 0) pj_count, nvl(funding_count, 0) funding_count
+		from tum_member m,
+			(select email, count(pj_id) pj_count from tum_project where pj_check_yn='y' group by email) pj,
+			(select email, count(funding_id) funding_count from tum_funding group by email) f
+		where m.email = pj.email(+)
+		and m.email = f.email(+)
+		and m.email = #{email}
 	</select>
 	
 	<delete id="unreg" parameterType="String">
 		delete from tum_member where email=#{email}
 	</delete>
 	
+	<select id="found" resultType="java.lang.String" parameterType="java.lang.String">
+		select pass 
+			from tum_member where email=#{email}
+	</select>
+	
+	<select id="found_ajax" resultType="java.lang.String" parameterType="java.lang.String">
+		select count(email)
+			from tum_member where email=#{email}
+	</select>
 	
 </mapper>

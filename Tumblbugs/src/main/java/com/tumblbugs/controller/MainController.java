@@ -24,11 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.tumblbugs.dao.BannerDAO;
 import com.tumblbugs.dao.MainDAO;
 import com.tumblbugs.dao.ProjectSortDAO;
 import com.tumblbugs.dao.RegDAO;
 import com.tumblbugs.dao.SearchDAO;
 import com.tumblbugs.util.HangulJaso;
+import com.tumblbugs.vo.BannerVO;
 import com.tumblbugs.vo.CollectionVO;
 import com.tumblbugs.vo.HeaderVO;
 import com.tumblbugs.vo.ProjectVO;
@@ -45,6 +47,8 @@ public class MainController {
 	private ProjectSortDAO projectsortDAO;
 	@Autowired
 	private SearchDAO searchDAO;
+	@Autowired
+	private BannerDAO bannerDAO;
 	
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
@@ -56,6 +60,7 @@ public class MainController {
 		ArrayList<ProjectVO> favlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "전체", "전체", "1", "fav", "전체");
 		ArrayList<ProjectVO> ddlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "2", "전체", "1", "deadline", "전체");
 		ArrayList<ProjectVO> newlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "전체", "전체", "1", "new", "전체");
+		ArrayList<BannerVO> bannerlist = bannerDAO.getResultMainList();
 		if(signkey != null && email != null) {
 			regdao.getResultReg_update(email,signkey);
 			System.out.println("회원가입완료"+regdao);
@@ -66,6 +71,7 @@ public class MainController {
 		mv.addObject("favlist",favlist);
 		mv.addObject("ddlist",ddlist);
 		mv.addObject("newlist",newlist);
+		mv.addObject("bannerlist",bannerlist);
 		mv.setViewName("index");
 		return mv;
 	}

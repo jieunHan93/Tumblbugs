@@ -16,7 +16,7 @@
   		$(document).ready(function(){
   			var input= "input[value='${category}']";
   			var link = $(input).parent();
-  			var category = '${category}'
+  			var category = '${category}';
   			$(link).css("color","#000000");
   			$(link).parent().css("border-bottom","2px solid #000000");
   			
@@ -35,23 +35,16 @@
   					     
   			    btnSize:'sm'	// 'sm'  or 'lg'		
   			});
-  			
   			jQuery('#ampaginationsm').on('am.pagination.change',function(e){
   				   jQuery('.showlabelsm').text('The selected page no: '+e.page);
   		           $(location).attr('href', "http://localhost:9090/tumblbugs/notice/list?category="+category+"&rpage="+e.page);         
   		    });
   			
-  			
-  			
-            $("#input_notice_list_search").keyup(function() {
-                var keyVal = $(this).val();
-                $("#notice_list_content > ul > #notice_li_card").hide();
-                $("#notice_list_paging_box").hide();
-                
-                var liLoc = $("#notice_list_content .notice_list_card_title:contains('" + keyVal + "')");
-
-                $(liLoc).parent().parent().parent().parent().show();
-            });
+  			$("#noticeSearch").click(function(){
+  				 var searchVal = $("#input_notice_list_search").val();
+  					location.href=("http://localhost:9090/tumblbugs/notice/list?category=all&searchVal="+searchVal);
+  				
+  			});
   		});
   	</script>
 </head>
@@ -74,32 +67,29 @@
 			<div id="notice_list_content">
 				<ul>
 					<c:forEach var="vo" items="${list}" >
-					<li class="notice_list_card_size" id="notice_li_card">
-						<a href="http://localhost:9090/tumblbugs/notice/content?notice_id=${vo.notice_id}&category=${category}">
-							<div class="notice_list_card">
-								<c:if test="${vo.notice_sthumbnail != null }">
-									<div class="notice_list_card_img"><img src="http://localhost:9090/tumblbugs/resources/upload/${vo.notice_sthumbnail }"></div>
-								</c:if>
-								<div class="notice_list_card_content">
-									<div class="notice_list_card_status"><span>${vo.notice_category }</span>
-										<c:if test="${vo.event_waiting_date >= 0}">
-										<span>진행대기</span>
-										</c:if>
-										<c:if test="${vo.event_waiting_date < 0}"> 
+					<c:if test="${vo.event_waiting_date == null || vo.event_waiting_date <= 0}">
+						<li class="notice_list_card_size" id="notice_li_card">
+							<a href="http://localhost:9090/tumblbugs/notice/content?notice_id=${vo.notice_id}">
+								<div class="notice_list_card">
+									<c:if test="${vo.notice_sthumbnail != null }">
+										<div class="notice_list_card_img"><img src="http://localhost:9090/tumblbugs/resources/upload/${vo.notice_sthumbnail }"></div>
+									</c:if>
+									<div class="notice_list_card_content">
+										<div class="notice_list_card_status"><span>${vo.notice_category }</span>
 											<c:if test="${vo.event_extra_date >= 0}"> 
 												<span>진행중</span>
 											</c:if>
 											<c:if test="${vo.event_extra_date < 0}"> 
 												<span>종료</span>
 											</c:if>
-										</c:if>
+									</div>
+										<div class="notice_list_card_title">${vo.notice_title}</div>
+										<div class="notice_list_card_date">${vo.notice_reg_date }</div>
+									</div>
 								</div>
-									<div class="notice_list_card_title">${vo.notice_title}</div>
-									<div class="notice_list_card_date">${vo.notice_reg_date }</div>
-								</div>
-							</div>
-						</a>
-					</li>
+							</a>
+						</li>
+					</c:if>
 					</c:forEach>
 					
 						<li class="notice_list_card_size">
@@ -107,7 +97,7 @@
 						<div id="notice_list_search_box">
 							<div id="notice_list_search">
 								<input type="text" id="input_notice_list_search" val="검색">
-								<button type="button"><i class="fas fa-search"></i></button>
+								<button type="button" id="noticeSearch"><i class="fas fa-search"></i></button>
 							</div>
 						</div>
 					</li>

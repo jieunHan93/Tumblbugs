@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tumblbugs.vo.FaqVO;
+import com.tumblbugs.vo.QuestionVO;
 
 @Repository
 public class FaqDAO {
@@ -19,8 +20,14 @@ public class FaqDAO {
 	
 	private static String namespace = "mapper.faq";
 	
-	public String getResultContent() {
-		return sqlSession.selectOne(namespace+".spon_article_content");
+	/** FAQ 상세내용 **/
+	public ArrayList<FaqVO> getResultContent(String faq_num){
+		List<FaqVO> list = null;
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("faq_num", faq_num);
+		
+		list = sqlSession.selectList(namespace+".spon_article_content", param);
+		return (ArrayList<FaqVO>)list;
 	}
 	
 	/** FAQ 등록 **/
@@ -98,6 +105,76 @@ public class FaqDAO {
 		return (ArrayList<FaqVO>)slist_4;
 	}
 	
+	/** 창작자 센터 메인 리스트(1. 텀블벅스 플랫폼 알아보기)**/
+	public ArrayList<FaqVO> getCreateCenterList_1() {
+		List clist_1 = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		clist_1 = sqlSession.selectList(namespace+".clist_1", param);
+		
+		return (ArrayList<FaqVO>)clist_1;
+	}
+	
+	/** 창작자 센터 메인 리스트(2. 텀블벅스 펀딩 준비하기)**/
+	public ArrayList<FaqVO> getCreateCenterList_2() {
+		List clist_2 = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		clist_2 = sqlSession.selectList(namespace+".clist_2", param);
+		
+		return (ArrayList<FaqVO>)clist_2;
+	}
+	
+	/** 창작자 센터 메인 리스트(3. 텀블벅스에 프로젝트 올리기)**/
+	public ArrayList<FaqVO> getCreateCenterList_3() {
+		List clist_3 = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		clist_3 = sqlSession.selectList(namespace+".clist_3", param);
+		
+		return (ArrayList<FaqVO>)clist_3;
+	}
+	
+	/** 창작자 센터 메인 리스트(4. 펀딩 시작하고 후원자 만나기)**/
+	public ArrayList<FaqVO> getCreateCenterList_4() {
+		List clist_4 = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		clist_4 = sqlSession.selectList(namespace+".clist_4", param);
+		
+		return (ArrayList<FaqVO>)clist_4;
+	}
+	
+	/** 창작자 센터 메인 리스트(5. 펀딩 마감 후 선물 전달하기/마무리하기)**/
+	public ArrayList<FaqVO> getCreateCenterList_5() {
+		List clist_5 = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		clist_5 = sqlSession.selectList(namespace+".clist_5", param);
+		
+		return (ArrayList<FaqVO>)clist_5;
+	}
+	
+	/** 공통 사항 메인 리스트(1. 텀블벅스 소개)**/
+	public ArrayList<FaqVO> getCommonCenterList_1() {
+		List colist_1 = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		colist_1 = sqlSession.selectList(namespace+".colist_1", param);
+		
+		return (ArrayList<FaqVO>)colist_1;
+	}
+	
+	/** 공통 사항 메인 리스트(2. 계정 설정 및 기타)**/
+	public ArrayList<FaqVO> getCommonCenterList_2() {
+		List colist_2 = null;
+		Map<String, String> param = new HashMap<String, String>();
+		
+		colist_2 = sqlSession.selectList(namespace+".colist_2", param);
+		
+		return (ArrayList<FaqVO>)colist_2;
+	}
+	
 	/** 후원자 센터(1.후원하기) 총 건수 **/
 	public int spon_1_TotalCount(){
 		return sqlSession.selectOne(namespace+".spon_count1");
@@ -106,5 +183,30 @@ public class FaqDAO {
 	/** 후원자 센터(2.결제하기) 총 건수 **/
 	public int spon_2_TotalCount(){
 		return sqlSession.selectOne(namespace+".spon_count2");
+	}
+	
+	/** 창작자 센터(1. 텀블벅스 플랫폼 알아보기) 총 건수 **/
+	public int create_1_TotalCount(){
+		return sqlSession.selectOne(namespace+".create_count1");
+	}
+	
+	/** 창작자 센터(2. 텀블벅스 펀딩 준비하기) 총 건수 **/
+	public int create_2_TotalCount(){
+		return sqlSession.selectOne(namespace+".create_count2");
+	}
+	
+	/** 창작자 센터(3. 텀블벅스에 프로젝트 올리기) 총 건수 **/
+	public int create_3_TotalCount(){
+		return sqlSession.selectOne(namespace+".create_count3");
+	}
+	
+	/** 창작자 센터(4. 펀딩 시작하고 후원자 만나기) 총 건수 **/
+	public int create_4_TotalCount(){
+		return sqlSession.selectOne(namespace+".create_count4");
+	}
+	
+	/** 공통 사항(2. 계정 설정 및 기타) 총 건수 **/
+	public int common_1_TotalCount(){
+		return sqlSession.selectOne(namespace+".common_count1");
 	}
 }

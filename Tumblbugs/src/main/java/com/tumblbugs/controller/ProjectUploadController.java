@@ -13,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tumblbugs.dao.PJUploadDAO;
 import com.tumblbugs.vo.FileVO;
@@ -234,20 +236,23 @@ public class ProjectUploadController {
 	 * @return
 	 */
 	@RequestMapping(value="/project_start_upload", method=RequestMethod.GET)
-	public ModelAndView project_start_upload(HttpSession session) {
+	public ModelAndView project_start_upload(HttpSession session, String pj_id, @RequestParam("pj_id") String reqId) {
 		ModelAndView mv = new ModelAndView();
+		if(reqId != null && reqId != "") {
+			pj_id = reqId;
+		}
 		
-		String session_id = (String)session.getAttribute("pj_id");
 		String semail = (String)session.getAttribute("semail");
 		MemberVO mvo = new MemberVO();
 		mvo = PJUploadDao.getMemberContent(semail);
+		session.setAttribute("pj_id", pj_id);
 		
-		if(session_id != null){
+		if(pj_id != null && pj_id != ""){
 			ProjectVO vo = new ProjectVO();
 			
 			ArrayList<GiftVO> glist = new ArrayList<GiftVO>();
-			vo = PJUploadDao.getProjectContent(session_id);
-			glist = PJUploadDao.getGiftContent(session_id);
+			vo = PJUploadDao.getProjectContent(pj_id);
+			glist = PJUploadDao.getGiftContent(pj_id);
 			
 			for(GiftVO gvo : glist) {
 				ArrayList<ItemVO> ilist = new ArrayList<ItemVO>();
@@ -494,32 +499,37 @@ public class ProjectUploadController {
 	 * @return
 	 */
 	@RequestMapping(value="/project_upload_proc", method=RequestMethod.GET)
-	public String project_upload_proc(HttpSession session) {
+	public String project_upload_proc(HttpSession session, RedirectAttributes redirect) {
 		String session_id = (String)session.getAttribute("pj_id");
 		String res = "error_page";
-		boolean result = PJUploadDao.resultUploadProject(session_id);	
+		
+		boolean result = PJUploadDao.resultUploadProject(session_id);
+		
+		
 		if(result) {
+			redirect.addAttribute("pj_id", session_id);
 			res = "redirect:/project_start_upload";
 		}
 		
 		return res;
 	}
 	
-	
+	/** project 생성 **/
+	@RequestMapping(value="/new_project_proc", method=RequestMethod.GET)
+	@ResponseBody
+	public String new_project_proc(HttpSession session) {
+		String semail = (String)session.getAttribute("semail");
+		String pj_id ="";
+		pj_id = PJUploadDao.resultAddProject(semail);
+		
+		return pj_id;
+	}
 	/**
 	 * 프로젝트 정책 안내 페이지
 	 * @return
 	 */
 	@RequestMapping(value="/project_start_agreement", method=RequestMethod.GET)
-	public String project_start_agreement(HttpSession session) {
-		String session_id = (String)session.getAttribute("pj_id");
-		if(session_id == null){
-			session_id = "null";
-		}
-		
-		if(!session_id.equals("null")){
-			session.removeAttribute("pj_id");
-		}
+	public String project_start_agreement() {
 		return "/project/project_start_agreement";
 	}
 	
@@ -529,7 +539,6 @@ public class ProjectUploadController {
 	 */
 	@RequestMapping(value="/project_start", method=RequestMethod.GET)
 	public String project_start() {
-		
 		return "/project/project_start";
 	}
 	

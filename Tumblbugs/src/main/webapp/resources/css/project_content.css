@@ -216,7 +216,9 @@
 /** project_content_story -------------------------------------------------------------------------------------------------------
 	-----------------------------------------------------------------------------------------------------------------------------
 **/
-
+	#project_content #story_content img {
+		max-width: 630px;
+	}
 
 /** project_content_community ---------------------------------------------------------------------------------------------------
 	-----------------------------------------------------------------------------------------------------------------------------
@@ -237,6 +239,10 @@
 		padding: 15px 25px 15px 25px;
 		text-decoration: none;
 		color: #5c5c5c;
+	}
+	#community_top img#default_member_image {
+		height: 48px;
+		margin-top: -4px;
 	}
 	#community_top .white_box span#message {
 		display: inline-block;
@@ -289,6 +295,7 @@
 		background-color: #e7e7e7;
 		border-radius: 5px;
 		font-size: 10pt; font-weight: bold;
+		outline: none;
 	}
 	#community_content #editor button:hover,
 	.reply_write #btn_reply_write:hover {
@@ -311,14 +318,18 @@
 	
 	/* 커뮤니티 게시글 */
 	div#creator_posting {display: none;}
-	#posting_box {padding: 0px;}
-	#posting_box>div {padding: 20px;}
-	#posting_box>div#posting_header {padding-bottom: 10px;}
-	#posting_box>div#posting_header>#member_img {margin-bottom: -4px;}
-	#posting_box>div#posting_header>div {
+	.posting_box {
+		background-color: white;
+	    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+	    margin-bottom: 15px;
+	}
+	.posting_box>div {padding: 20px;}
+	.posting_box>div#posting_header {padding-bottom: 10px;}
+	.posting_box>div#posting_header>#member_img {margin-bottom: -4px;}
+	.posting_box>div#posting_header>div {
 		display: inline-block;
 	}
-	#posting_box #member_name {
+	.posting_box #member_name {
 		font-size: 10.5pt;
 		font-weight: bold;
 	}
@@ -332,33 +343,33 @@
 	}
 	#posting_log>span {margin-right: 5px;}
 	
-	#posting_box>div#posting_content {padding-bottom: 30px; border-bottom: 1px solid #e7e7e7;}
-	#posting_box>div#posting_reply {
+	.posting_box>div#posting_content {padding-bottom: 30px; border-bottom: 1px solid #e7e7e7;}
+	.posting_box>div#posting_reply {
 		font-size: 10pt;
 	}
-	#posting_box>div#posting_reply>span#reply_count {margin-left: 5px; font-weight: bold;}
+	.posting_box>div#posting_reply>span#reply_count {margin-left: 5px; font-weight: bold;}
 	
 	/* 드롭다운 수정/삭제 버튼 */
-	#posting_box .dropdown {float: right; border: none;}
-	#posting_box .dropdown-menu {
+	.posting_box .dropdown {float: right; border: none;}
+	.posting_box .dropdown-menu {
 		min-width: 30px;
 		font-size: 10.5pt;
 	}
-	#posting_box .btn-secondary,
-	#posting_box .btn-secondary:hover,
-	#posting_box .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+	.posting_box .btn-secondary,
+	.posting_box .btn-secondary:hover,
+	.posting_box .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
 		color: #757575;
 		background-color: white;
 		border-color: white;
 	}
-	#posting_box .btn-secondary:not(:disabled):not(.disabled).active:focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .show>.btn-secondary.dropdown-toggle:focus {
+	.posting_box .btn-secondary:not(:disabled):not(.disabled).active:focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .show>.btn-secondary.dropdown-toggle:focus {
 		box-shadow: none;
 	}
-	#posting_box .dropdown-toggle::after {
+	.posting_box .dropdown-toggle::after {
 	    display: none;
 	}
-	#posting_box .dropdown-item {cursor: pointer;}
-	#posting_box .dropdown-item:active {background-color: white;}
+	.posting_box .dropdown-item {cursor: pointer;}
+	.posting_box .dropdown-item:active {background-color: white;}
 	
 	/* 커뮤니티 댓글 */
 	div.reply_count {cursor: pointer;}
@@ -418,6 +429,10 @@
 		margin-bottom: -8px;
 	}
 	#community .reply_write #member_img img {height: 30px;}
+	#community .reply_write #member_img img#default_profile_img {
+		height: 35px;
+    	margin-top: -3px;
+	}
 	.reply_write #member_name {
 		display: inline-block;
 		vertical-align: top;
@@ -426,7 +441,7 @@
 	.reply_write input {
 		width: 510px;
 		padding: 7px;
-		margin-right: 5px;
+		margin-right: 7px;
 		border: 1px solid #e7e7e7;
 		border-radius: 4px;
 	}

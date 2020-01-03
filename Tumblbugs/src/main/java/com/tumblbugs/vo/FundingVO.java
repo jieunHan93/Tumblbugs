@@ -3,7 +3,7 @@ package com.tumblbugs.vo;
 import java.util.List;
 
 public class FundingVO {
-	String funding_id, pj_id, email, funding_date, extra_funding_price, total_funding_price, payment_id, payment_complete_yn,
+	String funding_id, pj_id, email, funding_date, extra_funding_price, total_funding_price, payment_id, payment_info, payment_complete_yn,
 			recipient_name, recipient_addr, recipient_phone, recipient_request, delivery_start_date, courier, invoice_number, delivery_complete_yn,
 			pj_title, pj_simg, remaining_days, name, pj_end_date, pj_pay_date, payment,
 			project_status, payment_status;	//db에서 가져온 뒤 dao에서 가공해 set해주는 필드
@@ -72,6 +72,14 @@ public class FundingVO {
 
 	public void setPayment_id(String payment_id) {
 		this.payment_id = payment_id;
+	}
+	
+	public String getPayment_info() {
+		return payment_info;
+	}
+
+	public void setPayment_info(String payment_info) {
+		this.payment_info = payment_info;
 	}
 
 	public String getPayment_complete_yn() {

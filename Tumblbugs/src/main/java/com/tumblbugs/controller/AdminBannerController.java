@@ -169,7 +169,7 @@ public class AdminBannerController {
 	
 	/** 배너 수정 **/
 	@RequestMapping(value="/admin/banner_update", method=RequestMethod.POST)
-	@ResponseBody
+	//@ResponseBody
 	public String banner_update(BannerVO vo, String del_simg, HttpServletRequest request) throws Exception {
 		String ba_cimg = vo.getBa_cimg().getOriginalFilename();
 		String ba_simg = "";
@@ -198,11 +198,11 @@ public class AdminBannerController {
 					if(del_file.exists()) del_file.delete();
 				}
 			} 
-			result = "success";
+			result = "redirect:/admin/banner";
 		} else {
-			result = "fail";
+			result = "error_page";
 		}
-		return result;
+		return "redirect:/admin/banner";
 	}
 	
 	/** 배너 삭제 **/
@@ -219,4 +219,30 @@ public class AdminBannerController {
 		}
 		return "";
 	}
+	
+	/** 배너 순서 조정 **/
+	@RequestMapping(value="/admin/banner_order", method=RequestMethod.POST)
+	@ResponseBody
+	public String banner_order(BannerVO vo) {
+		String msg="fail";
+		ArrayList<BannerVO> list = vo.getList();
+		ArrayList<BannerVO> update_list = new ArrayList<BannerVO>();
+		if(list != null) {
+			for(int i=0; i< list.size(); i++) {
+					BannerVO bvo = new BannerVO();
+					if(list.get(i).getBa_order() !="" && list.get(i).getBa_order() != null) {
+						bvo.setBa_id(list.get(i).getBa_id());
+						bvo.setBa_order(list.get(i).getBa_order());
+					} else {
+						bvo.setBa_order("");
+					}
+					System.out.println(list.get(i).getBa_id() +" " + list.get(i).getBa_order());
+					update_list.add(bvo);
+				} 
+			int val = bannerDAO.getResultUpdateOrder(update_list);
+			if(val != 0)  msg="success";
+		}
+		return msg;
+	}
+	
 }

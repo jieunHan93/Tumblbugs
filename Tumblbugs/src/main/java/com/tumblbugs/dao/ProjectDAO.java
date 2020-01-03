@@ -20,14 +20,52 @@ public class ProjectDAO {
 	private SqlSessionTemplate sqlSession;
 	private static String namespace = "mapper.project";
 	
+	//관리자 페이지 - 리스트
+	public ArrayList<ProjectVO> getAdminList(String category) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("category", category);
+		
+		List list = sqlSession.selectList(namespace + ".admin_list", map);
+		return (ArrayList<ProjectVO>)list;
+	}
+	
+	public Map<String, Object> getAdminProjectCount() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", sqlSession.selectOne(namespace + ".adminTotalCount"));
+		map.put("checkRequestCount", sqlSession.selectOne(namespace + ".adminCheckRequestCount"));
+		map.put("successCount", sqlSession.selectOne(namespace + ".adminSuccessCount"));
+		
+		return map;
+	}
+	
 	//관리자 페이지 - 콘텐츠
 	public ProjectVO getAdminContent(String pj_id) {
 		return sqlSession.selectOne(namespace + ".admin_content", pj_id);
 	}
 	
+	/**
+	 * 프로젝트 검토 결과 업데이트
+	 * @param pj_id
+	 * @param checkResult
+	 * @return
+	 */
+	public int updateProjectCheckYn(String pj_id, String checkResult, String pj_reject) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("pj_id", pj_id);
+		map.put("checkResult", checkResult);
+		map.put("pj_reject", pj_reject);
+		
+		return sqlSession.update(namespace + ".project_check_yn", map);
+	}
+	
 	//사용자 페이지 - 콘텐츠
 	public ProjectVO getContent(String pj_id) {
 		return sqlSession.selectOne(namespace + ".content", pj_id);
+	}
+	
+	//미리보기
+	public ProjectVO getPreviewContent(String pj_id) {
+		return sqlSession.selectOne(namespace + ".preview_content", pj_id);
 	}
 	
 	/**

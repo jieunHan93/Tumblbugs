@@ -24,9 +24,13 @@
 					<i class="far fa-hand-point-right"></i> 프로젝트 제목을 입력해주세요.  <span id="stitle_info" style="display:none"></span>
 				</c:if>
 			</div>
-			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_title == null}"> 입력하기</c:if>
-				<c:if test="${vo.pj_title != null}"> 수정하기</c:if>
+			<div id="title_write">
+				<c:if test="${vo.pj_title == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+				<c:if test="${vo.pj_title != null}">
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<i class="far fa-edit"></i> 수정하기
+					</c:if>
+				</c:if>
 			</div>
 		</div>
 		<div id="content_pro_title_d" class="upload_detail">
@@ -51,8 +55,13 @@
 				</li>
 			</ul>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>
 		<div id="content_pro_img" class="upload_detail_slide" >
@@ -65,9 +74,13 @@
 					<i class="far fa-hand-point-right"></i> 프로젝트 대표 이미지를 등록해주세요.	
 				</c:if>
 			</div>
-			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_title == null}"> 입력하기</c:if>
-				<c:if test="${vo.pj_title != null}"> 수정하기</c:if>
+			<div id="title_write">
+				<c:if test="${vo.pj_simg == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+				<c:if test="${vo.pj_simg != null}">
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<i class="far fa-edit"></i> 수정하기
+					</c:if>
+				</c:if>
 			</div>
 		</div>
 		<div id="content_pro_img_d" class="upload_detail">
@@ -88,8 +101,13 @@
 				
 			</div>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>
 		
@@ -103,9 +121,13 @@
 					<i class="far fa-hand-point-right"></i> 프로젝트 요약을 입력해주세요.	
 				</c:if>
 			</div>
-			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_title == null}"> 입력하기</c:if>
-				<c:if test="${vo.pj_title != null}"> 수정하기</c:if>
+			<div id="title_write">
+				<c:if test="${vo.pj_summary == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+				<c:if test="${vo.pj_summary != null}">
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<i class="far fa-edit"></i> 수정하기
+					</c:if>
+				</c:if>
 			</div>
 		</div>
 		<div id="content_pro_summ_d" class="upload_detail">
@@ -114,8 +136,13 @@
 			<div><textarea placeholder="프로젝트 요약을 입력해주세요" style="resize:none" class="m1_check" id="m1_c3_i1">${vo.pj_summary }</textarea></div>	
 			<div id="m1_c3_len">50자 남았습니다</div>				
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>
 		
@@ -129,9 +156,13 @@
 					<i class="far fa-hand-point-right"></i> 프로젝트 카테고리를 입력해주세요.
 				</c:if>
 			</div>		
-			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_category == null}"> 입력하기</c:if>
-				<c:if test="${vo.pj_category != null}"> 수정하기</c:if>
+			<div id="title_write">
+				<c:if test="${vo.pj_category == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+				<c:if test="${vo.pj_category != null}">
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<i class="far fa-edit"></i> 수정하기
+					</c:if>
+				</c:if>
 			</div>	
 		</div>
 		<div id="content_pro_category_d" class="upload_detail">
@@ -156,8 +187,13 @@
 				<option id="campagn">캠페인</option>	
 			</select></div>				
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>
 		
@@ -171,19 +207,31 @@
 					<i class="far fa-hand-point-right"></i> 프로젝트 페이지 주소를 입력해주세요.
 				</c:if>
 			</div>	
-			<div id="title_write"><i class="far fa-edit"></i> 입력하기</div>
+			<div id="title_write">
+				<c:if test="${vo.pj_addr == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+				<c:if test="${vo.pj_addr != null}">
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<i class="far fa-edit"></i> 수정하기
+					</c:if>
+				</c:if>
+			</div>
 		</div>
 		<div id="content_pro_addr_d" class="upload_detail">
 			<div class="d_title">프로젝트 페이지 주소</div>
 			<div><p>프로젝트 페이지로 접속할 수 있는 주소(URL)를 설정해주세요.</div>	
 			<div>
-				<span>https://localhost:9090/tumblbugs/</span>
+				<span>https://localhost:9090/tumblbugs/project/</span>
 				<input type="text" style="resize:none" class="m1_check" id="m1_c4_i1" value="${vo.pj_addr }"/>
 				<div id="m1_c4_len">50자 남았습니다</div>
 			</div>			
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>
 		
@@ -197,9 +245,13 @@
 					<i class="far fa-hand-point-right"></i> 예시:뱃지, 웹툰, 에코백, 고양이, 유기견
 				</c:if>
 			</div>	
-			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_tag == null}"> 입력하기</c:if>
-				<c:if test="${vo.pj_tag != null}"> 수정하기</c:if>
+			<div id="title_write">
+				<c:if test="${vo.pj_tag == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+				<c:if test="${vo.pj_tag != null}">
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<i class="far fa-edit"></i> 수정하기
+					</c:if>
+				</c:if>
 			</div>
 		</div>
 		<div id="content_pro_tag_d" class="upload_detail">
@@ -214,8 +266,13 @@
 			<div>쉼표를 제외한 특수문자는 입력하실 수 없습니다.</div>	
 			<div id="m1_c5_len"><span>50자 남았습니다</span></div>				
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>
 		</div>
@@ -286,7 +343,7 @@
 			<label>창작자 소개</label>
 			<div id="my_intro_info" class="sub_info">
 			<c:if test="${mvo.intro != null}">
-				<span style="color:black; font-size:11pt; font-weight:550;">${mvo.intro}</span>
+				<span style="color:black; font-size:10pt; font-weight:550;" >${mvo.intro}</span>
 			</c:if>
 			<c:if test="${mvo.intro == null}">
 				<i class="far fa-hand-point-right"></i> 창작자 소개를 입력해주세요.

@@ -23,6 +23,19 @@ public class NoticeDAO {
 	public String getNsfileName(String notice_id) {
 		return sqlSession.selectOne(namespace+".thumbnail_name" ,notice_id);
 	}
+	/** 공지사항(검색) - 페이징 **/
+	public ArrayList<NoticeVO> getNoticeSearchList(int start, int end, String searchVal){
+		List<NoticeVO> list = new ArrayList<NoticeVO>();
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("start", start);
+		param.put("end", end);
+		param.put("searchVal", searchVal);
+		
+		list = sqlSession.selectList(namespace+".notice_search_list", param);
+		
+		return (ArrayList<NoticeVO>)list;
+	}
 	
 	/** 공지사항(카테고리) - 페이징 **/
 	public ArrayList<NoticeVO> getNoticeCategoryList(int start, int end, String category){
@@ -64,6 +77,11 @@ public class NoticeDAO {
 	/** 전체 리스트 개수 **/
 	public int allCount() {
 		return sqlSession.selectOne(namespace+".all_count");
+	}
+	
+	/** 검색 리스트 개수 **/
+	public int searchCount(String searchVal) {
+		return sqlSession.selectOne(namespace+".search_count", searchVal);
 	}
 	
 	/** 공지사항 삭제 **/
@@ -109,13 +127,7 @@ public class NoticeDAO {
 		
 		return (ArrayList<NoticeVO>)list;
 	}
-	/** 카테고리별 리스트 **/
-/*	public ArrayList<NoticeVO> getNoticeCategoryList(String listColName){
-		List<NoticeVO> list = new ArrayList<NoticeVO>();
-		list = sqlSession.selectList(namespace+".notice_category_list", listColName);
-		
-		return (ArrayList<NoticeVO>)list;
-	}*/
+
 	/** 공지사항 작성 **/
 	public boolean noticeWrite(NoticeVO vo){
 		boolean result = false;

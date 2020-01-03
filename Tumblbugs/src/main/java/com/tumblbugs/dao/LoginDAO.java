@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tumblbugs.vo.MemberVO;
 import com.tumblbugs.vo.SessionVO;
@@ -19,6 +20,12 @@ public class LoginDAO {
 	/** 로그인 처리 **/
 	public SessionVO getResultLogin(MemberVO vo) {			
 		return sqlSession.selectOne(namespace + ".login", vo);
+	}
+	public String getfound(String email) {			
+		return sqlSession.selectOne(namespace + ".found", email);
+	}
+	public String getfound_ajax(String email) {			
+		return sqlSession.selectOne(namespace + ".found_ajax", email);
 	}
 	
 	public int getemailchk(String email) {

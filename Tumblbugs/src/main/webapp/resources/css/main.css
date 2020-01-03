@@ -265,7 +265,7 @@ div#projectMenuModal div#modal_search_title{
 	margin-bottom:15px;
 }
 div#projectMenuModal div#modal_search_box input {
-	width: 909px;
+	width: 910px;
 	height:40px;
 	font-size: 15px;
 	padding: 15px 10px;
@@ -479,11 +479,11 @@ div#main_header .swiper-container{
 div#main_header div.swiper-pagination{
 	vertical-align: bottom;
 }
-div#main_slide1.swiper-slide{ background-image: url("http://localhost:9090/tumblbugs/images/hero_aldif.jpg"); }
-div#main_slide2.swiper-slide{ background-image: url("http://localhost:9090/tumblbugs/images/hero_delta_time.jpg"); }
-div#main_slide3.swiper-slide{ background-image: url("http://localhost:9090/tumblbugs/images/hero_lunox_mod1.jpg"); }
-div#main_slide4.swiper-slide{ background-image: url("http://localhost:9090/tumblbugs/images/hero_nana.jpg"); }
-div#main_slide5.swiper-slide{ background-image: url("http://localhost:9090/tumblbugs/images/hero_planner.jpg"); }
+div.swiper-slide{ 
+	background-size: cover;
+	background-repeat: no-repeat; 	
+	background-position: 50% 50%;
+}
 div.swiper-slide>a {
  	width:100%;
  	height:450px;

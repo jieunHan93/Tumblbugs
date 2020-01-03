@@ -25,7 +25,7 @@
 					</tr>
 					<tr>
 						<td><a href="#">서비스 개선사항</a></td>
-						<td><a href="#">헬프 센터</a></td>
+						<td><a href="http://localhost:9090/tumblbugs/help">헬프 센터</a></td>
 					</tr>
 				</table>
 				<div id="footer_right">
@@ -36,7 +36,7 @@
 						<a href="https://www.instagram.com/tumblbug/" class="icon" id="instagram" target="blank"><img src="http://localhost:9090/tumblbugs/images/instagram_black.png"></a>
 						<a href="https://post.naver.com/my.nhn?memberNo=23995853" class="icon" id="naver" target="blank"><img src="http://localhost:9090/tumblbugs/images/naverIcon.png"></a>
 					</div>
-					<a href="#" id="goHelpCenter">문의하기</a>
+					<a href="http://localhost:9090/tumblbugs/help/helpq" id="goHelpCenter">문의하기</a>
 				</div>
 			</div>
 			<p>텀블벅은 플랫폼 제공자로서 프로젝트의 당사자가 아니며, 직접적인 통신판매를 진행하지 않습니다. 프로젝트의 완수 및 선물제공의 책임은 해당 프로젝트의 창작자에게 있으며, 프로젝트와 관련하여 후원자와 발생하는 법적 분쟁에 대한 책임은 해당 창작자가 부담합니다.

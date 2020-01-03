@@ -11,6 +11,11 @@
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/project_content.css">
 <link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
+<script>
+	$(document).ready(function() {
+		
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -23,15 +28,15 @@
 					<div id="fundingInfo_content">
 						<div class="white_box" id="project_policy">
 							<div class="subtitle">이 프로젝트의 환불 및 교환 정책</div>
-							<div class="subContent">${vo.pj_refund }<br></div>
+							<div class="subContent" style="white-space:pre-wrap; text-align: justify">${pvo.pj_refund }<br></div>
 						</div>
 						<div class="white_box" id="reward_info">
 							<div class="subtitle">상품정보 고시</div>
-							<div class="subtitle" id="reward_category">${vo.pj_class }</div>
+							<div class="subtitle" id="reward_category">${pvo.pj_class }</div>
 						</div>
 						<div class="white_box" id="request">
 							<span class="subtitle">프로젝트에 대해 문의사항이 있으신가요?</span>
-							<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${vo.pj_id}"><button type="button" id="btnSendMessage"><i class="fas fa-envelope"></i> &nbsp;창작자에게 문의하기</button></a>
+							<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${pvo.pj_id}"><button type="button" id="btnSendMessage"><i class="fas fa-envelope"></i> &nbsp;창작자에게 문의하기</button></a>
 						</div>
 					</div>
 				</div>

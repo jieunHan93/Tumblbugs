@@ -25,14 +25,23 @@
 		where c.community_id = r.community_id
 		and r.email = m.email
 		and c.community_id = #{community_id}
+		order by reply_date
 	</select>
 	
 	<select id="replyOne" parameterType="map" resultType="com.tumblbugs.vo.CommunityReplyVO">
 		select reply_id, r.email, m.name, m.profile_simg, reply_content,  to_char(reply_date,'yyyy.mm.dd hh24:mi') reply_date
 		from tum_community_reply r, tum_member m
 		where r.email = m.email
-		and r.reply_id = #{reply_id}
 		and r.email = #{email}
+		and r.community_id = #{community_id}
+		and reply_date = (select max(reply_date) from tum_community_reply)
+	</select>
+	
+	<select id="rcount" parameterType="String" resultType="int">
+		select nvl(rcount,0) rcount
+		from tum_community c, (select count(*) rcount, community_id from tum_community_reply group by community_id) r
+		where c.community_id = r.community_id(+)
+		and c.community_id=#{community_id}
 	</select>
 	
 	<insert id="write" parameterType="com.tumblbugs.vo.CommunityVO">

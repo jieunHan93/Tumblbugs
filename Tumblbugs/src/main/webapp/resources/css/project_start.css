@@ -294,8 +294,7 @@
 		color:rgb(241,75,88);
 	}
 	#project_start_upload .upload_detail_slide:hover,
-	#project_start_upload .present_detail_slide:hover,
-	.upload_present_slide{
+	#project_start_upload .present_detail_slide:hover{
 		background:rgb(240,245,255);
 		transition: all 0.2s;
 	}
@@ -421,10 +420,13 @@
 		font-wight:bold;
 		cursor:pointer;
 	}
-	#project_start_upload .content_btn button:first-child{
+	#project_start_upload .content_btn button:first-child,
+	.gift_reset{
 		background:rgb(223,224,225);
 	}
-	#project_start_upload .content_btn button:last-child{
+	#project_start_upload .content_btn button.up_save,
+	#project_start_upload .content_btn button.update_present_btn,
+	.add_present_btn{
 		background:#1e90ff;
 		color:white;
 	}
@@ -432,7 +434,10 @@
 		background:#ccc;
 		transition: all 0.2s;
 	}
-	#project_start_upload .content_btn button:last-child:hover{
+	#project_start_upload .content_btn button.up_save:hover,
+	.add_present_btn:hover,
+	.update_present_btn:hover
+	{
 		background:#1d85ea;
 		transition: all 0.2s;
 	}
@@ -672,6 +677,7 @@
 		position:relative;
 		left:10px;
 		bottom:28px;
+		padding:5px 10px 5px 10px;
 	}
 	#project_start_upload #content_my_name_d>div:nth-child(3) input:focus{
 		border-color:#1d85ea;

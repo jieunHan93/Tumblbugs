@@ -21,9 +21,13 @@
 				<i class="far fa-hand-point-right"></i> 프로젝트 스토리를 입력해주세요.
 			</c:if>
 			</div>
-			<div id="title_write"><i class="far fa-edit"></i>
-				<c:if test="${vo.pj_story == null}"> 입력하기</c:if>
-				<c:if test="${vo.pj_story != null}"> 수정하기</c:if>
+			<div id="title_write">
+				<c:if test="${vo.pj_story == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+					<c:if test="${vo.pj_story != null}">
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<i class="far fa-edit"></i> 수정하기
+					</c:if>
+				</c:if>
 			</div>
 		</div>
 		<div id="content_m3_c2_d" class="upload_detail">
@@ -39,14 +43,19 @@
 					<textarea class="m3_check" id="m3_c1_i1">
 						<c:if test="${vo.pj_story != null}">
 							${vo.pj_story}
-						</c:if>
+						</c:if> 
 					</textarea>
 					</form>
 					</div>
 			</div>
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save" id="m3_c1_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>	
 	</div>	

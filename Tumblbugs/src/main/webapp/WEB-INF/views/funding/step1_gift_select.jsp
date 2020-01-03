@@ -17,12 +17,19 @@
 <script>
 	$(document).ready(function() {
 		//선물을 미리 선택하고 페이지에 들어올 때
-		var giftId = '${gift_id}';
-		$("html").animate({scrollTop : $("label#" + giftId).offset().top}, 300);
-		$("label#" + giftId).css("background-color", "#f9f9f9");
-		$("label#" + giftId).find(".gift_quantity_and_option").show();
-		$("label#" + giftId).find(".select_cancel").show();
-		totalPrice();
+		if('${gift_id}' != null && '${gift_id}' != "") {
+			var gift = $("label#" + '${gift_id}');
+			
+			$("html").animate({scrollTop : gift.offset().top}, 300);
+			gift.find("input[type='checkbox']").prop("checked", true).val("y");
+			gift.css("background-color", "#f9f9f9");
+			gift.find(".gift_quantity_and_option").slideDown();
+			gift.find(".select_cancel").show();
+			
+			var totalprice = gift.find("#gift_price").text().replace(",","");
+			$("span#total_price").text(totalprice).number(true);
+			$("input[name='total_funding_price']").val(totalprice.trim());
+		}
 	});
 </script>
 </head>

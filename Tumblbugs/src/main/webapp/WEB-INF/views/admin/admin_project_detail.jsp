@@ -11,6 +11,11 @@
 <title>Insert title here</title>
 <script>
 	$(document).ready(function() {
+		//승인/반려 처리 되어있으면 체크 리스트 숨김
+		if('${vo.pj_check_yn}' != null && '${vo.pj_check_yn}' != "" && '${vo.pj_check_yn}' != "c") {
+			$(".checklist_sidebar").hide();
+		}
+		
 		//체크된 아이콘 숨김
 		$("i#true").hide();
 		
@@ -60,9 +65,8 @@
 			});
 			
 			if(result == true) {
-				//db 업데이트
-				
 				alert("승인 처리되었습니다.");
+				location.href = "http://localhost:9090/tumblbugs/admin/project_check_proc?pj_id=" + '${vo.pj_id}';
 			}
 		});
 	});
@@ -83,8 +87,8 @@
 						<label id="menu3">스토리텔링</label>
 						<label id="menu4">계좌</label>
 						<div>
-							<a href="http://localhost:9090/tumblbugs/admin/project"><button type="button" id="btn_list">목록보기</button></a>
-							<a href="http://localhost:9090/tumblbugs/project_preview" target="_blank"><button type="button" id="btn_preview"><i class="far fa-eye"></i> &nbsp;&nbsp;미리보기</button></a>
+							<a href="http://localhost:9090/tumblbugs/admin/projects"><button type="button" id="btn_list">목록보기</button></a>
+							<a href="http://localhost:9090/tumblbugs/preview/${vo.pj_id}" target="_blank"><button type="button" id="btn_preview"><i class="far fa-eye"></i> &nbsp;&nbsp;미리보기</button></a>
 						</div>
 					</div>
 				</div>
@@ -182,7 +186,7 @@
 						<div class="menu_content_box" id="refund">
 							<div>
 								<div class="sub_menu_title">환불 및 교환 정책</div>
-								<div class="sub_menu_value">${vo.pj_refund }</div>
+								<div class="sub_menu_value" style="white-space:pre-wrap; text-align: justify">${vo.pj_refund }</div>
 							</div>
 						</div>
 						<div class="menu_content_box" id="class">
@@ -303,7 +307,7 @@
 				</div>
 				<div class="check_result_button">
 					<button id="btn_approve" type="button">승인</button>
-					<a href="http://localhost:9090/tumblbugs/admin/project_reject"><button id="btn_reject" type="button">반려</button></a>
+					<a href="http://localhost:9090/tumblbugs/admin/project_reject/${vo.pj_id}"><button id="btn_reject" type="button">반려</button></a>
 				</div>
 			</div>
 		</div>

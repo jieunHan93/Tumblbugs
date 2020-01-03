@@ -70,5 +70,9 @@ public class MypageDAO {
 	public int select_pyment_method() {
 		return sqlSession.selectOne(namespace2 + ".select_pyment_method");			
 	}
+
+	public int getpayment_delete(String pid) {
+		return sqlSession.delete(namespace2 + ".payment_delete", pid);		
+	}
 	
 }

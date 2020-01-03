@@ -1,6 +1,6 @@
 @charset "EUC-KR";
 
-/********************************* 헤더 *******************/
+/********************* 헤더 *******************/
 div#header_wrap {
 	background-color:#ffffff;
 	width:100%;
@@ -607,19 +607,6 @@ section#sec2>ul#ul1 {
 section#sec2 > ul#ul1 > li#sec2_item {
 	margin-bottom: 12px;
 }
-section#sec2 > ul#ul1 > li#sec2_item a{
-	z-index: 5;
-	text-decoration: none;
-	display: block;
-	width:511px;
-	height: 45px;
-	padding-left: 20px;
-	line-height:45px;
-	font-size: 15px;
-	color: #191919;
-	background-color:#ffffff;
-	border: 1px solid #EFEDED;
-}
 section#sec2 > ul#ul2 {
 	border:1px solid #EFEDED;
 	list-style: none;
@@ -630,8 +617,8 @@ div#q_partnership {margin-bottom: 60px;}
 div#q_partnership a#partner_a:hover {text-decoration: underline;}
 
 /************** 1:1 문의 상세(창작,후원,일반) *********/
-div#q_type>form>input[type="text"]#question_email,
-div#q_type>form>input[type="text"]#question_spon_number{
+div#q_type>form>div>input[type="text"]#question_email,
+div#q_type>form>div>input[type="text"]#question_spon_number{
 	padding: 10px;
 	width: 586px;
 	height:18px;
@@ -639,7 +626,7 @@ div#q_type>form>input[type="text"]#question_spon_number{
 	border-radius: 4px;
 	margin-bottom: 5px;
 }
-div#q_type>form>input[type="text"]#question_title{
+div#q_type>form>div>input[type="text"]#question_title{
 	padding: 10px;
 	width: 586px;
 	height:18px;
@@ -667,7 +654,7 @@ div#h_fileUpload span{
 	display:inline-block;
 	margin: 10px 0px;
 }
-div#q_type>form>textarea#question_ques_content {
+div#q_type>form>div>textarea#question_ques_content {
 	padding: 10px;
 	width: 586px;
 	height:98px;
@@ -675,13 +662,13 @@ div#q_type>form>textarea#question_ques_content {
 	border-radius: 4px;
 	margin-bottom: 30px;
 }
-div#q_type>form>p#help_email {
+div#q_type>form>div>p#help_email {
 	color: #666;
 	font-size: 12px;
 	margin-top: 5px;
 	margin-bottom: 30px;
 }
-div#q_type>form>p#help_footer {
+div#q_type>form>div>p#help_footer {
 	color: #666;
 	font-size: 12px;
 	margin-top: 5px;
@@ -691,7 +678,7 @@ p#help_id {
 	font-size: 14px;
 	display: inline-block;
 }
-div#q_type>form>button[type="button"] {
+div#q_type>form>div>button[type="button"] {
 	background-color: #1e90ff;
 	border: 0;
     border-radius: 4px;

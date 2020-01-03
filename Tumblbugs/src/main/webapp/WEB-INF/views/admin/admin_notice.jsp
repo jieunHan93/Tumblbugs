@@ -141,10 +141,10 @@
 								<td class="title">${vo.notice_title }</td>
 								<td>${vo.notice_reg_date}</td>
 								
-								<c:if test="${vo.event_waiting_date >= 0}">
+								<c:if test="${vo.event_waiting_date > 0}">
 									<td>진행대기</td>
 								</c:if>
-								<c:if test="${vo.event_waiting_date < 0}"> 
+								<c:if test="${vo.event_waiting_date <= 0}"> 
 									<c:if test="${vo.event_extra_date >= 0}"> 
 										<td>진행중</td>
 									</c:if>

@@ -32,7 +32,7 @@
 	
 	.admin_project_content {
 		padding: 25px 30px;
-		width: 1200px;
+		width: 1400px;
 	}
 	
 	#project_table_wrapper {
@@ -51,8 +51,15 @@
 		width: 100%;
 		margin-bottom: 10px;
 	}
-	#project_table td:not(.title) {
+	#project_table td {
 		text-align: center;
+	}
+	#project_table td.title {
+		text-align: left;
+	}
+	#project_table td.pj_price,
+	#project_table td.total_funding_price {
+		text-align: right;
 	}
 	#project_table,
 	#project_table th,
@@ -62,6 +69,7 @@
 	}
 	.admin_project_content #project_table th {
 		font-size: 10pt;
+		text-align: center;
 	}
 	
 	#project_table a {
@@ -323,6 +331,9 @@
 	#story .sub_menu_value {
 		padding-top: 20px;
 		font-weight: normal;
+	}
+	#story .sub_menu_value img {
+		max-width: 900px;
 	}
 	
 	/** menu4: 계좌 **/

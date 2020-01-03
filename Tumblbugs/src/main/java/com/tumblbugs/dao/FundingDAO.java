@@ -26,7 +26,7 @@ public class FundingDAO {
 	 * @param vo
 	 * @return
 	 */
-	public int fundingInsert(FundingVO vo) {
+	public int insertFunding(FundingVO vo) {
 		int nthSupporter = 0;
 		
 		if(sqlSession.insert(namespace + ".fundingInsert", vo) != 0) {
@@ -35,7 +35,7 @@ public class FundingDAO {
 			for(FundingGiftVO fgvo:vo.getGiftList()) {
 				String funding_id = getFundingId(vo.getEmail());
 				fgvo.setFunding_id(funding_id);
-				insertCount += fundingGiftInsert(fgvo);
+				insertCount += insertFundingGift(fgvo);
 			}
 			
 			if(insertCount == vo.getGiftList().size()) {
@@ -51,7 +51,7 @@ public class FundingDAO {
 	 * @param vo
 	 * @return
 	 */
-	public int fundingGiftInsert(FundingGiftVO vo) {
+	public int insertFundingGift(FundingGiftVO vo) {
 		return sqlSession.insert(namespace + ".fundingGiftInsert", vo);
 	}
 	
@@ -177,28 +177,28 @@ public class FundingDAO {
 		
 		//update 작업 수행
 		for(FundingGiftVO fgvo:updateList) {
-			fundingGiftUpdate(fgvo);
+			updateFundingGift(fgvo);
 		}
 		
 		//insert 작업 수행
 		for(FundingGiftVO fgvo:newList2) {
-			fundingGiftInsert(fgvo);
+			insertFundingGift(fgvo);
 		}
 		
 		//delete 작업 수행
 		for(FundingGiftVO fgvo:oldList) {
-			fundingGiftDelete(fgvo);
+			deleteFundingGift(fgvo);
 		}
 		
 		//추가후원금, 총 후원금 업데이트
 		return sqlSession.update(namespace + ".priceUpdate", vo);
 	}
 	
-	public int fundingGiftUpdate(FundingGiftVO vo) {
+	public int updateFundingGift(FundingGiftVO vo) {
 		return sqlSession.update(namespace + ".fundingGiftUpdate", vo);
 	}
 	
-	public int fundingGiftDelete(FundingGiftVO vo) {
+	public int deleteFundingGift(FundingGiftVO vo) {
 		return sqlSession.delete(namespace + ".fundingGiftDelete", vo);
 	}
 	
@@ -208,10 +208,11 @@ public class FundingDAO {
 	 * @param payment_id
 	 * @return
 	 */
-	public int getPaymentUpdateResult(String funding_id, String payment_id) {
+	public int getPaymentUpdateResult(String funding_id, String payment_id, String payment_info) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("funding_id", funding_id);
 		map.put("payment_id", payment_id);
+		map.put("payment_info", payment_info);
 		
 		return sqlSession.update(namespace + ".paymentUpdate", map);
 	}

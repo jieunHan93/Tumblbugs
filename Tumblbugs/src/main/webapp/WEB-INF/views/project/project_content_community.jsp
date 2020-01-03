@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>텀블벅스 :: tumblbugs</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/project_content.css">
@@ -17,7 +17,7 @@
 		$("#box3_sponser").show();
 		
 		//게시글 삭제
-		$("#posting_box #community_delete").click(function() {
+		$(".posting_box #community_delete").click(function() {
 			if(confirm("게시글을 삭제하시겠습니까?")) {
 				var community_id = $(this).closest(".dropdown").attr("id");
 				
@@ -78,10 +78,16 @@
 						replyEach += "</div></div></div>";
 					}
 					
-					replyEach += "<div class='reply_write'>"
-									+ "<span id='member_img'><img src='http://localhost:9090/tumblbugs/images/avatar_2.png'></span>"
-									+ "<input type='text' id='reply_write_content'>"
-									+ "<button id='btn_reply_write' type='button'>올리기</button></div>";
+					//로그인&후원자 회원만 댓글 작성란 show
+					if('${sessionScope.semail}' != null && '${sessionScope.semail}' != "" && ('${fundingYn}' > 0 || '${sessionScope.semail}' == '${pvo.email}')) {
+						replyEach += "<div class='reply_write'>";
+						if('${sessionScope.svo.profile_simg}' != null && '${sessionScope.svo.profile_simg}' != "") {
+							replyEach += "<span id='member_img'><img src='http://localhost:9090/tumblbugs/upload/" + '${sessionScope.svo.profile_simg}' + "'></span>";
+						} else {
+							replyEach += "<span id='member_img'><img id='default_profile_img' src='http://localhost:9090/tumblbugs/images/avatar_2.png'></span>";
+						}
+						replyEach += "<input type='text' id='reply_write_content'><button id='btn_reply_write' type='button'>올리기</button></div>";
+					}
 					
 					$(".reply_list#" + community_id).append(replyEach).slideToggle();
 					
@@ -94,13 +100,33 @@
 							alert("댓글을 입력해주세요.");
 							$(this).siblings("input#reply_write_content").focus();
 						} else {
+							
 							$.ajax({
 								url: "http://localhost:9090/tumblbugs/community_reply_write_proc?community_id=" + community_id + "&reply_content=" + reply_content,
-								success: function(result) {
-									if(result != "0") {
+								success: function(data) {
+									var newReply = JSON.parse(data);
+									
+									if(newReply.reply_id != null && newReply.reply_id != "") {
+										var appendData = "<div class='reply_each' id='" + newReply.reply_id +"'>"
+											+ "<span id='member_img'><img src='http://localhost:9090/tumblbugs/upload/"+ newReply.profile_simg + "'></span>"
+											+ "<div id='reply_each_right'>"
+											+ "<div id='reply_writer_and_date'>"
+											+ "<div id='member_name'>" + newReply.name
+											+ "<c:if test='${" + newReply.email + " == vo.email }'>"
+											+ "<span id='creator_label'>창작자</span>"
+											+ "</c:if></div>"
+											+ "<div id='reply_date'>" + newReply.reply_date + "</div></div>"
+											+ "<div id='reply_content'><span>" + newReply.reply_content + "</span>"
+											+ "<button id='btn_reply_delete' type='button' style='margin-left: 7px'>삭제</button>"
+											+ "</div></div></div>";
 										
+										var id = $(".reply_list#" + community_id + " .reply_each").last().attr("id");
+										$(".reply_each#" + id).after(appendData);
+										$("input#reply_write_content").val("");
+										
+										getRcount(community_id);
 									} else {
-										alert("댓글 등록을 실패했습니다.");
+										alert("댓글 등록에 실패했습니다.");
 									}
 								}
 							});
@@ -116,14 +142,15 @@
 								url: "http://localhost:9090/tumblbugs/community_reply_delete_proc?reply_id=" + reply_id,
 								success: function(result) {
 									if(result != "0") {
-										var rcount = $(".reply_each#" + reply_id).closest("#posting_reply").find("#rcount");
-										rcount.text(rcount.text() - 1);
 										$(".reply_each#" + reply_id).remove();
+										getRcount(community_id);
 									}
 								}
 							});
 						}
 					});
+					
+					
 				}
 			});
 			
@@ -131,7 +158,16 @@
 			$(this).hide();
 		});
 		
-		
+		//댓글 등록&삭제 후 댓글 count 업데이트
+		function getRcount(community_id) {
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/rcount?community_id=" + community_id,
+				success: function(rcount) {
+					$(".posting_box#" + community_id).find("span#rcount").text(rcount);
+					$(".posting_box#" + community_id).find("b#rcount").text(rcount);
+				}
+			});
+		}
 		
 		//댓글 접기
 		$("div.reply_count_reply_show").click(function() {
@@ -163,6 +199,14 @@
 										</a>
 									</div>
 								</c:when>
+								<c:when test="${sessionScope.semail == pvo.email}">
+									<div class="white_box" id="box3_sponser">
+										<a href="http://localhost:9090/tumblbugs/project/${pvo.pj_addr }/community/new">
+											<span id="member_img"><img src="http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_simg }"></span>
+											<span id="message">후원자들에게 소식을 전해보세요</span>
+										</a>
+									</div>
+								</c:when>
 								<c:when test="${fundingYn eq 0}">
 									<!-- 비후원자 회원 -->
 									<div class="white_box" id="box2_nonsponser">
@@ -173,7 +217,7 @@
 								<c:when test="${fundingYn > 0}">
 									<!-- 후원자 -->
 									<div class="white_box" id="box3_sponser">
-										<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }/community/new">
+										<a href="http://localhost:9090/tumblbugs/project/${pvo.pj_addr }/community/new">
 											<span id="member_img"><img src="http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_simg }"></span>
 											<span id="message">창작자에게 응원의 한 마디를!</span>
 										</a>
@@ -189,12 +233,12 @@
 							<c:choose>
 								<c:when test="${fn:length(clist) != 0}">
 									<c:forEach var="cvo" items="${clist}" varStatus="status">
-										<div class="white_box" id="posting_box">
+										<div class="posting_box" id="${cvo.community_id}">
 											<div id="posting_header">
 												<span id="member_img"><img src="http://localhost:9090/tumblbugs/upload/${cvo.profile_simg }"></span>
 												<div>
 													<div id="member_name">${cvo.name }
-														<c:if test="${vo.email == cvo.email }">
+														<c:if test="${pvo.email == cvo.email }">
 															<span id="creator_label">창작자</span>
 														</c:if>
 													</div>
@@ -216,7 +260,7 @@
 													    <i class="fas fa-ellipsis-v"></i>
 													  	</button>
 														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-														    <a class="dropdown-item" id="community_update" href="http://localhost:9090/tumblbugs/project/${vo.pj_addr}/community/update/${cvo.community_id}">수정</a>
+														    <a class="dropdown-item" id="community_update" href="http://localhost:9090/tumblbugs/project/${pvo.pj_addr}/community/update/${cvo.community_id}">수정</a>
 														    <a class="dropdown-item" id="community_delete">삭제</a>
 													  </div>
 													</div>
@@ -227,7 +271,7 @@
 												<div class="reply_count">
 													<div class="reply_count_original" id="${cvo.community_id }">	<!-- 게시글 id를 id로 준다. -->
 														<i class="fas fa-comment"></i>&nbsp;&nbsp;
-														<span id="reply_count">${cvo.rcount }</span>
+														<span id="rcount">${cvo.rcount }</span>
 													</div>
 													<div class="reply_count_reply_show" id="${cvo.community_id }">	<!-- 게시글 id를 id로 준다. -->
 														<span><b id="rcount">${cvo.rcount }</b>개의 댓글이 있습니다.</span>
@@ -251,8 +295,8 @@
 							<c:choose>
 								<c:when test="${fn:length(clist) != 0}">
 									<c:forEach var="cvo" items="${clist}">
-										<c:if test="${vo.email == cvo.email }">
-										<div class="white_box" id="posting_box">
+										<c:if test="${pvo.email == cvo.email }">
+										<div class="posting_box" id="${cvo.community_id}">
 											<div id="posting_header">
 												<span id="member_img"><img src="http://localhost:9090/tumblbugs/upload/${cvo.profile_simg }"></span>
 												<div>

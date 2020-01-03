@@ -9,21 +9,38 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>텀블벅스 :: tumblbugs</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
 <link rel="icon" href="http://localhost:9090/tumblbugs/images/tumblbugs_img_logo.ico" type="image/x-icon">
 <script>
 	$(document).ready(function() {
+		//프로젝트 마감 이후에는 후원사항 변경 불가하도록 설정
+		var project_status = $(".project_status").text();
+		if(project_status.indexOf("펀딩 진행중") == -1) {
+			$("td div#funding_edit_button").hide();
+		}
+		
 		var odata = "";
 		
 		//수정하기 버튼 클릭
 		$(".button_td #btn_update").click(function() {
 			//설정 초기화
 			$(".data_tr_update #btn_update_submit").addClass("disabled");	//저장 버튼 비활성화
-			$(".data_value input").each(function() {						//수정 버튼 누르면 보이는 input value들을 DB에 저장된 값으로 setting
-				var id = $(this).closest("tr").attr("id");
-				var beforeData = $("tr#" + id + " .data_value").text();
-				$(this).val(beforeData);
+			$(".data_tr_update").each(function() {							//수정 버튼 누르면 보이는 input value들을 DB에 저장된 값으로 setting
+				var id = $(this).attr("id");
+				var beforeData = $("tr.data_tr#" + id + " .data_value").text();
+				
+				if(id != "recipient_addr") {
+					$(this).find("input").val(beforeData);
+				} else {
+					var zipcode = beforeData.slice(1, 6);
+					var address = beforeData.replace(beforeData.slice(0, 8), "");
+					$("label#zipcode span").text(zipcode);
+					$("input#address").val(address);
+					$("input#address_detail").val("");
+					$("input#new_address").val(beforeData);
+				}
 			});
 			
 			var data_tr = $(this).closest("tr");
@@ -62,11 +79,49 @@
 			}
 		});
 		
+		//우편번호 검색
+		$("#btnAddrSearch").click(function() {
+			new daum.Postcode({
+				oncomplete: function(data) {
+	                var zipcode = data.zonecode;
+	                var roadAddr = data.roadAddress;
+					var extraRoadAddr = "";
+	                
+					if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+						extraRoadAddr += data.bname;
+	                }
+	                if(data.buildingName !== '' && data.apartment === 'Y') {
+	                	extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                if(extraRoadAddr !== ''){
+	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+	                }
+	                
+	                //사용자에게 보여줄 데이터
+	                $("label#zipcode span").text(zipcode);
+					$("input#address").val(roadAddr + extraRoadAddr);
+	                
+	                //db에 넘길 데이터
+					$("input#new_address").val("[" + zipcode + "] " + roadAddr + extraRoadAddr);
+	                
+	                //상세 주소 입력란 포커스
+	                $("input#address_detail").focus();
+	                
+	                //저장하기 버튼 활성화
+	                $(".data_tr_update#recipient_addr #btn_update_submit").removeClass("disabled").removeAttr("disabled");
+				}
+			}).open();
+		});
+		
 		//배송정보 저장
 		$(".data_tr_update #btn_update_submit").click(function() {
 			if($(this).attr("disabled") != "disabled") {
 				var column = $(this).closest(".data_tr_update").attr("id");
 				var value = $(this).closest(".data_tr_update").find("input").val();
+				
+				if(column == "recipient_addr") {
+					value = $("input#new_address").val() + " " + $("input#address_detail").val();
+				}
 				
 				$.ajax({
 					url: "http://localhost:9090/tumblbugs/myfunding_delivery_update?funding_id=" + '${fvo.funding_id}' + "&column=" + column + "&value=" + value,
@@ -89,6 +144,29 @@
 		background-color: #1d85ea;
 		opacity: 0.5;
 		cursor: default;
+	}
+	
+	.data_tr_update#recipient_addr td .data_value {
+		color: #767676;
+		padding: 3px 0px;
+	}
+	
+	#recipient_addr .data_subtitle {
+		font-size: 9.5pt;
+		padding: 6px 0px 5px 0px;
+	}
+	#funding_detail button#btnAddrSearch {
+		margin-left: 7px;
+		background-color: #fa6462;
+		color: white;
+		font-size: 9pt;
+		padding: 3px 5px;
+		border-radius: 3px;
+	}
+	#zipcode {
+		background-color: #c3d4fc;
+		padding: 6px 10px;
+		border-radius: 3px;
 	}
 </style>
 </head>
@@ -118,7 +196,8 @@
 							<a href="http://localhost:9090/tumblbugs/project/${pj_addr }"><div class="project_title"><b>${fvo.pj_title }<span class="creator_name">${fvo.name }</span></b></div></a>
 						</td>
 						<td class="button_td">
-							<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${fvo.pj_id }"><button type="button" id="btn_sendMessage"><i class="fas fa-envelope"></i> 문의하기</button></a>
+							<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${fvo.pj_id }">
+							<button type="button" id="btn_sendMessage"><i class="fas fa-envelope"></i>&nbsp;&nbsp;문의하기</button></a>
 						</td>
 					</tr>
 					<tr>
@@ -141,7 +220,12 @@
 					<tr>
 						<td class="button_td" colspan="2">
 							<span>총 <fmt:formatNumber value="${fvo.total_funding_price }" groupingUsed="true"/>원을 후원하셨습니다.</span>
-							<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/edit_gift"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a>
+						</td>
+						<td rowspan="3">
+							<div id="funding_edit_button">
+								<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/edit_gift">
+								<button type="button" id="btn_edit"><i class="fas fa-undo-alt"></i>&nbsp;&nbsp;후원사항 변경 및 취소하기</button></a>
+							</div>
 						</td>
 					</tr>
 					<c:forEach items="${giftList }" var="gift">
@@ -175,9 +259,15 @@
 					<tr>
 						<td class="data_td">
 							<div class="data_title">결제 수단</div>
-							<div class="data_value">${fvo.payment }</div>
+							<div class="data_value">${fvo.payment_info }</div>
 						</td>
-						<td class="button_td"><a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/edit_payment"><button type="button"><i class="fas fa-edit"></i> 변경하기</button></a></td>
+						<td class="button_td">
+							<div id="funding_edit_button">
+								<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/edit_payment">
+									<button type="button"><i class="fas fa-edit"></i> 변경하기</button>
+								</a>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td class="data_td" colspan="2">
@@ -207,7 +297,11 @@
 								<div class="data_title">받는 분 이름</div>
 								<div class="data_value">${fvo.recipient_name }</div>
 							</td>
-							<td class="button_td"><button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button></td>
+							<td class="button_td">
+								<div id="funding_edit_button">
+									<button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button>
+								</div>
+							</td>
 						</tr>
 						<tr class="data_tr_update" id="recipient_name">
 							<td class="data_td_update" colspan="2">
@@ -224,7 +318,11 @@
 								<div class="data_title">받는 분 연락처</div>
 								<div class="data_value">${fvo.recipient_phone }</div>
 							</td>
-							<td class="button_td"><button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button></td>
+							<td class="button_td">
+								<div id="funding_edit_button">
+									<button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button>
+								</div>
+							</td>
 						</tr>
 						<tr class="data_tr_update" id="recipient_phone">
 							<td class="data_td_update" colspan="2">
@@ -241,19 +339,39 @@
 								<div class="data_title">배송 주소</div>
 								<div class="data_value">${fvo.recipient_addr }</div>
 							</td>
-							<td class="button_td"><button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button></td>
+							<td class="button_td">
+								<div id="funding_edit_button">
+									<button type="button" id="btn_update"><i class="fas fa-edit"></i> 수정하기</button>
+								</div>
+							</td>
 						</tr>
 						<tr class="data_tr_update" id="recipient_addr">
 							<td class="data_td_update" colspan="2">
 								<div class="data_title">배송 주소</div>
-								<div class="data_value"><input type="text" value="${fvo.recipient_addr }"></div>
+								<div class="data_value">
+									<div>
+										<div>
+											<label class="data_subtitle">선택한 주소</label>
+											<button type="button" id="btnAddrSearch">다시 선택</button>
+										</div>
+										<div>
+											<label id="zipcode"><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;<span>00000</span></label>
+											<input type="text" id="address" disabled>
+										</div>
+									</div>
+									<div>
+										<div class="data_subtitle">나머지 주소</div>
+										<input type="text" id="address_detail">
+									</div>
+									<input type="hidden" id="new_address">
+								</div>
 								<div class="button_div">
 									<button type="button" id="btn_update_cancel"><i class="fas fa-times"></i> &nbsp;취소하기</button>
 									<button type="button" class="disabled" id="btn_update_submit" disabled><i class="fas fa-check"></i> &nbsp;저장하기</button>
 								</div>
 							</td>
 						</tr>
-						<tr>
+						<tr id="invoice_number">
 							<td class="data_td" colspan="2">
 								<div class="data_title">운송장 정보</div>
 								<div class="data_value">
@@ -266,11 +384,6 @@
 						</tr>
 					</table>
 				</form>
-			</div>
-			<div class="last_div">
-				<a href="http://localhost:9090/tumblbugs/myfunding/${fvo.funding_id }/cancel_funding">
-					<button id="btn_funding_cancle">후원 취소하기</button>
-				</a>
 			</div>
 		</section>
 	</div>

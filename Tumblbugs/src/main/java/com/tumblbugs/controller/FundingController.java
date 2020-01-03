@@ -117,19 +117,30 @@ public class FundingController {
 	public ModelAndView step3(@PathVariable("pj_addr") String pj_addr, FundingVO vo, PaymentVO pvo) {
 		
 		ModelAndView mv = new ModelAndView();
+		String payment_id = vo.getPayment_id();
 		
 		//신규 결제 수단 등록
 		if(!pvo.getPayment_method().equals("")) {
 			int result = paymentDAO.regist(pvo);
 			
 			if(result != 0) {
-				String payment_id = paymentDAO.getNewPaymentId(vo.getEmail());
+				payment_id = paymentDAO.getNewPaymentId(vo.getEmail());
 				vo.setPayment_id(payment_id);
 			}
 		}
 		
+		//payment_info 컬럼에 들어갈 데이터 가공
+		PaymentVO payment = paymentDAO.getPaymentContent(payment_id);
+		String payment_info = "";
+		if(payment.getPayment_method().equals("01")) {
+			payment_info = "카드(" + payment.getCard_company() + "/" + payment.getCard_number() + ")";
+		} else if(payment.getPayment_method().equals("02")) {
+			payment_info = "계좌(" + payment.getBank() + "/" + payment.getAccount_number() + ")";
+		}
+		vo.setPayment_info(payment_info);
+		
 		//펀딩 등록: tum_funding
-		int nthSupporter = fundingDAO.fundingInsert(vo);
+		int nthSupporter = fundingDAO.insertFunding(vo);
 		if(nthSupporter != 0) {
 			mv.setViewName("/funding/step3_funding_success");
 			mv.addObject("nthSupporter", nthSupporter);
@@ -150,7 +161,58 @@ public class FundingController {
 	 * @return
 	 */
 	@RequestMapping(value="/myfunding", method=RequestMethod.GET)
-	public ModelAndView myfunding(HttpSession session, String cancelResult, String category, String page) {
+	public ModelAndView myfunding(HttpSession session, String cancelResult, String page) {
+		ModelAndView mv = new ModelAndView();
+		String email = (String)session.getAttribute("semail");
+		
+		mv.setViewName("/mypage/myfunding");
+		mv.addObject("member", mypageDAO.getProfile(email));
+		
+		//페이징 처리 - startCount, endCount 구하기
+		int startCount = 0;
+		int endCount = 0;
+		int pageSize = 5;	//한페이지당 게시물 수
+		int reqPage = 1;	//요청페이지	
+		int pageCount = 1;	//전체 페이지 수
+		int dbCount = fundingDAO.execTotalCount(email, "all", null);	//DB에서 가져온 전체 행수
+		
+		//총 페이지 수 계산
+		if(dbCount % pageSize == 0){
+			pageCount = dbCount/pageSize;
+		}else{
+			pageCount = dbCount/pageSize+1;
+		}
+
+		//요청 페이지 계산
+		if(page != null){
+			reqPage = Integer.parseInt(page);
+			startCount = (reqPage-1) * pageSize+1;
+	 		endCount = reqPage *pageSize;
+		}else{
+			startCount = 1;
+			endCount = 5;
+		}
+		
+		mv.addObject("page", page);
+		mv.addObject("dbCount", dbCount);
+		mv.addObject("pageSize", pageSize);
+		mv.addObject("cancelResult", cancelResult);
+		mv.addObject("fundingCount", fundingDAO.getFundingCount(email));
+		mv.addObject("flist", fundingDAO.getFundingList(email, "all", null, startCount, endCount));
+		
+		Map map = fundingDAO.getFundingCount(email);
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 내 후원현황 리스트 화면 - 카테고리 선택(모두보기/펀딩 진행중/결제 완료)
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/myfunding/{category}", method=RequestMethod.GET)
+	public ModelAndView myfunding_category(HttpSession session, String cancelResult, @PathVariable("category") String category, String page) {
 		ModelAndView mv = new ModelAndView();
 		String email = (String)session.getAttribute("semail");
 		
@@ -195,6 +257,7 @@ public class FundingController {
 		return mv;
 	}
 	
+	
 	/**
 	 * 내 후원현황 > 검색 결과
 	 * @param session
@@ -233,7 +296,7 @@ public class FundingController {
 	 * @param funding_id
 	 * @return
 	 */
-	@RequestMapping(value="/myfunding/{funding_id}")
+	@RequestMapping(value="/myfunding/detail/{funding_id}")
 	public ModelAndView funding_detail(@PathVariable("funding_id") String funding_id) {
 		ModelAndView mv = new ModelAndView();
 		
@@ -345,7 +408,7 @@ public class FundingController {
 		
 		//DB 연동
 		if(fundingDAO.getFundingUpdateResult(vo) != 0) {
-			resPage = "redirect:/myfunding/" + vo.getFunding_id();
+			resPage = "redirect:/myfunding/detail/" + vo.getFunding_id();
 		} else {
 			//에러페이지
 		}
@@ -383,7 +446,8 @@ public class FundingController {
 	@RequestMapping(value="/edit_payment_proc", method=RequestMethod.GET)
 	@ResponseBody
 	public String edit_payment_proc(String funding_id, String payment_id) {
-		return String.valueOf(fundingDAO.getPaymentUpdateResult(funding_id, payment_id));
+		String payment_info = paymentDAO.getPaymentInfo(payment_id);
+		return String.valueOf(fundingDAO.getPaymentUpdateResult(funding_id, payment_id, payment_info));
 	}
 	
 	/**

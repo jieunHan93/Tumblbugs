@@ -81,7 +81,7 @@ div#p2_content{
 					<i class="fas fa-project-diagram"></i><p>프로젝트</p>
 				</div>
 					<ul id="p2_content_detail">
-						<li><a href="http://localhost:9090/tumblbugs/admin/project">관리</a></li>
+						<li><a href="http://localhost:9090/tumblbugs/admin/projects">관리</a></li>
 						<li><a href="http://localhost:9090/tumblbugs/admin/banner">배너 등록</a></li>
 					</ul>
 				<div id="p2_content">

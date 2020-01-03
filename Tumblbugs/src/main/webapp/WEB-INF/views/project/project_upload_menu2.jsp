@@ -17,9 +17,13 @@
 				<div id="funding_info" class="sub_info">
 					<i class="far fa-hand-point-right"></i> 목표 금액을 입력해주세요.
 				</div>
-				<div id="title_write"><i class="far fa-edit"></i>
-					<c:if test="${vo.pj_price == null}"> 입력하기</c:if>
-					<c:if test="${vo.pj_price != null}"> 수정하기</c:if>
+				<div id="title_write">
+					<c:if test="${vo.pj_price == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+					<c:if test="${vo.pj_price != null}">
+						<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+							<i class="far fa-edit"></i> 수정하기
+						</c:if>
+					</c:if>
 				</div>
 		</div>
 		<div id="content_m2_c1_d" class="upload_detail">
@@ -35,7 +39,10 @@
 			</div>
 			<div>
 				<div><i class="fas fa-question-circle"></i> 수수료를 제외하면 얼마를 받을 수 있나요?</div>
-				<div><p>위 금액을 모으는 데 성공하실 경우, 대략 1,122 원 정도를 받게 됩니다. 총 모금액에서 대략적으로 아래와 같은 금액이 공제됩니다.</p></div>
+				<div><p>위 금액을 모으는 데 성공하실 경우, 대략<span id="totalPrice">
+						<c:if test="${vo.pj_price == null}">0</c:if>
+						<c:if test="${vo.pj_price != null}"><fmt:formatNumber pattern="#,###" value="${vo.pj_price-(vo.pj_price*0.088)}"/></c:if></span>
+							원 정도를 받게 됩니다. 총 모금액에서 대략적으로 아래와 같은 금액이 공제됩니다.</p></div>
 				<div>
 					<table>
 						<tr>
@@ -44,15 +51,24 @@
 						</tr>
 						<tr>
 							<td>결제대행 수수료(3% + VAT)</td>
-							<td id="m2_c1_t1">0원</td>
+							<td id="m2_c1_t1">
+								<c:if test="${vo.pj_price == null}">0원</c:if>
+								<c:if test="${vo.pj_price != null}"><fmt:formatNumber pattern="#,###" value="${vo.pj_price*0.033}"/>원</c:if>
+							</td>
 						</tr>
 						<tr>
 							<td>플랫폼 수수료(5% + VAT)</td>
-							<td id="m2_c1_t2">0원</td>
+							<td id="m2_c1_t2">
+								<c:if test="${vo.pj_price == null}">0원</c:if>
+								<c:if test="${vo.pj_price != null}"><fmt:formatNumber pattern="#,###" value="${vo.pj_price*0.055}"/>원</c:if>
+							</td>
 						</tr>
 						<tr>
 							<td>공제액 합계¹</td>
-							<td id="m2_c1_t3">10,835원²</td>
+							<td id="m2_c1_t3">
+								<c:if test="${vo.pj_price == null}">0원²</c:if>
+								<c:if test="${vo.pj_price != null}"><fmt:formatNumber pattern="#,###" value="${vo.pj_price*0.088}"/>원²</c:if>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -63,8 +79,13 @@
 			</div>
 			
 			<div class="content_btn">
-				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-				<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+				</c:if>
+				<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+					<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+				</c:if>
 			</div>
 		</div>	
 	
@@ -81,9 +102,13 @@
 							<i class="far fa-hand-point-right"></i> 프로젝트 시작일을 입력해주세요.
 						</c:if>
 					</div>
-					<div id="title_write"><i class="far fa-edit"></i>
-						<c:if test="${vo.pj_start_date == null}"> 입력하기</c:if>
-						<c:if test="${vo.pj_start_date != null}"> 수정하기</c:if>
+					<div id="title_write">
+						<c:if test="${vo.pj_start_date == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+							<c:if test="${vo.pj_start_date != null}">
+							<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+								<i class="far fa-edit"></i> 수정하기
+							</c:if>
+						</c:if>
 					</div>
 			</div>
 			<div id="content_start_d" class="upload_detail">
@@ -99,8 +124,13 @@
 					<label>에 펀딩을 시작합니다.</label>
 				</div>
 				<div class="content_btn">
-					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+						<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+					</c:if>
+					<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+						<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+					</c:if>
 				</div>
 			</div>
 		
@@ -115,9 +145,13 @@
 							<i class="far fa-hand-point-right"></i> 프로젝트 마감일을 입력해주세요.
 						</c:if>
 					</div>
-					<div id="title_write"><i class="far fa-edit"></i>
-						<c:if test="${vo.pj_end_date == null}"> 입력하기</c:if>
-						<c:if test="${vo.pj_end_date != null}"> 수정하기</c:if>
+					<div id="title_write">
+						<c:if test="${vo.pj_end_date == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+						<c:if test="${vo.pj_end_date != null}">
+							<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+								<i class="far fa-edit"></i> 수정하기
+							</c:if>
+						</c:if>
 					</div>
 			</div>
 			<div id="content_m2_c2_d" class="upload_detail">
@@ -134,8 +168,13 @@
 					<label>에 펀딩을 마감합니다.</label>
 				</div>
 				<div class="content_btn">
-					<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-					<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+					<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+						<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+						<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+					</c:if>
+					<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+						<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+					</c:if>
 				</div>
 			</div>	
 		</div>
@@ -158,12 +197,14 @@
 <input type="hidden" value="1000" id="present_number">
 	<div  id="com_present" >선물 구성</div>
 	<div id="pro_present1" class="pro_present">
-	
+	<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
 		<div class="upload_present_slide2" style="display:none" id="upload_present_slide">
 			<label><span class="price">5,000</span>원 이상 밀어주시는 분께</label>
 			<div id="present_btn">
+			<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
 				<button type='button' class="present_update"><i class="far fa-edit"></i> 수정하기</button>
 				<button type='button' class="up_delete"><i class="fas fa-trash-alt"></i> 삭제하기</button>
+			</c:if>
 			</div>
 			<div><span class="title">선물제목</span></div>
 			<div id="item_option_div"></div>
@@ -182,7 +223,7 @@
 				<div>최소 후원금액</div>
 				<div>인기 금액대인 1만원대 선물부터 특별한 의미를 담은 10만원 이상 선물까지, 다양한 금액대로 구성하면 성공률이 더욱 높아집니다.
 					  배송이 필요한 선물의 경우,<span class="bold_txt">배송비 포함</span>된 금액으로 작성해주세요.</div>
-				<input type="text" placeholder="5,000" style="resize:none" class="m2_check" id="m2_c4_i2"/>
+				<input type="number" placeholder="5,000" style="resize:none" class="m2_check" id="m2_c4_i2"/>
 				<label class="bold_txt" >원 이상 밀어주시는 분께 드리는 선물입니다.</label>
 			</div>
 			<div>
@@ -229,7 +270,7 @@
 				<div>
 					<input type="checkbox" id="gift_max_count">
 					<label class="bold_txt">선물을</label>
-					<input type="text" placeholder="1" style="resize:none" id="m2_c4_i6"/>
+					<input type="number" placeholder="1" style="resize:none" id="m2_c4_i6"/>
 					<label class="bold_txt">개로 제한합니다.</label>
 			</div>
 				<div>
@@ -243,7 +284,7 @@
 					<button type="button" class="add_present_btn" id="add_present_btn"><i class="fas fa-check"></i> 저장하기</button>
 				</div>		
 			</div>
-			
+		</c:if>	
 <!--  기존 상품  -->
 	<c:forEach var="gvo" items='${glist}'>
 	<fmt:formatNumber var= "gift_price" value= "${gvo.gift_price}" />
@@ -251,8 +292,10 @@
 		<div class="upload_present_slide"  id="upload_present_slide${gvo.rno}">
 			<label><span class="price">${gift_price}</span>원 이상 밀어주시는 분께</label>
 			<div id="present_btn">
-				<button type='button' class="present_update"><i class="far fa-edit"></i> 수정하기</button>
-				<button type='button' class="up_delete"><i class="fas fa-trash-alt"></i> 삭제하기</button>
+				<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+					<button type='button' class="present_update"><i class="far fa-edit"></i> 수정하기</button>
+					<button type='button' class="up_delete"><i class="fas fa-trash-alt"></i> 삭제하기</button>
+				</c:if>
 			</div>
 			<div><span class="title">${gvo.gift_title }</span></div>
 			<div id="item_option_div">
@@ -265,10 +308,10 @@
 				</c:forEach>
 			</div>
 			<div>예상전달일 : <span class="date">${gvo.gift_delivery_date }</span></div>
-			<c:if test="${gvo.gift_delivery_yn == 'N'}" >
+			<c:if test="${gvo.gift_delivery_yn == 'n'}" >
 				<div class="delivery_check_tag">배송 불필요</div>
 			</c:if>
-			<c:if test="${gvo.gift_delivery_yn == 'Y'}" >
+			<c:if test="${gvo.gift_delivery_yn == 'y'}" >
 				<div class="delivery_check_tag">배송 필요</div>
 			</c:if>
 		</div>
@@ -280,7 +323,7 @@
 				<div>최소 후원금액</div>
 				<div>인기 금액대인 1만원대 선물부터 특별한 의미를 담은 10만원 이상 선물까지, 다양한 금액대로 구성하면 성공률이 더욱 높아집니다.
 					  배송이 필요한 선물의 경우,<span class="bold_txt">배송비 포함</span>된 금액으로 작성해주세요.</div>
-				<input type="text" placeholder="5,000" style="resize:none" class="m2_check" id="m2_c4_i2" value='${gvo.gift_price }'/>
+				<input type="number" placeholder="5,000" style="resize:none" class="m2_check2" id="m2_c4_i2" value='${gvo.gift_price }'/>
 				<label class="bold_txt" >원 이상 밀어주시는 분께 드리는 선물입니다.</label>
 			</div>
 			<div>
@@ -303,12 +346,12 @@
 										<c:if test="${ivo.item_check == 'y'}" > class="item_check_class"</c:if>>
 										<td id='item_icon_td${ivo.rno }'>
 											<c:if test="${ivo.item_check == 'y'}" >
-												<label class='item_check_icon' for='item${ivo.rno }' style='color:#1e90ff'><i class='fas fa-check-circle' id='pro_icon${ivo.rno }'></i></label>
-												<input type='checkbox' class='item_check' id='item${ivo.rno }' name='item_check' style='display:none' checked='checked'>
+												<label class='item_check_icon' for='item${ivo.rno }' style='color:#1e90ff'><i class='fas fa-check-circle' id='pro_icon${ivo.rno}'></i></label>
+												<input type='checkbox' class='item_check' id='item${list.rno }${ivo.rno }' style='display:none'  name='item_check' checked>
 											</c:if>
 											<c:if test="${ivo.item_check == 'n'}" >
-												<label class='item_check_icon' for='item${ivo.rno }'><i class='fas fa-check-circle' id='pro_icon${ivo.rno }'></i></label>
-												<input type='checkbox' class='item_check' id='item${ivo.rno }' name='item_check' style='display:none'>
+												<label class='item_check_icon' for='item${ivo.rno }'><i class='fas fa-check-circle' id='pro_icon${ivo.rno}'></i></label>
+												<input type='checkbox' class='item_check' id='item${list.rno }${ivo.rno }' style='display:none' name='item_check'>
 											</c:if>
 										</td>
 										<td id='item_name_td'>${ivo.item_title }</td>
@@ -335,19 +378,19 @@
 			<div>
 				<div>선물 제목</div>
 				<div><p>구성된 선물에 대해 추가적으로 알리고 싶은 내용을 적어주세요.</div>
-				<input type="text" placeholder="예)배송비 포함,얼리버드,(선물세트 A) 등" style="resize:none" class="m2_check" id="present_title" value="${gvo.gift_title}"/>
-				<label>50자 남았습니다</label>
+				<input type="text" placeholder="예)배송비 포함,얼리버드,(선물세트 A) 등" style="resize:none" class="m2_check2" id="present_title" value="${gvo.gift_title}"/>
+				<label id="prolenCheck">50자 남았습니다</label>
 			</div>
 			<div>
 				<div>선물 카드 정렬 순서</div>
 				<div><p>선물 카드의 순서를 정해 주세요. 혜택이 많은 선물 카드부터 나오도록 등록하시는 것이 좋습니다.</div>
-				<input type="number" placeholder="1" style="resize:none" class="m2_check"  id="m2_c4_i4" value="${gvo.gift_sort_num}"/>
+				<input type="number" placeholder="1" style="resize:none" class="m2_check2"   style="display:none"  id="m2_c4_i4" value="${gvo.gift_sort_num}"/>
 				<label class="bold_txt">번째로 보일 선물 카드입니다.</label>
 			</div>
 			<div>
 				<div>예상 전달일</div>
 				<div><p>이 선물을 선택한 후원자들에게 선물을 배송 또는 공개하기로 약속하는 날입니다. <span class="bold_txt">결제 종료일 이후의 날짜</span>인지 확인해서 정해주세요.</div>
-				<input type="date" style="resize:none" class="m2_check" id="present_date" value="${gvo.gift_delivery_date}"/>
+				<input type="date" style="resize:none" class="m2_check2" id="present_date"  style="display:none"  value="${gvo.gift_delivery_date}"/>
 				<label class="bold_txt"> 에 선물을 전달하겠습니다.</label>
 			</div>
 			<div>
@@ -357,21 +400,21 @@
 					<c:if test="${gvo.gift_max_count > 0}" >
 						<input type="checkbox" id="gift_max_count" checked>
 						<label class="bold_txt">선물을</label>
-						<input type="text" placeholder="1" style="resize:none" id="m2_c4_i6" value="${gvo.gift_max_count}"/>
+						<input type="number" placeholder="1" style="resize:none" id="m2_c4_i6" value="${gvo.gift_max_count}"/>
 						<label class="bold_txt">개로 제한합니다.</label>
 					</c:if>
 					<c:if test="${gvo.gift_max_count <= 0}" >
 						<input type="checkbox" id="gift_max_count">
 						<label class="bold_txt">선물을</label>
-						<input type="text" placeholder="1" style="resize:none" id="m2_c4_i6" />
+						<input type="number" placeholder="1" style="resize:none" id="m2_c4_i6" />
 						<label class="bold_txt">개로 제한합니다.</label>
 					</c:if>
 				</div>
 				<div>
-					<c:if test="${gvo.gift_delivery_yn == 'Y'}" >
+					<c:if test="${gvo.gift_delivery_yn == 'y'}" >
 						<input type="checkbox" id="delivery_check" checked>
 					</c:if>
-					<c:if test="${gvo.gift_delivery_yn != 'Y'}" >
+					<c:if test="${gvo.gift_delivery_yn != 'y'}" >
 						<input type="checkbox" id="delivery_check">
 					</c:if>
 					<label class="bold_txt" >배송이 필요한 선물입니다.</label>
@@ -400,9 +443,13 @@
 									<i class="far fa-hand-point-right"></i> 환불 및 교환 정책을 입력해주세요.
 								</c:if>
 							</div>
-							<div id="title_write"><i class="far fa-edit"></i>
-								<c:if test="${vo.pj_refund == null}"> 입력하기</c:if>
-								<c:if test="${vo.pj_refund != null}"> 수정하기</c:if>
+							<div id="title_write">
+								<c:if test="${vo.pj_refund == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+								<c:if test="${vo.pj_refund != null}">
+									<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+										<i class="far fa-edit"></i> 수정하기
+									</c:if>
+								</c:if>
 							</div>
 						</div>
 						<div id="content_m2_c5_d" class="upload_detail">
@@ -432,8 +479,13 @@
 - 전달된 파일은 타인에게 양도가 [  가능  /  불가능  ]합니다.</c:if><c:if test="${vo.pj_refund != null}">${vo.pj_refund}</c:if></textarea>
 							</div>
 							<div class="content_btn">
-								<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-								<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+								<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+									<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+									<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+								</c:if>
+								<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+									<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+								</c:if>
 							</div>
 						</div>	
 						
@@ -448,9 +500,13 @@
 									<i class="far fa-hand-point-right"></i> 후원자에게 선물을 제공하는 경우 전자상거래 등에서의 상품 등의 정보제공에 관한 고시법에 따라 상품 정보를 작성해 주세요.
 								</c:if>
 							</div>
-							<div id="title_write"><i class="far fa-edit"></i>
-								<c:if test="${vo.pj_class == null}"> 입력하기</c:if>
-								<c:if test="${vo.pj_class != null}"> 수정하기</c:if>
+							<div id="title_write">
+								<c:if test="${vo.pj_class == null}"><i class="far fa-edit"></i> 입력하기</c:if>
+								<c:if test="${vo.pj_class != null}">
+									<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+										<i class="far fa-edit"></i> 수정하기
+									</c:if>
+								</c:if>
 							</div>
 						</div>
 						<div id="content_m2_c6_d" class="upload_detail">
@@ -487,11 +543,28 @@
 									<option>영유아 용품</option>
 									<option>악기</option>
 									<option>스포츠 용품</option>
+									<option>서적</option>
+									<option>호텔/펜션 예약</option>
+									<option>여행패키지</option>
+									<option>항공권</option>
+									<option>자동차 대여 서비스(렌터카)</option>
+									<option>물품대여 서비스(정수기, 비데 등)</option>
+									<option>물품대여서비스(서적, 유아용품 등)</option>
+									<option>디지털 콘텐츠(음원, 게임 등)</option>
+									<option>모바일 쿠폰</option>
+									<option>영화·공연</option>
+									<option>기타 용역</option>
+									<option>기타 재화</option>
 								</select>
 							</div>
 							<div class="content_btn">
-								<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-								<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+								<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
+									<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
+									<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+								</c:if>
+								<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
+									<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>
+								</c:if>
 							</div>
 						</div>	
 					</div>

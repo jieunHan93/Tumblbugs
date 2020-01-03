@@ -13,13 +13,13 @@
 		<div class="white_box" id="creator_infomation">
 			<div id="box_header">창작자 소개</div>
 			<div>
-				<span id="creator_img"><img src="http://localhost:9090/tumblbugs/upload/${vo.profile_simg }"></span>
-				<span id="creator_name"><a href="http://localhost:9090/tumblbugs/myproject/${vo.email }">${vo.name }</a></span>
+				<span id="creator_img"><img src="http://localhost:9090/tumblbugs/upload/${mvo.profile_simg }"></span>
+				<span id="creator_name"><a href="http://localhost:9090/tumblbugs/projects/${mvo.member_id }" class="active">${mvo.name }</a></span>
 			</div>
-			<div class="line_div" id="creator_intro">${vo.intro }</div>
+			<div class="line_div" id="creator_intro">${mvo.intro }</div>
 			<div id="creator_login">마지막 로그인&nbsp; <b>8시간 전</b></div>
-			<div id="creator_project">진행한 프로젝트&nbsp; <b>${vo.member_pj_count }</b>&nbsp;&nbsp;&nbsp; 밀어준 프로젝트&nbsp; <b>${vo.member_funding_count }</b></div>
-			<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${vo.pj_id }"><button type="button" id="btnSendMessage"><i class="fas fa-envelope"></i> &nbsp;창작자에게 문의하기</button></a>
+			<div id="creator_project">진행한 프로젝트&nbsp; <b>${mvo.pj_count }</b>&nbsp;&nbsp;&nbsp; 밀어준 프로젝트&nbsp; <b>${mvo.funding_count }</b></div>
+			<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${pvo.pj_id }"><button type="button" id="btnSendMessage"><i class="fas fa-envelope"></i> &nbsp;창작자에게 문의하기</button></a>
 		</div>
 		<div id="option_count">선택할 수 있는 <b>${fn:length(giftList) }</b>개의 선물이 있습니다</div>
 		<c:forEach items="${giftList }" var="gift">
@@ -41,8 +41,8 @@
 				</ul>
 				<div class="line_div" id="expected_delivery_day">예상 전달일 <b>${gift.gift_delivery_date }</b></div>
 				<c:choose>
-					<c:when test="${vo.remaining_days >= 0}">
-						<a href="http://localhost:9090/tumblbugs/${vo.pj_addr }/funding/step1?gift_id=${gift.gift_id}">
+					<c:when test="${pvo.remaining_days >= 0}">
+						<a href="http://localhost:9090/tumblbugs/${pvo.pj_addr }/funding/step1?gift_id=${gift.gift_id}">
 							<button type="button">선물 선택하고 밀어주기</button>
 						</a>
 					</c:when>

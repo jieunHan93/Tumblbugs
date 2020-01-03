@@ -102,7 +102,20 @@ $(document).ready(function(){
 		<section>
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
-			      <div class="swiper-slide" id="main_slide1">
+				<c:if test="${fn:length(bannerlist) != 0}">
+				<c:forEach var="vo" items="${bannerlist }">
+					<div class="swiper-slide"  style=" background-image: url('http://localhost:9090/tumblbugs/upload/${vo.ba_simg}')">
+				      <a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }">
+				     	 <div id="swiper-content">
+				     	 	<h1 class="swiper-title">${fn:replace(vo.ba_title,',' , '<br>')}</h1>
+				     	 	<div class="swiper-subtitle">${vo.ba_content}</div>
+				     	 </div>
+				      </a>
+			      </div>
+				</c:forEach>
+				</c:if>
+				
+<!-- 			      <div class="swiper-slide" id="main_slide1">
 				      <a href="http://localhost:9090/tumblbugs/project_content">
 				     	 <div id="swiper-content">
 				     	 	<h1 class="swiper-title">수면을 위한<br>차, 옷, 향</h1>
@@ -141,7 +154,7 @@ $(document).ready(function(){
 				     	 	<div class="swiper-subtitle">프로진로고민러를 위한 고민 근육 기르기 가이드북</div>
 				     	 </div>
 				      </a>
-			      </div>
+			      </div> -->
 			    </div>
 			    <!-- Add Pagination -->
 			    <div class="swiper-pagination"></div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <%@page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,6 +19,7 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
 $(document).ready(function(){
+	
 	var item_value = 1000;
 	var product_number = 1000;
 	
@@ -41,6 +43,13 @@ $(document).ready(function(){
 	        break;
 	    }
 	});
+	 /* var storyVal = '${fn:trim(vo.pj_story)}'; */
+	 var storyValLen = '${fn:length(vo.pj_story)}';
+	 
+	 if(storyValLen == 0 ){
+		CKEDITOR.instances.m3_c1_i1.setData("");
+	} 
+		
 	
 	/** 기존 값 세팅**/ 
 	$("#m2_c2_i2").val('${vo.pj_end_date}');
@@ -75,10 +84,20 @@ $(document).ready(function(){
 	if(pj_price != null && pj_price != ""){
 		$("#content_m2_c1 .sub_info").text(pj_price).css('font-size','11pt').css('color','black').css('font-weight','550');
 	}
-	
-	if('${vo}' == null || '${vo}' == ""){
-		CKEDITOR.instances.m3_c1_i1.setData("");
-	}
+/* 	<c:forEach var="list" items="${glist}">
+	<c:forEach var="ivo" items="${list.itemList}">
+		if('${ivo.item_check}' == 'y'){
+			$("#item"+'${list.rno }'+'${ivo.rno}').prop("checked","true");
+		}
+	</c:forEach>
+	</c:forEach> */
+/* 	$(".item_check").each(function(i, e){
+		   if($(this).is(":checked")){
+			   $(this).prop("checked","true");
+		   }else{
+			   $(this).removeProp("checked");
+		   }
+	}); */
 	
 	$("#menu_label1").css('background-color','rgb(247,247,247)').css('border-color','#ccc');
 	$("#content_up_menu1").css('display','inline-block');	
@@ -90,6 +109,7 @@ $(document).ready(function(){
 		 alert("검토 요청이 완료되었습니다!");
 		 location.href = 'http://localhost:9090/tumblbugs/project_upload_proc';
 	 });
+	 
 	 $("#submit_btn_n").click(function(){
 		 alert("재검토 요청이 완료되었습니다!");
 		 location.href = 'http://localhost:9090/tumblbugs/project_upload_proc';
@@ -104,10 +124,10 @@ $(document).ready(function(){
 		$(".upload_detail_slide").css('display','inline-block');
 		$(".upload_present_slide").css('display','block');
 		$(".upload_detail").css('display','none');
-		
+		$(".present_detail_slide").css('display','');
 		$(this).css('display','none');
 		$(save_btn).attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
-		$("#m3_c1_save").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+		$("#m3_c1_save").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
 		
 		$(this).next().css('display','block').css({
 				 "-moz-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
@@ -124,11 +144,20 @@ $(document).ready(function(){
 			$(window).scrollTop($(thisTarget).offset().top);
 		});
 		
+		CKEDITOR.instances.m3_c1_i1.on('change', function() {
+			var ckVal = CKEDITOR.instances.m3_c1_i1.getData().length;
+			if(ckVal > 0){
+				$("#m3_c1_save").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+			}else if(ckVal == 0){
+				$("#m3_c1_save").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+			}
+		});
+		
+		
 		/** 글자수 체크 & 버튼 활성화**/
 		$(slide_d_id+" input[type=text]").off().on("change keyup paste", function(){
 			var my_id = $(this).attr("id");
 			var input_val_len = $(this).val().length;
-			
 			if(slide_id == "#content_m4_c3"){
 				var m4_txt_check = 0;
 				$(slide_d_id+" .m4_check").each(function(i, e){
@@ -192,12 +221,14 @@ $(document).ready(function(){
 					$("#m2_c1_t1").text((Math.round($(this).val() * 0.033)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원");
 					$("#m2_c1_t2").text(Math.round($(this).val() * 0.055).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원");
 					$("#m2_c1_t3").text(Math.round($(this).val() * 0.088).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원²");
+					$("#totalPrice").text(Math.round($(this).val() -($(this).val()* 0.088)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원²");
 					$(this).css('border-color',"rgb(232,237,247)");
 					$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
 				}else if($(this).val() < 5000){
 					$("#m2_c1_t1").text(Math.round($(this).val() * 0.033).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원");
 					$("#m2_c1_t2").text(Math.round($(this).val() * 0.055).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원");
 					$("#m2_c1_t3").text(Math.round($(this).val() * 0.088).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원²");
+					$("#totalPrice").text(Math.round($(this).val() -($(this).val()* 0.088)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원²");
 					$(this).css('border-color',"rgb(241,75,88)");
 					$(".up_save").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
 				}else if($(this).val == 0){
@@ -226,12 +257,10 @@ $(document).ready(function(){
 				}else{
 					$(save_btn).attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
 				}
-			}else if(my_id=="m2_c4_i2" || my_id=="m2_c4_i4" || my_id=="m2_c4_i6" || my_id=="pj_account_number" || my_id=="pj_account_number2"){
-				if($(this).val() != ""){
-					$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
-				}else{
-					$(save_btn).attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
-				}
+			}else if(my_id=="m2_c4_i2" || my_id=="m2_c4_i4" || my_id=="m2_c4_i6" || my_id=="pj_account_id" || my_id=="pj_account_id2"){
+				var val = $(this).val();
+				val = str.replace(/[^0-9]/g,"");
+				$(this).val(val);	
 			}else{
 				if(input_val_len != 0 && input_val_len <= 50){
 					$(this).next().text(50-input_val_len+"자 남았습니다.").css("color","#444444");
@@ -327,6 +356,9 @@ $(document).ready(function(){
 				$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
 			}
 		});
+		
+		
+			
 		/** 취소 버튼 **/
 		$(slide_d_id+" .up_reset").off().click(function(){
 			$(slide_id).next().css('display','none');
@@ -696,11 +728,6 @@ $(document).ready(function(){
 		slide_id = "#"+$(this).attr("id");
 		slide_d_id="#"+$(slide_id).next().attr("id");
 		save_btn = "#"+$(slide_id).next().attr("id")+" .up_save";
-		/** 페이지 오픈 위치 **/
-		/*$(document).on('click',slide_id,function(){
-		    var thisTarget = $(slide_d_id);
-			$(window).scrollTop($(thisTarget).offset().top);
-		}); */
 		
 		$(".add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
 	
@@ -710,6 +737,7 @@ $(document).ready(function(){
 			$(".add_items_table").css('display','block');
 		}
 		
+		$(".upload_present_slide").css('display','block');
 		$(".upload_detail_slide").css('display','inline-block');
 		$(".present_detail_slide").css('display','none');
 		$(".upload_detail").css('display','none');
@@ -756,7 +784,7 @@ $(document).ready(function(){
 	});
 	
 	$(document).on("click",".add_present_btn",function(){
-		var d_yn = "N";
+		var d_yn = "n";
 		var g_max_count = 0;
 		
 		
@@ -764,7 +792,7 @@ $(document).ready(function(){
 		/** gift json + ajax **/
 		
 		if($(slide_d_id+" #delivery_check").is(":checked")){
-			d_yn = "Y";
+			d_yn = "y";
 		}
 		
 		if($(slide_d_id+" #gift_max_count").is(":checked")){
@@ -890,7 +918,7 @@ $(document).ready(function(){
 				"<div>최소 후원금액</div>"+
 				"<div>인기 금액대인 1만원대 선물부터 특별한 의미를 담은 10만원 이상 선물까지, 다양한 금액대로 구성하면 성공률이 더욱 높아집니다."+
 					 " 배송이 필요한 선물의 경우,<span class='bold_txt'>배송비 포함</span>된 금액으로 작성해주세요.</div>"+
-				"<input type='text' placeholder='5,000' style='resize:none' class='m2_check2' id='m2_c4_i2'/>"+
+				"<input type='number' placeholder='5,000' style='resize:none' class='m2_check2' id='m2_c4_i2'/>"+
 				"<label class='bold_txt' >원 이상 밀어주시는 분께 드리는 선물입니다.</label>"+
 			"</div>"+
 			"<div>"+
@@ -922,7 +950,7 @@ $(document).ready(function(){
 			"<div>"+
 				"<div>선물 카드 정렬 순서</div>"+
 				"<div><p>선물 카드의 순서를 정해 주세요. 혜택이 많은 선물 카드부터 나오도록 등록하시는 것이 좋습니다.</div>"+
-				"<input type='text' placeholder='1' style='resize:none' class='m2_check2'  id='m2_c4_i4'/>"+
+				"<input type='number' placeholder='1' style='resize:none' class='m2_check2'  id='m2_c4_i4'/>"+
 				"<label class='bold_txt'>번째로 보일 선물 카드입니다.</label>"+
 			"</div>"+
 			"<div>"+
@@ -937,7 +965,7 @@ $(document).ready(function(){
 				"<div>"+
 					"<input type='checkbox' id='gift_max_count'>"+
 					"<label class='bold_txt'>선물을</label>"+
-					"<input type='text' placeholder='1' style='resize:none' class='m2_check2' id='m2_c4_i6'/>"+
+					"<input type='number' placeholder='1' style='resize:none' class='m2_check2' id='m2_c4_i6'/>"+
 									"<label class='bold_txt'>개로 제한합니다.</label>"+
 				"</div><div>"+
 					"<input type='checkbox' id='delivery_check'>"+
@@ -954,54 +982,85 @@ $(document).ready(function(){
 			$("#com_present").after(new_present).css('display','block');
 			
 			$(slide_id).attr('class','present_detail_slide2');
-			
+			form_check();
 		} 
 	});
 	/** 상품 validation **/
 	$(document).on("change keyup paste",slide_d_id+" .m2_check2", function(){
 		var pro_btn_check = 0;
 		var item_check = 0;
+		var titleVal = $(slide_d_id+" #present_title").val().length;
 		
 		$(slide_d_id+" .item_check").each(function(i, e){
 			if($(this).is(":checked"))	item_check++;
 			
-		});
+		 }); 
 		
 		$(slide_d_id+" .m2_check2").each(function(i, e){
 		   if($(this).val() != null && $(this).val() != "" ){
 			   pro_btn_check++;
-	    }
-	    if(pro_btn_check == 4 && item_check > 0 ){
-				$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
-	   	}
-	    if(item_check > 0 && pro_btn_check == 4 ){
-				$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
-		   }
+	   	   }	
 		});	
-	});
 
+		 if(pro_btn_check == 4 && item_check > 0 ){
+			 $(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+			 $(slide_d_id+" .update_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+	   	 }else{
+	   		$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+	   		$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+	   	 }
+		 
+		 if( titleVal <= 50 && titleVal > 0){
+				$(slide_d_id+" #prolenCheck").text(50-titleVal+"자 남았습니다.").css("color","#444444");
+				$(this).css('border-color',"rgb(232,237,247)"); 
+		 }else if( titleVal > 50){
+				$(slide_d_id+" #prolenCheck").text(titleVal-50+"자 초과했습니다.").css("color","rgb(241,75,88)");
+				$(this).css('border-color',"rgb(241,75,88)");
+				$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+				$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+		 }else if(titleVal == 0){
+				$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+				$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+				$(slide_d_id+" #prolenCheck").text(50-titleVal+"자 남았습니다.").css("color","#444444");
+		 }
+	});
 
 	/** 상품 validation **/
 	$(document).on("change keyup paste",slide_d_id+" .m2_check", function(){
 		var pro_btn_check = 0;
 		var item_check = 0;
-		
-		$(slide_d_id+" .item_check").each(function(i, e){
-			if($(this).is(":checked"))	item_check++;
-			
-		});
+		var titleVal = $(slide_d_id+" #present_title").val().length;
 		
 		$(slide_d_id+" .m2_check").each(function(i, e){
 		   if($(this).val() != null && $(this).val() != "" ){
 			   pro_btn_check++;
-	    }
-	    if(pro_btn_check == 4 && item_check > 0 ){
-				$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
-	   	}
-	    if(item_check > 0 && pro_btn_check == 4 ){
-				$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
-		   }
+	    	}
 		});	
+		$(slide_d_id+" .item_check").each(function(i, e){
+			if($(this).is(":checked"))	item_check++;
+			
+		});
+	    if(pro_btn_check == 4 && item_check > 0 ){
+			$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+			 $(slide_d_id+" .update_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+	   	}else{
+	   		$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+	   		$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+	   	}
+	    
+	    if( titleVal <= 50 && titleVal > 0){
+			$(slide_d_id+" #prolenCheck").text(50-titleVal+"자 남았습니다.").css("color","#444444");
+			$(this).css('border-color',"rgb(232,237,247)"); 
+		 }else if( titleVal > 50){
+			$(slide_d_id+" #prolenCheck").text(titleVal-50+"자 초과했습니다.").css("color","rgb(241,75,88)");
+			$(this).css('border-color',"rgb(241,75,88)");
+			$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+			$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+		 }else if(titleVal == 0){
+			 $(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+			$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+			$(slide_d_id+" #prolenCheck").text(50-titleVal+"자 남았습니다.").css("color","#444444");
+		 }
 	});	
 	
 	/** 상품 수정 (저장)버튼 **/
@@ -1037,9 +1096,9 @@ $(document).ready(function(){
 		$(this).parent().parent().prev().prev().css('display','block');
 		
 		/** gift json + ajax **/
-		var d_yn="N", g_max_count=0;
+		var d_yn="n", g_max_count=0;
 		if($(slide_d_id+" #delivery_check").is(":checked")){
-			d_yn = "Y";
+			d_yn = "y";
 		}
 		
 		if($(slide_d_id+" #gift_max_count").is(":checked")){
@@ -1048,8 +1107,8 @@ $(document).ready(function(){
 		/** 상품 ajax **/
 		var data = {
 				gift_id : $(slide_d_id+" .gift_id").val(),
-				gift_title : $(slide_d_id+" #m2_c4_i2").val(),
-				gift_price : $(slide_d_id+" #present_title").val(),
+				gift_title : $(slide_d_id+" #present_title").val(),
+				gift_price : $(slide_d_id+" #m2_c4_i2").val(),
 				gift_sort_num : $(slide_d_id+" #m2_c4_i4").val(),
 				gift_delivery_date: $(slide_d_id+" #present_date").val(),
 				gift_max_count : g_max_count,
@@ -1111,6 +1170,7 @@ $(document).ready(function(){
 				}
 				
 			}
+			form_check();
 		}
 	});
 	
@@ -1128,8 +1188,17 @@ $(document).ready(function(){
 		
 		$(".upload_detail").css('display','none');
 		$(".upload_present_slide").css('display','');
+		$(".present_detail_slide").css('display','');
+		
 		$(this).parent().parent().css('display','none');
-		$(this).parent().parent().next().next().css('display','inline-block');
+		$(this).parent().parent().next().next().css('display','inline-block').css({
+			 "-moz-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+			  "-webkit-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+			  "animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+			  "-moz-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+			  "-webkit-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+			  "animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)"
+  		 });
 		
 		$(slide_d_id+" .d_title").text("선물 수정하기");
 		
@@ -1305,6 +1374,7 @@ $(document).ready(function(){
 		}else{
 			option_value = "옵션 없음";
 		}
+		
 		var list_val ="<tr id='list_item_number"+item_value+"'>"+
 						"<td>"+$("#item_name").val()+"</td>"+
 						"<td>"+ option_value +"</td>"+
@@ -1317,7 +1387,7 @@ $(document).ready(function(){
 						
 		var pro_itmes ="<tr id='item_number"+item_value+"' value=''>"+
 						"<td id='item_icon_td"+item_value+"'><label class='item_check_icon' for='item"+item_value+"'><i class='fas fa-check-circle' id='pro_icon"+item_value+"'></i></label>"+
-							"<input type='checkbox' class='item_check' id='item"+item_value+"' name='item_check' style='display:none'></td>"+
+							"<input type='checkbox' class='item_check' id='item"+item_value+"' style='display:none' name='item_check' checked></td>"+
 						"<td id='item_name_td'>"+$("#item_name").val()+"</td>"+
 						"<td id='item_option'>"+ option_value +"</td>"+
 						"<td id='item_count_td"+item_value+"'>"+
@@ -1327,7 +1397,6 @@ $(document).ready(function(){
 							"<input type='hidden' id='item_option_type' value='"+radio_num+"'>"+
 							"<input type='hidden' id='item_id' value=''>"+
 						"</tr>";		
-	
 		$(".pro_items_count").css('border','none');			
 		$("#item_name").val("");
 		$("#item_add_panel").css('display','none');
@@ -1336,6 +1405,8 @@ $(document).ready(function(){
 		$(slide_d_id+" .add_items_table").append(pro_itmes);
 		$("#item_list").css('display','block');
 		$("#m2_c4_add_items").css('display','block');
+		$(slide_d_id+" td#item_icon_td"+item_value+" .item_check_icon").trigger("click");
+		$(slide_d_id+" td#item_icon_td"+item_value+" .item_check_icon").trigger("click");
 		
 		/**수정삭제 hover**/
 		$(".list_update").hover(function(){
@@ -1375,17 +1446,18 @@ $(document).ready(function(){
 	$(document).on("click",".item_check_icon",function(){
 		var box_id = $(this).next().attr("id");
 		 if($("input:checkbox[id="+box_id+"]").is(":checked")){
-			 var tr_addr ="#"+$(this).parent().parent().attr("id");
+			 	var tr_addr ="#"+$(this).parent().parent().attr("id");
 	        	var td_addr ="#"+$(this).parent().next().next().next().attr("id");
+	        	$("input:checkbox[id="+box_id+"]").attr("checked",false);
 	        	
-	        	$("input:checkbox[id="+box_id+"]").removeAttr("checked");
 	            $(this).css('color','#666666');
 	            $(tr_addr+">td").css('background','white');
 	          	$(td_addr+" input[type=text]").css('background','white');
 	            $(td_addr+" input[type=text]").val("0");
 	            
 	        }else{
-	            $("input:checkbox[id="+box_id+"]").attr("checked");
+	        	$("input:checkbox[id="+box_id+"]").attr("checked",true);
+	        	
 	            $(this).css('color','#1e90ff');
 	          
 	          	/* 개수 증가  */
@@ -1397,9 +1469,51 @@ $(document).ready(function(){
 	          	if($(td_addr+">span>input[type=text]").val() == 0){
 	          		$(td_addr+">span>input[type=text]").val("1");
 	          	}
-	        	
 	        }
+		 	/** 체크박스 개수 확인 & 버튼활성화 **/
+			var pro_btn_check = 0;
+			var pro2_btn_check = 0;
+			var item_check = 0;
+			var titleVal = $(slide_d_id+" #present_title").val().length;
+			
+			$(slide_d_id+" .m2_check2").each(function(i, e){
+			   if($(this).val() != null && $(this).val() != "" )   pro2_btn_check++;
+			});
+			
+		    $(slide_d_id+" .m2_check").each(function(i, e){
+			   if($(this).val() != null && $(this).val() != "" )   pro_btn_check++;
+		    
+			});	
+			
+			$(slide_d_id+" .item_check").each(function(i, e){
+				if($(this).is(":checked"))	item_check++;
+			});
+			
+			if(pro_btn_check == 4 && item_check >= 0 ){
+				$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+				$(slide_d_id+" .update_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+		   	}else if(pro2_btn_check == 4 && item_check > 0 ){
+		   		$(slide_d_id+" .add_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+		   		$(slide_d_id+" .update_present_btn").removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+		   	}else{
+		   		$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+		   		$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+		   	}
 		
+		    if( titleVal <= 50 && titleVal > 0){
+				$(slide_d_id+" #prolenCheck").text(50-titleVal+"자 남았습니다.").css("color","#444444");
+				$(this).css('border-color',"rgb(232,237,247)"); 
+			 }else if( titleVal > 50){
+				$(slide_d_id+" #prolenCheck").text(titleVal-50+"자 초과했습니다.").css("color","rgb(241,75,88)");
+				$(this).css('border-color',"rgb(241,75,88)");
+				$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+		   		$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+			 }else if(titleVal == 0){
+				$(slide_d_id+" .add_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+			   	$(slide_d_id+" .update_present_btn").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+				$(slide_d_id+" #prolenCheck").text(50-titleVal+"자 남았습니다.").css("color","#444444");
+			 }
+		    
 		 });
 	
 	/** 아이템 삭제 */
@@ -1411,7 +1525,6 @@ $(document).ready(function(){
 		
 		$.ajax({url: 'project_delete_item_proc?item_id='+modal_item_id,
             success : function() {
-            	alert("success!");
         }});
 		
 		if($(slide_d_id+" .add_items_table tr").length <= 1){
@@ -1431,7 +1544,7 @@ $(document).ready(function(){
 		var radio_num = $(this).next().next().attr("id");
 		var pro_item_tr = "#"+$(this).next().next().val();
 		var list_item_tr = "#list_"+$(this).next().next().val();
-		
+		var thisList = this;
 		$("#item_add_btn").css('display','none');
 		$("select#option_select option").remove();
 		$("select#option_select option").attr("selected", true);
@@ -1442,6 +1555,7 @@ $(document).ready(function(){
 		$("#option_name2").val("");
 		$("#item_add_panel").css('display','block');
 		$("input[type=radio]").prop("checked", false);
+		alert(radio_num);
 		$("input:radio[id ='"+radio_num+"']").prop("checked", true);
 		
 		$("#modal_add_save").css('display','none');
@@ -1482,7 +1596,7 @@ $(document).ready(function(){
 			$(list_item_tr).children().eq(0).text($("#item_name").val());
 			$(pro_item_tr).children().eq(1).text($("#item_name").val());
 			$(pro_item_tr).children().eq(2).text(option_value);
-			
+			$(thisList).next().next().attr("id","item_option"+radio_num);
 			
 			$("#modal_add_save").css('display','inline-block');
 			$("#modal_update_data").css('display','none');
@@ -1507,7 +1621,7 @@ $(document).ready(function(){
 	
 	});
 	
-	/** 계좌 정보 개인 / 사업자**/
+	/** 계좌 정보 개인 / 사업자 **/
 	$(".account_type").click(function(){
 		$("#m4_c3_save").attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
 		if($(this).attr("id") == "personal_radio"){
@@ -1543,25 +1657,7 @@ $(document).ready(function(){
 	$(document).on('change',"#my_pro_img", function(){
 	    readInputFile(this);
 	});
-	
-	
-	/** 파일 drag & drop **/
-	/* var $drop = $("#img_uploadzone");
-	$drop.on("dragenter", function(e) {  //드래그 요소가 들어왔을떄
-		$(this).addClass('drag-over');
-		
-	}).on("dragleave", function(e) {  //드래그 요소가 나갔을때
-	  $(this).removeClass('drag-over');
-	
-	}).on("dragover", function(e) {
-	  e.stopPropagation();
-	  e.preventDefault();
-	  
-	}).on('drop', function(e) {  //드래그한 항목을 떨어뜨렸을때
-	  e.preventDefault();
-	  $(this).removeClass('drag-over');
-	  
-	}); */
+
 	
 });
 /** date format**/
@@ -1608,19 +1704,33 @@ function form_check(){
 	   }
 	});
 	
-	 var m2_count = 0;
+	var m2_count = 0;
 	$(".m2_check").each(function(i, e){
+		var m2_count2 = 0;
 	   if($(this).val() != null && $(this).val() != ""){
 		  m2_count++;
 	   }
-	   if(m2_count == 9){
+	   $(".m2_check2").each(function(i, e){
+		   if($(this).val() != null && $(this).val() != ""){
+			  m2_count2++;
+		   }
+	   });
+	   
+	   if(m2_count >= 9 ){
 		$("#menu_label2").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 펀딩 및 선물 구성");
 		$("#menu2_check").val("1");
+	   }else if(m2_count >= 5 && m2_count2 >= 4){
+	    $("#menu_label2").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 펀딩 및 선물 구성");
+		$("#menu2_check").val("1");
+	   }else{
+		  $("#menu_label2").html("<i class='fas fa-circle' style='color:#ccc'></i> 펀딩 및 선물 구성");
+			$("#menu2_check").val("0");
 	   }
+	   
 	});
 	
 	 var m3_count = 0;
-	   if(CKEDITOR.instances.m3_c1_i1.getData() != null && CKEDITOR.instances.m3_c1_i1.getData() != ""){
+	   if( CKEDITOR.instances.m3_c1_i1.getData() != ""){
 		   m3_count++;
 	   }
 	   if(m3_count == 1){
@@ -1647,13 +1757,20 @@ function form_check(){
 		   if('${vo.pj_check_yn}' == null || '${vo.pj_check_yn}' == ""){
 			   if(all == 4){
 					$("#submit_btn").css('background','#1e90ff').css('color','white').css('cursor','pointer');
+					$("#submit_btn").removeAttr("disabled");
 					$("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 모든 섹션을 완성하셨습니다. <span style='color:#1e90ff; font-weight:bold;'>검토 요청하기</span> 버튼을 눌러 검토를 요청하세요.");
 					
 			   }else if(all == 1){
 				   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 1개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
+				   $("#submit_btn").css('background','white').css('color','#1e90ff').css('cursor','default');
+					$("#submit_btn").attr("disabled","disabled");
 			   }else if(all == 2){
+				   $("#submit_btn").css('background','white').css('color','#1e90ff').css('cursor','default');
+					$("#submit_btn").attr("disabled","disabled");
 				   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 2개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
 			   }else if(all == 3){
+				   $("#submit_btn").css('background','white').css('color','#1e90ff').css('cursor','default');
+					$("#submit_btn").attr("disabled","disabled");
 				   $("#all_pro_info").html("<i class='fas fa-bullhorn'></i> 총 4개 섹션 중 3개를 완성하셨습니다. 모든 섹션을 완성하시면 프로젝트 검토를 요청하실 수 있습니다.");
 			   }
 		   }
@@ -1698,7 +1815,7 @@ function readInputFile(input) {
 		<section>
 			<div id="start_upload_header">
 				<div>
-					<div><a href="http://localhost:9090/tumblbugs/myproject"><i class="fas fa-chevron-left"></i> 내 페이지</a> </div>
+					<div><a href="http://localhost:9090/tumblbugs/projects/${mvo.member_id }"><i class="fas fa-chevron-left"></i> 내 페이지</a> </div>
 					<div><a href="http://localhost:9090/tumblbugs/index"> tumblbugs </a></div>
 					<div><a href="http://localhost:9090/tumblbugs/help/createcenter"><i class="fas fa-flask"></i> 창작자 센터 </a></div>
 				</div>
@@ -1769,7 +1886,7 @@ function readInputFile(input) {
 					<input type="radio" class="upload_menu_btn" id="up_menu4"/>
 						<label class="up_menu_lb" id="menu_label4" for="up_menu4"><i class="fas fa-circle" style="color:#ccc"></i> 계좌 설정</label>
 					<div>
-						<a href="http://localhost:9090/tumblbugs/project_preview" target="_blank"><button type="button" ><i class="far fa-eye"></i> 미리보기</button></a>
+						<a href="http://localhost:9090/tumblbugs/preview/${vo.pj_id }" target="_blank"><button type="button" ><i class="far fa-eye"></i> 미리보기</button></a>
 						<!-- <button><i class="far fa-save"></i> 임시 <i class="fas fa-check"></i> 저장</button> -->
 						<c:if test="${vo.pj_check_yn == 'n' }">
 							<button type="button" id="submit_btn_n"><i class="fab fa-telegram-plane"></i> 재검토 요청하기</button>

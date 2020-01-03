@@ -5,34 +5,88 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.project">
+	<select id="admin_list" parameterType="map" resultType="com.tumblbugs.vo.ProjectVO">
+		select rownum rno, pj_id, pj_title, name, pj_check_request_date, pj_check_yn, pj_start_date, pj_end_date, pj_price, total_funding_price, achievement_rate
+		from (select p.pj_id, p.pj_title, m.name, to_char(pj_check_request_date, 'yyyy/mm/dd') pj_check_request_date, pj_check_yn,
+				    to_char(pj_start_date, 'yyyy/mm/dd') pj_start_date, to_char(pj_end_date, 'yyyy/mm/dd') pj_end_date,
+				    to_char(pj_price,'999,999,999,999') pj_price, to_char(nvl(f.total_funding_price,0), '999,999,999,999') total_funding_price,
+				    trunc((nvl(f.total_funding_price, 0)/p.pj_price)*100) achievement_rate
+				from tum_project p, tum_member m,
+					(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f
+				WHERE P.EMAIL = M.EMAIL
+				AND p.pj_id = f.PJ_ID(+)
+				AND P.pj_check_request_date is not null
+				<choose>
+					<when test="category == 'check'">
+						and p.pj_check_yn is null
+					</when>
+					<when test="category == 'success'">
+						<![CDATA[and pj_price <= total_funding_price]]>
+					</when>
+				</choose>
+		    	order by pj_check_request_date)
+	</select>
+
 	<select id="admin_content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
-		SELECT P.PJ_ID, P.PJ_CATEGORY, P.PJ_TITLE, P.PJ_SIMG, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE,
+		SELECT P.PJ_ID, P.PJ_CATEGORY, P.PJ_TITLE, P.PJ_SIMG, p.pj_summary, p.pj_addr, p.pj_tag, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE,
 			TO_CHAR(PJ_END_DATE, 'yyyy-mm-dd') PJ_END_DATE, TO_CHAR(PJ_END_DATE + 7, 'yyyy-mm-dd') PJ_PAY_END_DATE,
 			TO_CHAR(PJ_END_DATE + 16, 'yyyy-mm-dd') PJ_BILL_DATE, P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS, p.pj_email, p.pj_account_type,
 			p.pj_account_name, p.pj_account_id, p.pj_phone, p.pj_bank, substr(p.pj_account_number, -4) pj_account_number,
-			M.NAME, M.PROFILE_SIMG, M.INTRO
+			M.NAME, M.PROFILE_SIMG, M.INTRO, p.pj_check_yn
 		FROM TUM_PROJECT P, TUM_MEMBER M
 		WHERE P.EMAIL = M.EMAIL
 		AND P.PJ_ID = #{pj_id}
 	</select>
-
-	<select id="content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
-		SELECT P.PJ_ID, P.PJ_CATEGORY, p.pj_addr, P.PJ_TITLE, P.PJ_SIMG, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE, TO_CHAR(PJ_END_DATE + 1, 'yyyy"년" fmmm"월" dd"일"') PJ_PAY_DATE, 
+	
+	<select id="adminTotalCount" resultType="int">
+		select count(*) from tum_project where pj_check_request_date is not null
+	</select>
+	
+	<select id="adminCheckRequestCount" resultType="int">
+		select count(*) from tum_project where pj_check_request_date is not null and pj_check_yn is null
+	</select>
+	
+	<select id="adminSuccessCount" resultType="int">
+		<![CDATA[
+			select count(*)
+			from tum_project p,(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f
+			WHERE p.pj_id = f.PJ_ID(+)
+			AND p.pj_check_request_date is not null
+			and p.pj_price <= f.total_funding_price
+		]]>
+	</select>
+	
+	<update id="project_check_yn" parameterType="map">
+		update tum_project
+		set pj_check_yn = #{checkResult}
+		<if test="checkResult == 'n'.toString()">
+			, pj_reject = #{pj_reject}
+		</if>
+		where pj_id = #{pj_id}
+	</update>
+	
+	<select id="preview_content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
+		SELECT P.PJ_ID, p.email, P.PJ_CATEGORY, p.pj_addr, P.PJ_TITLE, P.PJ_SIMG, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE, TO_CHAR(PJ_END_DATE + 1, 'yyyy"년" fmmm"월" dd"일"') PJ_PAY_DATE, 
 			TO_CHAR(NVL(F.TOTAL_FUNDING_PRICE,0), '999,999,999,999') total_funding_price, trunc((NVL(F.TOTAL_FUNDING_PRICE,0)/P.PJ_PRICE)*100) achievement_rate,
-			TRUNC(P.PJ_END_DATE - SYSDATE + 1) remaining_days, TO_CHAR(NVL(F.SPONSOR_COUNT,0),'999,999,999') total_sponsor_count,
-			M.NAME, M.PROFILE_SIMG, M.INTRO, M.PJ_COUNT member_pj_count, M.FUNDING_COUNT member_funding_count, NVL(C.COMMUNITY_COUNT,0) COMMUNITY_COUNT,
-			M.EMAIL, P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS
+			TRUNC(P.PJ_END_DATE - SYSDATE - 1) remaining_days, TO_CHAR(NVL(F.SPONSOR_COUNT,0),'999,999,999') total_sponsor_count,
+			NVL(C.COMMUNITY_COUNT,0) COMMUNITY_COUNT, P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS
 		FROM TUM_PROJECT P,
-			(SELECT T1.EMAIL, NAME, PROFILE_SIMG, INTRO, PJ_COUNT, NVL(FUNDING_COUNT,0) FUNDING_COUNT
-				FROM TUM_MEMBER T1,
-					(SELECT EMAIL, COUNT(PJ_ID) PJ_COUNT FROM TUM_PROJECT GROUP BY EMAIL) T2,
-					(SELECT EMAIL, COUNT(FUNDING_ID) FUNDING_COUNT FROM TUM_FUNDING GROUP BY EMAIL) T3
-				WHERE T1.EMAIL = T2.EMAIL
-				AND T1.EMAIL = T3.EMAIL(+)) M,
 			(SELECT PJ_ID, COUNT(COMMUNITY_ID) COMMUNITY_COUNT FROM TUM_COMMUNITY GROUP BY PJ_ID) C,
 			(SELECT PJ_ID, SUM(TOTAL_FUNDING_PRICE) TOTAL_FUNDING_PRICE, COUNT(FUNDING_ID) SPONSOR_COUNT FROM TUM_FUNDING GROUP BY PJ_ID) F
-		WHERE P.EMAIL = M.EMAIL
-		AND P.PJ_ID = C.PJ_ID(+)
+		WHERE P.PJ_ID = C.PJ_ID(+)
+		AND P.PJ_ID = F.PJ_ID(+)
+		AND P.PJ_ID = #{pj_id}
+	</select>
+	
+	<select id="content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
+		SELECT P.PJ_ID, p.email, p.pj_summary, P.PJ_CATEGORY, p.pj_addr, P.PJ_TITLE, P.PJ_SIMG, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE, TO_CHAR(PJ_END_DATE + 1, 'yyyy"년" fmmm"월" dd"일"') PJ_PAY_DATE, 
+			TO_CHAR(NVL(F.TOTAL_FUNDING_PRICE,0), '999,999,999,999') total_funding_price, trunc((NVL(F.TOTAL_FUNDING_PRICE,0)/P.PJ_PRICE)*100) achievement_rate,
+			TRUNC(P.PJ_END_DATE - SYSDATE - 1) remaining_days, TO_CHAR(NVL(F.SPONSOR_COUNT,0),'999,999,999') total_sponsor_count,
+			NVL(C.COMMUNITY_COUNT,0) COMMUNITY_COUNT, P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS
+		FROM TUM_PROJECT P,
+			(SELECT PJ_ID, COUNT(COMMUNITY_ID) COMMUNITY_COUNT FROM TUM_COMMUNITY GROUP BY PJ_ID) C,
+			(SELECT PJ_ID, SUM(TOTAL_FUNDING_PRICE) TOTAL_FUNDING_PRICE, COUNT(FUNDING_ID) SPONSOR_COUNT FROM TUM_FUNDING GROUP BY PJ_ID) F
+		WHERE P.PJ_ID = C.PJ_ID(+)
 		AND P.PJ_ID = F.PJ_ID(+)
 		AND P.PJ_ID = #{pj_id}
 		AND P.PJ_CHECK_YN = 'y'

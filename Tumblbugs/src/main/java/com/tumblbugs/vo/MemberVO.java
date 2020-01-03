@@ -3,14 +3,35 @@ package com.tumblbugs.vo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class MemberVO {
-	String email,name,pass,profile_img,profile_simg,intro,phone,website,reg_date,use_yn,signkey,certificate;
-	
-	int rno;
+	//member_id : 회원별 프로젝트 리스트 출력을 위해 추가
+	String email,name,pass,profile_img,profile_simg,intro,phone,website,reg_date,use_yn,signkey,certificate, member_id;
+	int rno, pj_count, funding_count;
 	CommonsMultipartFile profile_cimg;
-	
-	
 
 	
+	public int getPj_count() {
+		return pj_count;
+	}
+
+	public void setPj_count(int pj_count) {
+		this.pj_count = pj_count;
+	}
+
+	public int getFunding_count() {
+		return funding_count;
+	}
+
+	public void setFunding_count(int funding_count) {
+		this.funding_count = funding_count;
+	}
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
 
 	public CommonsMultipartFile getProfile_cimg() {
 		return profile_cimg;

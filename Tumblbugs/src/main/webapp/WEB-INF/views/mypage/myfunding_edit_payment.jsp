@@ -29,7 +29,7 @@
 					url: "http://localhost:9090/tumblbugs/edit_payment_proc?funding_id=" + '${funding_id}'+ "&payment_id=" + payment_id,
 					success: function(result) {
 						if(result != "0") {
-							location.href = "http://localhost:9090/tumblbugs/myfunding/" + '${funding_id}';
+							location.href = "http://localhost:9090/tumblbugs/myfunding/detail/" + '${funding_id}';
 						} else {
 							alert("일시적인 오류로 인하여 결제 수단 변경에 실패하였습니다.");
 						}

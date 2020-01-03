@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,11 +18,7 @@
 	$(document).ready(function(){
 		$(".update_project_page").click(function(){
 			var pj_id = $(this).attr("id");
-					
-			$.ajax({url: 'update_project_page?pj_id='+pj_id,
-                success : function() {
-                	location.href = "http://localhost:9090/tumblbugs/project_start_upload"; 
-   			}});
+			location.href = "http://localhost:9090/tumblbugs/project_start_upload?pj_id="+pj_id; 
 		});
 		
 		$(".delete_project_page").off().on('click', function(){
@@ -29,9 +26,8 @@
 			var conf_val = confirm('프로젝트를 삭제하시겠습니까? 작성 중인 모든 내용이 삭제됩니다.');
 			
 			if(conf_val){
-				$.ajax({url: 'delete_project_proc?pj_id='+pj_id, success : function(res) {
+				$.ajax({url: 'http://localhost:9090/tumblbugs/delete_project_proc?pj_id='+pj_id, success : function(res) {
 					location.reload();
-					alert(res);
 	   			}});
 				
 			}
@@ -41,7 +37,7 @@
 		
 		    maxSize: 7,	    		// max page size
 		    totals: '${dbcount}',	// total pages	
-		    page: '${rpage}',		// initial page		
+		    page: '${page}',		// initial page		
 		    pageSize: '${pagesize}',			// max number items per page
 		
 		    // custom labels		
@@ -55,7 +51,7 @@
 		
 		jQuery('#ampaginationsm').on('am.pagination.change',function(e){
 			   jQuery('.showlabelsm').text('The selected page no: '+e.page);
-	           $(location).attr('href', "http://localhost:9090/tumblbugs/myproject?rpage="+e.page);         
+	           $(location).attr('href', "http://localhost:9090/tumblbugs/projects/" + '${mvo.member_id}' +"?page="+e.page);
 	    });
 		
  	});
@@ -68,13 +64,11 @@
 		<section id="myproject_bk">
 			<div id="myproject_header_info">
 				<div id="myproject_header_info_icon">
-					<div>
-						<img src="http://localhost:9090/tumblbugs/upload/${mvo.profile_simg}">
-					</div>
+					<div style="background-image: url('http://localhost:9090/tumblbugs/upload/${mvo.profile_simg}')"></div>
 				</div>
 				<h1>${mvo.name}</h1>
 				<c:if test="${mvo.website != 'null' && mvo.website != null && mvo.website !=''}"> 
-					<p id="myproject_header_info_web"><a href="http://www.raspberry-studio.com">${mvo.website}</a></p>
+					<p id="myproject_header_info_web"><a href="${mvo.website}">${mvo.website}</a></p>
 				</c:if>
 				<c:if test="${mvo.website == 'null'}"> 
 					<p id="myproject_header_info_web"><a>창작자 웹사이트가 없습니다!</a></p>
@@ -94,25 +88,29 @@
 						<!-- 카드 한장 -->
 						<c:forEach var="vo" items="${list}" >
 							<fmt:formatNumber var= "total_price" value= "${vo.total_price}" />
-							<fmt:parseNumber var= "pj_extra_date" integerOnly= "true" value= "${vo.pj_extra_date}" />
 							<c:if test="${(vo.total_price/vo.pj_price)*100 != 'NaN'}"> 
 								<fmt:parseNumber var= "per_total" integerOnly= "true" value= "${(vo.total_price/vo.pj_price)*100}" />
 							</c:if>
 							<c:if test="${(vo.total_price/vo.pj_price)*100 == 'NaN'}"> 
 								<fmt:parseNumber var= "per_total" integerOnly= "true" value= "0" />
 							</c:if>
+							
 							<div class="project_card">
+								<c:if test="${sessionScope.semail eq mvo.email}">
 								<!-- Default dropright button -->
 								<div class="btn-group dropright">
 								  	<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								  		<i class="fas fa-ellipsis-v"></i>
 								  	</button>
 							  		<div class="dropdown-menu">
-									    <div class="dropdown-item"><a id="${vo.pj_id}" class="update_project_page" style="cursor:pointer">수정</a></div>
-									   	<div class="dropdown-item"><a id="${vo.pj_id}" class="delete_project_page" style="cursor:pointer">삭제</a></div>
-									    <div class="dropdown-item"><a href="http://localhost:9090/tumblbugs/myproject/delivery?pj_id=${vo.pj_id }&rpage=${rpage}" style="cursor:pointer">선물배송</a></div>
+							  			<div class="dropdown-item"><a id="${vo.pj_id}" class="update_project_page" style="cursor:pointer">수정</a></div>
+							  			<c:if test="${vo.pj_check_yn !='y' || vo.start_extra_date > 0}"> 
+										   		<div class="dropdown-item"><a id="${vo.pj_id}" class="delete_project_page" style="cursor:pointer">삭제</a></div>
+								   		</c:if>
+									    <div class="dropdown-item"><a href="http://localhost:9090/tumblbugs/myproject/delivery?pj_id=${vo.pj_id }&page=${page}" style="cursor:pointer">선물배송</a></div>
 								  	</div>
 								</div>
+								</c:if>
 								<c:if test="${vo.pj_addr != null && vo.pj_check_yn == 'y'}"> 
 								<a class="project_card_img_link" href="http://localhost:9090/tumblbugs/project/${vo.pj_addr}">
 									<div class="project_card_img_box">
@@ -149,17 +147,23 @@
 										</div>
 										<div class="project_card_bottom_info_right">
 											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date > 1}"> 
-												<c:if test="${vo.today_date != vo.pj_end_date}">
-													<span>남은 시간</span>
-													<span>${pj_extra_date+1}일</span>
+												<c:if test="${vo.start_extra_date > 0}">
+														<span>시작까지</span>
+														<span>${vo.start_extra_date}일</span>
+												</c:if>
+												<c:if test="${vo.start_extra_date <= 0}">
+													<c:if test="${vo.pj_extra_date != 0}">
+														<span>남은 시간</span>
+														<span>${vo.pj_extra_date+1}일</span>
+													</c:if>
 												</c:if>
 											</c:if>
-											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date <= 1 && pj_extra_date == 0}"> 
-												<c:if test="${vo.today_date == vo.pj_end_date}">
+											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date <= 1 && vo.pj_extra_date == 0}"> 
+												<c:if test="${vo.pj_extra_date == 0}">
 													<span>남은 시간</span>
 													<span style='color:rgb(224,90,107)'>오늘마감!</span>
 												</c:if>
-												<c:if test="${vo.today_date != vo.pj_end_date}">
+												<c:if test="${vo.pj_extra_date > 0}">
 													<span>남은 시간</span>
 													<span>1일</span>
 												</c:if>
@@ -185,47 +189,9 @@
 									</div>
 							</div>
 						</c:forEach>
-						
-						<div id="paging"><div id="ampaginationsm"></div></div>
-								<!-- <div class="project_card">
-							Default dropright button
-							<div class="btn-group dropright">
-							  	<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  		<i class="fas fa-ellipsis-v"></i>
-							  	</button>
-						  		<div class="dropdown-menu">
-								    <div class="dropdown-item"><a>수정</a></div>
-								   	<div class="dropdown-item"><a href="#" onclick="return confirm('프로젝트를 삭제하시겠습니까? 작성 중인 모든 내용이 삭제됩니다.')">삭제</a></div>
-								    <div class="dropdown-item"><a>선물배송</a></div>
-							  	</div>
-							</div>
-							<a class="project_card_img_link" href="http://localhost:9090/tumblbugs/project_content">
-								<div class="project_card_img_box">
-									<img class="project_card_img" src="http://localhost:9090/tumblbugs/images/myproject_2.jpg">
-								</div>
-							</a>
-							<div class="project_card_content">
-								<h3 class="project_card_content_title">
-									<a href="http://localhost:9090/tumblbugs/project_content">일상의 사랑스러움, 하트지갑</a>
-								</h3>
-								<p class="project_card_content_creator">라즈베리스튜디오의 프로젝트</p>
-								<p class="project_card_content_detail">특별한 취향을 가진 사람들에게 사랑스러운 일상을 선물하는 하트지갑입니다:)</p>
-							</div>
-							
-							<div class="progress project_card_content_progress">
-						  		<div class="progress-bar" role="progressbar" aria-valuenow="693" aria-valuemin="0" aria-valuemax="100" style="width:693%"></div>
-							</div>
-							
-							<div class="project_card_bottom_info">
-								<div class="project_card_bottom_info_left">
-									<span>모인 금액</span>
-									<span>13,871,000원<span>693 %</span></span>
-								</div>
-								<div class="project_card_bottom_info_right">
-									<span class="project_card_status_success">성공!</span>
-								</div>
-							</div>
-						</div> -->
+						<c:if test="${fn:length(list) ne 0}">
+							<div id="paging"><div id="ampaginationsm"></div></div>
+						</c:if>
 					</div>
 				</div>
 			</div>

@@ -32,8 +32,8 @@
 		//리스트
 		var table = $('#qna_list').DataTable({
 			bPaginate: true, //페이징처리
-            bLengthChange: true, // n개씩보기
-            lengthMenu : [ [15, 30, -1], [15, 30, "전체"] ], // 10/25/50/All 개씩보기
+            bLengthChange: false, // n개씩보기
+            //lengthMenu : [ [10, 20, -1], [10, 20, "전체"] ], // 10/25/50/All 개씩보기
             bAutoWidth: false, //자동너비
             ordering: true, //칼럼별 정렬
             searching: false, //검색기능
@@ -149,6 +149,7 @@ div#admin_mainconent>div#admin_header p {
 	 table#qna_list {
 		width: 1200px;
 		text-align: center;
+		font-size: 14px;
 	}
 	 table#qna_list, table#qna_list th, table#qna_list td {
 	 	border: 1px solid gray;
@@ -161,10 +162,10 @@ div#admin_mainconent>div#admin_header p {
 	 	background-color: #eeeded;
 	 }
 	 
-	 table#qna_list tr#qna_list_item th:first-child{width: 50px;}
+	 table#qna_list thead tr#qna_list_item th:first-child{width: 40px;}
 	 table#qna_list tr#qna_list_item th:nth-child(2){width: 80px;}
 	 table#qna_list tr#qna_list_item th:nth-child(3){width: 230px;}
-	 table#qna_list tr#qna_list_item th:nth-child(4){width: 550px;}
+	 table#qna_list tr#qna_list_item th:nth-child(4){width: 621px;}
 	 table#qna_list tr#qna_list_item th:nth-child(6){width: 120px;}
 	 
 	 table#qna_list tr#qna_list_item2 {background-color: #ffffff;}
@@ -181,13 +182,16 @@ div#admin_mainconent>div#admin_header p {
 		margin-top: 150px;
 		margin-left: 1000px;
 	}
-	div#admin_write a button {
+	div#admin_write a button#btnAdmin_write {
 		background-color: #eeeded;
-		border-radius: 4px;
+		border-radius: 5px;
     	padding: 5px;
     	margin-top: 10px;
+    	margin-left:120px;
     	border: 1px solid #ccc;
     	width: 100px;
+    	cursor: pointer;
+    	color: #545454;
 	}
 </style>
 </head>
@@ -233,38 +237,38 @@ div#admin_mainconent>div#admin_header p {
 				</section>
 			</div>
 			<div id="admin_write">
-				<a href="http://localhost:9090/tumblbugs/admin/faq_write"><button type="button" style="margin-left:150px;cursor: pointer;">새 질문 등록</button></a>
+				<a href="http://localhost:9090/tumblbugs/admin/faq_write"><button type="button" id="btnAdmin_write">새 질문 등록</button></a>
 			</div>
 			<div id="admin_qna">
 				<table id="qna_list">
 					<thead>
-					<tr id="qna_list_item">
-						<th>번호</th>
-						<th>유형</th>
-						<th>리스트 번호</th>
-						<th>제목</th>
-						<th>등록일시</th>
-						<th>메인 노출 여부</th>
-					</tr>
+						<tr id="qna_list_item">
+							<th>번호</th>
+							<th>유형</th>
+							<th>리스트 번호</th>
+							<th>제목</th>
+							<th>등록일시</th>
+							<th>메인 노출</th>
+						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="vo" items="${list}">
-					<tr id="qna_list_item2">
-						<td>${vo.rno}</td>
-						<td>${vo.faq_category }</td>
-						<td>${vo.faq_list_num }</td>
-						<td><a href="http://localhost:9090/tumblbugs/admin/answer" id="td_a">${vo.faq_list_title}</a></td>
-						<td>${vo.reg_date}</td>
-						<c:choose>
-							<c:when test="${vo.faq_main_check eq 'YES'}">
-								<td style="color: #1e90ff;">${vo.faq_main_check}</td>
-							</c:when>
-							<c:otherwise>
-								<td>${vo.faq_main_check}</td>
-							</c:otherwise>
-						</c:choose>
-					</tr>
-					</c:forEach>
+						<c:forEach var="vo" items="${list}">
+							<tr id="qna_list_item2">
+								<td>${vo.rno}</td>
+								<td>${vo.faq_category }</td>
+								<td>${vo.faq_list_num }</td>
+								<td><a href="http://localhost:9090/tumblbugs/admin/answer" id="td_a">${vo.faq_list_title}</a></td>
+								<td>${vo.reg_date}</td>
+								<c:choose>
+									<c:when test="${vo.faq_main_check eq 'YES'}">
+										<td style="color: #1e90ff;">${vo.faq_main_check}</td>
+									</c:when>
+									<c:otherwise>
+										<td>${vo.faq_main_check}</td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
