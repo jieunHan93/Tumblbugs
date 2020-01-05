@@ -357,14 +357,14 @@ $(document).ready(function(){
         	$(".switchBtn.checked").each(function(){
     			$(this).closest("tr").addClass("switchon");
     		});
-        	/* setTimeout(function() {
+        	setTimeout(function() {
         		$(".dataRow tr").each(function(){
             		ba_order = $(this).prevAll().length + 1;
             		$(this).find("input.ba_order").val(ba_order);
             		//console.log($(this).find("input#ba_id").val()+$(this).find("td:nth-child(2)").text()+$(this).find("input.ba_order").val());
             	});
        			reorder();
-			}, 300); */
+			}, 300); 
         }
 	});
 	/** 배너 순서 변경 **/
