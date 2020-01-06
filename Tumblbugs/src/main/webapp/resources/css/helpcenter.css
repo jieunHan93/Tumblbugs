@@ -618,7 +618,8 @@ div#q_partnership a#partner_a:hover {text-decoration: underline;}
 
 /************** 1:1 문의 상세(창작,후원,일반) *********/
 div#q_type>form>div>input[type="text"]#question_email,
-div#q_type>form>div>input[type="text"]#question_spon_number{
+div#q_type>form>div>input[type="text"]#question_spon_number,
+div#q_type>form>div>input[type="text"]#question_project_title{
 	padding: 10px;
 	width: 586px;
 	height:18px;

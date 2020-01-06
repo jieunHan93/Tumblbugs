@@ -120,6 +120,7 @@ div.project_card{
 	margin-right:15px;
 	margin-bottom:15px;
 }
+
 a.project_card_img_link{
 	clear:both;
 	cursor: pointer;
@@ -134,7 +135,7 @@ div.project_card_img_box{
 }
 div.project_card_img_box>img{
 	width: 100%;
- height: auto;
+ 	height: 160px;
 }
 div.project_card_content{
 	padding:13px 19px 0px 19px;

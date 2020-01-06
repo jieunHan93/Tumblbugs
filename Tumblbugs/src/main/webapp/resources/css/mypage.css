@@ -9,6 +9,7 @@ ul {list-style-type: none;}
 section#mypage_profile_header{
 	background-color: #ebeae5;
 	height:144px;
+	
 }
 div#mypage_profile_header_container{
 	width:1080px;
@@ -263,6 +264,8 @@ div#payment_regist_editor {
 	margin-top:10px;
 	width:700px;
 	min-height:500px;
+		
+	border: 10px solid red;
 }
 div#registed_payment_list>div.registed_payment_content{
 	width:660px;
@@ -1477,4 +1480,9 @@ div#message_cat_box_footer button:hover{
 	background-color: #1d85ea;
 }
 
-
+span#pw_chk_ok,
+span#pw_chk_fail
+{
+	color: #1e90ff;
+	font-size: 12px;
+}

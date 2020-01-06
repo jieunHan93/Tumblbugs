@@ -74,6 +74,11 @@
 	
 	#project_table a {
 		color: black;
+		text-decoration: none;
+		display: block;
+	}
+	#project_table tbody tr:hover {
+		background-color: #ebe8e8;
 	}
 
 	/* 탭 */
@@ -459,6 +464,7 @@
 		width: 100px;
 		font-size: 10.5pt;
 		padding: 0px;
+		padding-top: 3px;
 	}
 	div#profile_editor input[type=text],
 	div#profile_editor input[type=text].form-control,
