@@ -11,17 +11,22 @@
 				    to_char(pj_start_date, 'yyyy/mm/dd') pj_start_date, to_char(pj_end_date, 'yyyy/mm/dd') pj_end_date,
 				    to_char(pj_price,'999,999,999,999') pj_price, to_char(nvl(f.total_funding_price,0), '999,999,999,999') total_funding_price,
 				    trunc((nvl(f.total_funding_price, 0)/p.pj_price)*100) achievement_rate
-				from tum_project p, tum_member m,
+				from tum_project p, tum_member m, tum_project_bill b,
 					(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f
 				WHERE P.EMAIL = M.EMAIL
+				and p.pj_id = b.pj_id(+)
 				AND p.pj_id = f.PJ_ID(+)
 				AND P.pj_check_request_date is not null
 				<choose>
 					<when test="category == 'check'">
 						and p.pj_check_yn is null
 					</when>
-					<when test="category == 'success'">
-						<![CDATA[and pj_price <= total_funding_price]]>
+					<when test="category == 'bill'">
+						<![CDATA[
+						and pj_price <= total_funding_price
+						and sysdate > p.pj_end_date + 7
+						and b.pj_id is null
+						]]>
 					</when>
 				</choose>
 		    	order by pj_check_request_date)
@@ -46,13 +51,15 @@
 		select count(*) from tum_project where pj_check_request_date is not null and pj_check_yn is null
 	</select>
 	
-	<select id="adminSuccessCount" resultType="int">
+	<select id="adminBillCount" resultType="int">
 		<![CDATA[
 			select count(*)
-			from tum_project p,(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f
+			from tum_project p,(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f, tum_project_bill b
 			WHERE p.pj_id = f.PJ_ID(+)
-			AND p.pj_check_request_date is not null
+		    and p.pj_id = b.pj_id(+)
 			and p.pj_price <= f.total_funding_price
+		    and sysdate > p.pj_end_date + 7
+		    and b.pj_id is null
 		]]>
 	</select>
 	

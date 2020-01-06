@@ -17,6 +17,19 @@
 		from tum_faq order by reg_date desc))
 	</select>
 	
+	<update id="faq_update" parameterType="com.tumblbugs.vo.FaqVO">
+		update tum_faq set faq_category = #{faq_category}, faq_list_num = #{faq_list_num}, faq_list_title = #{faq_list_title}, faq_content = #{faq_content},
+		faq_main_check = #{faq_main_check}, reg_date = sysdate where faq_num = #{faq_num}
+	</update>
+	
+	<delete id="faq_delete" parameterType="java.lang.String">
+		delete from tum_faq where faq_num=#{faq_num}
+	</delete>
+	
+	<select id="faq_content" parameterType="java.lang.String" resultType="com.tumblbugs.vo.FaqVO">
+		select * from tum_faq where faq_num=#{faq_num}
+	</select>
+	
 	<select id="frequent_list" parameterType="map" resultType="com.tumblbugs.vo.FaqVO">
 		select * from (select rownum rno, FAQ_NUM, FAQ_CATEGORY,FAQ_LIST_TITLE,to_char(REG_DATE,'yyyy/mm/dd') REG_DATE,FAQ_MAIN_CHECK
 		from (select FAQ_NUM, FAQ_CATEGORY,FAQ_LIST_TITLE,REG_DATE,FAQ_MAIN_CHECK

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.project_bill">
+	<select id="billContent_from_funding" parameterType="String" resultType="com.tumblbugs.vo.ProjectBillVO">
+		select (card_pay_price + account_pay_price) total_pay_price, (card_sponsor_count + account_sponsor_count) total_sponsor_count,
+			card_pay_price, card_sponsor_count, account_pay_price, account_sponsor_count,
+			(card_comm + account_comm + (card_pay_price + account_pay_price)*0.05 + transfer_comm) total_comm,
+			(card_pay_price + account_pay_price)*0.05 tumblbugs_comm, (card_comm + account_comm) pay_comm, card_comm, account_comm, transfer_comm,
+			((card_pay_price + account_pay_price) - (card_comm + account_comm + (card_pay_price + account_pay_price)*0.05 + transfer_comm)) total_receipts
+		from
+		(select nvl(sum(total_funding_price),0) card_pay_price, count(*) card_sponsor_count, nvl(sum(total_funding_price)*0.035,0) card_comm
+		from tum_funding
+		where pj_id=#{pj_id} and payment_complete_yn = 'y' and substr(payment_info,0,2) = '카드') card,
+		(select nvl(sum(total_funding_price),0) account_pay_price, count(*) account_sponsor_count, count(*)*250 account_comm
+		from tum_funding
+		where pj_id=#{pj_id} and payment_complete_yn = 'y' and substr(payment_info,0,2) = '계좌') account,
+		(select case when pj_bank = '신한은행' then 0 else 1000 end as transfer_comm from tum_project where pj_id=#{pj_id})
+	</select>
+	
+	<select id="billContent" parameterType="String" resultType="com.tumblbugs.vo.ProjectBillVO">
+		select bill_id, pj_id, total_pay_price, card_pay_price, card_sponsor_count, account_pay_price, account_sponsor_count, total_comm,
+			tumblbugs_comm, pay_comm, card_comm, account_comm, transfer_comm, total_receipts, bill_complete_date
+		from tum_project_bill
+		where bill_id=#{bill_id}
+	</select>
+	
+	<select id="bill_id" parameterType="String" resultType="String">
+		select bill_id from tum_project_bill where pj_id = #{pj_id}
+	</select>
+	
+	<insert id="insert" parameterType="com.tumblbugs.vo.ProjectBillVO">
+		insert into tum_project_bill
+		values('B' || lpad(tum_project_bill_sequ.nextval, 5, 0), #{pj_id}, #{total_pay_price}, #{card_pay_price},
+				#{card_sponsor_count}, #{account_pay_price}, #{account_sponsor_count}, #{total_comm}, #{tumblbugs_comm},
+				#{pay_comm}, #{card_comm}, #{account_comm}, #{transfer_comm}, #{total_receipts}, sysdate)
+	</insert>
+</mapper>

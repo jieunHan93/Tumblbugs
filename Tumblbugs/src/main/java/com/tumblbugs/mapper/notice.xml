@@ -4,7 +4,6 @@
 
 <mapper namespace="mapper.notice">
 	<!-- <insert id="notice_write" parameterType="com.tumblbugs.vo.NoticeVO">
-	1
 		insert into tum_notice values('NO' || LPAD(tum_notice_sequ.nextval, 5, 0), #{notice_title}, #{notice_content:VARCHAR}, 
 								#{notice_category}, sysdate, to_date('${notice_event_start} 23:59:59', 'yyyy-mm-dd hh24:mi:ss'),
 								to_date('${notice_event_end} 23:59:59', 'yyyy-mm-dd hh24:mi:ss'), #{notice_thumbnail}, #{notice_sthumbnail})

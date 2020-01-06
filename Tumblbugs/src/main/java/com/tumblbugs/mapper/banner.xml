@@ -41,9 +41,6 @@
 	
 	<update id="checkbox" parameterType="map"> 
 		UPDATE TUM_BANNER SET BA_CONTROLL =#{ba_controll}, BA_STATUS=#{ba_status} 
-		<if test="ba_status == '대기중' or ba_status == '종료'">
-			, BA_ORDER = ''
-		</if>
 		WHERE BA_ID = #{ba_id}
 	</update>
 	
@@ -57,5 +54,9 @@
 	
 	<select id="main_list" resultType="com.tumblbugs.vo.BannerVO">
 		SELECT BA_TITLE, BA_CONTENT, BA_SIMG, PJ_ADDR FROM TUM_BANNER WHERE BA_STATUS='진행중' AND BA_ORDER IS NOT NULL ORDER BY BA_ORDER ASC
+	</select>
+	
+	<select id="ba_controll" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT BA_CONTROLL FROM TUM_BANNER WHERE BA_ID=#{ba_id}
 	</select>
 </mapper>

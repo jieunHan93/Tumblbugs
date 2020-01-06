@@ -6,7 +6,7 @@
 	<insert id="reg" 
 		parameterType="com.tumblbugs.vo.MemberVO">
 		insert into tum_member 
-			values(#{email},#{name},#{pass},'null','null','null','null','null',sysdate,'y',#{signkey},'n', 'M' || LPAD(tum_member_sequ.nextval, 5, 0))
+			values(#{email},#{name},#{pass},'','','','','',sysdate,'y',#{signkey},'n', 'M' || LPAD(tum_member_sequ.nextval, 5, 0))
 	</insert>
 	 
 	<select  id="email_chk" 
