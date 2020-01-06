@@ -46,7 +46,7 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping(value="/email_chk", method=RequestMethod.GET)
 	public String email_chk(String email) {
-		System.out.println(email+"controll");
+		//System.out.println(email+"controll");
 		int result = logindao.getemailchk(email);	
 		return String.valueOf(result);
 

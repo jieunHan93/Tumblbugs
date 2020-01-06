@@ -73,6 +73,8 @@ public class HelpController {
 		String root_path = "";
 		String attach_path = "";
 		String qsfile = "";
+		String resPage = "";
+		boolean result = false;
 		
 		if(vo.getQuestion_qcfile().getOriginalFilename() != null && vo.getQuestion_qcfile().getOriginalFilename() != ""){
 			//bfile, bsfile 생성
@@ -91,10 +93,8 @@ public class HelpController {
 			//db연동을 위한 파일명 set
 			vo.setQuestion_qfile(qfile); // 이것을 해주기 위함, 중요
 			vo.setQuestion_qsfile(qsfile);
-		
+			result = quesDao.getResultWrite(vo);
 		}
-		boolean result = quesDao.getResultWrite(vo);
-		String resPage = "";
 		
 		if(result) {
 			if(vo.getQuestion_qcfile().getOriginalFilename() != null && vo.getQuestion_qcfile().getOriginalFilename() != ""){
@@ -107,7 +107,8 @@ public class HelpController {
 			}
 			resPage = "redirect:/help/helpq";
 		}else {
-			resPage = "errorPage";
+			result = quesDao.getResultWriteNofile(vo);
+			resPage = "redirect:/help/helpq";
 		}
 		return resPage;
 	}

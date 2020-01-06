@@ -72,7 +72,7 @@ public class ProjectUploadController {
 					}
 				}
 		
-		return "success";
+		return vo.getProfile_simg();
 	}
 	
 	
@@ -121,7 +121,7 @@ public class ProjectUploadController {
 			System.out.println("선택 파일 없음~");
 		}
 		
-		return "success";
+		return vo.getPj_simg();
 	}
 	
 	

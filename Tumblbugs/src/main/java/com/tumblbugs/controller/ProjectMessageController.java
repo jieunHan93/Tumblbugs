@@ -1,6 +1,5 @@
 package com.tumblbugs.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.tumblbugs.dao.MessageDAO;
+import com.tumblbugs.dao.ProjectDAO;
 import com.tumblbugs.util.BeforeTimeUtil;
 import com.tumblbugs.vo.MessageVO;
 
@@ -26,18 +26,13 @@ public class ProjectMessageController {
 	
 	@Autowired
 	private MessageDAO messageDAO;
-	
-	//String email="yappihan@naver.com";
-	//String email="semibold@naver.com";
-	//String email="test3@naver.com";
-	//String email="aaa@naver.com";
+	@Autowired
+	private ProjectDAO projectDAO;
 	
 	/** 프로젝트 상세페이지에서 문의하기 **/
 	@RequestMapping(value="/sendMessage", method=RequestMethod.GET)
 	public ModelAndView send_message(String pj_id) {
 		ModelAndView mv = new ModelAndView();
-		/*String email = (String)session.getAttribute("email");
-		System.out.println("email::"+email);*/
 		String name = messageDAO.getResultCreatorName(pj_id);
 		mv.addObject("pj_id", pj_id);
 		mv.addObject("name", name);
@@ -51,9 +46,10 @@ public class ProjectMessageController {
 		String email = (String)session.getAttribute("semail");
 		vo.setEmail(email);
 		boolean result = messageDAO.getResultWrite(vo);
+		String pj_addr=projectDAO.getPj_addr(vo.getPj_id());
 		if(result) {
 			mv.addObject("pj_id", vo.getPj_id());
-			mv.setViewName("redirect:/project_content");
+			mv.setViewName("redirect:/project/" + pj_addr);
 		} else {
 			mv.setViewName("/error_page");
 		}
@@ -70,7 +66,6 @@ public class ProjectMessageController {
 	@RequestMapping(value="/mypage/message_proc", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String message_proc(String user, String sort, HttpSession session) throws Exception {
-		// 아이디 세션으로 받아오기!!
 		String email = (String)session.getAttribute("semail");
 		ArrayList<MessageVO> list = messageDAO.getResultChatroom(user, email, sort);
 		
@@ -99,7 +94,6 @@ public class ProjectMessageController {
 	@RequestMapping(value="/mypage/message/content", method=RequestMethod.GET)
 	public ModelAndView message_content(String chatroom_id) {
 		ModelAndView mv = new ModelAndView();
-		// 아이디 세션으로 받아오기!!
 		MessageVO vo = messageDAO.getResultProjectInfo(chatroom_id);
 		mv.addObject("chatroom_id", chatroom_id);
 		mv.addObject("vo", vo);

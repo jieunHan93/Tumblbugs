@@ -55,6 +55,7 @@ public class MainController {
 	public ModelAndView index(String email, String signkey, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		ArrayList<HeaderVO> list = mainDAO.getResultCollectionName();
+		ArrayList<HeaderVO> tlist = mainDAO.getResultCollectionTag();
 		ArrayList<CollectionVO> main_clist = mainDAO.getResultCollectionMainList();
 		ArrayList<ProjectVO> cplist = projectsortDAO.getResultCollectionProjectList("C00001", 1, 8);
 		ArrayList<ProjectVO> favlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "전체", "전체", "1", "fav", "전체");
@@ -66,6 +67,7 @@ public class MainController {
 			System.out.println("회원가입완료"+regdao);
 		}	
 		session.setAttribute("clist", list);
+		session.setAttribute("tlist", tlist);
 		mv.addObject("main_clist", main_clist);
 		mv.addObject("cplist",cplist);
 		mv.addObject("favlist",favlist);

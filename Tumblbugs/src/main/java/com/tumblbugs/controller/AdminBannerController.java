@@ -169,25 +169,24 @@ public class AdminBannerController {
 	
 	/** 배너 수정 **/
 	@RequestMapping(value="/admin/banner_update", method=RequestMethod.POST)
-	//@ResponseBody
+	@ResponseBody
 	public String banner_update(BannerVO vo, String del_simg, HttpServletRequest request) throws Exception {
-		String ba_cimg = vo.getBa_cimg().getOriginalFilename();
 		String ba_simg = "";
 		String result = "";
 		boolean confirm = false;
-		
-		if(ba_cimg != "" && ba_cimg != null) {
+		if(vo.getBa_cimg() != null) {
 			UUID uuid = UUID.randomUUID();
-			String ba_img = ba_cimg;
-			ba_simg = uuid+"_"+ba_cimg;
+			String ba_img = vo.getBa_cimg().getOriginalFilename();
+			ba_simg = uuid+"_"+vo.getBa_cimg().getOriginalFilename();
 			
 			vo.setBa_img(ba_img);
 			vo.setBa_simg(ba_simg);
 		}
 		confirm = bannerDAO.getResultUpdate(vo);
+		vo.setBa_controll(bannerDAO.getResultControll(vo.getBa_id()));
 		getResultStatus(vo);
 		if(confirm) {
-			if(ba_cimg != "" && ba_cimg != null) {
+			if(vo.getBa_cimg() != null) {
 				String root_path = request.getSession().getServletContext().getRealPath("/");
 				String attach_path = "\\resources\\upload\\";
 				File file= new File(root_path+attach_path+ba_simg);
@@ -228,7 +227,7 @@ public class AdminBannerController {
 		ArrayList<BannerVO> list = vo.getList();
 		ArrayList<BannerVO> update_list = new ArrayList<BannerVO>();
 		if(list != null) {
-			for(int i=0; i< list.size(); i++) {
+			for(int i=1; i< list.size(); i++) {
 					BannerVO bvo = new BannerVO();
 					if(list.get(i).getBa_order() !="" && list.get(i).getBa_order() != null) {
 						bvo.setBa_id(list.get(i).getBa_id());
@@ -236,7 +235,6 @@ public class AdminBannerController {
 					} else {
 						bvo.setBa_order("");
 					}
-					System.out.println(list.get(i).getBa_id() +" " + list.get(i).getBa_order());
 					update_list.add(bvo);
 				} 
 			int val = bannerDAO.getResultUpdateOrder(update_list);

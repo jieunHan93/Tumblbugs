@@ -1,10 +1,10 @@
 package com.tumblbugs.controller;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tumblbugs.dao.RegDAO;
@@ -21,7 +21,7 @@ public class AdminMemberController {
 	 * @return
 	 */
 	@RequestMapping(value="/admin/member", method=RequestMethod.GET)
-	public ModelAndView admin_member(String email) {
+	public ModelAndView admin_member(String email, String unreg) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(email == null) {
@@ -41,15 +41,8 @@ public class AdminMemberController {
 	 * @return
 	 */
 	@RequestMapping(value="/admin/member_unreg_proc", method=RequestMethod.GET)
+	@ResponseBody
 	public String member_unregister_proc(String email) {
-		String resPage = "";
-		
-		if(regDAO.getResultUnreg(email) != 0) {
-			resPage = "redirect:/admin/member";
-		} else {
-			//에러페이지
-		}
-		
-		return resPage;
+		return String.valueOf(regDAO.getResultUnreg(email));
 	}
 }
