@@ -6,13 +6,20 @@ public class QuestionVO {
 	
 	//Field
 	int question_num,rno;
-	String question_category, question_email, question_title, question_ques_content, question_spon_number, question_qfile, question_qsfile,
+	String question_category, question_email, question_title, question_ques_content, question_spon_number, question_project_title,question_qfile, question_qsfile,
 	question_ques_reg_date, question_ans_content, question_ans_reg_date, question_ans_check;
 	CommonsMultipartFile question_qcfile;
 	
 	//Method
+	
 	public CommonsMultipartFile getQuestion_qcfile() {
 		return question_qcfile;
+	}
+	public String getQuestion_project_title() {
+		return question_project_title;
+	}
+	public void setQuestion_project_title(String question_project_title) {
+		this.question_project_title = question_project_title;
 	}
 	public void setQuestion_qcfile(CommonsMultipartFile question_qcfile) {
 		this.question_qcfile = question_qcfile;

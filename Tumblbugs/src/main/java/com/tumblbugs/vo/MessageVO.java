@@ -11,8 +11,7 @@ public class MessageVO {
 	MSG_DATE       NOT NULL DATE  */
 	String msg_id, chatroom_id, pj_id, email,email_starter, msg_content, msg_type, msg_date, msg_check;
 	String pj_title, pj_simg, name, profile_simg, pj_email, pj_addr;
-	
-	
+
 	public String getPj_addr() {
 		return pj_addr;
 	}

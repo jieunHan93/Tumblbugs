@@ -1,8 +1,10 @@
 package com.tumblbugs.vo;
 
+import java.io.Serializable;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public class CollectionVO {
+public class CollectionVO{
 	/*이름            널        유형             tum_collection
 	------------- -------- -------------- 
 	COL_ID        NOT NULL VARCHAR2(100)  
