@@ -19,6 +19,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="http://localhost:9090/tumblbugs/calendar/css/core-main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <style>
+    body::-webkit-scrollbar {
+	    width: 0px;
+	    background: transparent;
+	}
+	body{
+		background-color: #f6f5f5;
+	}
+    </style>
 	<script>
 	$.fn.dataTable.ext.order['dom-checkbox'] = function  ( settings, col )
 	{

@@ -8,6 +8,8 @@
 <title>관리자 페이지 메인</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function() {
@@ -26,24 +28,28 @@
 			$(".funding_list").hide();
 			$(".funding_list#" + id).show();
 		});
-		//1:1문의
+
+		//리스트
+		var table = $('#qna_list').DataTable({
+			bPaginate: true, //페이징처리
+            bLengthChange: false, // n개씩보기
+            //lengthMenu : [ [10, 20, -1], [10, 20, "전체"] ], // 10/25/50/All 개씩보기
+            bAutoWidth: false, //자동너비
+            ordering: true, //칼럼별 정렬
+            searching: false, //검색기능
+		});
 	});
 </script>
 <style>
 body {background-color: #f7f7f7;}
-div#admin_mainpage{
-	/* display: inline-block; */
-}
 div#admin_mainconent{
-	display: inline-block;
 	margin: 0;
-	position: absolute;
 	margin-left: 320px;
 }
 div#admin_mainconent>div#admin_header{
 	border-bottom:1px solid #ccc;
 	border-right:1px solid #ccc;
-	width: 1100px;
+	width: 100%;
 	height: 70px;
 	line-height:70px;
 	background-color: #ffffff;
@@ -62,7 +68,7 @@ div#admin_mainconent>div#admin_header p {
 		background-color: #f6f5f5;
 	}
 	#funding_history article {
-		width: 1080px;
+		width: 1200px;
 		margin: auto;
 	}
 	#funding_history li {list-style-type: none;}
@@ -133,19 +139,20 @@ div#admin_mainconent>div#admin_header p {
 		margin-left: 15px;
 	}
 	div#admin_qna {
-		width: 1080px;
+		width: 1200px;
 		position: absolute;
 		margin: 150px 0px 0px 20px;
 	}
 	 table#qna_list {
-		width: 1080px;
+		width: 1200px;
 		text-align: center;
+		font-size: 14px;
 	}
 	 table#qna_list, table#qna_list th, table#qna_list td {
 	 	border: 1px solid gray;
 		border-collapse: collapse;
 	}
-	table#qna_list th:first-child{width: 60px;}
+	table#qna_list th:first-child{width: 40px;}
 	table#qna_list th:nth-child(2){width: 100px;}
 	table#qna_list th:nth-child(3){width: 250px;}
 	table#qna_list th:nth-child(4){width: 330px;}
@@ -208,67 +215,35 @@ div#admin_mainconent>div#admin_header p {
 			</div>
 			<div id="admin_qna">
 				<table id="qna_list">
-					<tr id="qna_list_item">
-						<th>번호</th>
-						<th>분류</th>
-						<th>이메일</th>
-						<th>제목</th>
-						<th>문의일시</th>
-						<th>처리유무</th>
-					</tr>
-					<c:forEach var="vo" items="${list}">
-						<tr id="qna_list_item2">
-							<td>${vo.rno}</td>
-							<td>${vo.question_category}</td>
-							<td>${vo.question_email}</td>
-							<td><a href="http://localhost:9090/tumblbugs/admin/answer?question_num=${vo.question_num}" id="td_a">${vo.question_title}</a></td>
-							<td>${vo.question_ques_reg_date}</td>
-							<c:choose>
-								<c:when test="${vo.question_ans_check eq null}">
-									<td>NO</td>
-								</c:when>
-								<c:otherwise>
-									<td style="color: #1e90ff;">${vo.question_ans_check}</td>
-								</c:otherwise>
-							</c:choose>
+					<thead>
+						<tr id="qna_list_item">
+							<th>번호</th>
+							<th>문의 유형</th>
+							<th>이메일</th>
+							<th>제목</th>
+							<th>문의일시</th>
+							<th>처리유무</th>
 						</tr>
-					</c:forEach>
-					<!-- <tr id="qna_list_item2">
-						<td>2</td>
-						<td>창작자</td>
-						<td>qwerew</td>
-						<td>병호2</td>
-						<td><a href="#" id="td_a">관리자님 문의입니다~</a></td>
-						<td>2019-12-02</td>
-						<td>답변완료</td>
-					</tr>
-					<tr id="qna_list_item2">
-						<td>3</td>
-						<td>일반</td>
-						<td>bmlbmlbml</td>
-						<td>병호3</td>
-						<td><a href="#" id="td_a">관리자님 문의입니다~</a></td>
-						<td>2019-12-02</td>
-						<td>답변완료</td>
-					</tr>
-					<tr id="qna_list_item2">
-						<td>3</td>
-						<td>일반</td>
-						<td>bmlbmlbml</td>
-						<td>병호3</td>
-						<td><a href="#" id="td_a">관리자님 문의입니다~</a></td>
-						<td>2019-12-02</td>
-						<td>답변완료</td>
-					</tr>
-					<tr id="qna_list_item2">
-						<td>3</td>
-						<td>일반</td>
-						<td>bmlbmlbml</td>
-						<td>병호3</td>
-						<td><a href="#" id="td_a">관리자님 문의입니다~</a></td>
-						<td>2019-12-02</td>
-						<td>답변완료</td>
-					</tr> -->
+					</thead>
+					<tbody>
+						<c:forEach var="vo" items="${list}">
+							<tr id="qna_list_item2">
+								<td>${vo.rno}</td>
+								<td>${vo.question_category}</td>
+								<td>${vo.question_email}</td>
+								<td><a href="http://localhost:9090/tumblbugs/admin/answer?question_num=${vo.question_num}" id="td_a">${vo.question_title}</a></td>
+								<td>${vo.question_ques_reg_date}</td>
+								<c:choose>
+									<c:when test="${vo.question_ans_check eq null}">
+										<td>NO</td>
+									</c:when>
+									<c:otherwise>
+										<td style="color: #1e90ff;">${vo.question_ans_check}</td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
 		</div>

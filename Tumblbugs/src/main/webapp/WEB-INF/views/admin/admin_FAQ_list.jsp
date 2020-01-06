@@ -42,9 +42,6 @@
 </script>
 <style>
 body {background-color: #f7f7f7;}
-div#admin_mainpage{
-	/* display: inline-block; */
-}
 div#admin_mainconent{
 	margin: 0;
 	margin-left: 320px;
@@ -244,10 +241,10 @@ div#admin_mainconent>div#admin_header p {
 					<thead>
 						<tr id="qna_list_item">
 							<th>번호</th>
-							<th>유형</th>
+							<th>질문 유형</th>
 							<th>리스트 번호</th>
 							<th>제목</th>
-							<th>등록일시</th>
+							<th>등록 일시</th>
 							<th>메인 노출</th>
 						</tr>
 					</thead>
@@ -257,7 +254,7 @@ div#admin_mainconent>div#admin_header p {
 								<td>${vo.rno}</td>
 								<td>${vo.faq_category }</td>
 								<td>${vo.faq_list_num }</td>
-								<td><a href="http://localhost:9090/tumblbugs/admin/answer" id="td_a">${vo.faq_list_title}</a></td>
+								<td><a href="http://localhost:9090/tumblbugs/admin/faq_content?faq_num=${vo.faq_num}" id="td_a">${vo.faq_list_title}</a></td>
 								<td>${vo.reg_date}</td>
 								<c:choose>
 									<c:when test="${vo.faq_main_check eq 'YES'}">

@@ -114,13 +114,23 @@
 								<c:if test="${vo.pj_addr != null && vo.pj_check_yn == 'y'}"> 
 								<a class="project_card_img_link" href="http://localhost:9090/tumblbugs/project/${vo.pj_addr}">
 									<div class="project_card_img_box">
-										<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg}">
+										<c:if test="${vo.pj_simg != null}"> 
+											<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg}">
+										</c:if>
+										<c:if test="${vo.pj_simg == null}">
+											<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/tmp_img.jpg">
+										</c:if>
 									</div>
 								</a>
 								</c:if>
 								<c:if test="${vo.pj_addr == null || vo.pj_check_yn != 'y'}"> 
 									<div class="project_card_img_box">
-										<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg}">
+										<c:if test="${vo.pj_simg != null}"> 
+											<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/${vo.pj_simg}">
+										</c:if>
+										<c:if test="${vo.pj_simg == null}">
+											<img class="project_card_img" src="http://localhost:9090/tumblbugs/upload/tmp_img.jpg">
+										</c:if>
 									</div>
 								</c:if>
 								
@@ -146,7 +156,7 @@
 											<span>${total_price}원<span> ${per_total}%</span></span>
 										</div>
 										<div class="project_card_bottom_info_right">
-											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date > 1}"> 
+											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date >= 1}"> 
 												<c:if test="${vo.start_extra_date > 0}">
 														<span>시작까지</span>
 														<span>${vo.start_extra_date}일</span>
@@ -158,15 +168,9 @@
 													</c:if>
 												</c:if>
 											</c:if>
-											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date <= 1 && vo.pj_extra_date == 0}"> 
-												<c:if test="${vo.pj_extra_date == 0}">
-													<span>남은 시간</span>
-													<span style='color:rgb(224,90,107)'>오늘마감!</span>
-												</c:if>
-												<c:if test="${vo.pj_extra_date > 0}">
-													<span>남은 시간</span>
-													<span>1일</span>
-												</c:if>
+											<c:if test="${vo.pj_check_yn == 'y' && vo.pj_extra_date == 0}"> 
+												<span>남은 시간</span>
+												<span style='color:rgb(224,90,107)'>오늘마감!</span>
 											</c:if>
 											<c:if test="${vo.pj_check_yn == 'n'}"> 
 												<span style='color:rgb(224,90,107)'>승인 실패</span>

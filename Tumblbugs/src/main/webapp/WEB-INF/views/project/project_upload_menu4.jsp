@@ -93,7 +93,7 @@
 					<div id="m4_c3_info" class="sub_info">
 						<c:if test="${vo.pj_account_type != null && vo.pj_account_id != null && 
 							vo.pj_account_name != null && vo.pj_bank != null && vo.pj_account_number != null }">
-								<span style="color:black; font-size:11pt; font-weight:550;">작성 완료</span>
+								<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_account_number}</span>
 						</c:if>
 						<c:if test="${vo.pj_account_type == null || vo.pj_account_id == null || 
 							vo.pj_account_name == null || vo.pj_bank == null || vo.pj_account_number == null }">
@@ -215,7 +215,7 @@
 					<div class="content_btn">
 						<c:if test="${vo.pj_check_yn !='c' && vo.pj_check_yn !='y'}">
 							<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>
-							<button type="button" class="up_save"><i class="fas fa-check"></i> 저장하기</button>
+							<button type="button" class="up_save" id="m4_c3_save"><i class="fas fa-check"></i> 저장하기</button>
 						</c:if>
 						<c:if test="${vo.pj_check_yn =='c' || vo.pj_check_yn =='y'}">
 							<button type="button" class="up_reset" style="position:relative; left:120px;"><i class="fas fa-times"></i> 취소하기</button>

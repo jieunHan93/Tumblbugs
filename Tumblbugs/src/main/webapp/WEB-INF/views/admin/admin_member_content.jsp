@@ -7,9 +7,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/admin_project_member.css">
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/admin_project_member.css">
 <title>Insert title here</title>
+<script>
+	$(document).ready(function() {
+		$("#btn_unreg").click(function() {
+			var email = '${vo.email}';
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/admin/member_unreg_proc?email=" + email,
+				success: function(result) {
+					if(result != "0") {
+						alert("탈퇴 처리되었습니다.");
+						location.href = "http://localhost:9090/tumblbugs/admin/member";
+					} else {
+						alert("탈퇴 처리에 실패했습니다.");
+					}
+				}
+			});
+		});
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="admin_sidebar.jsp"></jsp:include>
@@ -23,7 +41,7 @@
 					<div>
 						<label class="profile_editor_label">프로필 사진</label>
 						<div id="profilel_editor_img">
-							<span></span>
+							<span style="background-image: url(http://localhost:9090/tumblbugs/upload/${vo.profile_simg})"></span>
 						</div>
 					</div>
 					<div>
@@ -48,9 +66,9 @@
 					</div>
 					<div id="profile_button_div">
 						<a href="http://localhost:9090/tumblbugs/admin/member"><button type="button">목록보기</button></a>
-						<c:if test="${vo.use_yn == 'n' }">
-						<a href="http://localhost:9090/tumblbugs/admin/member_unreg_proc"><button id="btn_unreg" type="button">탈퇴 처리하기</button></a>
-						</c:if>
+						<%-- <c:if test="${vo.use_yn == 'n' }"> --%>
+						<button id="btn_unreg" type="button">탈퇴 처리하기</button>
+						<%-- </c:if> --%>
 					</div>
 				</div>
 				<div id="profile_pre">
@@ -58,11 +76,11 @@
 					<div id="profile_pre_header">
 						<div>프로필 카드 미리보기</div>
 						<div id="profile_pre_header_card">
-							<span id="profile_pre_header_card_icon"></span>
+							<span id="profile_pre_header_card_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${vo.profile_simg})"></span>
 							<span id="profile_pre_header_card_name">${vo.name }</span>
 						</div>
 					</div>
-					<div id="profile_pre_middle"><a href="http://localhost:9090/tumblbugs/myproject"><i class="fas fa-check-circle"></i><span>2개의 프로젝트</span></a>의 창작자</div>
+					<div id="profile_pre_middle"><a href="http://localhost:9090/tumblbugs/projects/${vo.member_id}"><i class="fas fa-check-circle"></i><span>${vo.pj_count}개의 프로젝트</span></a>의 창작자</div>
 					<a href="http://localhost:9090/tumblbugs/myfunding"><div id="profile_pre_footer"><span>후훤 현황 자세히보기</span></div></a>
 				</div>
 			</div>

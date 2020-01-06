@@ -150,6 +150,11 @@
 	    	$("div#search_keyword_list>span:first-child").remove();
 			$("div.search_keyword_content").remove();
 	    });
+	    /** 모달 창 닫힐때 검색창 초기화 **/
+	    $("div#projectMenuModal").on('hide.bs.modal', function(){
+	    	$("input#searchKeyword").val("");
+	    });
+	    
 		/** 상위 검색 링크 불러오기 **/
 	    $.ajax({
 			url: "http://localhost:9090/tumblbugs/search_list_proc",
@@ -182,6 +187,13 @@
 				location.href="http://localhost:9090/tumblbugs/discover?keyword="+keyword;
 			}
 	    };
+	    
+	    /**메시지 메뉴 클릭시 메시지 메뉴 초기화**/
+	    $("#mymessage").click(function(){
+	    	sessionStorage.setItem("header_label","buyer");
+			sessionStorage.setItem("body_nav","all");
+	    });
+	    
 	});
 	</script>
 </head>
@@ -262,21 +274,17 @@
 	        			</c:forEach>
 	        		</div>
 	        		</c:if>
+	        		
+	        		<c:if test="${fn:length(sessionScope.tlist) != 0}">
 	        		<div id="modal_tag">
 	        			<div>태그</div>
 	        			<div id="tags">
-	        				<div><a href="#"><span>#원터이즈커밍</span></a></div>
-	        				<div><a href="#"><span>#창작자의도구상자</span></a></div>
-	        				<div><a href="#"><span>#한국의멋</span></a></div>
-	        				<div><a href="#"><span>#텀블벅미식회</span></a></div>
-	        				<div><a href="#"><span>#집사생활</span></a></div>
-	        				<div><a href="#"><span>#오늘의분위기</span></a></div>
-	        				<div><a href="#"><span>#에코라이프</span></a></div>
-	        				<div><a href="#"><span>#어덕행덕</span></a></div>
-	        				<div><a href="#"><span>#기묘한이야기</span></a></div>
+	        			<c:forEach var="vo" items="${sessionScope.tlist }">
+	        				<div style="background-color:${vo.col_bcolor }"><a href="http://localhost:9090/tumblbugs/collections/${vo.col_addr }"><span>${vo.col_name }</span></a></div>
+	        			</c:forEach>
 	        			</div>
 	        		</div>
-	        		
+	        		</c:if>
 	        		<div id="modal_category">
 	        			<div>카테고리</div>
 	        			<div id="categories">
@@ -342,7 +350,7 @@
 	          	<span id="myMenu_user_profil_name">${sessionScope.svo.name}</span>
 	          </div>
 	          <div id="modal_space"></div>
-	          <a href="http://localhost:9090/tumblbugs/mypage/message"><div>메시지</div></a>
+	          <a id="mymessage" href="http://localhost:9090/tumblbugs/mypage/message"><div>메시지</div></a>
 	          <a href="http://localhost:9090/tumblbugs/myfunding"><div>내 후원현황</div></a>
 	          <a href="http://localhost:9090/tumblbugs/projects/${sessionScope.svo.member_id}"><div>내가 만든 프로젝트</div></a>
 	          <div id="modal_space"></div>

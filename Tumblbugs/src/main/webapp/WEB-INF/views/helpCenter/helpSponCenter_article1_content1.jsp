@@ -1,122 +1,108 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>ÅÒºí¹÷½º 1:1¹®ÀÇ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>í…€ë¸”ë²…ìŠ¤ 1:1ë¬¸ì˜</title>
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
 <script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function() {
+		$("div#article_container a.question_num").click(function() {
+			var id = $(this).attr("id");
+			var value = $("input[type=hidden]#"+id).val();
+			//alert(value);
+			  $("div#article_main>div").remove();
+		      $.ajax({
+		         url : "http://localhost:9090/tumblbugs/help/sponcenter/ajax?faq_num="+value,
+		         success : function(data) {
+
+		             var jsonObj = JSON.parse(data);
+		             //alert(jsonObj.list.length);
+					 var str = "";
+		             for(i=0;i<jsonObj.list.length;i++){
+		               str +='<div id="article_header">'
+		                     +'<h2 id="article_title">'+jsonObj.list[i].faq_list_title+'</h2>'
+		                     +'<p>'+jsonObj.list[i].reg_date+'</p>'
+		                     +'</div>'
+		                     +'<div id="article_info">'+jsonObj.list[i].faq_content+'</div>';
+		             }
+		             $("div#article_main").append(str);
+		         }
+		      });
+		});
+		
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="help_header.jsp"></jsp:include>
 	<div id="q_container">
 		<nav id="sub-nav">
 			<ul>
-				<li><a href="http://localhost:9090/tumblbugs/help">ÅÒºí¹÷½º ÇïÇÁ¼¾ÅÍ</a></li>&nbsp;&nbsp;
-				<li><span id="s_right">></span>&nbsp;&nbsp; <a href="http://localhost:9090/tumblbugs/help/sponcenter">ÈÄ¿øÀÚ ¼¾ÅÍ</a></li>&nbsp;&nbsp;
-				<li><span id="s_right">></span>&nbsp;&nbsp; <a href="http://localhost:9090/tumblbugs/help/sponcenter/a1">1. ÇÁ·ÎÁ§Æ® ¹Ð¾îÁÖ±â(ÈÄ¿øÇÏ±â)</a></li>
+				<li><a href="http://localhost:9090/tumblbugs/help">í…€ë¸”ë²…ìŠ¤ í—¬í”„ì„¼í„°</a></li>&nbsp;&nbsp;
+				<li><span id="s_right">></span>&nbsp;&nbsp; <a href="http://localhost:9090/tumblbugs/help/sponcenter">í›„ì›ìž ì„¼í„°</a></li>&nbsp;&nbsp;
+				<li><span id="s_right">></span>&nbsp;&nbsp; <a href="http://localhost:9090/tumblbugs/help/sponcenter/a1">1. í”„ë¡œì íŠ¸ ë°€ì–´ì£¼ê¸°(í›„ì›í•˜ê¸°)</a></li>
 			</ul>
-			<input type="search" id="query" placeholder="°Ë»ö">
+			<input type="search" id="query" placeholder="ê²€ìƒ‰">
 		</nav>
 		<div id="article_container">
 			<section id="article_sidebar">
-				<h3>ÀÌ ¼½¼ÇÀÇ ¹®¼­</h3>
+				<h3>ì´ ì„¹ì…˜ì˜ ë¬¸ì„œ</h3>
 				<ul>
 					<c:forEach var="vo" items="${list}" begin="0" end="9">
-						<li><a href="http://localhost:9090/tumblbugs/help/sponcenter/a1/c1">${vo.faq_list_title}</a></li>
-						<!-- <li><a href="http://localhost:9090/tumblbugs/help/sponcenter/a1/c2">³» ÈÄ¿øÇöÈ²¿¡ ÈÄ¿ø³»¿ªÀÌ º¸ÀÌÁö ¾Ê¾Æ¿ä.</a></li>
-						<li><a href="#">ÇÁ·ÎÁ§Æ® ¹Ð¾îÁÖ±â°¡ ¹«¾ùÀÎ°¡¿ä?</a></li>
-						<li><a href="#">Á¦°¡ ¹Ð¾îÁØ ÇÁ·ÎÁ§Æ®´Â ¾î¶»°Ô È®ÀÎÇÒ ¼ö ÀÖ³ª¿ä?</a></li>
-						<li><a href="#">¼­º£ÀÌ ÀÀ´äÀº ¾î¶»°Ô ÇÏ³ª¿ä?</a></li>
-						<li><a href="#">ÀÌ¹Ì ÆÝµùÀÌ ³¡³­ ÇÁ·ÎÁ§Æ®¿¡´Â Âü¿©ÇÒ ¼ö ¾ø´Â°Ç°¡¿ä?</a></li>
-						<li><a href="#">ÁøÇàÀÚ¿¡°Ô ¹®ÀÇÇÒ ¼ö ÀÖ´Â ¹æ¹ý¿¡´Â ¾î¶² °ÍÀÌ ÀÖ³ª¿ä?</a></li>
-						<li><a href="#">ÇÏ³ªÀÇ ÇÁ·ÎÁ§Æ®¿¡¼­ ¿©·¯ ¹ø ¹Ð¾îÁÖ´Â °Íµµ °¡´ÉÇÑ°¡¿ä?(´ÙÁß ÈÄ¿ø)</a></li>
-						<li><a href="#">°áÁ¦ÇÑ ÇÁ·ÎÁ§Æ®¿¡ ´ëÇÑ Çö±Ý¿µ¼öÁõ ¹ß±ÞÀÌ °¡´ÉÇÑ°¡¿ä?</a></li>
-						<li><a href="#">¹Ð¾îÁØ ÇÁ·ÎÁ§Æ® ÁøÇàÀÚ°¡ ¾Ë ¼ö ÀÖ´Â Á¦ Á¤º¸´Â ¹«¾ùÀÌ ÀÖ³ª¿ä?</a></li>	 -->
+						<input type="hidden" id="${vo.faq_num}" value="${vo.faq_num}">
+						<li><a href="#" class="question_num" id="${vo.faq_num}" >${vo.faq_list_title}</a></li>
 					</c:forEach>									
 				</ul>
-				<a href="http://localhost:9090/tumblbugs/help/sponcenter/a1">´õº¸±â</a>
+				<a href="http://localhost:9090/tumblbugs/help/sponcenter/a1">ë”ë³´ê¸°</a>
 			</section>
 			<article id="article">
 				<div id="article_main">
-					<div id="article_header">
-						<h2 id="article_title">Å©¶ó¿ìµå ÆÝµù°ú ÈÄ¿øÀÌ¶õ ¹«¾ùÀÎ°¡¿ä?</h2>
-						<p>16½Ã°£ Àü ¾÷µ¥ÀÌÆ®</p>
+					<%-- <div id="article_header">
+						<h2 id="article_title">í¬ë¼ìš°ë“œ íŽ€ë”©ê³¼ í›„ì›ì´ëž€ ë¬´ì—‡ì¸ê°€ìš”?</h2>
+						<p>16ì‹œê°„ ì „ ì—…ë°ì´íŠ¸</p>
 					</div>
-					<div id="article_info">
-						${aaa}
-						<!-- <h2 id="title_info">Å©¶ó¿ìµåÆÝµùÀÌ¶õ ¹«¾ùÀÌÁÒ?</h2>
-						<p>Å©¶ó¿ìµåÆÝµùÀº ¾ÆÀÌµð¾î´Â ÀÖÁö¸¸ ½ÇÇàÀ» À§ÇÑ ÀÚ±ÝÀÌ ºÎÁ·ÇÑ °³ÀÎ ¶Ç´Â ÆÀÀÌ 
-						´Ù¼öÀÇ »ç¶÷µé(Crowd)·ÎºÎÅÍ µ·À» ¸ð±Ý(Funding)ÇÏ´Â °ÍÀ» ¸»ÇÕ´Ï´Ù.
-						</p>
-						<p>&nbsp;</p>
-						<h2 id="title_info">ÅÒºí¹÷¿¡¼­ÀÇ ÆÝµùÀº ¾î¶² ¹æ½ÄÀ¸·Î ÁøÇàµÇ³ª¿ä?</h2>
-						<p>Ã¢ÀÛÀÚ´Â ¸¸µé°íÀÚ ÇÏ´Â Ã¢ÀÛ¹°¿¡ ´ëÇÑ ÀÌ¾ß±â¿Í ¾ÆÀÌµð¾î, ±¸Ã¼ÀûÀÎ °èÈ¹, ¼±¹°ÀÇ ½ºÆå µîÀ» ´ãÀº ÇÁ·ÎÁ§Æ® ÆäÀÌÁö¸¦ »ý¼ºÇÏ¿© ÇÃ·§Æû¿¡ °Ô½ÃÇÕ´Ï´Ù.
-						 °Ô½ÃµÈ ÇÁ·ÎÁ§Æ®´Â ÇÃ·§ÆûÀ» ÅëÇØ ºÒÆ¯Á¤ ´Ù¼ö¿¡°Ô ³ëÃâµÇ°í, ÀÌ¿ëÀÚµéÀº ¿øÇÏ´Â ÇÁ·ÎÁ§Æ®¿¡ ¹Ð¾îÁÖ±â(ÈÄ¿ø)À» ÅëÇØ ÆÝµù¿¡ Âü¿©ÇÏ¿© ÈÄ¿øÀÚ°¡ µË´Ï´Ù.
-						 °áÁ¦´Â Áï½Ã ÁøÇàµÇÁö ¾Ê°í »çÀü¿¡ ¼³Á¤ÇÑ ¸¶°¨ÀÏ ±âÁØ ¸ñÇ¥ ±Ý¾×À» ´Þ¼ºÇÑ °æ¿ì¿¡¸¸ ÁøÇàµË´Ï´Ù.
-						 ÈÄ¿ø±ÝÀÌ ÇÁ·ÎÁ§Æ® ¼³°è ´ç½Ã ¼³Á¤ÇÑ ¸ñÇ¥ ±Ý¾×¿¡ µµ´ÞÇÏÁö ¸øÇÒ °æ¿ì ¿¹¾àµÈ °áÁ¦´Â Ãë¼ÒµÇ¸ç Ã¢ÀÛÀÚ¿¡°Ô Àü´ÞµÇ´Â ±Ý¾×Àº ¾ø½À´Ï´Ù.
-						</p>
-						<p>°áÁ¦µÈ ±Ý¾×Àº Ã¢ÀÛÀÚ¿¡°Ô Àü´ÞµÇ¾î ÈÄ¿øÀÚ¿Í ¾à¼ÓÇÑ ÇÁ·ÎÁ§Æ®¸¦ ÁøÇàÇÏ°í ¼±¹°À» ¸¸µå´Â µ¥¿¡ ¾²ÀÌ°Ô µË´Ï´Ù.
-						 ÀÌ¸¦ ÅëÇØ ¸¸µé¾îÁø Ã¢ÀÛÀÇ °á°ú¹°Àº ÆÝµù¿¡ Âü¿©ÇÑ ÈÄ¿øÀÚ¿¡°Ô ¼±¹°·Î Á¦°øµË´Ï´Ù.
-						</p>
-						<p>Ã¢ÀÛÀÚ´Â Àü´Þ¹ÞÀº ±Ý¾×À» ¹Ýµå½Ã ÇÁ·ÎÁ§Æ®¸¦ ÅëÇØ ÈÄ¿øÀÚ¿Í ¾à¼ÓÇÑ Ã¢ÀÛ¹°À» ¸¸µå´Â µ¥¿¡ »ç¿ëÇÏ°í,
-						 ¼±¹°ÀÌ ¾à¼ÓÇÑ´ë·Î Àü´ÞµÉ ¼ö ÀÖµµ·Ï ÃÖ¼±ÀÇ ³ë·ÂÀ» ´ÙÇØ¾ß ÇÕ´Ï´Ù. ´Ü, ºÒ°¡ÇÇÇÑ ¼±¹°ÀÇ º¯°æ ¹× Áö¿¬ µîÀÌ ¹ß»ýÇÒ °æ¿ì
-						 Ã¢ÀÛÀÚ´Â ÈÄ¿øÀÚ¿¡°Ô ÀÌ¸¦ ¼º½ÇÈ÷ ¼³¸íÇÏ°í ÇÕÀÇÇØ¾ß ÇÒ ÀÇ¹«°¡ ÀÖ½À´Ï´Ù.
-						 Áö¿¬ ¹× ½ÇÆÐ¸¦ ºñ·ÔÇÑ ÇÁ·ÎÁ§Æ®ÀÇ ¿¹»ó°ú ´Ù¸¥ ÁøÇà »çÇ×ÀÌ ¹ß»ýÇÑ °æ¿ì ±× Ã¥ÀÓÀº Ã¢ÀÛÀÚ¿¡°Ô ÀÖ½À´Ï´Ù.
-						</p>
-						<p>&nbsp;</p>
-						<h2 id="title_info">¹Ð¾îÁÖ±â(ÈÄ¿ø)¶õ ¹«¾ùÀÎ°¡¿ä?</h2>
-						<p>ÇÁ·ÎÁ§Æ® ¹Ð¾îÁÖ±â´Â Ã¢ÀÛÀÚµéÀÌ ±¸»óÇÏ´Â ÇÁ·ÎÁ§Æ®°¡ ½ÇÁ¦·Î ±¸ÇöµÉ ¼ö ÀÖµµ·Ï ÀÏÁ¤ÇÑ ±Ý¾×À» ÁöºÒÇÏ¿© µ½´Â °ÍÀÔ´Ï´Ù.
-						 ¿©·¯ºÐÀº Ã¢ÀÛÀÚ¸¦ ÇâÇÑ ÁöÁö¿Í µµ¿òÀ» ´õÇÏ°í, ÇÁ·ÎÁ§Æ®¸¦ ÅëÇØ ¸¸µé¾îÁö´Â ¼±¹°À» ¹Þ¾Æº¸½Ã°Ô µË´Ï´Ù.
-						</p>
-						<p>´Ù¸¸ ÅÒºí¹÷¿¡¼­ ÀÌ·ç¾îÁö´Â ÆÝµùÀº ¾ÆÁ÷ ±¸ÇöµÇÁö ¾ÊÀº ¾ÆÀÌµð¾î¸¦ ÈÄ¿øÀ» ÅëÇØ ÇÔ²² ¿Ï¼ºÇØ³ª°¡´Â ÀÏÀÔ´Ï´Ù.
-						 ÀÌ ¶§¹®¿¡ ÇÃ·§Æû Æ¯¼º»ó ¹Ð¾îÁÖ±â(ÈÄ¿ø)´Â ¿Ï¼ºµÈ Á¦Ç°À» ÁÖ¹®¹Þ¾Æ Áï½Ã ¹è¼ÛÇÏ´Â ±¸¸Å¿Í´Â ¸Æ¶ôÀÌ ´Ù¸¨´Ï´Ù.
-						 ¾ÆÀÌµð¾î¿Í ½ÃÁ¦Ç° ´Ü°è¿¡¼­ ÈÄ¿øÀ» ¹Þ´Â °ÍÀÌ±â¿¡ °èÈ¹ÇÑ ÇÁ·ÎÁ§Æ® ¹× ¼±¹°ÀÌ ¿¹»ó°ú ´Þ¸® ÁøÇàµÉ °¡´É¼ºÀÌ Á¸ÀçÇÏ´Â °ÍÀÌ »ç½ÇÀÔ´Ï´Ù.
-						 ±×·¯³ª ÅÒºí¹÷ÀÇ ÈÄ¿øÀÌ ÀÏ¹ÝÀûÀÎ ±¸¸Å¿Í ¸Æ¶ôÀº »ìÂ¦ ´Ù¸¦Áö¶óµµ ÁøÇàÀÚ´Â Ã¢ÀÛÀ» À§ÇØ ¹ÞÀº ÈÄ¿ø¿¡ »óÀÀÇÏ´Â º¸»óÀ» ¼º½ÇÇÏ°Ô Á¦°øÇÒ Ã¥ÀÓÀÌ ÀÖ½À´Ï´Ù.
-						</p>
-						<p>&nbsp;</p>
-						<h2 id="title_info">ÅÒºí¹÷Àº ÀÌ °úÁ¤¿¡¼­ ¹«¾ùÀ» ÇÏ³ª¿ä?</h2>
-						<p>ÅÒºí¹÷Àº Ã¢ÀÛÀ» À§ÇÑ »õ·Î¿î ½Ãµµ¸¦ ¼Ò°³ÇÏ°í ¾ÆÀÌµð¾î°¡ ÈÄ¿øÀÚ¸¦ ¸¸³ª ¼¼»ó¿¡ ³ª¿Ã ¼ö ÀÖ°Ô ÇÏ´Â ÇÃ·§Æû ¼­ºñ½º¸¦ Á¦°øÇÕ´Ï´Ù.</p> -->
-					</div>
+					<div id="article_info">${aaa}</div> --%>
 				</div>
 				<footer>
 					<div id="article_footer">
-						<span id="s1">µµ¿òÀÌ µÇ¾ú½À´Ï±î?</span>
+						<span id="s1">ë„ì›€ì´ ë˜ì—ˆìŠµë‹ˆê¹Œ?</span>
 						<div id="article_footer_ox">
-							<a href="#">¿¹</a>
-							<a href="#">¾Æ´Ï¿À</a>
+							<a href="#">ì˜ˆ</a>
+							<a href="#">ì•„ë‹ˆì˜¤</a>
 						</div>
-						<span id="s2">550¸í Áß 517¸íÀÌ µµ¿òÀÌ µÇ¾ú´Ù°í Çß½À´Ï´Ù.</span>
+						<span id="s2">550ëª… ì¤‘ 517ëª…ì´ ë„ì›€ì´ ë˜ì—ˆë‹¤ê³  í–ˆìŠµë‹ˆë‹¤.</span>
 					</div>
 				</footer>
 				<div id="article_relatives">
 					<div id="recent_article">
-						<h3>ÃÖ±Ù º» ¹®¼­</h3>
+						<h3>ìµœê·¼ ë³¸ ë¬¸ì„œ</h3>
 						<ul id="ul_article">
-							<li><a href="#">³» ÈÄ¿øÇöÈ²¿¡ ÈÄ¿ø³»¿ªÀÌ º¸ÀÌÁö ¾Ê¾Æ¿ä.</a></li>
-							<li><a href="#">¼­º£ÀÌ ÀÀ´äÀº ¾î¶»°Ô ÇÏ³ª¿ä?</a></li>
-							<li><a href="#">ÅÒºí¹÷ ÇÁ·ÎÁ§Æ® ±ÔÄ¢</a></li>
-							<li><a href="#">¹Ð¾îÁØ ÇÁ·ÎÁ§Æ® ÁøÇàÀÚ°¡ ¾Ë ¼ö ÀÖ´Â Á¦ Á¤º¸´Â ¹«¾ùÀÌ ÀÖ³ª¿ä?</a></li>
-							<li><a href="#">°áÁ¦ÇÑ ÇÁ·ÎÁ§Æ®¿¡ ´ëÇÑ Çö±Ý¿µ¼öÁõ ¹ß±ÞÀÌ °¡´ÉÇÑ°¡¿ä?</a></li>
+							<li><a href="#">ë‚´ í›„ì›í˜„í™©ì— í›„ì›ë‚´ì—­ì´ ë³´ì´ì§€ ì•Šì•„ìš”.</a></li>
+							<li><a href="#">ì„œë² ì´ ì‘ë‹µì€ ì–´ë–»ê²Œ í•˜ë‚˜ìš”?</a></li>
+							<li><a href="#">í…€ë¸”ë²… í”„ë¡œì íŠ¸ ê·œì¹™</a></li>
+							<li><a href="#">ë°€ì–´ì¤€ í”„ë¡œì íŠ¸ ì§„í–‰ìžê°€ ì•Œ ìˆ˜ ìžˆëŠ” ì œ ì •ë³´ëŠ” ë¬´ì—‡ì´ ìžˆë‚˜ìš”?</a></li>
+							<li><a href="#">ê²°ì œí•œ í”„ë¡œì íŠ¸ì— ëŒ€í•œ í˜„ê¸ˆì˜ìˆ˜ì¦ ë°œê¸‰ì´ ê°€ëŠ¥í•œê°€ìš”?</a></li>
 						</ul>
 					</div>
 					<div id="related_article">
-						<h3>°ü·Ã ¹®¼­</h3>
+						<h3>ê´€ë ¨ ë¬¸ì„œ</h3>
 						<ul id="ul_article">
-							<li><a href="#">ÆÝµù ¼ö¼ö·á´Â ¾ó¸¶ÀÎ°¡¿ä?</a></li>
-							<li><a href="#">ÇÁ·ÎÁ§Æ® ¿Ã¸®·Á¸é ¾î¶»°Ô ÇØ¾ß ÇÏ³ª¿ä?</a></li>
-							<li><a href="#">°áÁ¦°¡ ½ÇÆÐÇß½À´Ï´Ù. Àç°áÁ¦´Â ¾î¶»°Ô ÇÏ³ª¿ä?</a></li>
-							<li><a href="#">³» ÈÄ¿øÇöÈ²¿¡ ÈÄ¿ø³»¿ªÀÌ º¸ÀÌÁö ¾Ê¾Æ¿ä.</a></li>
-							<li><a href="#">ÈÄ¿ø ¼±¹°·Î Á¦°øµÇ´Â Ç°¸ñ¿¡ µû¸¥ ÇÊ¼ö È®ÀÎ»çÇ×</a></li>
+							<li><a href="#">íŽ€ë”© ìˆ˜ìˆ˜ë£ŒëŠ” ì–¼ë§ˆì¸ê°€ìš”?</a></li>
+							<li><a href="#">í”„ë¡œì íŠ¸ ì˜¬ë¦¬ë ¤ë©´ ì–´ë–»ê²Œ í•´ì•¼ í•˜ë‚˜ìš”?</a></li>
+							<li><a href="#">ê²°ì œê°€ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. ìž¬ê²°ì œëŠ” ì–´ë–»ê²Œ í•˜ë‚˜ìš”?</a></li>
+							<li><a href="#">ë‚´ í›„ì›í˜„í™©ì— í›„ì›ë‚´ì—­ì´ ë³´ì´ì§€ ì•Šì•„ìš”.</a></li>
+							<li><a href="#">í›„ì› ì„ ë¬¼ë¡œ ì œê³µë˜ëŠ” í’ˆëª©ì— ë”°ë¥¸ í•„ìˆ˜ í™•ì¸ì‚¬í•­</a></li>
 						</ul>
 					</div>
 				</div>
 				<div id="article_more_question">
-					<p>Áú¹®¿¡ ´ëÇÑ ´äÀ» Ã£Áö ¸øÇÏ¼Ì³ª¿ä?</p>
-					<a href="http://localhost:9090/tumblbugs/help/helpq">1:1 ¹®ÀÇÇÏ±â</a>
+					<p>ì§ˆë¬¸ì— ëŒ€í•œ ë‹µì„ ì°¾ì§€ ëª»í•˜ì…¨ë‚˜ìš”?</p>
+					<a href="http://localhost:9090/tumblbugs/help/helpq">1:1 ë¬¸ì˜í•˜ê¸°</a>
 				</div>
 			</article>
 		</div>

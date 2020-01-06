@@ -19,7 +19,7 @@
              lengthMenu : [ [15, 30, -1], [15, 30, "전체"] ], // 10/25/50/All 개씩보기
              bAutoWidth: false, //자동너비
              ordering: true, //칼럼별 정렬
-             searching: false, //검색기능
+             searching: true, //검색기능
 		});
 	});
 </script>
@@ -38,7 +38,7 @@
 						<th class="email">이메일</th>
 						<th class="name">이름</th>
 						<th class="reg_date">가입일</th>
-						<th class="use_yn">활성 상태</th>
+						<!-- <th class="use_yn">활성 상태</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -48,7 +48,7 @@
 						<td class="email"><a href="http://localhost:9090/tumblbugs/admin/member?email=${vo.email }">${vo.email }</a></td>
 						<td class="name">${vo.name }</td>
 						<td class="reg_date">${vo.reg_date }</td>
-						<td class="use_yn">${vo.use_yn }</td>
+						<%-- <td class="use_yn">${vo.use_yn }</td> --%>
 					</tr>
 					</c:forEach>
 				</tbody>

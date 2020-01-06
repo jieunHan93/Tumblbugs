@@ -121,10 +121,22 @@
 											+ "</div></div></div>";
 										
 										var id = $(".reply_list#" + community_id + " .reply_each").last().attr("id");
-										$(".reply_each#" + id).after(appendData);
+										
+										if(id != null && id != "") {
+											$(".reply_each#" + id).after(appendData);
+										} else {
+											$(".reply_list#" + community_id).prepend(appendData);
+										}
+										
 										$("input#reply_write_content").val("");
 										
 										getRcount(community_id);
+										
+										//댓글 삭제
+										$(".reply_each #btn_reply_delete").click(function() {
+											var reply_id = $(this).closest(".reply_each").attr("id");
+											deleteReply(reply_id, community_id);
+										});
 									} else {
 										alert("댓글 등록에 실패했습니다.");
 									}
@@ -136,18 +148,7 @@
 					//댓글 삭제
 					$(".reply_each #btn_reply_delete").click(function() {
 						var reply_id = $(this).closest(".reply_each").attr("id");
-						
-						if(confirm("댓글을 삭제하시겠습니까?")) {
-							$.ajax({
-								url: "http://localhost:9090/tumblbugs/community_reply_delete_proc?reply_id=" + reply_id,
-								success: function(result) {
-									if(result != "0") {
-										$(".reply_each#" + reply_id).remove();
-										getRcount(community_id);
-									}
-								}
-							});
-						}
+						deleteReply(reply_id, community_id);
 					});
 					
 					
@@ -157,6 +158,21 @@
 			$(this).siblings(".reply_count_reply_show").show();
 			$(this).hide();
 		});
+		
+		//댓글 삭제
+		function deleteReply(reply_id, community_id) {
+			if(confirm("댓글을 삭제하시겠습니까?")) {
+				$.ajax({
+					url: "http://localhost:9090/tumblbugs/community_reply_delete_proc?reply_id=" + reply_id,
+					success: function(result) {
+						if(result != "0") {
+							$(".reply_each#" + reply_id).remove();
+							getRcount(community_id);
+						}
+					}
+				});
+			}
+		}
 		
 		//댓글 등록&삭제 후 댓글 count 업데이트
 		function getRcount(community_id) {

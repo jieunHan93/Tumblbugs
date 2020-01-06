@@ -87,6 +87,7 @@
 				$("textarea").focus();
 				return false;
 			} else {
+				alert("정보를 수정했습니다.");
 				colUpdateFrom.submit();
 			}
 			

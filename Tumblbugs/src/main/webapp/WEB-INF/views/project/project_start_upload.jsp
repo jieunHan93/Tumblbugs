@@ -19,7 +19,6 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
 $(document).ready(function(){
-	
 	var item_value = 1000;
 	var product_number = 1000;
 	
@@ -55,6 +54,7 @@ $(document).ready(function(){
 	$("#m2_c2_i2").val('${vo.pj_end_date}');
 	$("#pj_start_date").val('${vo.pj_start_date}');
 	var pj_price = '${vo.pj_price}'.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	var pj_simg = '${vo.pj_simg}';
 	$("#m1_select").val("${vo.pj_category}");
 	$("#m2_select").val("${vo.pj_class}");
 	$(".add_items_table").css('display','block');
@@ -84,20 +84,15 @@ $(document).ready(function(){
 	if(pj_price != null && pj_price != ""){
 		$("#content_m2_c1 .sub_info").text(pj_price).css('font-size','11pt').css('color','black').css('font-weight','550');
 	}
-/* 	<c:forEach var="list" items="${glist}">
-	<c:forEach var="ivo" items="${list.itemList}">
-		if('${ivo.item_check}' == 'y'){
-			$("#item"+'${list.rno }'+'${ivo.rno}').prop("checked","true");
-		}
-	</c:forEach>
-	</c:forEach> */
-/* 	$(".item_check").each(function(i, e){
-		   if($(this).is(":checked")){
-			   $(this).prop("checked","true");
-		   }else{
-			   $(this).removeProp("checked");
-		   }
-	}); */
+	if(pj_simg != null && pj_simg != ""){
+		$("#content_pro_img").css('height','200px');
+		$("#content_pro_img #title_write").css('position','relative').css('bottom','60px');
+		$("#prevProImg").css('width','300px').css('height','200px').css('background-image','url(http://localhost:9090/tumblbugs/resources/upload/'+pj_simg+')')
+		.css('background-size','270px 130px').css('background-repeat','no-repeat').css('display','inline-block');
+	}
+	if('${mvo.profile_simg}' != null && '${mvo.profile_simg}' != ""){
+		$("#content_my_img").css('height','200px');
+	}
 	
 	$("#menu_label1").css('background-color','rgb(247,247,247)').css('border-color','#ccc');
 	$("#content_up_menu1").css('display','inline-block');	
@@ -275,10 +270,7 @@ $(document).ready(function(){
 									$(save_btn).attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
 								}
 								
-				        },  error:function(request,status,error){
-		                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		                    
-		                }});
+				        }});
 					}
 				}else if(input_val_len > 50){
 					$(this).next().text(input_val_len-50+"자 초과했습니다.").css("color","rgb(241,75,88)");
@@ -292,10 +284,20 @@ $(document).ready(function(){
 			
 		});
 		
+		CKEDITOR.instances.m3_c1_i1.on('change', function() {
+			var editorVal = CKEDITOR.instances.m3_c1_i1.getData();
+			if(editorVal != ""){
+				$(this).css('border-color',"rgb(232,237,247)"); 
+				$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+			}else if(editorVal == ""){
+				$(save_btn).attr('disabled', true).css('background','rgb(135,200,255)').css('cursor','default');
+			}
+		});
+		
 		$("textarea").off().on("change keyup paste", function(){
 			var my_id = $(this).attr("id");
 			var input_val_len = $(this).val().length;
-			 if(my_id=="m1_c3_i1"){
+			if(my_id=="m1_c3_i1"){
 				if(input_val_len != 0 && input_val_len <= 50){
 					$("#m1_c3_len").text(50-input_val_len+"자 남았습니다.").css("color","#444444");
 					$(this).css('border-color',"rgb(232,237,247)"); 
@@ -414,9 +416,8 @@ $(document).ready(function(){
 							pj_account_name : $("#pj_account_name2").val(),
 							pj_bank : $("#business_bank").val(),
 							pj_account_number : $("#pj_account_number2").val()	
-						}
+					}
 				}
-			
 				
 				$.ajax({type: "POST",
 			        	url: 'project_edit_account_proc',
@@ -427,9 +428,10 @@ $(document).ready(function(){
                         success : function(result) {
              	}});
 				
-               /* 	location.reload(); */
 				$(slide_d_id).css('display','none');
 				$(slide_id).css('display','inline-block');
+				$(check_input).text(data.pj_account_number).css('font-size','11pt').css('color','black').css('font-weight','550'); 
+				$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
            }//끝
 			
 			var update_param = "";
@@ -443,10 +445,7 @@ $(document).ready(function(){
 					$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 						success: function(data){
 							
-					},  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                }});
+					}});
 					$(check_input).text(input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
 					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
 					
@@ -465,10 +464,7 @@ $(document).ready(function(){
 						
 						$.ajax({url: "project_edit_title_proc?pj_title="+$("#m1_c1_i1").val()+"&pj_stitle="+$("#m1_c1_i2").val(),
 								success: function(data){
-				        },  error:function(request,status,error){
-		                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		                    
-		                }});
+				        }});
 						
 					}else{
 						$("#upload_my_stitle").css('display','none');
@@ -485,13 +481,10 @@ $(document).ready(function(){
 					
 					$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 						success: function(data){
-					},  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                }});
+					}});
 					
 				}else if($("#m1_c4_i1").attr("id") == $(slide_d_id+" input").attr("id")){
-					$(check_input).text("http://localhost:9090/tumblbugs/"+input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
+					$(check_input).text("http://localhost:9090/tumblbugs/project/"+input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
 					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
 					
 					/** 저장 ajax **/
@@ -499,10 +492,7 @@ $(document).ready(function(){
 					
 					$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 						success: function(data){
-					},  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                }});
+					}});
 					
 				}else if($("#pj_account_number2").val() != ""){
 					account_num = $("#pj_account_number2").val();
@@ -527,10 +517,7 @@ $(document).ready(function(){
 						$.ajax({url: "project_member_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 							success: function(data){
 								
-						},  error:function(request,status,error){
-		                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		                    
-		                }});
+						}});
 					}else if($(slide_d_id+" input[type=text]").attr("id") == "m4_c1_i1"){
 						var email_val = $("#m4_c1_i1").val();
 								pj_colname="pj_email";
@@ -538,10 +525,7 @@ $(document).ready(function(){
 								$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 									success: function(data){
 										
-								},  error:function(request,status,error){
-				                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				                    
-				                }});
+								}});
 						
 						
 					}else if($(slide_d_id+" input[type=text]").attr("id") == "m4_c2_i1"){
@@ -550,10 +534,7 @@ $(document).ready(function(){
 						$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 							success: function(data){
 								
-						},  error:function(request,status,error){
-		                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		                    
-		                }});
+						}});
 					}
 					
 				}
@@ -573,10 +554,7 @@ $(document).ready(function(){
 					
 					$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+textarea_val,
 						success: function(data){
-					},  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                }});
+					}});
 					
 				}else if($("#m1_c3_i1").attr("id")==$(slide_d_id+" textarea").attr("id")){
 					$(check_input).text($("#m1_c3_i1").val()).css('font-size','11pt').css('color','black').css('font-weight','550');
@@ -585,10 +563,7 @@ $(document).ready(function(){
 					
 					$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+textarea_val,
 						success: function(data){
-					},  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                }});
+					}});
 					
 				}else if($("#m3_c1_i1").attr("id")==$(slide_d_id+" textarea").attr("id")){
 					$(check_input).text("작성 완료").css('font-size','11pt').css('color','black').css('font-weight','550');
@@ -619,13 +594,7 @@ $(document).ready(function(){
 					
 					$.ajax({url: "project_member_proc?pj_colname="+pj_colname+"&pj_val="+textarea_val,
 						success: function(data){
-					},  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                },  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                }});
+					}});
 				}
 				
 			}else if(select_val != null && select_val !=""){
@@ -645,23 +614,20 @@ $(document).ready(function(){
 					
 					$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+select_val,
 						success: function(data){
-					},  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                    
-	                }});
+					}});
 				
 			}else if(file_val != null && file_val !=""){
 				$(slide_d_id).css('display','none');
 				$(slide_id).css('display','inline-block');
 				
 				if($(slide_d_id+" input[type=file]").attr("id") == "pro_img"){
-					$(check_input).text("선택완료").css('font-size','11pt').css('color','black').css('font-weight','550');
-					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
-					$(check_input).text(file_val).css('font-size','11pt').css('color','black').css('font-weight','550');
-					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
-					
+					$(check_input).text("");
+					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기").css('position','relative').css('bottom','60px');
 		            var options = {
 		                success : function(data) {
+		                	$("#content_pro_img").css('height','200px');
+							$(check_input).css('height','200px').css('background-image','url(http://localhost:9090/tumblbugs/resources/upload/'+data+")")
+											.css('background-size','270px 130px').css('background-repeat','no-repeat');
 		                },
 		                type : "POST",
 		                url: 'project_edit_file_proc'
@@ -671,13 +637,11 @@ $(document).ready(function(){
 
 			          
 				}else if($(slide_d_id+" input[type=file]").attr("id") == "my_pro_img"){
-						$(check_input).text("선택완료").css('font-size','11pt').css('color','black').css('font-weight','550');
 						$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
-						$(check_input).text(file_val).css('font-size','11pt').css('color','black').css('font-weight','550');
-						$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
-						
+						$(check_input).text("");
 			            var options = {
 			                success : function(data) {
+			                	$("#my_img_info #my_d_img").css('background-image','url(http://localhost:9090/tumblbugs/resources/upload/'+data+")");
 			                },
 			                type : "POST",
 			                url: 'project_edit_memberFile_proc'
@@ -818,9 +782,6 @@ $(document).ready(function(){
             	gift_id = result;
             	$(slide_d_id+" .gift_id").val(result);
             	
-            },  error:function(request,status,error){
-                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                
             }});
 		
 		/** item json + ajax (item id 구분없이 insert) **/
@@ -852,9 +813,7 @@ $(document).ready(function(){
 	                	$(slide_d_id+" .add_items_table tr:nth-child("+i+") #item_id").val(result);
 	                	$(slide_d_id+" .add_items_table tr:nth-child("+i+")").val(result);
 	                	$("item_table tr #"+t_id).val(result);
-	                },  error:function(request,status,error){
-	                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                	}});
+	                }});
 			}
 		}
 		
@@ -965,7 +924,7 @@ $(document).ready(function(){
 				"<div>"+
 					"<input type='checkbox' id='gift_max_count'>"+
 					"<label class='bold_txt'>선물을</label>"+
-					"<input type='number' placeholder='1' style='resize:none' class='m2_check2' id='m2_c4_i6'/>"+
+					"<input type='number' placeholder='1' style='resize:none' id='m2_c4_i6'/>"+
 									"<label class='bold_txt'>개로 제한합니다.</label>"+
 				"</div><div>"+
 					"<input type='checkbox' id='delivery_check'>"+
@@ -1121,9 +1080,8 @@ $(document).ready(function(){
         	data: JSON.stringify(data),
         	contentType:'application/json; charset=utf-8',
         	async: false,
-            success : function() {},  error:function(request,status,error){
-    			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
+            success : function() {}
+            
         });
 		
 		/** 상품 수정 -> item 수정 **/
@@ -1213,7 +1171,6 @@ $(document).ready(function(){
 		
 		$.ajax({url: 'project_delete_gift_proc?gift_id='+del_gift_id,
             success : function(result) {
-            	alert(result);
         }});
 		
 		form_check();
@@ -1555,7 +1512,7 @@ $(document).ready(function(){
 		$("#option_name2").val("");
 		$("#item_add_panel").css('display','block');
 		$("input[type=radio]").prop("checked", false);
-		alert(radio_num);
+		
 		$("input:radio[id ='"+radio_num+"']").prop("checked", true);
 		
 		$("#modal_add_save").css('display','none');
@@ -1655,9 +1612,11 @@ $(document).ready(function(){
 	
 	/** 프로필 사진 미리보기 업로드 **/
 	$(document).on('change',"#my_pro_img", function(){
-	    readInputFile(this);
+	    readInputFile(this, "#content_my_img_d #my_d_img");
 	});
-
+	$(document).on('change',"#pro_img", function(){
+	    readInputFile(this, "#img_upload_btn");
+	});
 	
 });
 /** date format**/
@@ -1698,7 +1657,7 @@ function form_check(){
 	   if($(this).val() != null && $(this).val() != ""){
 		   m1_count++;
 	   }
-	   if(m1_count == 6){//10
+	   if(m1_count == 6){
 		$("#menu_label1").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 프로젝트 개요");
 		$("#menu1_check").val("1");
 	   }
@@ -1706,20 +1665,20 @@ function form_check(){
 	
 	var m2_count = 0;
 	$(".m2_check").each(function(i, e){
-		var m2_count2 = 0;
-	   if($(this).val() != null && $(this).val() != ""){
-		  m2_count++;
-	   }
+	 	var m2_count2 = 0;
+	    if($(this).val() != null && $(this).val() != ""){
+		   m2_count++;
+	   	}
 	   $(".m2_check2").each(function(i, e){
 		   if($(this).val() != null && $(this).val() != ""){
 			  m2_count2++;
 		   }
 	   });
-	   
+	  
 	   if(m2_count >= 9 ){
 		$("#menu_label2").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 펀딩 및 선물 구성");
 		$("#menu2_check").val("1");
-	   }else if(m2_count >= 5 && m2_count2 >= 4){
+	   }else if(m2_count == 5 && m2_count2 >= 4){
 	    $("#menu_label2").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 펀딩 및 선물 구성");
 		$("#menu2_check").val("1");
 	   }else{
@@ -1797,11 +1756,15 @@ function auto_hypen(num) {
 	return num;
 }
 /** 프로필 사진 미리보기 **/
-function readInputFile(input) {
+function readInputFile(input, prevImg) {
     if(input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#my_d_img').css('background-image','url('+e.target.result+')');
+            if(prevImg == "#content_my_img_d #my_d_img"){
+            	$(prevImg).css('background-image','url('+e.target.result+')');
+           	}else{
+           		$(prevImg).css('background-image','url('+e.target.result+')').css('background-size','500px 100%');
+            };
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -1817,7 +1780,7 @@ function readInputFile(input) {
 				<div>
 					<div><a href="http://localhost:9090/tumblbugs/projects/${mvo.member_id }"><i class="fas fa-chevron-left"></i> 내 페이지</a> </div>
 					<div><a href="http://localhost:9090/tumblbugs/index"> tumblbugs </a></div>
-					<div><a href="http://localhost:9090/tumblbugs/help/createcenter"><i class="fas fa-flask"></i> 창작자 센터 </a></div>
+					<div><a href="http://localhost:9090/tumblbugs/help/createcenter" target="_blank"><i class="fas fa-flask"></i> 창작자 센터 </a></div>
 				</div>
 			</div>
 			<div id="start_upload_header_detail">

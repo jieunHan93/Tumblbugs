@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
+<script src="http://localhost:9090/tumblbugs/js/jquery.number.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <title>Insert title here</title>
@@ -85,12 +86,10 @@
 		var table = $('#project_table').DataTable({
 			 bPaginate: true, //페이징처리
              bLengthChange: true, // n개씩보기
-             lengthMenu : [ [15, 30, -1], [15, 30, "전체"] ], // 10/25/50/All 개씩보기
+             lengthMenu : [ [-1, 15, 30], ["전체", 15, 30] ], // 10/25/50/All 개씩보기
              bAutoWidth: false, //자동너비
              order: [[ 0, "desc" ]],	//정렬
              searching: true, //검색기능
-             
-             
 		});
 		
 		//선택 탭 css
@@ -108,14 +107,66 @@
 		$("tbody tr td #btn_bill_open").click(function() {
 			var pj_id = $(this).closest("tr").attr("id");
 			
-			/* $.ajax({
-				url: "http://localhost:9090/tumblbugs/project_bill/pj_id=" + pj_id,
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/admin/project/bill/" + pj_id,
 				success: function(data) {
+					var billData = JSON.parse(data);
+					$("#total_sponsor_count").text(billData.card_sponsor_count + billData.account_sponsor_count).number(true);
+					$("#total_pay_price").text(billData.total_pay_price).number(true);
+					$("#card_pay_price").text(billData.card_pay_price).number(true);
+					$("#card_sponsor_count").text(billData.card_sponsor_count).number(true);
+					$("#account_pay_price").text(billData.account_pay_price).number(true);
+					$("#account_sponsor_count").text(billData.account_sponsor_count).number(true);
+					$("#total_comm").text(billData.total_comm).number(true);
+					$("#tumblbugs_comm").text(billData.tumblbugs_comm).number(true);
+					$("#pay_comm").text(billData.pay_comm).number(true);
+					$("#card_comm").text(billData.card_comm).number(true);
+					$("#account_comm").text(billData.account_comm).number(true);
+					$("#transfer_comm").text(billData.transfer_comm).number(true);
+					$("#total_receipts").text(billData.total_receipts).number(true);
 					
+					//form data set
+					$("input[name='pj_id']").val(billData.pj_id);
+					$("input[name='total_pay_price']").val(billData.total_pay_price);
+					$("input[name='card_pay_price']").val(billData.card_pay_price);
+					$("input[name='card_sponsor_count']").val(billData.card_sponsor_count);
+					$("input[name='account_pay_price']").val(billData.account_pay_price);
+					$("input[name='account_sponsor_count']").val(billData.account_sponsor_count);
+					$("input[name='total_comm']").val(billData.total_comm);
+					$("input[name='tumblbugs_comm']").val(billData.tumblbugs_comm);
+					$("input[name='pay_comm']").val(billData.pay_comm);
+					$("input[name='card_comm']").val(billData.card_comm);
+					$("input[name='account_comm']").val(billData.account_comm);
+					$("input[name='transfer_comm']").val(billData.transfer_comm);
+					$("input[name='total_receipts']").val(billData.total_receipts);
+					
+					if(billData.bill_id != null && billData.bill_id != "") {
+						$("#btn_bill_submit").attr("disabled", "disabled").css("cursor", "default").text("정산 완료");
+					} else {
+						$("#btn_bill_submit").removeAttr("disabled").css("cursor", "pointer").text("정산하기");
+					}
 				}
-			}); */
+			});
 			
 			$(".modal").modal("show");
+		});
+		
+		//정산 처리
+		$("#btn_bill_submit").click(function() {
+			var formData = $("form[name='billForm']").serialize();
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/bill_proc",
+				data: formData,
+				type: "post",
+				success: function(result) {
+					if(result != "0") {
+						alert("정산 완료되었습니다.");
+						$("#btn_bill_submit").attr("disabled", "disabled").css("cursor", "default").text("정산 완료");
+					} else {
+						alert("정산 처리에 실패했습니다.");
+					}
+				}
+			});
 		});
 		
 		$("#btn_bill_close").click(function() {
@@ -145,10 +196,10 @@
 							<span id="list_count">${adminProjectCount.checkRequestCount}</span>
 						</li>
 					</a>
-					<a href="http://localhost:9090/tumblbugs/admin/projects/success" id="success">
+					<a href="http://localhost:9090/tumblbugs/admin/projects/bill" id="bill">
 						<li>
-							<span>펀딩 성공</span>
-							<span id="list_count">${adminProjectCount.successCount}</span>
+							<span>정산 대기</span>
+							<span id="list_count">${adminProjectCount.billCount}</span>
 						</li>
 					</a>
 				</nav>
@@ -199,55 +250,72 @@
 			</table>
 		</div>
 		<div class="modal">
-			<div class="admin_project_bill">
-				<div class="title">모금액 명세서</div>
-				<table id="bill_table">
-					<tr class="subtitle">
-						<td>출금 성공액 (21명)</td>
-						<td>1,005,130원</td>
-					</tr>
-					<tr>
-						<td>- 신용카드 (9명)</td>
-						<td>1,005,130원</td>
-					</tr>
-					<tr>
-						<td>- 계좌이체 (12명)</td>
-						<td>1,005,130원</td>
-					</tr>
-					<tr class="subtitle">
-						<td>수수료 내역</td>
-						<td>-68,127원</td>
-					</tr>
-					<tr class="bold_content">
-						<td>- Tumblbugs (5% + VAT)</td>
-						<td>1,005,130원</td>
-					</tr>
-					<tr class="bold_content">
-						<td>- 결제 수수료</td>
-						<td>1,005,130원</td>
-					</tr>
-					<tr class="tab_content">
-						<td>- 신용카드 (3.5% + VAT)</td>
-						<td>1,005,130원</td>
-					</tr>
-					<tr class="tab_content">
-						<td>- 계좌이체 (건당 250원 + VAT)</td>
-						<td>1,005,130원</td>
-					</tr>
-					<tr class="bold_content">
-						<td>- 최종 수령액 송금 수수료 (신한은행 외 타은행 이체 수수료)</td>
-						<td>1,000원</td>
-					</tr>
-					<tr class="subtitle">
-						<td>최종 수령액(출금 성공액 - 수수료 내역)</td>
-						<td>937,003원</td>
-					</tr>
-				</table>
-				<div>
-					<button id="btn_bill_complete" type="button">정산하기</button>
-					<button id="btn_bill_close" type="button">닫기</button>
+			<form action="http://localhost:9090/tumblbugs/bill_proc" method="post" name="billForm">
+				<!-- 전송 데이터 -->
+				<input type="hidden" name="pj_id">
+				<input type="hidden" name="total_pay_price">
+				<input type="hidden" name="card_pay_price">
+				<input type="hidden" name="card_sponsor_count">
+				<input type="hidden" name="account_pay_price">
+				<input type="hidden" name="account_sponsor_count">
+				<input type="hidden" name="total_comm">
+				<input type="hidden" name="tumblbugs_comm">
+				<input type="hidden" name="pay_comm">
+				<input type="hidden" name="card_comm">
+				<input type="hidden" name="account_comm">
+				<input type="hidden" name="transfer_comm">
+				<input type="hidden" name="total_receipts">
+				
+				<div class="admin_project_bill">
+					<div class="title">모금액 명세서</div>
+					<table id="bill_table">
+						<tr class="subtitle">
+							<td>출금 성공액 (<span id="total_sponsor_count">0</span>명)</td>
+							<td><span id="total_pay_price">0</span>원</td>
+						</tr>
+						<tr>
+							<td>- 신용카드 (<span id="card_sponsor_count">0</span>명)</td>
+							<td><span id="card_pay_price">0</span>원</td>
+						</tr>
+						<tr>
+							<td>- 계좌이체 (<span id="account_sponsor_count">0</span>명)</td>
+							<td><span id="account_pay_price">0</span>원</td>
+						</tr>
+						<tr class="subtitle">
+							<td>수수료 내역</td>
+							<td>-<span id="total_comm">0</span>원</td>
+						</tr>
+						<tr class="bold_content">
+							<td>- Tumblbugs (VAT 5%)</td>
+							<td><span id="tumblbugs_comm">0</span>원</td>
+						</tr>
+						<tr class="bold_content">
+							<td>- 결제 수수료</td>
+							<td><span id="pay_comm">0</span>원</td>
+						</tr>
+						<tr class="tab_content">
+							<td>- 신용카드 (VAT 3.5%)</td>
+							<td><span id="card_comm">0</span>원</td>
+						</tr>
+						<tr class="tab_content">
+							<td>- 계좌이체 (VAT 건당 250원)</td>
+							<td><span id="account_comm">0</span>원</td>
+						</tr>
+						<tr class="bold_content">
+							<td>- 최종 수령액 송금 수수료 (신한은행 외 타은행 이체 수수료)</td>
+							<td><span id="transfer_comm">0</span>원</td>
+						</tr>
+						<tr class="subtitle">
+							<td>최종 수령액(출금 성공액 - 수수료 내역)</td>
+							<td><span id="total_receipts">0</span>원</td>
+						</tr>
+					</table>
+					<div>
+						<button id="btn_bill_submit" type="button">정산하기</button>
+						<button id="btn_bill_close" type="button">닫기</button>
+					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </body>

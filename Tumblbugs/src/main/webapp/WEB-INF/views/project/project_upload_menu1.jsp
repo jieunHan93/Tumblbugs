@@ -68,7 +68,7 @@
 			<label>프로젝트 대표 이미지</label>
 			<div id="img_info" class="sub_info">
 				<c:if test="${vo.pj_simg != null}">
-					<span style="color:black; font-size:11pt; font-weight:550;">${vo.pj_img}</span>
+					<span id="prevProImg"></span>
 				</c:if>
 				<c:if test="${vo.pj_simg == null}">
 					<i class="far fa-hand-point-right"></i> 프로젝트 대표 이미지를 등록해주세요.	
@@ -91,7 +91,9 @@
 			<div><img src="http://localhost:9090/tumblbugs/images/project_start/pro_img2.png"></div>	
 			<div><img src="http://localhost:9090/tumblbugs/images/project_start/pro_img3.png"></div>
 			<div id="img_uploadzone" >
-				<label for="pro_img" id="img_upload_btn">
+				<label for="pro_img" id="img_upload_btn" <c:if test="${vo.pj_simg != null}">
+					style="background-image:url('http://localhost:9090/tumblbugs/resources/upload/${vo.pj_simg}'); background-size:500px 100%;"
+					</c:if>	>
 					<i class="far fa-file-image"></i>
 					<span>이미지 업로드</span>
 					<span>파일 형식은 jpg 또는 png로, 사이즈는 가로 1,240px 세로 930px 이상으로 올려주세요.</span>
@@ -283,7 +285,7 @@
 			<label>프로필 이미지</label>
 			<div id="my_img_info" class="sub_info">
 				<c:if test="${mvo.profile_img != null}">
-					<span style="color:black; font-size:11pt; font-weight:550;">${mvo.profile_img}</span>
+					<span id="my_d_img" style="background-image:url('http://localhost:9090/tumblbugs/resources/upload/${mvo.profile_simg}')"></span>
 				</c:if>
 				<c:if test="${mvo.profile_img == null}">
 					<i class="far fa-hand-point-right"></i> 프로필 이미지를 등록해주세요.
@@ -343,7 +345,7 @@
 			<label>창작자 소개</label>
 			<div id="my_intro_info" class="sub_info">
 			<c:if test="${mvo.intro != null}">
-				<span style="color:black; font-size:10pt; font-weight:550;" >${mvo.intro}</span>
+				<span style="color:black; font-size:10pt; font-weight:550;">${mvo.intro}</span>
 			</c:if>
 			<c:if test="${mvo.intro == null}">
 				<i class="far fa-hand-point-right"></i> 창작자 소개를 입력해주세요.
@@ -363,8 +365,7 @@
 						2~3문장으로 간략하게 어떤 작업을 위주로 활동해 온 창작자인지 알려주세요.
 				</div>
 			</div>
-			<div><textarea placeholder="창작자 소개를 입력해주세요." style="resize:none" id="m1_c7_i1"><c:if test="${mvo.intro != null}">${mvo.intro}</c:if>
-			</textarea></div>
+			<div><textarea placeholder="창작자 소개를 입력해주세요." style="resize:none" id="m1_c7_i1"><c:if test="${mvo.intro != null}">${mvo.intro}</c:if>	</textarea></div>
 			<div id="m1_c7_len">300자 남았습니다</div>
 			<div class="content_btn">
 				<button type="button" class="up_reset"><i class="fas fa-times"></i> 취소하기</button>

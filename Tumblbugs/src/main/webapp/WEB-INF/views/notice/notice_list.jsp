@@ -96,7 +96,7 @@
 						<div id="notice_list_paging_box"><div id="ampaginationsm"></div></div>
 						<div id="notice_list_search_box">
 							<div id="notice_list_search">
-								<input type="text" id="input_notice_list_search" val="검색">
+								<input type="text" id="input_notice_list_search" autocomplete="off" placeholder="검색어를 입력해주세요.">
 								<button type="button" id="noticeSearch"><i class="fas fa-search"></i></button>
 							</div>
 						</div>

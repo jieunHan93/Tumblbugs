@@ -198,7 +198,7 @@
 					<label id="extra_funding">
 						<div class="gift_price">후원금 더하기</div>
 						<div class="extra_funding_price">
-							<input type="text" id="extra_funding_price" name="extra_funding_price" placeholder="0" value="${fvo.extra_funding_price }"> 원을 추가로 후원합니다.
+							<input type="text" id="extra_funding_price" name="extra_funding_price" placeholder="0" autocomplete="off" value="${fvo.extra_funding_price }"> 원을 추가로 후원합니다.
 						</div>
 					</label>
 				</form>

@@ -38,7 +38,8 @@
 								str += '<div id="mypage_message_card_content">';
 								str += '<div id="mypage_message_card_title"><b>'+jsonObj.result[i].pj_title+'</b></div>';
 								str += '<div id="mypage_message_card_company"><b>'+jsonObj.result[i].name+'</b></div>';
-								str += '<div id="mypage_message_card_preview"><span>'+jsonObj.result[i].msg_content+'</span></div>';
+								str += '<div id="mypage_message_card_preview"><span>'+jsonObj.result[i].msg_content+'</span>';
+								str+= '</div>';
 								str += '</div>';
 								str += '<div id="mypage_message_card_date">';
 								str += '<div>'+jsonObj.result[i].msg_date+'</div>';

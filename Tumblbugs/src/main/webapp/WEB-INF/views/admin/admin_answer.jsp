@@ -103,6 +103,14 @@ div#admin_mainconent>div#admin_header p {
 		height:150px;
 		margin: 10px 0px;
 	}
+	#qfile_loc{
+		display: block;
+		position: relative;
+		width: 120px;
+		top:-22px;
+		left:200px;
+		background-color: white;
+	}
 </style>
 </head>
 <body>
@@ -118,34 +126,40 @@ div#admin_mainconent>div#admin_header p {
 					<input type="hidden" name="question_title" value="[텀블벅스 문의 답변입니다]">
 					<table id="answer">
 						<tr>
-							<th>문의 분류</th>
-							<td>창작자</td>
-							<th>문의 일시</th>
-							<td>2019-12-02</td>
+							<th>문의 유형</th>
+							<td>${vo.question_category}</td>
 						</tr>
 						<tr>
-							<th>아이디</th>
-							<td>jmy0316</td>
-							<th>이름</th>
-							<td>장문용</td>
+							<th>문의 일시</th>
+							<td>${vo.question_ques_reg_date}</td>
 						</tr>
 						<tr>
 							<th>이메일</th>
-							<td>jmoon0316@naver.com</td>
-							<th>연락처</th>
-							<td>010-2548-9065</td>
+							<td>${vo.question_email}</td>
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td colspan="3">관리자님 문의입니다~</td>
+							<td>${vo.question_title}</td>
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td colspan="3">창작자는 어떻게 할 수 있나요?</td>
+							<td>${vo.question_ques_content}</td>
+						</tr>
+						<tr>
+							<th>후원번호</th>
+							<td>${vo.question_spon_number}</td>
+						</tr>
+						<tr>
+							<th>프로젝트 제목</th>
+							<td>${vo.question_project_title}</td>
 						</tr>
 						<tr>
 							<th>첨부 파일</th>
-							<td colspan="3"><input type="file"></td>
+							<td>
+								<c:if test="${vo.question_qsfile != null && vo.question_qsfile != ''}">
+									<img src="http://localhost:9090/tumblbugs/upload/${vo.question_qsfile}"/ width="300" height="300">
+								</c:if>
+							</td>
 						</tr>
 						<tr>
 							<th>답변</th>

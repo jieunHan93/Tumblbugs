@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,22 +29,19 @@
 				<section id="content_sec">
 					<h3><a href="http://localhost:9090/tumblbugs/help/commoncenter/a1">1. 텀블벅스 소개</a></h3>
 					<ul id="article_list">
-						<li id="article_list_item"><a href="#">텀블벅스 서비스에 제휴, 협력을 제안하고 싶습니다.</a></li>
-						<li id="article_list_item"><a href="#">텀블벅스(tumblbugs)는 무엇인가요? </a></li>
-						<li id="article_list_item"><a href="#">또 어디서 텀블벅스를 만나볼 수 있나요?</a></li>
+						<c:forEach var="vo" items="${colist_1}" begin="0" end="5">
+							<li id="article_list_item"><a href="#">${vo.faq_list_title}</a></li>
+						</c:forEach>
 					</ul>
 				</section>
 				<section id="content_sec">
 					<h3><a href="http://localhost:9090/tumblbugs/help/commoncenter/a2">2. 계정 설정 및 기타</a></h3>
 					<ul id="article_list">
-						<li id="article_list_item"><a href="#">네이버 아이디로 가입이 잘 되지 않아요.(데이터 검증 실패)</a></li>
-						<li id="article_list_item"><a href="#">텀블벅스로부터 문자/카카오 알림톡을 받았어요.</a></li>
-						<li id="article_list_item"><a href="#">주말이나 휴일에 제공되지 않는 서비스는 무엇인가요?</a></li>
-						<li id="article_list_item"><a href="#">뉴스레터 구독 설정은 어떻게 변경할 수 있나요?</a></li>
-						<li id="article_list_item"><a href="#">비밀번호를 잊어버렸습니다. 어떻게 하면 좋죠?</a></li>
-						<li id="article_list_item"><a href="#">계정과 연계된 이메일 주소는 어떻게 변경할 수 있지요?</a></li>
+						<c:forEach var="vo" items="${colist_2}" begin="0" end="5">
+							<li id="article_list_item"><a href="#">${vo.faq_list_title}</a></li>
+						</c:forEach>
 					</ul>
-					<a href="http://localhost:9090/tumblbugs/help/commoncenter/a2" id="doc">문서 7개 모두 보기</a>
+					<a href="http://localhost:9090/tumblbugs/help/commoncenter/a2" id="doc">문서 ${commonCount1}개 모두 보기</a>
 				</section>
 			</div>
 		</div>
