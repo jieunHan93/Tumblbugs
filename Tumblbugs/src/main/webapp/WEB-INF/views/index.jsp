@@ -23,6 +23,32 @@ $(document).ready(function(){
 	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/swiper.min.css">
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+	<style>
+	div.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets{
+		text-align: right;
+		width:1480px;
+		margin-bottom:10px;
+	}
+	span.swiper-pagination-bullet{
+		border:2px solid rgba(255,250,250,0.5);
+		width:50px;
+		height:50px;
+		background-repeat: no-repeat;
+		background-size:cover;
+		background-position: center;
+		transition:.3s;
+	}
+	span.swiper-pagination-bullet:not(.swiper-pagination-bullet-active){
+		opacity: 0.7;
+	}
+	span.swiper-pagination-bullet:hover {
+	    -webkit-transform:scale(1.2);
+	    -moz-transform:scale(1.2);
+	    -ms-transform:scale(1.2);   
+	    -o-transform:scale(1.2);
+	    transform:scale(1.2);
+	}
+	</style>
 	<script>
     $(document).ready(function () {
         var swiper = new Swiper('div#main_header>section>div.swiper-container', {
@@ -92,6 +118,18 @@ $(document).ready(function(){
 			}
 			location.href="http://localhost:9090/tumblbugs/discover";
 		});
+
+		/** 배너 뱃지 적용 **/
+		var list = new Array(); 
+		<c:forEach items="${bannerlist}" var="item">
+		list.push("${item.ba_simg}");
+		</c:forEach>
+		for(i=1;i<list.length+1;i++){
+			//$("span.swiper-pagination-bullet").attr("aria-label", "Go to slide "+i).css("background-image", list.ba_simg);
+			var id="span[aria-label='Go to slide "+i+"']";
+			$(id).css("background-image", "url('http://localhost:9090/tumblbugs/upload/"+list[i-1]+"')");
+		}
+			
 	});
   </script>
 </head>
