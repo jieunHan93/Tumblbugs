@@ -33,7 +33,7 @@ public class ProjectDAO {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalCount", sqlSession.selectOne(namespace + ".adminTotalCount"));
 		map.put("checkRequestCount", sqlSession.selectOne(namespace + ".adminCheckRequestCount"));
-		map.put("successCount", sqlSession.selectOne(namespace + ".adminSuccessCount"));
+		map.put("billCount", sqlSession.selectOne(namespace + ".adminBillCount"));
 		
 		return map;
 	}

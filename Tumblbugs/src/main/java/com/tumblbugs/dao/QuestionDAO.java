@@ -39,7 +39,13 @@ public class QuestionDAO {
 		if(ins_result != 0) result = true;
 		return result;
 	}
-	
+	/** 1:1 문의 등록(파일없을때) **/
+	public boolean getResultWriteNofile(QuestionVO vo) {
+		boolean result = false;
+		int ins_result = sqlSession.insert(namespace+".spon_write_nofile", vo);
+		if(ins_result != 0) result = true;
+		return result;
+	}
 	/** 1:1 문의 리스트 **/
 	public ArrayList<QuestionVO> getResultList() {
 		List list = null;

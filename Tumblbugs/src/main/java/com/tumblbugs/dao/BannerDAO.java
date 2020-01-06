@@ -89,4 +89,9 @@ public class BannerDAO {
 		list = sqlSession.selectList(namespace+".main_list");
 		return (ArrayList<BannerVO>)list;
 	}
+	
+	/** 배너 수정시의 노출상태 값 **/
+	public String getResultControll(String ba_id) {
+		return sqlSession.selectOne(namespace+".ba_controll", ba_id);
+	}
 }

@@ -28,4 +28,10 @@ public class MainDAO {
 		list = sqlSession.selectList(namespace+".collection_main_list");
 		return (ArrayList<CollectionVO>)list;
 	}
+	
+	public ArrayList<HeaderVO> getResultCollectionTag(){
+		List list = null;
+		list = sqlSession.selectList(namespace+".collection_tag_list");
+		return (ArrayList<HeaderVO>)list;
+	}
 }

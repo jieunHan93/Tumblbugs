@@ -29,7 +29,7 @@ public class LoginDAO {
 	}
 	
 	public int getemailchk(String email) {
-		System.out.println(email+"dao");
+		//System.out.println(email+"dao");
 		return sqlSession.selectOne(namespace+".email_chk", email);			
 	}
 	public int getpass_chk(String pass,String email) {

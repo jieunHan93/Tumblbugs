@@ -29,14 +29,29 @@ public class FaqDAO {
 		list = sqlSession.selectList(namespace+".spon_article_content", param);
 		return (ArrayList<FaqVO>)list;
 	}
-	
+	/** FAQ 상세내용(관리자 페이지) **/
+	public FaqVO getResultContent_admin(String faq_num){
+		return sqlSession.selectOne(namespace+".faq_content",faq_num);
+	}
 	/** FAQ 등록 **/
 	public boolean getResultWrite(FaqVO vo) {
-		
 		boolean result = false;
 		int ins_result = sqlSession.insert(namespace+".fwrite", vo);
 		if(ins_result != 0) result = true;
-		
+		return result;
+	}
+	/** FAQ 수정 **/
+	public boolean getResultUpdate(FaqVO vo) {
+		boolean result = false;
+		int up_result = sqlSession.update(namespace+".faq_update", vo);
+		if(up_result != 0) result = true;
+		return result;
+	}
+	/** FAQ 삭제 **/
+	public boolean getResultDelete(String faq_num) {
+		boolean result = false;
+		int del_result = sqlSession.delete(namespace+".faq_delete", faq_num);
+		if(del_result != 0) result = true;
 		return result;
 	}
 	
