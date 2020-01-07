@@ -1,6 +1,5 @@
 package com.tumblbugs.controller;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.mail.internet.MimeMessage;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.tumblbugs.dao.LoginDAO;
 import com.tumblbugs.vo.MemberVO;
@@ -27,10 +27,24 @@ public class LoginController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	/**
+	 * 로그인 화면
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String login() {
-		return "/login/login";
+	public ModelAndView login(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/login/login");
+		
+		if(session.getAttribute("requestUrl") != null && session.getAttribute("requestUrl") != "") {
+			mv.addObject("requestUrl", session.getAttribute("requestUrl"));
+			session.invalidate();
+		}
+		
+		return mv;
 	}
+	
 	@RequestMapping(value="/found", method=RequestMethod.GET)
 	public String found() {
 		return "/login/found";
@@ -51,14 +65,24 @@ public class LoginController {
 		return String.valueOf(result);
 
 	}
-	@ResponseBody	
+	
+	/*@ResponseBody	
 	@RequestMapping(value="/pass_chk", method=RequestMethod.GET)
-	public String pass_chk(String pass,HttpSession session) {
+	public String pass_chk(String pass,String email,HttpSession session) {
 		SessionVO svo = (SessionVO)session.getAttribute("svo");	
-		int result = logindao.getpass_chk(pass,svo.getEmail());
+		MemberVO vo = new MemberVO();
+		vo.setEmail(email);
+		vo.setPass(pass);
+		SessionVO svo = logindao.getResultLogin(vo);
+		int result = logindao.getpass_chk(pass,email);
+		if(result != 0) {
+			session.setAttribute("svo", svo);
+			session.setAttribute("email", email);
+		}
+		
 		return String.valueOf(result);
 		
-	}
+	}*/
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) {
@@ -76,41 +100,28 @@ public class LoginController {
 		return "/login/reg_chk_page";
 	}
 	
-	@RequestMapping(value="/login_proc", method=RequestMethod.POST)
-	public String login_proc(MemberVO vo, HttpSession session , HttpServletResponse response) {
-		String resPage = "";
-		SessionVO svo = logindao.getResultLogin(vo);	
-
-		if(svo != null) {
-			
-			if(svo.isResult()) {	
-				
-				session.setAttribute("svo", svo);
-				session.setAttribute("semail", vo.getEmail());
-				resPage = "redirect:/index";
-			}
-			
-		}else{
-			response.setContentType("text/html; charset=UTF-8");
-			 
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('잘못된 계정입니다.'); location.href='/tumblbugs/index';</script>");			 
-				out.flush();
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-			 
+	/**
+	 * 로그인 처리
+	 * @param session
+	 * @param email
+	 * @param pass
+	 * @return
+	 */
+	@RequestMapping(value="/login_proc", method=RequestMethod.GET)
+	@ResponseBody
+	public String login_proc(HttpSession session, String email, String pass) {
+		SessionVO svo = logindao.getResultLogin(email, pass);
+		boolean loginResult = false;
 		
-
-			resPage = "redirect:/login";
+		if(svo != null && svo.isResult()) {
+			//로그인 성공
+			session.setAttribute("svo", svo);
+			session.setAttribute("semail", email);
+			loginResult = true;
 		}
 		
-		return resPage;		
+		return String.valueOf(loginResult);
 	}
-	
 	
 	
 	@RequestMapping(value="/found_proc", method=RequestMethod.GET)

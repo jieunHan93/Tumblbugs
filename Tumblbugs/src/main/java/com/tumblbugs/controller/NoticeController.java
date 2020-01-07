@@ -80,7 +80,7 @@ public class NoticeController {
 		}else if(category.equals("¿Ã∫•∆Æ")) {
 			category="event";
 		}
-		 
+		mv.addObject("searchVal",searchVal); 
 		mv.addObject("category",category);
 		mv.setViewName("/notice/notice_list");
 		mv.addObject("list", list);

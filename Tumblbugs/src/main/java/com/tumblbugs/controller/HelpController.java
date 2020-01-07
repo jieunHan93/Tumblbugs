@@ -68,8 +68,8 @@ public class HelpController {
 	@RequestMapping(value="/help/spon1_proc", method=RequestMethod.POST)
 	public String helpQuestion_spon1_proc(QuestionVO vo, HttpServletRequest request) throws Exception{
 		
-		System.out.println(vo.getQuestion_category());
-		System.out.println(vo.getQuestion_email());
+		/*System.out.println(vo.getQuestion_category());
+		System.out.println(vo.getQuestion_email());*/
 		String root_path = "";
 		String attach_path = "";
 		String qsfile = "";
@@ -218,37 +218,101 @@ public class HelpController {
 		mv.setViewName("/helpCenter/helpSponCenter_article1");
 		return mv;
 	}
+	
+	/** 후원자 센터(2. 결제하기) **/
 	@RequestMapping(value="/help/sponcenter/a2", method=RequestMethod.GET)
-	public String sponcenter_a2() {
-		return "/helpCenter/helpSponCenter_article2";
+	public ModelAndView sponcenter_a2() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getSponCenterList_2();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpSponCenter_article2");
+		return mv;
 	}
+	
+	/** 후원자 센터(3. 선물 전달받기) **/
 	@RequestMapping(value="/help/sponcenter/a3", method=RequestMethod.GET)
-	public String sponcenter_a3() {
-		return "/helpCenter/helpSponCenter_article3";
+	public ModelAndView sponcenter_a3() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getSponCenterList_3();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpSponCenter_article3");
+		return mv;
 	}
+	
+	/** 후원자 센터(4. 기타) **/
 	@RequestMapping(value="/help/sponcenter/a4", method=RequestMethod.GET)
-	public String sponcenter_a4() {
-		return "/helpCenter/helpSponCenter_article4";
+	public ModelAndView sponcenter_a4() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getSponCenterList_4();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpSponCenter_article4");
+		return mv;
 	}
+	
+	/** 창작자 센터(1. 텀블벅스 플랫폼 알아보기) **/
 	@RequestMapping(value="/help/createcenter/a1", method=RequestMethod.GET)
-	public String createcenter_a1() {
-		return "/helpCenter/helpCreateCenter_article1";
+	public ModelAndView createcenter_a1() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getCreateCenterList_1();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpCreateCenter_article1");
+		return mv;
 	}
+	
+	/** 창작자 센터(2. 텀블벅스 펀딩 준비하기) **/
 	@RequestMapping(value="/help/createcenter/a2", method=RequestMethod.GET)
-	public String createcenter_a2() {
-		return "/helpCenter/helpCreateCenter_article2";
+	public ModelAndView createcenter_a2() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getCreateCenterList_2();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpCreateCenter_article2");
+		return mv;
 	}
+	
+	/** 창작자 센터(3. 텀블벅스에 플랫폼 올리기) **/
 	@RequestMapping(value="/help/createcenter/a3", method=RequestMethod.GET)
-	public String createcenter_a3() {
-		return "/helpCenter/helpCreateCenter_article3";
+	public ModelAndView createcenter_a3() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getCreateCenterList_3();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpCreateCenter_article3");
+		return mv;
 	}
+	
+	/** 창작자 센터(4. 펀딩 시작하고 후원자 만나기) **/
 	@RequestMapping(value="/help/createcenter/a4", method=RequestMethod.GET)
-	public String createcenter_a4() {
-		return "/helpCenter/helpCreateCenter_article4";
+	public ModelAndView createcenter_a4() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getCreateCenterList_4();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpCreateCenter_article4");
+		return mv;
 	}
+	
+	/** 창작자 센터(5. 펀딩 마감 후 선물 전달하기/마무리하기) **/
 	@RequestMapping(value="/help/createcenter/a5", method=RequestMethod.GET)
-	public String createcenter_a5() {
-		return "/helpCenter/helpCreateCenter_article5";
+	public ModelAndView createcenter_a5() {
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<FaqVO> list = faqDao.getCreateCenterList_5();
+		
+		mv.addObject("list",list);
+		mv.setViewName("/helpCenter/helpCreateCenter_article5");
+		return mv;
 	}
 	@RequestMapping(value="/help/commoncenter/a1", method=RequestMethod.GET)
 	public String commoncenter_a1() {
@@ -259,24 +323,55 @@ public class HelpController {
 		return "/helpCenter/helpCommonCenter_article2";
 	}
 	/** 후원자 센터(1. 후원하기) - 상세페이지 **/
-	@RequestMapping(value="/help/sponcenter/a1/c1", method=RequestMethod.GET)
-	public ModelAndView commoncenter_a1_c1() {
+	@RequestMapping(value="/help/sponcenter/article1/content", method=RequestMethod.GET)
+	public ModelAndView commoncenter_article1_content() {
 		ModelAndView mv = new ModelAndView();
 		ArrayList<FaqVO> list = faqDao.getSponCenterList_1();
 
 		mv.addObject("list", list);
-		mv.setViewName("/helpCenter/helpSponCenter_article1_content1");
+		mv.setViewName("/helpCenter/helpSponCenter_article1_content");
 		return mv;
 	}
 	
+	/** 후원자 센터(2. 결제하기) - 상세페이지 **/
+	@RequestMapping(value="/help/sponcenter/article2/content", method=RequestMethod.GET)
+	public ModelAndView commoncenter_article2_content() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<FaqVO> list = faqDao.getSponCenterList_2();
+
+		mv.addObject("list", list);
+		mv.setViewName("/helpCenter/helpSponCenter_article2_content");
+		return mv;
+	}
+	
+	/** 후원자 센터(3. 선물 전달받기) - 상세페이지 **/
+	@RequestMapping(value="/help/sponcenter/article3/content", method=RequestMethod.GET)
+	public ModelAndView commoncenter_article3_content() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<FaqVO> list = faqDao.getSponCenterList_3();
+
+		mv.addObject("list", list);
+		mv.setViewName("/helpCenter/helpSponCenter_article3_content");
+		return mv;
+	}
+	
+	/** 후원자 센터(4. 기타) - 상세페이지 **/
+	@RequestMapping(value="/help/sponcenter/article4/content", method=RequestMethod.GET)
+	public ModelAndView commoncenter_article4_content() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<FaqVO> list = faqDao.getSponCenterList_4();
+
+		mv.addObject("list", list);
+		mv.setViewName("/helpCenter/helpSponCenter_article4_content");
+		return mv;
+	}
 	/** 후원자 센터(1. 후원하기) - 상세페이지 ajax 
 	 * @throws Exception **/
-	@RequestMapping(value="/help/sponcenter/ajax", method=RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="/help/sponcenter/ajax1", method=RequestMethod.GET,produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String commoncenter_a1_c1_ajax(String faq_num) throws Exception {
+	public String commoncenter_article1_content_ajax(String faq_num) throws Exception {
 		
 		ArrayList<FaqVO> list = faqDao.getResultContent(faq_num);
-		System.out.println(list);
 		BeforeTimeUtil util = new BeforeTimeUtil();
 		Gson gson = new Gson();
 		JsonArray jlist = new JsonArray();
@@ -288,16 +383,83 @@ public class HelpController {
 			obj.addProperty("faq_list_title", vo.getFaq_list_title());
 			obj.addProperty("reg_date", util.beforeTime(vo.getReg_date()));
 			obj.addProperty("faq_content", vo.getFaq_content());
-			System.out.println(vo.getFaq_list_title());
 			jlist.add(obj);
 		}
 		
 		jdata.add("list", jlist);
 		return String.valueOf(gson.toJson(jdata));
 	}
-	@RequestMapping(value="/help/sponcenter/a1/c2", method=RequestMethod.GET)
-	public String commoncenter_a1_c2() {
-		return "/helpCenter/helpSponCenter_article1_content2";
+	/** 후원자 센터(2. 결제하기) - 상세페이지 ajax 
+	 * @throws Exception **/
+	@RequestMapping(value="/help/sponcenter/ajax2", method=RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String commoncenter_article2_content_ajax(String faq_num) throws Exception {
+		
+		ArrayList<FaqVO> list = faqDao.getResultContent(faq_num);
+		BeforeTimeUtil util = new BeforeTimeUtil();
+		Gson gson = new Gson();
+		JsonArray jlist = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		
+		for(FaqVO vo : list) {
+			JsonObject obj = new JsonObject();
+			
+			obj.addProperty("faq_list_title", vo.getFaq_list_title());
+			obj.addProperty("reg_date", util.beforeTime(vo.getReg_date()));
+			obj.addProperty("faq_content", vo.getFaq_content());
+			jlist.add(obj);
+		}
+		
+		jdata.add("list", jlist);
+		return String.valueOf(gson.toJson(jdata));
+	}
+	/** 후원자 센터(3. 선물 전달받기) - 상세페이지 ajax 
+	 * @throws Exception **/
+	@RequestMapping(value="/help/sponcenter/ajax3", method=RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String commoncenter_article3_content_ajax(String faq_num) throws Exception {
+		
+		ArrayList<FaqVO> list = faqDao.getResultContent(faq_num);
+		BeforeTimeUtil util = new BeforeTimeUtil();
+		Gson gson = new Gson();
+		JsonArray jlist = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		
+		for(FaqVO vo : list) {
+			JsonObject obj = new JsonObject();
+			
+			obj.addProperty("faq_list_title", vo.getFaq_list_title());
+			obj.addProperty("reg_date", util.beforeTime(vo.getReg_date()));
+			obj.addProperty("faq_content", vo.getFaq_content());
+			jlist.add(obj);
+		}
+		
+		jdata.add("list", jlist);
+		return String.valueOf(gson.toJson(jdata));
+	}
+	/** 후원자 센터(4. 기타) - 상세페이지 ajax 
+	 * @throws Exception **/
+	@RequestMapping(value="/help/sponcenter/ajax4", method=RequestMethod.GET,produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String commoncenter_article4_content_ajax(String faq_num) throws Exception {
+		
+		ArrayList<FaqVO> list = faqDao.getResultContent(faq_num);
+		BeforeTimeUtil util = new BeforeTimeUtil();
+		Gson gson = new Gson();
+		JsonArray jlist = new JsonArray();
+		JsonObject jdata = new JsonObject();
+		
+		for(FaqVO vo : list) {
+			JsonObject obj = new JsonObject();
+			
+			obj.addProperty("faq_list_title", vo.getFaq_list_title());
+			obj.addProperty("reg_date", util.beforeTime(vo.getReg_date()));
+			obj.addProperty("faq_content", vo.getFaq_content());
+			jlist.add(obj);
+		}
+		
+		jdata.add("list", jlist);
+		return String.valueOf(gson.toJson(jdata));
 	}
 	/** 검색결과 화면 **/
 	@RequestMapping(value="/help/helpsearch", method=RequestMethod.GET)

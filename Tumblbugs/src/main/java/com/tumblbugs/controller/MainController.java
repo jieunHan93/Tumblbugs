@@ -57,7 +57,7 @@ public class MainController {
 		ArrayList<HeaderVO> list = mainDAO.getResultCollectionName();
 		ArrayList<HeaderVO> tlist = mainDAO.getResultCollectionTag();
 		ArrayList<CollectionVO> main_clist = mainDAO.getResultCollectionMainList();
-		ArrayList<ProjectVO> cplist = projectsortDAO.getResultCollectionProjectList("C00001", 1, 8);
+		ArrayList<ProjectVO> cplist = projectsortDAO.getResultCollectionProjectList("C00005", 1, 8);
 		ArrayList<ProjectVO> favlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "전체", "전체", "1", "fav", "전체");
 		ArrayList<ProjectVO> ddlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "2", "전체", "1", "deadline", "전체");
 		ArrayList<ProjectVO> newlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "전체", "전체", "1", "new", "전체");
@@ -76,6 +76,14 @@ public class MainController {
 		mv.addObject("bannerlist",bannerlist);
 		mv.setViewName("index");
 		return mv;
+	}
+	
+	@RequestMapping(value="/new_message_check", method=RequestMethod.GET)
+	@ResponseBody
+	public String new_message_check(HttpSession session) {
+		String email = (String)session.getAttribute("semail");
+		int val = mainDAO.getResultNewMessage(email);
+		return String.valueOf(val);
 	}
 
 	@RequestMapping(value="/search_list_proc", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")

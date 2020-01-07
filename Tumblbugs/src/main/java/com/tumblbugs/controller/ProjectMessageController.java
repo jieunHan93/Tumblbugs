@@ -82,6 +82,7 @@ public class ProjectMessageController {
 			obj.addProperty("name", vo.getName());
 			obj.addProperty("msg_content", vo.getMsg_content());
 			obj.addProperty("msg_date", util.beforeTime(vo.getMsg_date()));
+			obj.addProperty("new_message", vo.getNew_message());
 			jlist.add(obj);
 		}
 		
@@ -99,6 +100,22 @@ public class ProjectMessageController {
 		mv.addObject("vo", vo);
 		mv.setViewName("/mypage/message_content");
 		return mv;
+	}
+	/** 메시지 new 표시 소비자 **/
+	@RequestMapping(value="/mypage/message/new_message_buyer", method=RequestMethod.GET)
+	@ResponseBody
+	public String new_message_b(HttpSession session) {
+		String email = (String)session.getAttribute("semail");
+		int val = messageDAO.getResultNewMessageCountB(email);
+		return String.valueOf(val);
+	}
+	/** 메시지 new 표시 소비자 **/
+	@RequestMapping(value="/mypage/message/new_message_creator", method=RequestMethod.GET)
+	@ResponseBody
+	public String new_message_y(HttpSession session) {
+		String email = (String)session.getAttribute("semail");
+		int val = messageDAO.getResultNewMessageCountC(email);
+		return String.valueOf(val);
 	}
 	
 	/** 메세지 상세목록 호출   **/

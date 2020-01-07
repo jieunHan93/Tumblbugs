@@ -146,7 +146,31 @@ public class AdminProjectController {
 		
 		return mv;
 	}
-
+	
+	/**
+	 * 에디터 추천 등록
+	 * @param pj_id
+	 * @return
+	 */
+	@RequestMapping(value="/editor_recommend_proc", method=RequestMethod.GET)
+	@ResponseBody
+	public String editorRecommend(String pj_id) {
+		int result = projectDAO.editorRecommend(pj_id);
+		return String.valueOf(result);
+	}
+	
+	/**
+	 * 에디터 추천 등록 해제
+	 * @param pj_id
+	 * @return
+	 */
+	@RequestMapping(value="/editor_recommend_cancel_proc", method=RequestMethod.GET)
+	@ResponseBody
+	public String editorRecommendCancel(String pj_id) {
+		int result = projectDAO.editorRecommendCancel(pj_id);
+		return String.valueOf(result);
+	}
+	
 	/**
 	 * 프로젝트 승인 처리
 	 * @param pj_id
