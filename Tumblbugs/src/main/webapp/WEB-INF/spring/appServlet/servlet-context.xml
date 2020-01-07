@@ -55,6 +55,20 @@
 	<context:component-scan base-package="com.tumblbugs.mapper" />
 	
 	
+	<!-- authInterceptor 생성 -->
+    <beans:bean id="authInterceptor" class="com.tumblbugs.interceptor.AuthHandlerInterceptor">
+    </beans:bean>
+    
+    <interceptors>
+        <interceptor>
+            <mapping path="/**/funding/**"/>
+            <mapping path="/sendMessage**"/>
+            <mapping path="/project_start_**"/>
+            <beans:ref bean="authInterceptor"/>
+        </interceptor>
+    </interceptors>
+	
+	
 	<!-- Transaction 관리 -->
     <beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <beans:property name="dataSource" ref="dataSource"/>
