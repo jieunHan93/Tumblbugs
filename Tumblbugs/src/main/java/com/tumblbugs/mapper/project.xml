@@ -6,8 +6,8 @@
 
 <mapper namespace="mapper.project">
 	<select id="admin_list" parameterType="map" resultType="com.tumblbugs.vo.ProjectVO">
-		select rownum rno, pj_id, pj_title, name, pj_check_request_date, pj_check_yn, pj_start_date, pj_end_date, pj_price, total_funding_price, achievement_rate
-		from (select p.pj_id, p.pj_title, m.name, to_char(pj_check_request_date, 'yyyy/mm/dd') pj_check_request_date, pj_check_yn,
+		select rownum rno, pj_id, pj_title, name, to_char(pj_check_request_date, 'yyyy/mm/dd') pj_check_request_date, pj_check_yn, pj_start_date, pj_end_date, pj_price, total_funding_price, achievement_rate
+		from (select p.pj_id, p.pj_title, m.name, pj_check_request_date, pj_check_yn,
 				    to_char(pj_start_date, 'yyyy/mm/dd') pj_start_date, to_char(pj_end_date, 'yyyy/mm/dd') pj_end_date,
 				    to_char(pj_price,'999,999,999,999') pj_price, to_char(nvl(f.total_funding_price,0), '999,999,999,999') total_funding_price,
 				    trunc((nvl(f.total_funding_price, 0)/p.pj_price)*100) achievement_rate
@@ -34,9 +34,9 @@
 
 	<select id="admin_content" parameterType="String" resultType="com.tumblbugs.vo.ProjectVO">
 		SELECT P.PJ_ID, P.PJ_CATEGORY, P.PJ_TITLE, P.PJ_SIMG, p.pj_summary, p.pj_addr, p.pj_tag, TO_CHAR(PJ_PRICE,'999,999,999,999') PJ_PRICE,
-			TO_CHAR(PJ_END_DATE, 'yyyy-mm-dd') PJ_END_DATE, TO_CHAR(PJ_END_DATE + 7, 'yyyy-mm-dd') PJ_PAY_END_DATE,
+			to_char(pj_start_date, 'yyyy-mm-dd') pj_start_date, TO_CHAR(PJ_END_DATE, 'yyyy-mm-dd') PJ_END_DATE, TO_CHAR(PJ_END_DATE + 7, 'yyyy-mm-dd') PJ_PAY_END_DATE,
 			TO_CHAR(PJ_END_DATE + 16, 'yyyy-mm-dd') PJ_BILL_DATE, P.PJ_STORY, P.PJ_REFUND, P.PJ_CLASS, p.pj_email, p.pj_account_type,
-			p.pj_account_name, p.pj_account_id, p.pj_phone, p.pj_bank, substr(p.pj_account_number, -4) pj_account_number,
+			p.pj_account_name, p.pj_account_id, p.pj_phone, p.pj_bank, substr(p.pj_account_number, -4) pj_account_number, editor_recommend,
 			M.NAME, M.PROFILE_SIMG, M.INTRO, p.pj_check_yn
 		FROM TUM_PROJECT P, TUM_MEMBER M
 		WHERE P.EMAIL = M.EMAIL
@@ -65,7 +65,7 @@
 	
 	<update id="project_check_yn" parameterType="map">
 		update tum_project
-		set pj_check_yn = #{checkResult}
+		set pj_check_yn = #{checkResult}, pj_check_date = sysdate
 		<if test="checkResult == 'n'.toString()">
 			, pj_reject = #{pj_reject}
 		</if>
@@ -143,4 +143,12 @@
 	<select id="fundingYn" parameterType="map" resultType="int">
 		select count(*) from tum_funding where pj_id = #{pj_id} and email = #{email}
 	</select>
+	
+	<update id="editor_recommend" parameterType="String">
+		update tum_project set editor_recommend='1' where pj_id=#{pj_id}
+	</update>
+	
+	<update id="editor_recommend_cancel" parameterType="String">
+		update tum_project set editor_recommend=null where pj_id=#{pj_id}
+	</update>
 </mapper>

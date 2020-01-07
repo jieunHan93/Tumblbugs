@@ -28,7 +28,10 @@
 		update tum_project  set ${pj_colname}=#{pj_val} where pj_id=#{pj_id}
 	</update>
 	
-	<update id="update_date" parameterType="map">
+	<update id="update_start_date" parameterType="map">
+		update tum_project  set ${pj_colname}=to_date('${pj_val}', 'yyyy-mm-dd hh24:mi:ss') where pj_id=#{pj_id}
+	</update>
+	<update id="update_end_date" parameterType="map">
 		update tum_project  set ${pj_colname}=to_date('${pj_val} 23:59:59', 'yyyy-mm-dd hh24:mi:ss') where pj_id=#{pj_id}
 	</update>
 	

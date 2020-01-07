@@ -6,7 +6,7 @@
 	<insert id="reg" 
 		parameterType="com.tumblbugs.vo.MemberVO">
 		insert into tum_member 
-			values(#{email},#{name},#{pass},'','','','','',sysdate,'y',#{signkey},'n', 'M' || LPAD(tum_member_sequ.nextval, 5, 0))
+			values(#{email},#{name},#{pass},'avatar_2.png','avatar_2.png','','','',sysdate,'y',#{signkey},'n', 'M' || LPAD(tum_member_sequ.nextval, 5, 0))
 	</insert>
 	 
 	<select  id="email_chk" 
@@ -29,7 +29,7 @@
 	</update>
 	
 	<select id="login" 
-		parameterType="com.tumblbugs.vo.MemberVO" 
+		parameterType="map" 
 		resultType="com.tumblbugs.vo.SessionVO"> 
 		<!-- SELECT email , name , pass FROM tum_member where email = #{email} -->
 		    select count(*) result, name ,email, profile_simg , member_id from tum_member 
