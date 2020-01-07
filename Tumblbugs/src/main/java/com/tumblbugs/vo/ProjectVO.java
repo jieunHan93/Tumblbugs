@@ -8,9 +8,9 @@ public class ProjectVO {
 	String pj_id, pj_title, pj_stitle, pj_img, pj_simg, pj_summary, pj_category, pj_addr, pj_tag, email, pj_reg_date, pj_start_date,
 			pj_end_date, pj_class, pj_refund, pj_story, pj_account_type, pj_account_name, pj_bank, pj_check_request_date, pj_check_yn, pj_reject,
 			pj_success_yn, pj_price, pj_account_number,
-			pj_email, pj_phone;
+			pj_email, pj_phone, pj_account_id, editor_recommend;
 	
-	int pj_account_id, rno, total_price, start_extra_date, pj_extra_date;
+	int rno, total_price, start_extra_date, pj_extra_date;
 	
 	CommonsMultipartFile pj_cimg;
 	
@@ -22,6 +22,13 @@ public class ProjectVO {
 	String funding, status, progress;
 	
 	
+	public String getEditor_recommend() {
+		return editor_recommend;
+	}
+
+	public void setEditor_recommend(String editor_recommend) {
+		this.editor_recommend = editor_recommend;
+	}
 
 	public int getStart_extra_date() {
 		return start_extra_date;
@@ -295,11 +302,11 @@ public class ProjectVO {
 		this.pj_price = pj_price;
 	}
 
-	public int getPj_account_id() {
+	public String getPj_account_id() {
 		return pj_account_id;
 	}
 
-	public void setPj_account_id(int pj_account_id) {
+	public void setPj_account_id(String pj_account_id) {
 		this.pj_account_id = pj_account_id;
 	}
 

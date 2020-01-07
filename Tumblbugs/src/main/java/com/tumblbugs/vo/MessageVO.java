@@ -9,9 +9,35 @@ public class MessageVO {
 	MSG_CONTENT    NOT NULL VARCHAR2(2000) 
 	MSG_TYPE       NOT NULL VARCHAR2(100)  
 	MSG_DATE       NOT NULL DATE  */
-	String msg_id, chatroom_id, pj_id, email,email_starter, msg_content, msg_type, msg_date, msg_check;
-	String pj_title, pj_simg, name, profile_simg, pj_email, pj_addr;
-
+	String msg_id, chatroom_id, pj_id, email,email_starter, msg_content, msg_type, msg_date, msg_check, new_message;
+	String pj_title, pj_simg, name, profile_simg, pj_email, pj_addr, member_id, user_type;
+	int cnt;
+	
+	
+	public String getUser_type() {
+		return user_type;
+	}
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+	public String getNew_message() {
+		return new_message;
+	}
+	public void setNew_message(String new_message) {
+		this.new_message = new_message;
+	}
 	public String getPj_addr() {
 		return pj_addr;
 	}
