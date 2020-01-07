@@ -227,14 +227,15 @@
 		position:relative;
 	}
 	#project_menu #upload_menu button{
-		padding: 6px 25px 6px 25px;
-		font-size:10pt;
-		font-weight:bold;
-		border-radius:4px;
-		border:2px solid gray;
-		color:gray;
-		background: none;
-		cursor:pointer;
+		padding: 6px;
+	    width: 110px;
+	    font-size: 10pt;
+	    font-weight: bold;
+	    border-radius: 4px;
+	    border: 2px solid black;
+	    color: white;
+	    background-color: black;
+	    cursor: pointer;
 	}
 
 	/** 프로젝트 세부 내용 **/
@@ -278,9 +279,11 @@
 	/** menu1: 프로젝트 개요 **/
 	/* 프로필 이미지 */
 	#profile_img .sub_menu_value span {
+	    display: block;
 		width: 80px;
 		height: 80px;
 		border-radius: 80px;
+		overflow: hidden;
 	}
 	#profile_img .sub_menu_value span img {
 		height: 80px;

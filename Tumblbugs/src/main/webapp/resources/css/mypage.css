@@ -264,8 +264,6 @@ div#payment_regist_editor {
 	margin-top:10px;
 	width:700px;
 	min-height:500px;
-		
-	border: 10px solid red;
 }
 div#registed_payment_list>div.registed_payment_content{
 	width:660px;
