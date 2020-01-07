@@ -88,65 +88,6 @@
 	    }
 	});
 </script>
-<style>
-	#shareModalBackground {
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		background-color: black;
-		opacity: 0.5;
-	}
-	#shareModal {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		margin-left: -250px;
-		margin-top: -300px;
-		width: 500px;
-		height: 600px;
-		font-weight: bold;
-		font-size: 10pt;
-		text-align: center;
-		background-color: white;
-	}
-	#shareModal #shareModalHeader {
-		box-shadow: 0px 1px 2px 0px rgba(10,10,10,0.1);
-		padding: 20px;
-	}
-	#shareModal #shareModalHeader #modalTitle {
-		display: inline-block;
-		margin-right: -20px;
-	}
-	#shareModal #shareModalHeader #times {
-		display: inline-block;
-		cursor: pointer;
-		float: right;
-		font-size: 12pt;
-	}
-	#shareModal #shareModalBody {
-		padding: 15px;
-	}
-	#shareModal #shareModalBody a {
-		display: block;
-		padding: 13px 0px;
-		color: white;
-		text-decoration: none;
-	}
-	#shareModal #shareFacebook {
-		background-color: rgb(59,89,152);
-		margin: 15px 0px 10px 0px;
-	}
-	#shareModal #shareTwitter {
-		background-color: rgb(0,172,237);
-		margin-bottom: 10px;
-	}
-	#shareModal #shareKakaoTalk a {
-		background-color: rgb(255,232,18);
-		color: black;
-		cursor: pointer;
-	}
-</style>
 </head>
 <body>
 	<section id="overview">

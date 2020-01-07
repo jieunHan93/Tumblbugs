@@ -13,10 +13,38 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   	<script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
   	
-
+	<style>
+	span#new_circle{
+		display: inline-block;
+		width:15px;
+		height:15px;
+		background-image: url("http://localhost:9090/tumblbugs/images/new_icon.png");
+		background-position: 50% 50%;
+		background-size: cover;
+		border-radius: 50%;
+		margin-left:5px;
+		margin-bottom:-3px;
+	}
+	span#new_circle.main_circle{
+		position: absolute;
+	    right: 5px;
+	    bottom: -7px;
+	}
+	div#modal_message{
+		display: inline-block;
+	}
+	span#new_circle.in_modal{
+		position: relative;
+	    left: 5px;
+	    top: -5px;
+	}
+	</style>
 
   	<script>
   	$(document).ready(function(){
+  		$("span#new_circle.main_circle").hide();
+  		$("span#new_circle.in_modal").hide();
+  		
   		$( window ).scroll( function() {
     		if ( $( this ).scrollTop() > 200 ) {
     			$( '.top' ).fadeIn();
@@ -194,6 +222,22 @@
 			sessionStorage.setItem("body_nav","all");
 	    });
 	    
+		/** 새 메시지 체크 **/
+		function new_message(){
+			$.ajax({
+				url:"http://localhost:9090/tumblbugs/new_message_check",
+				success:function(result){
+					if(result != 0){
+						$("span#new_circle.main_circle").show();
+						$("span#new_circle.in_modal").show();
+					}
+					setTimeout(new_message,3000);
+				}
+			});
+		}
+		if($("input#check_email").val() != ""){
+			new_message();
+		}
 	});
 	</script>
 </head>
@@ -209,7 +253,7 @@
 			<div id="header_nav_center"><a href="http://localhost:9090/tumblbugs/index"><img src="http://localhost:9090/tumblbugs/images/tumblbugs_logo.png"></a></div>
 			<button type="button" data-toggle="modal" data-target="#searchMenuModal" id="open_search_box"></button>
 			<div id="header_nav_right">
-			
+				<input type="hidden" id="check_email" value="${sessionScope.svo.email}">
 					<c:choose> 
 					    <c:when test="${sessionScope.svo.email == null}"> 
 					    
@@ -225,8 +269,8 @@
 					    		data-target="#myMenuModal">	
 					    		${sessionScope.svo.name }	
 					    		<div id="user_icon" style="background-image: url(http://localhost:9090/tumblbugs/upload/${sessionScope.svo.profile_simg})"></div> 
-					    		<!-- <div id="user_icon" ></div> -->
 					    	</button>	
+					    		<span id="new_circle" class="main_circle"></span>
 					    </c:otherwise>    
 					    
 					</c:choose>  
@@ -350,7 +394,7 @@
 	          	<span id="myMenu_user_profil_name">${sessionScope.svo.name}</span>
 	          </div>
 	          <div id="modal_space"></div>
-	          <a id="mymessage" href="http://localhost:9090/tumblbugs/mypage/message"><div>메시지</div></a>
+	          <a id="mymessage" href="http://localhost:9090/tumblbugs/mypage/message"><div id="modal_message">메시지</div><span id="new_circle" class="in_modal"></span></a> 
 	          <a href="http://localhost:9090/tumblbugs/myfunding"><div>내 후원현황</div></a>
 	          <a href="http://localhost:9090/tumblbugs/projects/${sessionScope.svo.member_id}"><div>내가 만든 프로젝트</div></a>
 	          <div id="modal_space"></div>

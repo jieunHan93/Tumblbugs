@@ -69,6 +69,40 @@
 				location.href = "http://localhost:9090/tumblbugs/admin/project_check_proc?pj_id=" + '${vo.pj_id}';
 			}
 		});
+		
+		if('${vo.editor_recommend}' == '1') {
+			$("#btn_editor_recommend_cancel").show();
+		} else {
+			$("#btn_editor_recommend").show();
+		}
+		
+		//에디터 추천 등록
+		$("#btn_editor_recommend").click(function() {
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/editor_recommend_proc?pj_id=" + '${vo.pj_id}',
+				success: function(result) {
+					if(result != "0") {
+						alert("에디터 추천 프로젝트에 등록되었습니다.");
+						$("#btn_editor_recommend").hide();
+						$("#btn_editor_recommend_cancel").show();
+					}
+				}
+			});
+		});
+		
+		//에디터 추천 해제
+		$("#btn_editor_recommend_cancel").click(function() {
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/editor_recommend_cancel_proc?pj_id=" + '${vo.pj_id}',
+				success: function(result) {
+					if(result != "0") {
+						alert("에디터 추천을 취소했습니다.");
+						$("#btn_editor_recommend_cancel").hide();
+						$("#btn_editor_recommend").show();
+					}
+				}
+			});
+		});
 	});
 </script>
 </head>
@@ -89,6 +123,10 @@
 						<div>
 							<a href="http://localhost:9090/tumblbugs/admin/projects"><button type="button" id="btn_list">목록보기</button></a>
 							<a href="http://localhost:9090/tumblbugs/preview/${vo.pj_id}" target="_blank"><button type="button" id="btn_preview"><i class="far fa-eye"></i> &nbsp;&nbsp;미리보기</button></a>
+							<c:if test="${vo.pj_check_yn eq 'y'}">
+								<button type="button" id="btn_editor_recommend" style="display:none">에디터 추천</button>
+								<button type="button" id="btn_editor_recommend_cancel" style="display:none">에디터 추천 해제</button>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -143,6 +181,10 @@
 							<div>
 								<div class="sub_menu_title">목표 금액</div>
 								<div class="sub_menu_value">${vo.pj_price }원</div>
+							</div>
+							<div>
+								<div class="sub_menu_title">프로젝트 시작일</div>
+								<div class="sub_menu_value">${vo.pj_start_date }</div>
 							</div>
 							<div>
 								<div class="sub_menu_title">프로젝트 마감일</div>
@@ -216,8 +258,8 @@
 						<label class="menu_content_label">본인 인증</label>
 						<div class="menu_content_box">
 							<div>
-								<div class="sub_menu_title">이름 / 생년월일 / 휴대폰 번호</div>
-								<div class="sub_menu_value">${vo.pj_account_name } / ${vo.pj_account_id} / ${vo.pj_phone }</div>
+								<div class="sub_menu_title">이름 / 휴대폰 번호</div>
+								<div class="sub_menu_value">${vo.pj_account_name } / ${vo.pj_phone }</div>
 							</div>
 						</div>
 						<label class="menu_content_label">입금 계좌</label>

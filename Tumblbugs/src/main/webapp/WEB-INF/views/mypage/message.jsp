@@ -9,17 +9,58 @@
 	<script src="http://localhost:9090/tumblbugs/js/jquery-3.4.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/main.css">
 	<link rel="stylesheet" type="text/css" href="http://localhost:9090/tumblbugs/css/mypage.css">
+	<style>
+	span#new_circle{
+		display: inline-block;
+		width:15px;
+		height:15px;
+		background-image: url("http://localhost:9090/tumblbugs/images/new_icon.png");
+		background-position: 50% 50%;
+		background-size: cover;
+		border-radius: 50%;
+		margin-left:5px;
+		margin-bottom:-3px;
+	}
+	span#new_circle.in_h5{
+		margin-bottom:-1px;
+	}
+	</style>
 	<script>
 		$(document).ready(function(){
 			$("div#mypage_nomessage").hide();
-			
+			$("span#new_circle.in_h5").hide();
 			var header_label = sessionStorage.getItem("header_label");
 			var body_nav = sessionStorage.getItem("body_nav");
 			if(header_label == null) header_label="buyer";
 			if(body_nav == null) body_nav="all";
 			
-			console.log(header_label+" ," + body_nav);
-			
+			//console.log(header_label+" ," + body_nav);
+			function new_message_b(){
+				$.ajax({
+					url:"http://localhost:9090/tumblbugs/mypage/message/new_message_buyer",
+					success:function(result){
+						console.log("구매기준:"+result);
+						if(result != 0){
+							$("div#mypage_message_header_label").find("span.buyer").show();
+						} 
+						setTimeout(new_message_b,3000);
+					}
+				});
+			};
+			function new_message_c(){
+				$.ajax({
+					url:"http://localhost:9090/tumblbugs/mypage/message/new_message_creator",
+					success:function(result){
+						console.log("판매기준:"+result);
+						if(result != 0){
+							$("div#mypage_message_header_label").find("span.creator").show();
+						} 
+						setTimeout(new_message_c,3000);
+					}
+				});
+			};
+			new_message_b();
+			new_message_c();
 			function content(){
 				$.ajax({
 					url: "http://localhost:9090/tumblbugs/mypage/message_proc?user="+header_label+"&sort="+body_nav,
@@ -39,6 +80,8 @@
 								str += '<div id="mypage_message_card_title"><b>'+jsonObj.result[i].pj_title+'</b></div>';
 								str += '<div id="mypage_message_card_company"><b>'+jsonObj.result[i].name+'</b></div>';
 								str += '<div id="mypage_message_card_preview"><span>'+jsonObj.result[i].msg_content+'</span>';
+								/* str+= '<i class="fas fa-comment"></i>'; */
+								if(jsonObj.result[i].new_message == 'Y') str+= '<span id="new_circle"></span>';
 								str+= '</div>';
 								str += '</div>';
 								str += '<div id="mypage_message_card_date">';
@@ -55,7 +98,6 @@
 					}
 				}); // ajax
 			};
-			
 			content();
 			
 			$("div#mypage_message_header_label>div").click(function(){
@@ -155,11 +197,11 @@
 				</div>
 				<div id="mypage_message_header_label">
 					<div>
-						<h5>문의/후원한 프로젝트</h5>
+						<h5>문의/후원한 프로젝트<span id="new_circle" class="in_h5 buyer"></span></h5> 
 						<input type="hidden" value="buyer">
 					</div>
 					<div>
-						<h5>만든 프로젝트</h5>
+						<h5>만든 프로젝트<span id="new_circle" class="in_h5 creator"></span></h5>
 						<input type="hidden" value="creator">
 					</div>
 				</div>

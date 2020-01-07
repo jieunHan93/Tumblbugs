@@ -17,6 +17,7 @@
   			var input= "input[value='${category}']";
   			var link = $(input).parent();
   			var category = '${category}';
+  			$("#input_notice_list_search").val('${searchVal}');
   			$(link).css("color","#000000");
   			$(link).parent().css("border-bottom","2px solid #000000");
   			
@@ -43,8 +44,17 @@
   			$("#noticeSearch").click(function(){
   				 var searchVal = $("#input_notice_list_search").val();
   					location.href=("http://localhost:9090/tumblbugs/notice/list?category=all&searchVal="+searchVal);
-  				
   			});
+  			
+  			$("#input_notice_list_search").keydown(function(key){
+  				if (key.keyCode == 13) {
+  					var searchVal = $("#input_notice_list_search").val();
+  					location.href=("http://localhost:9090/tumblbugs/notice/list?category=all&searchVal="+searchVal);
+  				}
+			});
+			$("#notice_list_header_title").click(function(){
+				location.href=("http://localhost:9090/tumblbugs/notice/list");
+			});
   		});
   	</script>
 </head>
@@ -53,7 +63,7 @@
 	
 	<div id="notice_list_bk">
 		<section id="notice_list_nav_bk">
-			<div id="notice_list_header_title">공지사항</div>
+			<div id="notice_list_header_title" style="cursor:pointer">공지사항</div>
 			<div id="notice_list_header_nav_container">
 				<div id="notice_list_header_nav">
 					<div><a href="http://localhost:9090/tumblbugs/notice/list">전체<input type="hidden" value="all"></a></div>
@@ -76,10 +86,10 @@
 									</c:if>
 									<div class="notice_list_card_content">
 										<div class="notice_list_card_status"><span>${vo.notice_category }</span>
-											<c:if test="${vo.event_extra_date >= 0}"> 
+											<c:if test="${vo.event_extra_date > 0}"> 
 												<span>진행중</span>
 											</c:if>
-											<c:if test="${vo.event_extra_date < 0}"> 
+											<c:if test="${vo.event_extra_date <= 0}"> 
 												<span>종료</span>
 											</c:if>
 									</div>
@@ -91,7 +101,6 @@
 						</li>
 					</c:if>
 					</c:forEach>
-					
 						<li class="notice_list_card_size">
 						<div id="notice_list_paging_box"><div id="ampaginationsm"></div></div>
 						<div id="notice_list_search_box">

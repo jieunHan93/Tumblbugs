@@ -74,8 +74,7 @@
 						<a href="http://localhost:9090/tumblbugs/project/${vo.pj_addr }"><span>${vo.pj_title}</span></a>
 					</div>
 					<div id="message_cat_box_header_info">
-						<!-- 회사 id hidden으로 넘길것 -->
-						<a href="#"><div id="message_cat_box_company_img" style="background-image: url(http://localhost:9090/tumblbugs/upload/${vo.profile_simg}"></div><div id="message_cat_box_company">${vo.name }</div></a>
+						<a href="http://localhost:9090/tumblbugs/projects/${vo.member_id }"><div id="message_cat_box_company_img" style="background-image: url(http://localhost:9090/tumblbugs/upload/${vo.profile_simg}"></div><div id="message_cat_box_company">${vo.name }</div></a>
 					</div>
 				</div>
 				<div id="message_cat_box_body"> 

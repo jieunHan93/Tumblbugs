@@ -17,34 +17,41 @@ margin: auto;
 width: 1080px;
 
 }
-body>div#logindiv1>section#section1 {
+body>div#logindiv1>div#bodysectiondiv>section#section1 {
 border:1px solid LightGray;
 border-radius: 5px 5px 5px 5px; 
-display: inline-block;
-margin: 100px 0 100px 360px;
+/* display: inline-block; */
+/* margin: 100px 0 100px 360px; */
+margin:auto;
+margin-top:100px;
+margin-bottom:100px;
+display:table;
 padding: 20px 50px 50px 50px;
 box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.1);
 }
 
 
-body>div#logindiv1>section#section1>div#div1>b#b1{
+body>div#logindiv1>div#bodysectiondiv>section#section1>div#div1>b#b1{
 display: inline-block;
 padding-left:100px;
 color: LightGray;
 border-bottom: 1px solid LightGray;
 }
-body>div#logindiv1>section#section1>div#div1>b#b2{
+body>div#logindiv1>div#bodysectiondiv>section#section1>div#div1>b#b2{
 display: inline-block;
 color:Gray;
 }
 
-body>div#logindiv1>section#section1>div#div1>b#b3{
+body>div#logindiv1>div#bodysectiondiv>section#section1>div#div1>b#b3{
 display: inline-block;
 padding-right:100px;
 color: LightGray;
 border-bottom: 1px solid LightGray;
 }
+div#bodysectiondiv{
+margin: auto;
 
+}
 input#email {
 margin: 20px 0 0 0;
 padding: 10px 40px 10px 10px;
@@ -117,159 +124,47 @@ span#emailcheckform,
 span#pwcheck,
 span#pwcheckform,
 span#login_success,
-span#login_fail
+span#login_fail,
+span#msglogin
 {
 color: #1e90ff;
 font-size: 12px;
+margin: 0px 0 -15px 0;
+display: table;
 }
 
 </style>
 <script type="text/javascript">
 
 $(document).ready(function(){
-	$("#emailcheck").hide();
-	$("#emailcheckform").hide();
-	$("#pwcheck").hide();
-	$("#pwcheckform").hide();
-	$("#login_success").hide();
-	$("#login_fail").hide();
-	
-	$("#email").focus(function () {
-		$("#emailcheck").hide();
-		$("#emailcheckform").hide();
-		$("#pwcheck").hide();
-		$("#pwcheckform").hide();
-	});
-	
-	$("#pass").focus(function () {
-		$("#emailcheck").hide();
-		$("#emailcheckform").hide();
-		$("#pwcheck").hide();
-		$("#pwcheckform").hide();
-	});
-	
-	$("#email").keyup(function(){
-		$("#emailcheck").hide();
-		$("#emailcheckform").hide();
-		$("#pwcheck").hide();
-		$("#pwcheckform").hide();
-		$("#login_success").hide();
-
-		
-		if($("#email").val() == "" ){
-			$("#emailcheck").show();
-			$("#emailcheckform").hide();
-			$("#pwcheck").hide();
-			$("#pwcheckform").hide();
-			
-		}else{
-			
-			$("#emailcheck").hide();
-			$("#emailcheckform").hide();
-			$("#pwcheck").hide();
-			$("#pwcheckform").hide();
-			
-			var emailVal = $("#email").val();
-			var emailExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-			
-			if (emailVal.match(emailExp) != null) {
-				
-				$("#emailcheck").hide();
-				$("#emailcheckform").hide();
-				
-		    }else {
-		    	
-				$("#emailcheck").hide();
-			    $("#emailcheckform").show();			    
-					
-			}
-		}
-	
-		//email ajax
-		$("#email").keyup(function(){
+	 $("#btnlogin").click(function(){
+		 if($("#email").val() == "") {
+			 alert("이메일 주소를 입력해주세요.");
+			 $("#email").focus();
+		 } else if($("#pass").val() == "") {
+			 alert("비밀번호를 입력해주세요.");
+			 $("#pass").focus();
+		 } else {
 			 $.ajax({
-					url:"email_chk?email="+$("#email").val(),			
-					success:function(data){
-						if(data == '0'){
-							$("#login_fail").show();
-							$("#login_success").hide();
+					url:"http://localhost:9090/tumblbugs/login_proc?pass="+$("#pass").val()+"&email="+$("#email").val(),
+					success: function(result){
+						if(result == 'false'){
+							$("#msglogin").html("아이디 또는 비밀번호가 올바르지 않습니다.");
+							$("#email").val("").focus();
+							$("#pass").val("");
 						}else{
-							$("#login_success").show();
-							$("#login_fail").hide();
+						 	if('${requestUrl}' != null && '${requestUrl}' != "") {
+						 		location.href = '${requestUrl}';
+						 	} else {
+						 		location.href = 'http://localhost:9090/tumblbugs/index';
+						 	}
 						}			
 					}
-				}); 	
-		});
-	});
-	
-	
-
-	
-	
-	
-	$("#pass").keyup(function (){
-		$("#emailcheck").hide();
-		$("#emailcheckform").hide();
-		$("#pwcheck").hide();
-		$("#pwcheckform").hide();
-		$("#login_success").hide();
-		$("#login_fail").hide();
-		
-		if($("#pass").val() == ""){
-			
-			$("#emailcheck").hide();
-			$("#emailcheckform").hide();
-			$("#pwcheck").show();
-			$("#pwcheckform").hide();
-			
-		}else{
-			
-			$("#emailcheck").hide();
-			$("#emailcheckform").hide();
-			$("#pwcheck").hide();
-			$("#pwcheckform").hide();
-			
-			var pwVal = $("#pass").val();
-			var pwExp = /^[A-Za-z0-9]{4,30}$/;
-			
-			if (pwVal.match(pwExp) != null) {
-				$("#pwcheck").hide();
-				$("#pwcheckform").hide();
-				
-		    }else {
-		    	
-				$("#pwcheck").hide();
-			    $("#pwcheckform").show();
-			    
-					
-			}
+			});
 		}
+		  
 		
-	});
-	
-	/* $("#btnlogin").click(function(){
-		 $.ajax({
-				url:"email_chk?email="+$("#email").val(),			
-				success:function(data){
-					if(data == '0'){
-					alert("아이디틀림");
-					}else{
-						 $.ajax({
-								url:"pass_chk?pass="+$("#pass").val(),			
-								success:function(data){
-									if(data == '0'){
-										alert("비밀번호 틀림");
-									}else{
-										alert("로그인성공");
-										login_proc.submit();
-									}			
-								}
-							}); 
-					}			
-				}
-			}); 
-		
-	}); */
+	}); 
 	
 });
 </script>
@@ -278,46 +173,44 @@ $(document).ready(function(){
 
 <jsp:include page="../header.jsp"></jsp:include>
 	<div id="logindiv1">
-		<section id="section1">
-				<div id="div1">
-				<b id="b1"></b>
-				<b id="b2">로그인</b>
-				<b id="b3"></b> 
-					<form name="login_proc" action="/tumblbugs/login_proc" method="POST" class="login" id="login">
-						<ul id="ul1">
+		<div id="bodysectiondiv">
+			<section id="section1">
+					<div id="div1">
+					<b id="b1"></b>
+					<b id="b2">로그인</b>
+					<b id="b3"></b> 
+						<form name="login_proc" action="/tumblbugs/login_proc" method="POST" class="login" id="login">
+							<ul id="ul1">
+								<span id="msglogin"></span>
+								<li id="li1">
+									<input type="text" name="email" id="email" placeholder="이메일 주소를 입력하세요." >
+								</li>
+								
+								
+								<li>
+									<input type="password" name="pass" id="pass" placeholder="비밀번호 입력하세요.">
+								</li>							
+								
+								<li>
+									<button type="button" id="btnlogin">로그인</button>
+								</li>
+								
+							</ul>
+						</form>
 							
-							<li id="li1">
-								<input type="text" name="email" id="email" placeholder="이메일주소를입력하세요.">
-							</li>
-							<span id="emailcheck">이메일을 입력해 주세요.</span>
-							<span id="emailcheckform">이메일형식을 맞춰주세요.abc@abc.com</span>
+						<div id="div2">
+							<h1>아직 계정이 없으신가요?</h1>
+							<a href="http://localhost:9090/tumblbugs/reg" ><h2>텀블벅 가입하기</h2></a>
+						</div>
 							
-							<li>
-								<input type="password" name="pass" id="pass" placeholder="비밀번호 입력하세요.">
-							</li>							
-							<span id="pwcheck">비밀번호를 입력해주세요.</span>
-							<span id="pwcheckform">비밀번호형식을 맞춰주세요. 4자리 이상</span>
-							<span id="login_success">로그인 가능한 아이디입니다.</span>
-							<span id="login_fail">존재하지않는 아이디입니다.</span>
-							<li>
-								<button type="submit" id="btnlogin">로그인</button>
-							</li>
-							
-						</ul>
-					</form>
+						<div id="div3">
+							<a href="http://localhost:9090/tumblbugs/found">혹시 비밀번호를 잊으셨나요?</a>
+						</div>
 						
-					<div id="div2">
-						<h1>아직 계정이 없으신가요?</h1>
-						<a href="http://localhost:9090/tumblbugs/reg" ><h2>텀블벅 가입하기</h2></a>
 					</div>
-						
-					<div id="div3">
-						<a href="http://localhost:9090/tumblbugs/found">혹시 비밀번호를 잊으셨나요?</a>
-					</div>
-					
-				</div>
-			
-		</section>
+				
+			</section>
+		</div>
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>

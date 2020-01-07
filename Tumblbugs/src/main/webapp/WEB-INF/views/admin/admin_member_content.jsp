@@ -81,7 +81,7 @@
 						</div>
 					</div>
 					<div id="profile_pre_middle"><a href="http://localhost:9090/tumblbugs/projects/${vo.member_id}"><i class="fas fa-check-circle"></i><span>${vo.pj_count}개의 프로젝트</span></a>의 창작자</div>
-					<a href="http://localhost:9090/tumblbugs/myfunding"><div id="profile_pre_footer"><span>후훤 현황 자세히보기</span></div></a>
+					<!-- <a href="http://localhost:9090/tumblbugs/myfunding"><div id="profile_pre_footer"><span>후훤 현황 자세히보기</span></div></a> -->
 				</div>
 			</div>
 		</div>

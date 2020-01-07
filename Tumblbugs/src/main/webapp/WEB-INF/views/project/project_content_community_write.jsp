@@ -54,9 +54,6 @@
 				community_write_form.submit();
 			}
 		});
-		
-		
-		alert($("input[name='pj_id']").val());
 	});
 </script>
 <body>

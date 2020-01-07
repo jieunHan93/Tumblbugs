@@ -15,7 +15,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/6de59477c1.js" crossorigin="anonymous"></script>
 <script src="http://localhost:9090/tumblbugs/ckeditor/ckeditor.js"></script>
-<!-- <script src="http://localhost:9090/tumblbugs/js/project_upload.js"></script> -->
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
 $(document).ready(function(){
@@ -85,10 +84,9 @@ $(document).ready(function(){
 		$("#content_m2_c1 .sub_info").text(pj_price).css('font-size','11pt').css('color','black').css('font-weight','550');
 	}
 	if(pj_simg != null && pj_simg != ""){
-		$("#content_pro_img").css('height','200px');
-		$("#content_pro_img #title_write").css('position','relative').css('bottom','60px');
-		$("#prevProImg").css('width','300px').css('height','200px').css('background-image','url(http://localhost:9090/tumblbugs/resources/upload/'+pj_simg+')')
-		.css('background-size','270px 130px').css('background-repeat','no-repeat').css('display','inline-block');
+		$("#content_pro_img").css('min-height','300px');
+		$("#prevProImg").css('width','430px').css('height','235px').css('background-image','url(http://localhost:9090/tumblbugs/resources/upload/'+pj_simg+')')
+		.css('background-position','center').css('background-size','cover').css('background-repeat','no-repeat').css('display','inline-block');
 	}
 	if('${mvo.profile_simg}' != null && '${mvo.profile_simg}' != ""){
 		$("#content_my_img").css('height','200px');
@@ -257,10 +255,12 @@ $(document).ready(function(){
 				val = str.replace(/[^0-9]/g,"");
 				$(this).val(val);	
 			}else{
+				
 				if(input_val_len != 0 && input_val_len <= 50){
 					$(this).next().text(50-input_val_len+"자 남았습니다.").css("color","#444444");
 					$(this).css('border-color',"rgb(232,237,247)"); 
 					$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+					
 					if(my_id=="m1_c4_i1"){
 						$.ajax({url: "project_check_addr_proc?pj_addr="+$("#m1_c4_i1").val(),
 							success: function(data){
@@ -356,6 +356,7 @@ $(document).ready(function(){
 		$("input[type=file]").off().change(function(){
 			if($(this).val() != null && $(this).val() != ""){
 				$(save_btn).removeAttr('disabled').css('background','#1e90ff').css('cursor','pointer');
+				$("#fileVal").val($(this).val());
 			}
 		});
 		
@@ -400,7 +401,7 @@ $(document).ready(function(){
 			
 			/** 계좌 정보 ajax **/
 			if($(this).attr("id") == "m4_c3_save"){
-			    var data = {};
+			    
 				if($(".account_type:checked").val() == "개인"){
 					data={
 						pj_account_type : $(".account_type:checked").val(),
@@ -493,16 +494,6 @@ $(document).ready(function(){
 					$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 						success: function(data){
 					}});
-					
-				}else if($("#pj_account_number2").val() != ""){
-					account_num = $("#pj_account_number2").val();
-					$(check_input).text(account_num).css('font-size','11pt').css('color','black').css('font-weight','550'); 
-					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
-					
-				}else if($("#pj_account_number").val() != ""){
-					account_num = $("#pj_account_number").val();
-					$(check_input).text(account_num).css('font-size','11pt').css('color','black').css('font-weight','550'); 
-					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
 					
 				}else{
 					$(check_input).text(input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
@@ -622,12 +613,11 @@ $(document).ready(function(){
 				
 				if($(slide_d_id+" input[type=file]").attr("id") == "pro_img"){
 					$(check_input).text("");
-					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기").css('position','relative').css('bottom','60px');
 		            var options = {
 		                success : function(data) {
-		                	$("#content_pro_img").css('height','200px');
-							$(check_input).css('height','200px').css('background-image','url(http://localhost:9090/tumblbugs/resources/upload/'+data+")")
-											.css('background-size','270px 130px').css('background-repeat','no-repeat');
+		                	$("#content_pro_img").css('height','300px');
+							$(check_input).css('width','430px').css('height','230px').css('background-image','url(http://localhost:9090/tumblbugs/resources/upload/'+data+")")
+							.css('background-position','center').css('background-size','cover').css('background-repeat','no-repeat');
 		                },
 		                type : "POST",
 		                url: 'project_edit_file_proc'
@@ -1657,7 +1647,8 @@ function form_check(){
 	   if($(this).val() != null && $(this).val() != ""){
 		   m1_count++;
 	   }
-	   if(m1_count == 6){
+	 
+	   if(m1_count == 7){
 		$("#menu_label1").html("<i class='fas fa-check-circle' style='color:#1e90ff'></i> 프로젝트 개요");
 		$("#menu1_check").val("1");
 	   }
@@ -1763,7 +1754,7 @@ function readInputFile(input, prevImg) {
             if(prevImg == "#content_my_img_d #my_d_img"){
             	$(prevImg).css('background-image','url('+e.target.result+')');
            	}else{
-           		$(prevImg).css('background-image','url('+e.target.result+')').css('background-size','500px 100%');
+           		$(prevImg).css('background-image','url('+e.target.result+')').css('background-position','center').css('background-size','cover');
             };
         }
         reader.readAsDataURL(input.files[0]);

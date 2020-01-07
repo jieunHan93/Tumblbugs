@@ -99,7 +99,9 @@
 					<span>파일 형식은 jpg 또는 png로, 사이즈는 가로 1,240px 세로 930px 이상으로 올려주세요.</span>
 					<span>이미지 파일 선택하기</span>
 				</label>
-				<div><input type="file" class="m1_check" id="pro_img" style="display:none" name="pj_cimg" value="${vo.pj_img }"></div>
+				<div><input type="file" id="pro_img" style="display:none" name="pj_cimg">
+					<input type="hidden" id="fileVal" class="m1_check" value="${vo.pj_img}">
+				</div>
 				
 			</div>
 			<div class="content_btn">
