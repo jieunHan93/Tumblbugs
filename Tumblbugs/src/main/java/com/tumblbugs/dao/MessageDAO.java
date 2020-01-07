@@ -76,4 +76,12 @@ public class MessageDAO {
 	public String getResultCreatorName(String pj_id) {
 		return sqlSession.selectOne(namespace+".creator_name", pj_id);
 	}
+	
+	/** new 표시 띄워주기! **/
+	public int getResultNewMessageCountB(String email) {
+		return sqlSession.selectOne(namespace+".new_message_count_buyer", email);
+	}
+	public int getResultNewMessageCountC(String email) {
+		return sqlSession.selectOne(namespace+".new_message_count_creator", email);
+	}
 }

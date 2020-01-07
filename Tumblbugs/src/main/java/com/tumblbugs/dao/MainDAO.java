@@ -34,4 +34,9 @@ public class MainDAO {
 		list = sqlSession.selectList(namespace+".collection_tag_list");
 		return (ArrayList<HeaderVO>)list;
 	}
+	
+	/** 새로운 메시지 **/
+	public int getResultNewMessage(String email) {
+		return sqlSession.selectOne(namespace+".new_message", email);
+	}
 }

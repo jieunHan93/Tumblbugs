@@ -179,12 +179,18 @@ public class PJUploadDAO {
 	
 	public boolean resultUpdateDate(String pj_id, String pj_colname, String pj_val) {
 		boolean result = false;
+		int val = 0;
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("pj_id", pj_id);
 		param.put("pj_colname", pj_colname);
 		param.put("pj_val", pj_val);
 		
-		int val = sqlSession.update(namespace+".update_date", param);
+		if(pj_colname.equals("pj_start_date")) {
+			val = sqlSession.update(namespace+".update_start_date", param);
+		}else {
+			val = sqlSession.update(namespace+".update_end_date", param);
+		}
+		
 		
 		if( val != 0) result = true;
 		

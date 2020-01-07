@@ -58,6 +58,24 @@ public class ProjectDAO {
 		return sqlSession.update(namespace + ".project_check_yn", map);
 	}
 	
+	/**
+	 * 프로젝트 관리 > 에디터 추천 등록
+	 * @param pj_id
+	 * @return
+	 */
+	public int editorRecommend(String pj_id) {
+		return sqlSession.update(namespace + ".editor_recommend", pj_id);
+	}
+	
+	/**
+	 * 프로젝트 관리 > 에디터 추천 등록 해제
+	 * @param pj_id
+	 * @return
+	 */
+	public int editorRecommendCancel(String pj_id) {
+		return sqlSession.update(namespace + ".editor_recommend_cancel", pj_id);
+	}
+	
 	//사용자 페이지 - 콘텐츠
 	public ProjectVO getContent(String pj_id) {
 		return sqlSession.selectOne(namespace + ".content", pj_id);
