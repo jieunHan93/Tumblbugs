@@ -67,6 +67,7 @@ public class AdminBannerController {
 		return status;
 	}
 	
+	/** 노출 설정 ajax **/
 	@RequestMapping(value="/admin/banner_checkbox", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String getResultCheckBoxUpdate(BannerVO vo) throws Exception {
