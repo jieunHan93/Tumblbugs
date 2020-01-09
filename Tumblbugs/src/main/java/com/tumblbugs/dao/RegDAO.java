@@ -104,15 +104,22 @@ public class RegDAO {
 	}
 	
 	/**
-	 * 회원 탈퇴
+	 * 회원 비활성화
 	 * @param email
 	 * @return
 	 */
 	public int getResultUnreg(String email) {
-		return sqlSession.delete(namespace + ".unreg", email);
+		return sqlSession.update(namespace + ".unreg", email);
 	}
 	
-	
+	/**
+	 * 회원 활성화
+	 * @param email
+	 * @return
+	 */
+	public int getResultRereg(String email) {
+		return sqlSession.update(namespace + ".rereg", email);
+	}
 	
 	
 

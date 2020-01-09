@@ -15,13 +15,27 @@ public class ProjectVO {
 	CommonsMultipartFile pj_cimg;
 	
 	//추가 정보
-	String pj_pay_end_date, pj_bill_date; //결제 마감일, 정산일 - 프로젝트 관리 페이지에서 사용
-	String total_funding_price, achievement_rate, remaining_days, total_sponsor_count, pj_pay_date, community_count;	//모인 금액, 달성률, 남은 기간, 후원자 수, 결제 예정일, 커뮤니티 게시글 수
-	String name, profile_simg, intro;	//창작자 이름, 프로필이미지, 소개
+	String total_funding_price, 		//모인 금액
+			pay_complete_funding_price, //결제 완료된 후원 금액
+			achievement_rate,			//달성률
+			remaining_days,				//남은 기간
+			total_sponsor_count,		//후원자 수
+			pj_pay_date,				//결제 예정일
+			pj_pay_end_date,			//결제 마감일
+			pj_bill_date, 				//예상 정산일
+			community_count,			//커뮤니티 게시글 수
+			name, profile_simg, intro;	//창작자 이름, 프로필이미지, 소개
 	
 	String funding, status, progress;
 	
-	
+	public String getPay_complete_funding_price() {
+		return pay_complete_funding_price;
+	}
+
+	public void setPay_complete_funding_price(String pay_complete_funding_price) {
+		this.pay_complete_funding_price = pay_complete_funding_price;
+	}
+
 	public String getEditor_recommend() {
 		return editor_recommend;
 	}

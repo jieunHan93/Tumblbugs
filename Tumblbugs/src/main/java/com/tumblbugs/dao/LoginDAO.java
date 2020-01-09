@@ -17,6 +17,11 @@ public class LoginDAO {
 	private SqlSessionTemplate sqlSession; 	
 	private static String namespace = "mapper.member";	
 	
+	/** 회원 탈퇴여부 **/
+	public String getMemberUseyn(String email) {			
+		return sqlSession.selectOne(namespace + ".useyn", email);
+	}
+	
 	/** 로그인 처리 **/
 	public SessionVO getResultLogin(String email, String pass) {
 		Map<String, String> map = new HashMap<String,String>();

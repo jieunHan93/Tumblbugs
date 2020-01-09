@@ -6,13 +6,17 @@
 
 <mapper namespace="mapper.project">
 	<select id="admin_list" parameterType="map" resultType="com.tumblbugs.vo.ProjectVO">
-		select rownum rno, pj_id, pj_title, name, to_char(pj_check_request_date, 'yyyy/mm/dd') pj_check_request_date, pj_check_yn, pj_start_date, pj_end_date, pj_price, total_funding_price, achievement_rate
-		from (select p.pj_id, p.pj_title, m.name, pj_check_request_date, pj_check_yn,
+		select rownum rno, pj_id, pj_title, name, to_char(pj_check_request_date, 'yyyy/mm/dd') pj_check_request_date, pj_check_yn, pj_start_date,
+			 pj_end_date, pj_price, total_funding_price, achievement_rate, editor_recommend, pay_complete_funding_price, remaining_days
+		from (select p.pj_id, p.pj_title, m.name, pj_check_request_date, pj_check_yn, trunc(pj_end_date + 7 - sysdate, 1) remaining_days,
 				    to_char(pj_start_date, 'yyyy/mm/dd') pj_start_date, to_char(pj_end_date, 'yyyy/mm/dd') pj_end_date,
 				    to_char(pj_price,'999,999,999,999') pj_price, to_char(nvl(f.total_funding_price,0), '999,999,999,999') total_funding_price,
-				    trunc((nvl(f.total_funding_price, 0)/p.pj_price)*100) achievement_rate
+				    trunc((nvl(f.total_funding_price, 0)/p.pj_price)*100) achievement_rate, editor_recommend, pay_complete_funding_price
 				from tum_project p, tum_member m, tum_project_bill b,
-					(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f
+					(select f1.pj_id, f1.total_funding_price, f2.pay_complete_funding_price
+					from (select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f1,
+					(select pj_id, sum(total_funding_price) pay_complete_funding_price from tum_funding where payment_complete_yn = 'y' group by pj_id) f2
+					where f1.pj_id = f2.pj_id(+)) f
 				WHERE P.EMAIL = M.EMAIL
 				and p.pj_id = b.pj_id(+)
 				AND p.pj_id = f.PJ_ID(+)
@@ -54,7 +58,8 @@
 	<select id="adminBillCount" resultType="int">
 		<![CDATA[
 			select count(*)
-			from tum_project p,(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f, tum_project_bill b
+			from tum_project p,(select pj_id, sum(total_funding_price) total_funding_price from tum_funding group by pj_id) f
+				, tum_project_bill b
 			WHERE p.pj_id = f.PJ_ID(+)
 		    and p.pj_id = b.pj_id(+)
 			and p.pj_price <= f.total_funding_price

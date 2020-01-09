@@ -90,9 +90,13 @@
 		and m.email = #{email}
 	</select>
 	
-	<delete id="unreg" parameterType="String">
-		delete from tum_member where email=#{email}
-	</delete>
+	<update id="unreg" parameterType="String">
+		update tum_member set use_yn = 'n' where email=#{email}
+	</update>
+	
+	<update id="rereg" parameterType="String">
+		update tum_member set use_yn = 'y' where email=#{email}
+	</update>
 	
 	<select id="found" resultType="java.lang.String" parameterType="java.lang.String">
 		select pass 
@@ -102,6 +106,10 @@
 	<select id="found_ajax" resultType="java.lang.String" parameterType="java.lang.String">
 		select count(email)
 			from tum_member where email=#{email}
+	</select>
+	
+	<select id="useyn" resultType="java.lang.String" parameterType="java.lang.String">
+		select use_yn from tum_member where email=#{email}
 	</select>
 	
 </mapper>
