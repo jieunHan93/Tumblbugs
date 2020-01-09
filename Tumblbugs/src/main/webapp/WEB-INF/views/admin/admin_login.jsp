@@ -14,7 +14,7 @@
 				alert("아이디 입력해주세요");
 				$("#id").focus();
 			}else if($("#pass").val() == ""){
-				alert("비밀번호 입력바람");
+				alert("비밀번호를 입력해주세요");
 				$("#pass").focus();
 			}/* else{
 				loginForm.submit();
@@ -65,6 +65,10 @@ div#admin_info>button#admin_btn{
 	color: #ffffff;
 	background-color: #1e90ff;
 	cursor: pointer;
+	font-weight: bold;
+}
+input:focus {
+	outline: none;
 }
 </style>
 </head>

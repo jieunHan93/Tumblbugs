@@ -17,7 +17,7 @@
 				<span id="creator_name"><a href="http://localhost:9090/tumblbugs/projects/${mvo.member_id }" class="active">${mvo.name }</a></span>
 			</div>
 			<div class="line_div" id="creator_intro">${mvo.intro }</div>
-			<div id="creator_login">마지막 로그인&nbsp; <b>8시간 전</b></div>
+			<!-- <div id="creator_login">마지막 로그인&nbsp; <b>8시간 전</b></div> -->
 			<div id="creator_project">진행한 프로젝트&nbsp; <b>${mvo.pj_count }</b>&nbsp;&nbsp;&nbsp; 밀어준 프로젝트&nbsp; <b>${mvo.funding_count }</b></div>
 			<a href="http://localhost:9090/tumblbugs/sendMessage?pj_id=${pvo.pj_id }"><button type="button" id="btnSendMessage"><i class="fas fa-envelope"></i> &nbsp;창작자에게 문의하기</button></a>
 		</div>

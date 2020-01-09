@@ -12,203 +12,186 @@
 list-style-type: none;
 }
 body>div#logindiv1{
-
-margin: auto;
-width: 1080px;
-
+	margin: auto;
+	width: 1080px;
 }
 body>div#logindiv1>div#bodysectiondiv>section#section1 {
-border:1px solid LightGray;
-border-radius: 5px 5px 5px 5px; 
-/* display: inline-block; */
-/* margin: 100px 0 100px 360px; */
-margin:auto;
-margin-top:100px;
-margin-bottom:100px;
-display:table;
-padding: 20px 50px 50px 50px;
-box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.1);
+	width: 310px;
+    box-shadow: 0 1px 2px 1px #efefef;
+    border: 1px solid #e4e4e4;
+	border-radius: 5px 5px 5px 5px;
+	margin:auto;
+	margin-top:100px;
+	margin-bottom:100px;
+	padding: 40px 30px;
+	font-size: 10pt;
+	text-align: center;
+}
+#login_title_line {
+	border-top: 1px solid #e4e4e4;
 }
 
-
-body>div#logindiv1>div#bodysectiondiv>section#section1>div#div1>b#b1{
-display: inline-block;
-padding-left:100px;
-color: LightGray;
-border-bottom: 1px solid LightGray;
-}
-body>div#logindiv1>div#bodysectiondiv>section#section1>div#div1>b#b2{
-display: inline-block;
-color:Gray;
-}
-
-body>div#logindiv1>div#bodysectiondiv>section#section1>div#div1>b#b3{
-display: inline-block;
-padding-right:100px;
-color: LightGray;
-border-bottom: 1px solid LightGray;
+#div1 #login_title{
+	display: inline-block;
+	padding: 5px;
+	color: gray;
+	margin-top: -15px;
+	background-color: white;
+	font-weight: bold;
 }
 div#bodysectiondiv{
-margin: auto;
-
+	margin: auto;
 }
 input#email {
-margin: 20px 0 0 0;
-padding: 10px 40px 10px 10px;
-width: 260px;
-border: 1px solid #cdcdcd;
-border-radius: 5px 5px 5px 5px; 
+	margin-top: 35px;
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #e4e4e4;
+	border-radius: 5px;
 }
 input#email:hover{
-border-color: #1d85ea;
+	border-color: #1d85ea;
 }
 input#email:focus{
-border-color: #1d85ea;
+	border-color: #1d85ea;
 }
 input#pass{
-margin: 10px 0 0 0;
-padding: 10px 40px 10px 10px;
-width: 260px;
-border: 1px solid #cdcdcd;
-border-radius: 5px 5px 5px 5px; 
+	margin-top: 10px;
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #e4e4e4;
+	border-radius: 5px;
 }
 input#pass:hover{
-border-color: #1d85ea;
+	border-color: #1d85ea;
 }
 input#pass:focus{
-border-color: #1d85ea;
+	border-color: #1d85ea;
 }
 button#btnlogin{
-border  : none;
-background  : none;
-border-radius:5px 5px 5px 5px;
-background-color:#1e90ff;
-color: white;
-margin: 20px 0 0 0 ;
-padding: 13px 105px 13px 105px;
+	width: 100%;
+	padding: 13px 0px;
+	border: none;
+	border-radius:5px;
+	background-color:#1e90ff;
+	color: white;
+	margin-top: 20px;
+	font-weight: bold;
 }
 button#btnlogin:hover{
 background-color: #1d85ea;
 }
 div#div2 h1{
-margin: 25px 0 0 0;
-color:Gray;
-font-size: 22px;
+	margin: 30px 0 7px 0;
+	color:Gray;
+	font-size: 10pt;
 }
 div#div2 h2{
-margin: 25px 0 50px 0;
-padding-bottom:25px;
-font-size: 15px;
-border-bottom: 1px solid #cdcdcd;
-text-align: center;
-color: #1e90ff;
+	padding-bottom:25px;
+	font-size: 10pt;
+	border-bottom: 1px solid #e4e4e4;
+	color: #1e90ff;
+	margin-bottom: 30px;
 }
 div#div2 h2:hover{
-color: #1d85ea;
+	color: #1d85ea;
 }
 div#div2 a{
-text-decoration:none;
+	text-decoration:none;
 }
-
 div#div3 a{
-margin:-20px 0 0px 25px;
-text-align: center;
-color: #1e90ff;
-text-decoration:none;
+	color: #1e90ff;
+	text-decoration:none;
+	padding-bottom: 30px;
 }
 div#div3 a{
 color: #1d85ea;
 }
-span#emailcheck,
-span#emailcheckform,
-span#pwcheck,
-span#pwcheckform,
-span#login_success,
-span#login_fail,
 span#msglogin
 {
-color: #1e90ff;
-font-size: 12px;
-margin: 0px 0 -15px 0;
-display: table;
+	color: #1e90ff;
+	font-size: 12px;
+	margin: 0px 0 -15px 0;
+	display: table;
 }
-
 </style>
-<script type="text/javascript">
-
-$(document).ready(function(){
-	 $("#btnlogin").click(function(){
-		 if($("#email").val() == "") {
-			 alert("이메일 주소를 입력해주세요.");
-			 $("#email").focus();
-		 } else if($("#pass").val() == "") {
-			 alert("비밀번호를 입력해주세요.");
-			 $("#pass").focus();
-		 } else {
-			 $.ajax({
-					url:"http://localhost:9090/tumblbugs/login_proc?pass="+$("#pass").val()+"&email="+$("#email").val(),
-					success: function(result){
-						if(result == 'false'){
-							$("#msglogin").html("아이디 또는 비밀번호가 올바르지 않습니다.");
-							$("#email").val("").focus();
-							$("#pass").val("");
-						}else{
-						 	if('${requestUrl}' != null && '${requestUrl}' != "") {
-						 		location.href = '${requestUrl}';
-						 	} else {
-						 		location.href = 'http://localhost:9090/tumblbugs/index';
-						 	}
-						}			
-					}
-			});
-		}
-		  
+<script>
+	$(document).ready(function(){
+		$("#btnlogin").click(function(){
+			login();
+		}); 
 		
-	}); 
-	
-});
+		$("input#pass").keydown(function (key) {
+			if(key.keyCode == 13){
+				login();
+			}
+
+		});
+		
+		function login() {
+			if($("#email").val() == "") {
+				alert("이메일 주소를 입력해주세요.");
+				$("#email").focus();
+			 } else if($("#pass").val() == "") {
+				 alert("비밀번호를 입력해주세요.");
+				 $("#pass").focus();
+			 } else {
+				 $.ajax({
+						url:"http://localhost:9090/tumblbugs/login_proc?pass="+$("#pass").val()+"&email="+$("#email").val(),
+						success: function(result){
+							if(result == 'false'){
+								$("#msglogin").html("아이디 또는 비밀번호가 올바르지 않습니다.");
+								$("#email").val("").focus();
+								$("#pass").val("");
+							}if(result == 'n'){
+								$("#msglogin").html("사용할 수 없는 이메일입니다.");
+								$("#email").val("").focus();
+								$("#pass").val("");
+							}else if(result =='y'){
+								if('${requestUrl}' != null && '${requestUrl}' != "") {
+							 		location.href = '${requestUrl}';
+							 	} else {
+							 		location.href = 'http://localhost:9090/tumblbugs/index';
+							 	}
+							}			
+						}
+				});
+			}
+		}
+	});
 </script>
 </head>
-<body> 
-
+<body>
 <jsp:include page="../header.jsp"></jsp:include>
 	<div id="logindiv1">
 		<div id="bodysectiondiv">
 			<section id="section1">
 					<div id="div1">
-					<b id="b1"></b>
-					<b id="b2">로그인</b>
-					<b id="b3"></b> 
+						<div id="login_title_line">
+							<div id="login_title">로그인</div>
+						</div>
 						<form name="login_proc" action="/tumblbugs/login_proc" method="POST" class="login" id="login">
 							<ul id="ul1">
 								<span id="msglogin"></span>
 								<li id="li1">
-									<input type="text" name="email" id="email" placeholder="이메일 주소를 입력하세요." >
+									<input type="email" name="email" id="email" placeholder="이메일 주소를 입력하세요." autocomplete="off" required>
 								</li>
-								
-								
 								<li>
 									<input type="password" name="pass" id="pass" placeholder="비밀번호 입력하세요.">
-								</li>							
-								
+								</li>
 								<li>
 									<button type="button" id="btnlogin">로그인</button>
 								</li>
-								
 							</ul>
 						</form>
-							
 						<div id="div2">
 							<h1>아직 계정이 없으신가요?</h1>
 							<a href="http://localhost:9090/tumblbugs/reg" ><h2>텀블벅 가입하기</h2></a>
 						</div>
-							
 						<div id="div3">
 							<a href="http://localhost:9090/tumblbugs/found">혹시 비밀번호를 잊으셨나요?</a>
 						</div>
-						
 					</div>
-				
 			</section>
 		</div>
 	</div>

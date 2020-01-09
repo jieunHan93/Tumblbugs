@@ -18,10 +18,25 @@
 				url: "http://localhost:9090/tumblbugs/admin/member_unreg_proc?email=" + email,
 				success: function(result) {
 					if(result != "0") {
-						alert("탈퇴 처리되었습니다.");
-						location.href = "http://localhost:9090/tumblbugs/admin/member";
+						alert("비활성화 처리되었습니다.");
+						location.href = "http://localhost:9090/tumblbugs/admin/member?email=" + email;
 					} else {
-						alert("탈퇴 처리에 실패했습니다.");
+						alert("비활성화 처리에 실패했습니다.");
+					}
+				}
+			});
+		});
+		
+		$("#btn_rereg").click(function() {
+			var email = '${vo.email}';
+			$.ajax({
+				url: "http://localhost:9090/tumblbugs/admin/member_rereg_proc?email=" + email,
+				success: function(result) {
+					if(result != "0") {
+						alert("활성화 처리되었습니다.");
+						location.href = "http://localhost:9090/tumblbugs/admin/member?email=" + email;
+					} else {
+						alert("활성화 처리에 실패했습니다.");
 					}
 				}
 			});
@@ -66,9 +81,14 @@
 					</div>
 					<div id="profile_button_div">
 						<a href="http://localhost:9090/tumblbugs/admin/member"><button type="button">목록보기</button></a>
-						<%-- <c:if test="${vo.use_yn == 'n' }"> --%>
-						<button id="btn_unreg" type="button">탈퇴 처리하기</button>
-						<%-- </c:if> --%>
+						<c:choose>
+							<c:when test="${vo.use_yn == 'n'}">
+								<button id="btn_rereg" type="button">활성화하기</button>
+							</c:when>
+							<c:otherwise>
+								<button id="btn_unreg" type="button">비활성화하기</button>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				<div id="profile_pre">

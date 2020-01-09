@@ -11,41 +11,31 @@
 *{
 list-style-type: none;
 }
-body>div#logindiv1{
-
-width:1080px;
-margin: auto;
-
+#passFound{
+	width:1080px;
+	margin: auto;
+	padding: 100px 0px;
 }
-body>div#logindiv1>section#section1 {
-border:1px solid #dcdcdc;
-display: inline-block;
-margin: 100px 0 100px 360px;
-padding: 20px 50px 50px 50px;
-box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.1);
-border-radius: 5px 5px 5px 5px; 
+#passFound>section#section1 {
+	width: 310px;
+	padding: 30px;
+	border: 1px solid #e4e4e4;
+	box-shadow: 0 1px 2px 1px #efefef;
+	border-radius: 5px;
+	margin: auto;
+	font-size: 10pt;
 }
-
-
-
-body>div#logindiv1>section#section1>div#div1>b#b2{
-display: inline-block;
-color:Gray;
-font-size: 25px;
-border-bottom: 1px solid #dcdcdc;
-margin-bottom: 10px;
-padding-right: 100px;
+#passFound #b2 {
+	color: rgba(0,0,0,.87);
+	font-size: 18pt;
+	font-weight: bold;
 }
-
-
 
 input#email {
-margin: 20px 0 0 0;
-padding: 10px 40px 10px 10px;
-width: 260px;
-border: 1px solid #dcdcdc;
-border-radius: 5px 5px 5px 5px; 
-
+	padding: 12px;
+	width: 100%;
+	border: 1px solid #e4e4e4;
+	border-radius: 5px 5px 5px 5px; 
 }
 input#email:hover{
 border-color: #1d85ea;
@@ -58,51 +48,44 @@ margin: 10px 0 0 0;
 padding: 10px 40px 10px 10px;
 width: 260px;
 }
-button#btnlogin{
-border  : none;
-background  : none;
-border-radius:5px 5px 5px 5px;
-background-color:#1e90ff;
-color: white;
-margin: 20px 0 0 0 ;
-padding: 13px 61px 13px 61px;
-}
-button#btnlogin:hover{
-border-color: #1d85ea;
-}
-
-
-div#div3 a{
-margin:-20px 0 0px 25px;
-text-align: center;
-color: #F07878;
-text-decoration:none;
-}
-b#b4{
-border-bottom: 1px solid #dcdcdc;
-padding-right: 260px;
-}
-b#b5{
-text-decoration: none;
-color: Gray;
-}
-span#emailcheck,
-span#emailcheckform,
-span#email_true,
-span#email_false
-{
-color: #1e90ff;
-font-size: 12px;
-}
+	button#btnPassFound{
+		width: 100%;
+		border: none;
+		border-radius:5px;
+		background-color:#1e90ff;
+		color: white;
+		margin-top: 10px;
+		padding: 13px 0px;
+		font-weight: bold;
+	}
+	button#btnPassFound:hover{
+		border-color: #1d85ea;
+	}
+	p#b5{
+		color: gray;
+		line-height: 1.7;
+		font-size: 10.5pt;
+		padding: 20px 0px;
+		border-top: 1px solid #e4e4e4;
+		border-bottom: 1px solid #e4e4e4;
+	}
+	span#emailcheck,
+	span#emailcheckform,
+	span#email_true,
+	span#email_false
+	{
+		color: #1e90ff;
+		font-size: 12px;
+	}
 </style>
-<script type="text/javascript">
+<script>
 $(document).ready(function(){
 	$("#emailcheck").hide();
 	$("#emailcheckform").hide();
 	$("#email_true").hide();
 	$("#email_false").hide();
 	
-	$("#email").keyup(function(){
+	/* $("#email").keyup(function(){
 		$("#email_true").hide();
 		$("#email_false").hide();
 		if($("#email").val() == "" ){
@@ -122,29 +105,20 @@ $(document).ready(function(){
 			  else {
 				  $("#emailcheck").hide();
 				  $("#emailcheckform").show();
-					
 			  }
 		}
 		
-	})
+	}; */
 	
-	$("#btnlogin").click(function(){
-
+	$("#btnPassFound").click(function(){
 		 $.ajax({
 			 url: "found_ajax?email="+$("#email").val(), 
 			 success: function(result){
-				 if(result == '1'){
-						alert("이메일있음");
-						$("#email_true").show();
-						$("#email_false").hide();
-						$(location).attr('href', "http://localhost:9090/tumblbugs/found_proc?email="+$('#email').val());
-				   	
-				 }else{
-					   alert("이메일없음");
-					   $("#email_true").hide();
-					   $("#email_false").show();
-					   return false;
-				 }		 		
+				if(result == '1'){
+					$(location).attr('href', "http://localhost:9090/tumblbugs/found_proc?email="+$('#email').val());
+				}else{
+					alert("등록되지 않은 이메일입니다.");
+				}		 		
 			}
 		});
 				
@@ -156,38 +130,30 @@ $(document).ready(function(){
 <body> 
 
 <jsp:include page="../header.jsp"></jsp:include>
-	<div id="logindiv1">
+	<div id="passFound">
 		<section id="section1">
 				<div id="div1">
 				
-				<b id="b2">비밀번호 찾기</b>
-				
-				<br><b id="b5">텀블벅 가입 시 사용하신 이메일을 <br>
+				<div id="b2">비밀번호 찾기</div><br>
+				<p id="b5">텀블벅 가입 시 사용하신 이메일을 <br>
 				입력하시면 기존 비밀번호를 확인할 <br>
-				수 있는 링크를 보내드립니다.<br>
-				페이스북/네이버로 가입하신 경우,<br>
-				페이스북/네이버 계정에 쓰이는<br>
-				이메일을 	입력해주세요.</b>
-					<form action="/tumblbugs/found_proc" method="get" class="login" id="login">
-						<ul id="ul1">
-							<li id="li1">
-								<b id="b4"></b><br>
-								<input type="text" name="email" id="email" placeholder="가입하신 이메일 주소">
-								<br><span id="emailcheck">이메일을 입력해 주세요.</span>
-								<span id="emailcheckform">이메일을 형식이 올바르지 않습니다.</span>
-								<span id="email_true">이메일있음</span>
-								<span id="email_false">이메일없음</span>
-							</li> 
-							
-							<li>
-								<button type="button" id="btnlogin">비밀번호 링크 받기</button>
-							</li>
-						</ul>
-					</form>
-
-					
-				</div>
-			
+				수 있는 링크를 보내드립니다.</p>
+				<form action="/tumblbugs/found_proc" method="get" class="login" id="login">
+					<ul id="ul1">
+						<li id="li1">
+							<input type="text" name="email" id="email" placeholder="가입하신 이메일 주소">
+							<br>
+							<!-- <span id="emailcheck">이메일을 입력해 주세요.</span>
+							<span id="emailcheckform">이메일을 형식이 올바르지 않습니다.</span>
+							<span id="email_true">이메일있음</span>
+							<span id="email_false">이메일없음</span> -->
+						</li> 
+						<li>
+							<button type="button" id="btnPassFound">비밀번호 찾기</button>
+						</li>
+					</ul>
+				</form>
+			</div>
 		</section>
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>

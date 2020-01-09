@@ -20,7 +20,7 @@
 $(document).ready(function(){
 	var item_value = 1000;
 	var product_number = 1000;
-	
+	//f
 	/***ck 에디터***/
 	var editorConfig = {
 	   filebrowserUploadUrl : "http://localhost:9090/tumblbugs/fileupload.do", //이미지 업로드
@@ -47,7 +47,7 @@ $(document).ready(function(){
 	 if(storyValLen == 0 ){
 		CKEDITOR.instances.m3_c1_i1.setData("");
 	} 
-		
+	 	
 	
 	/** 기존 값 세팅**/ 
 	$("#m2_c2_i2").val('${vo.pj_end_date}');
@@ -495,20 +495,18 @@ $(document).ready(function(){
 						success: function(data){
 					}});
 					
-				}else{
-					$(check_input).text(input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
-					$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
-					
-					/** 저장 ajax **/
+				}else{/** 저장 ajax **/
 					var pj_colname="";
 					
 					if($(slide_d_id+" input[type=text]").attr("id") == "m1_c6_i1"){
 						pj_colname="name";
-						
 						$.ajax({url: "project_member_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 							success: function(data){
 								
 						}});
+						
+						$(check_input).text(input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
+						$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
 					}else if($(slide_d_id+" input[type=text]").attr("id") == "m4_c1_i1"){
 						var email_val = $("#m4_c1_i1").val();
 								pj_colname="pj_email";
@@ -517,15 +515,18 @@ $(document).ready(function(){
 									success: function(data){
 										
 								}});
-						
+							$(check_input).text(input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
+							$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
 						
 					}else if($(slide_d_id+" input[type=text]").attr("id") == "m4_c2_i1"){
 						pj_colname="pj_phone";
-						
 						$.ajax({url: "project_edit_proc?pj_colname="+pj_colname+"&pj_val="+input_val,
 							success: function(data){
 								
 						}});
+						
+						$(check_input).text(input_val).css('font-size','11pt').css('color','black').css('font-weight','550'); 
+						$(slide_id+">#title_write").html("<i class='far fa-edit'></i>"+" 수정하기");
 					}
 					
 				}
@@ -1229,6 +1230,18 @@ $(document).ready(function(){
 			  "-webkit-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
 			  "animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)"
   		 });
+		
+		if($("#item_table tr").length > 1){
+			$("#item_list").css('display','block').css({
+				 "-moz-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+				  "-webkit-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+				  "animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+				  "-moz-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+				  "-webkit-animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)",
+				  "animation": "slideIn 1s cubic-bezier(0.37, 0.82, 0.2, 1)"
+   		   });
+		}
+		
 		$('.modal').modal("hide");
 	});
 	

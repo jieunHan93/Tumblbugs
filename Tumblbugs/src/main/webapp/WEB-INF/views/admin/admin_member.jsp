@@ -38,7 +38,7 @@
 						<th class="email">이메일</th>
 						<th class="name">이름</th>
 						<th class="reg_date">가입일</th>
-						<!-- <th class="use_yn">활성 상태</th> -->
+						<th class="use_yn">상태</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -48,7 +48,9 @@
 						<td class="email"><a href="http://localhost:9090/tumblbugs/admin/member?email=${vo.email }">${vo.email }</a></td>
 						<td class="name">${vo.name }</td>
 						<td class="reg_date">${vo.reg_date }</td>
-						<%-- <td class="use_yn">${vo.use_yn }</td> --%>
+						<td class="use_yn">
+							<c:if test="${vo.use_yn eq 'n'}">비활성</c:if>
+						</td>
 					</tr>
 					</c:forEach>
 				</tbody>

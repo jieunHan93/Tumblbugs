@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -213,12 +214,13 @@
 						<th class="creator_name">창작자</th>
 						<th class="pj_check_request_date">검토 요청일</th>
 						<th class="pj_check_yn">검토 결과</th>
+						<th class="editor_recommend">에디터 추천</th>
 						<th class="pj_start_date">시작일</th>
 						<th class="pj_end_date">마감일</th>
 						<th class="pj_price">목표 금액</th>
 						<th class="total_funding_price">달성 금액</th>
 						<th class="achievement_rate">달성률</th>
-						<th class="pj_bill">정산</th>
+						<th class="pj_bill">명세서</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -236,13 +238,23 @@
 								<c:when test="${(empty vo.pj_check_yn) or (vo.pj_check_yn eq 'c')}">검토 중</c:when>
 							</c:choose>
 						</td>
+						<td class="editor_recommend">
+							<c:choose>
+								<c:when test="${vo.editor_recommend eq '1'}"><i class="fas fa-award"></i></c:when>
+								<c:otherwise></c:otherwise>
+							</c:choose>
+						</td>
 						<td class="pj_start_date">${vo.pj_start_date}</td>
 						<td class="pj_end_date">${vo.pj_end_date}</td>
 						<td class="pj_price">${vo.pj_price}</td>
 						<td class="total_funding_price">${vo.total_funding_price}</td>
 						<td class="achievement_rate">${vo.achievement_rate}%</td>
 						<td class="pj_bill">
-							<button class="btn btn-default" data-target="#layerpop" data-toggle="modal" id="btn_bill_open">정산</button>
+							<c:set var="remaining_days" value="${vo.remaining_days}"/>
+							<fmt:parseNumber var="rdays" type="number" value="${remaining_days}" />
+							<c:if test="${vo.total_funding_price >= vo.pj_price and rdays < 0}">
+								<button class="btn btn-default" data-target="#layerpop" data-toggle="modal" id="btn_bill_open">보기</button>
+							</c:if>
 						</td>
 					</tr>
 					</c:forEach>
