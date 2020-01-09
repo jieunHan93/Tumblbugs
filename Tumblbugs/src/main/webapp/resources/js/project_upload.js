@@ -1,6 +1,9 @@
 $(document).ready(function(){
-		var pj_end_date = '<c:out value="${pj_end_date}"/>';
-		$("#m2_c2_i2").val(pj_end_date);
+	$(document).ready(function(){
+		$(".go_agree_btn").click(function(){
+			location.href="http://localhost:9090/tumblbugs/project_start_agreement";
+		});
+	});
 	
 		var item_value = 0;
 		var product_number = 1;
@@ -16,8 +19,7 @@ $(document).ready(function(){
 		   var dialogDefinition = ev.data.definition;
 		
 		   switch (dialogName) {
-		       case 'image': //Image Properties dialog
-		       //dialogDefinition.removeContents('info');
+		       case 'image': 
 		       dialogDefinition.removeContents('Link');
 		       dialogDefinition.removeContents('advanced');
 		        break;
@@ -27,10 +29,6 @@ $(document).ready(function(){
 		$("#menu_label1").css('background-color','rgb(247,247,247)').css('border-color','#ccc');
 		$("#content_up_menu1").css('display','inline-block');	
 		
-		/* $("#m3_c1_save").click(function() {
-			var content = CKEDITOR.instances.ckeditor_content.getData();
-			alert(content);
-		}); */
 		
 		
 		$(".upload_detail_slide").click(function(){

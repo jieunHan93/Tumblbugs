@@ -2279,3 +2279,6 @@ input[type="number"]::-webkit-inner-spin-button {
     max-height: 20px;
     overflow:hidden;
 }
+#cke_m3_c1_i1 img{
+    max-width: 635px;
+}

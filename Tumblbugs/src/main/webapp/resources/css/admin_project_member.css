@@ -68,14 +68,18 @@
 		border-collapse: collapse;
 	}
 	.admin_project_content #project_table th {
-		font-size: 10pt;
+		font-size: 9pt;
 		text-align: center;
+	}
+	.admin_project_content #project_table td {
+		font-size: 9.5pt;
 	}
 	
 	#project_table a {
 		color: black;
 		text-decoration: none;
 		display: block;
+		text-overflow: ellipsis;
 	}
 	#project_table tbody tr:hover {
 		background-color: #ebe8e8;
@@ -440,7 +444,7 @@
 
 
 /** admin_member : 회원 관리 메인 **/
-	#project_table .no {width: 30px;}
+	#project_table .no {width: 20px;}
 	#project_table .name {width: 150px;}
 	#project_table .use_yn {width: 80px;}
 
