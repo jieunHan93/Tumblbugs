@@ -284,7 +284,7 @@ public class ProjectUploadController {
 		/*if(result) {
 			
 		}else {
-			res="redirect:/error_page";
+			res="redirect:/error";
 		}*/
 		
 	}
@@ -352,7 +352,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="error_page";
+			res="/error";
 		}
 		return res;
 	}
@@ -385,7 +385,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="error_page";
+			res="/error";
 		}
 		
 		return "success";
@@ -418,7 +418,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="error_page";
+			res="/error";
 		}
 		
 		return res;
@@ -453,7 +453,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="error_page";
+			res="/error";
 		}
 		
 		return res;
@@ -488,7 +488,7 @@ public class ProjectUploadController {
 		if(result) {
 			res=pj_id;
 		}else {
-			res="error_page";
+			res="/error";
 		}
 		
 		return res;
@@ -501,7 +501,7 @@ public class ProjectUploadController {
 	@RequestMapping(value="/project_upload_proc", method=RequestMethod.GET)
 	public String project_upload_proc(HttpSession session, RedirectAttributes redirect) {
 		String session_id = (String)session.getAttribute("pj_id");
-		String res = "error_page";
+		String res = "/error";
 		
 		boolean result = PJUploadDao.resultUploadProject(session_id);
 		

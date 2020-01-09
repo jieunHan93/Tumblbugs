@@ -111,16 +111,17 @@ public class LoginController {
 	@ResponseBody
 	public String login_proc(HttpSession session, String email, String pass) {
 		SessionVO svo = logindao.getResultLogin(email, pass);
-		boolean loginResult = false;
-		
+		String result = "";
 		if(svo != null && svo.isResult()) {
 			//로그인 성공
 			session.setAttribute("svo", svo);
 			session.setAttribute("semail", email);
-			loginResult = true;
+			result = logindao.getMemberUseyn(email);
+		}else {
+			result = "false";
 		}
 		
-		return String.valueOf(loginResult);
+		return result;
 	}
 	
 	
@@ -145,8 +146,7 @@ public class LoginController {
 			mailSender.send(message);
 			out.println("<script>alert('해당 이메일로 비밀번호가 전송되었습니다.');</script>");
 			out.flush();
-			resPage = "/login/found";
-			
+			resPage = "/login/login";
 		}else {
 			return "redirect:/index";
 		}

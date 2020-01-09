@@ -191,5 +191,9 @@ public class MainController {
 		return null;
 	}	
 	
+	@RequestMapping(value="/error", method=RequestMethod.GET)
+	public String error_page() {
+		return "/error_page";
+	}
 }
 

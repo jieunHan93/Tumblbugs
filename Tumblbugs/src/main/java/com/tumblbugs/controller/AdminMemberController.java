@@ -36,7 +36,7 @@ public class AdminMemberController {
 	}
 	
 	/**
-	 * 회원 탈퇴 처리
+	 * 회원 비활성화 처리
 	 * @param email
 	 * @return
 	 */
@@ -44,5 +44,16 @@ public class AdminMemberController {
 	@ResponseBody
 	public String member_unregister_proc(String email) {
 		return String.valueOf(regDAO.getResultUnreg(email));
+	}
+	
+	/**
+	 * 회원 활성화 처리
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value="/admin/member_rereg_proc", method=RequestMethod.GET)
+	@ResponseBody
+	public String member_reregister_proc(String email) {
+		return String.valueOf(regDAO.getResultRereg(email));
 	}
 }

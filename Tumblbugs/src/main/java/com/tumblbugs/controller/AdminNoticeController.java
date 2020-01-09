@@ -105,7 +105,7 @@ public class AdminNoticeController {
 				file.delete();
 			}
 		}else {
-			res = "error_page";
+			res = "/error";
 		}
 		
 		return res;
@@ -165,7 +165,7 @@ public class AdminNoticeController {
 		if(result) {
 			res = "redirect:/admin/notice";
 		}else {
-			res = "error_page";
+			res = "/error";
 		}
 		
 		return res;

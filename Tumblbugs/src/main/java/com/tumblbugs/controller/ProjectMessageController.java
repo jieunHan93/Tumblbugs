@@ -51,7 +51,7 @@ public class ProjectMessageController {
 			mv.addObject("pj_id", vo.getPj_id());
 			mv.setViewName("redirect:/project/" + pj_addr);
 		} else {
-			mv.setViewName("/error_page");
+			mv.setViewName("/error");
 		}
 		return mv;
 	}

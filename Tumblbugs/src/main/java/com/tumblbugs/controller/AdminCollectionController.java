@@ -199,7 +199,7 @@ public class AdminCollectionController {
 			}
 			respage="redirect:/admin/collection";
 		} else {
-			respage="error_page";
+			respage="/error";
 		}
 		return respage;
 	}
@@ -248,7 +248,7 @@ public class AdminCollectionController {
 			mv.addObject("col_id", vo.getCol_id());
 			mv.setViewName("redirect:/admin/collection/content");
 		} else {
-			mv.setViewName("error_page");
+			mv.setViewName("/error");
 		}
 		return mv;
 	}
@@ -262,7 +262,7 @@ public class AdminCollectionController {
 		if(result) {
 			mv.setViewName("redirect:/admin/collection");
 		} else {
-			mv.setViewName("error_page");
+			mv.setViewName("/error");
 		}
 		return mv;
 	}

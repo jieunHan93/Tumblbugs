@@ -80,7 +80,7 @@ public class AdminController {
 		if(result) {
 			mv.setViewName("redirect:/admin");
 		}else {
-			mv.setViewName("redirect:/error_Page");
+			mv.setViewName("/error");
 		}
 		return mv;
 	}
@@ -132,7 +132,7 @@ public class AdminController {
 		if(result) {
 			mv.setViewName("redirect:/admin/faq");
 		}else {
-			mv.setViewName("error_page");
+			mv.setViewName("/error");
 		}
 		return mv;
 	}
@@ -158,7 +158,7 @@ public class AdminController {
 		if(result) {
 			mv.setViewName("redirect:/admin/faq");
 		}else {
-			mv.setViewName("error_page");
+			mv.setViewName("/error");
 		}
 		return mv;
 	}

@@ -113,42 +113,47 @@ public class FundingController {
 	 * @param pvo
 	 * @return
 	 */
-	@RequestMapping(value="/{pj_addr}/funding/complete", method=RequestMethod.POST)
+	@RequestMapping(value="/{pj_addr}/funding/complete", method= {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView step3(@PathVariable("pj_addr") String pj_addr, FundingVO vo, PaymentVO pvo) {
 		
 		ModelAndView mv = new ModelAndView();
-		String payment_id = vo.getPayment_id();
 		
-		//신규 결제 수단 등록
-		if(!pvo.getPayment_method().equals("")) {
-			int result = paymentDAO.regist(pvo);
-			
-			if(result != 0) {
-				payment_id = paymentDAO.getNewPaymentId(vo.getEmail());
-				vo.setPayment_id(payment_id);
-			}
-		}
-		
-		//payment_info 컬럼에 들어갈 데이터 가공
-		PaymentVO payment = paymentDAO.getPaymentContent(payment_id);
-		String payment_info = "";
-		if(payment.getPayment_method().equals("01")) {
-			payment_info = "카드(" + payment.getCard_company() + "/" + payment.getCard_number() + ")";
-		} else if(payment.getPayment_method().equals("02")) {
-			payment_info = "계좌(" + payment.getBank() + "/" + payment.getAccount_number() + ")";
-		}
-		vo.setPayment_info(payment_info);
-		
-		//펀딩 등록: tum_funding
-		int nthSupporter = fundingDAO.insertFunding(vo);
-		if(nthSupporter != 0) {
-			mv.setViewName("/funding/step3_funding_success");
-			mv.addObject("nthSupporter", nthSupporter);
-			mv.addObject("project", projectDAO.getContent(vo.getPj_id()));
-			ArrayList<ProjectVO> favlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "전체", "전체", "1", "fav", "전체");
-			mv.addObject("favlist",favlist);
+		if(vo.getEmail() == null) {
+			mv.setViewName("redirect:/" + pj_addr + "/funding/step1");
 		} else {
-			mv.setViewName("errorPage");
+			String payment_id = vo.getPayment_id();
+			
+			//신규 결제 수단 등록
+			if(!pvo.getPayment_method().equals("")) {
+				int result = paymentDAO.regist(pvo);
+				
+				if(result != 0) {
+					payment_id = paymentDAO.getNewPaymentId(vo.getEmail());
+					vo.setPayment_id(payment_id);
+				}
+			}
+			
+			//payment_info 컬럼에 들어갈 데이터 가공
+			PaymentVO payment = paymentDAO.getPaymentContent(payment_id);
+			String payment_info = "";
+			if(payment.getPayment_method().equals("01")) {
+				payment_info = "카드(" + payment.getCard_company() + "/" + payment.getCard_number() + ")";
+			} else if(payment.getPayment_method().equals("02")) {
+				payment_info = "계좌(" + payment.getBank() + "/" + payment.getAccount_number() + ")";
+			}
+			vo.setPayment_info(payment_info);
+			
+			//펀딩 등록: tum_funding
+			int nthSupporter = fundingDAO.insertFunding(vo);
+			if(nthSupporter != 0) {
+				mv.setViewName("/funding/step3_funding_success");
+				mv.addObject("nthSupporter", nthSupporter);
+				mv.addObject("project", projectDAO.getContent(vo.getPj_id()));
+				ArrayList<ProjectVO> favlist = projectsortDAO.getResultProjectList(1, 8,"전체", "ongoing", "전체", "전체", "1", "fav", "전체");
+				mv.addObject("favlist",favlist);
+			} else {
+				mv.setViewName("errorPage");
+			}
 		}
 		
 		return mv;
